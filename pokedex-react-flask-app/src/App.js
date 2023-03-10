@@ -1,10 +1,12 @@
 import React from 'react';
 import { useQuery, gql } from "@apollo/client"
-import logo from './logo.svg';
 import './App.css';
 
 const GEN_1_QUERY = gql`
-query { gen_1: pokemon_v2_pokemonspecies(where: {generation_id: {_eq: 1}}) {
+query { gen_1: pokemon_v2_pokemonspecies(
+    where: {generation_id: {_eq: 1}},
+    order_by: {id: asc}
+  ) {
     id,
     name
   }
@@ -16,22 +18,15 @@ export default function App() {
   if(error) return <pre>{error.message}</pre>
 
   const { gen_1 } = data
-  console.log(gen_1)
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2>Gen 1 Pokemon</h2>
+        { gen_1 ? (
+          <ul>
+            {gen_1.map(({name, id}) => (<li key={id}>{name}</li>))}
+          </ul>
+        ) : undefined }
       </header>
     </div>
   );
