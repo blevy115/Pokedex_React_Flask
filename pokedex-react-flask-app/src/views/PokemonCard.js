@@ -1,6 +1,7 @@
 import React from "react"
 import { useParams, Link } from "react-router-dom"
 import { useQuery, gql } from "@apollo/client"
+import TypeEffectiveness from "../components/TypeEffectiveness"
 
 const GET_POKEMON_INFO = gql`
 query getPokemonInfo($id: Int!) {
@@ -92,6 +93,7 @@ export default function PokemonCard(){
             return <li key={type.pokemon_v2_type.id}>{type.pokemon_v2_type.name}</li>
         })}
         </ul>
+        <TypeEffectiveness types={types.map(type => type.pokemon_v2_type.name)}/>
         <p>Stats</p>
         <ul>
         {stats.map((stat) => {
