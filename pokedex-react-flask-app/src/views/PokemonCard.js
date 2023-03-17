@@ -2,6 +2,7 @@ import React from "react"
 import { useParams, Link } from "react-router-dom"
 import { useQuery, gql } from "@apollo/client"
 import TypeEffectiveness from "../components/TypeEffectiveness"
+import PokemonImages from "../components/PokemonImages"
 
 const GET_POKEMON_INFO = gql`
 query getPokemonInfo($id: Int!) {
@@ -61,10 +62,6 @@ query getPokemonInfo($id: Int!) {
   }
 `
 
-const getImagePath = (id) => {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
-}
-
 export default function PokemonCard(){
     const params = useParams();
     const {data, loading} = useQuery(GET_POKEMON_INFO, {
@@ -84,7 +81,7 @@ export default function PokemonCard(){
 
         <div style={{margin: "auto", width: "50%"}}>
         <p>{name}</p>
-        <img src={getImagePath(params.pokemonId)} />
+        <PokemonImages id={params.pokemonId}/>
         <p>Generation: {info.generation_id}</p>
         {info.has_gender_differences ? <p>Has Gender Differences</p>: undefined}
         <p>Types</p>
