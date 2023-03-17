@@ -16,9 +16,9 @@ query GetPokemonList($name: String!){
 export default function Main() {
     const [name, setName] = useState("")  
     const {data: list, loading: loadingList} = useQuery(GET_POKEMON_LIST, {
-      variables: { name: `%${name}%` }
+      variables: { name: `%${name}%` },
+      skip: !name
     })
-  
     return (
       <div className="App">
         <header className="App-header">
@@ -29,7 +29,7 @@ export default function Main() {
           ></input>
           { !loadingList && list ? <PokemonList 
             list={list.pokemon_list} 
-          /> : <p>Loading</p>
+          /> : undefined
           }
         </header>
       </div>

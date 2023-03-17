@@ -1,6 +1,5 @@
 import React from 'react';
-// import { Routes, Route } from "react-router-dom";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 
 import './App.css';
 import Main from './views/Main';
@@ -14,7 +13,7 @@ let router = createBrowserRouter([
   {
     path: "pokemon/:pokemonId",
     element: < PokemonCard />,
-    errorElement: <h2>Note not found</h2>,
+    errorElement: <><Link to="/">Back to List</Link><h2>Not valid Pokemon ID</h2></>,
   }
 ])
 

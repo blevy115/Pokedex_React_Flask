@@ -1,5 +1,5 @@
 import React from "react"
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useQuery, gql } from "@apollo/client"
 
 const GET_POKEMON_INFO = gql`
@@ -74,6 +74,13 @@ export default function PokemonCard(){
     const {name, types, info, stats, abilities} = data.pokemon_details[0]
     // console.log(stats)
     return (
+      <>
+        <div style={{display: "flex", flexDirection: "column"}}>
+        <Link to="/">Back to List</Link>
+        <Link to={`/pokemon/${parseInt(params.pokemonId) -1}`}>Previous</Link>
+        <Link to={`/pokemon/${parseInt(params.pokemonId) +1}`}>Next</Link>
+        </div>
+
         <div style={{margin: "auto", width: "50%"}}>
         <p>{name}</p>
         <img src={getImagePath(params.pokemonId)} />
@@ -98,5 +105,6 @@ export default function PokemonCard(){
         })}
         </ol>
         </div>
+        </>
     )
 }
