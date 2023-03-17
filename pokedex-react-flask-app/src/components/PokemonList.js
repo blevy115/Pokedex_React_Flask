@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom"
 export default function PokemonList({ list }){
     let navigate = useNavigate();
     return (
-            <ul>
+            <ul style={{listStyleType:"none"}}>
                 {list.map(({name, id}) => (
                 <li 
                     key={id}
