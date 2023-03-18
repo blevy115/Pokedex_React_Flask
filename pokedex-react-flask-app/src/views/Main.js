@@ -1,18 +1,7 @@
 import React, { useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_POKEMON_LIST } from "../api/pokeapi";
 import PokemonList from "../components/PokemonList";
-
-const GET_POKEMON_LIST = gql`
-  query GetPokemonList($name: String!) {
-    pokemon_list: pokemon_v2_pokemon(
-      where: { name: { _ilike: $name } }
-      order_by: { name: asc }
-    ) {
-      id
-      name
-    }
-  }
-`;
 
 export default function Main() {
   const [name, setName] = useState("");
