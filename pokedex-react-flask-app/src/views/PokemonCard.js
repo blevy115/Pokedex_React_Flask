@@ -37,6 +37,9 @@ query getPokemonInfo($id: Int!) {
         pokemon_v2_ability {
           name
           id
+          pokemon_v2_abilityeffecttexts(where: { pokemon_v2_language: { name: { _eq: "en" } } }) {
+            short_effect
+          } 
         }
         is_hidden
       }
@@ -70,7 +73,6 @@ export default function PokemonCard(){
     if (loading) return <p>Loading...</p>
     // const {name, types, stats, abilities, level_moves, egg_moves, tm_moves} = data.pokemon_details[0]
     const {name, types, info, stats, abilities} = data.pokemon_details[0]
-    // console.log(stats)
     return (
       <>
         <div style={{display: "flex", flexDirection: "column"}}>
@@ -79,8 +81,8 @@ export default function PokemonCard(){
         <Link to={`/pokemon/${parseInt(params.pokemonId) +1}`}>Next</Link>
         </div>
 
-        <div style={{margin: "auto", width: "50%"}}>
-        <p>{name}</p>
+        <div style={{margin: "auto", width: "60%"}}>
+        <p style={{textAlign: "center"}}>{name}</p>
         <PokemonImages id={params.pokemonId}/>
         <p>Generation: {info.generation_id}</p>
         {info.has_gender_differences ? <p>Has Gender Differences</p>: undefined}
@@ -100,7 +102,14 @@ export default function PokemonCard(){
         <p>Abilities</p>
         <ol>
         {abilities.map((ability) => {
-            return <li key={ability.pokemon_v2_ability.id}>{ability.pokemon_v2_ability.name}{ability.is_hidden && " (Hidden)"}</li>
+          const hasAbilityText = ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts.length > 0
+            return (
+              <div key={ability.pokemon_v2_ability.id}>
+              <li >{ability.pokemon_v2_ability.name}{ability.is_hidden && " (Hidden)"}
+              <span className="HoverToSee">{ hasAbilityText ? `: ${ability.pokemon_v2_ability?.pokemon_v2_abilityeffecttexts[0].short_effect}`: undefined}</span>
+              </li>
+              </div>
+            )
         })}
         </ol>
         </div>
