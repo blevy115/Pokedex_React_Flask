@@ -19,3 +19,7 @@ code {
 li:hover .HoverToSee {
   display: inline-block
 }
+
+.PokemonImage {
+  max-width: 25em;
+}

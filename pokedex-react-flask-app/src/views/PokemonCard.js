@@ -15,14 +15,21 @@ export default function PokemonCard() {
   const { name, types, info, stats, abilities } = data.pokemon_details[0];
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <Link to="/">Back to List</Link>
-        <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>Previous</Link>
-        <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
-      </div>
-
+      <Link to="/">Back to List</Link>
       <div style={{ margin: "auto", width: "60%" }}>
-        <p style={{ textAlign: "center" }}>{name}</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "center",
+          }}
+        >
+          <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+            Previous
+          </Link>
+          <p style={{ textAlign: "center" }}>{name}</p>
+          <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
+        </div>
         <PokemonImages id={params.pokemonId} />
         <p>Generation: {info.generation_id}</p>
         {info.has_gender_differences ? (

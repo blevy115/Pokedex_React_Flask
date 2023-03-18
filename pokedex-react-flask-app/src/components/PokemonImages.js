@@ -32,11 +32,11 @@ export default function PokemonImages({ id }) {
       >
         <div>
           <p style={{ textAlign: "center" }}>Regular</p>
-          <img src={getImagePath(id)} onLoad={imageLoaded} />
+          <img className="PokemonImage" src={getImagePath(id)} onLoad={imageLoaded} />
         </div>
         <div>
           <p style={{ textAlign: "center" }}>Shiny</p>
-          <img src={getShinyImagePath(id)} onLoad={imageLoaded} />
+          <img className="PokemonImage" src={getShinyImagePath(id)} onLoad={imageLoaded} />
         </div>
       </div>
     </>
