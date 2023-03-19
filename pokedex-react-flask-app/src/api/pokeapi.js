@@ -42,7 +42,7 @@ const GET_POKEMON_INFO = gql`
 
       level_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "level-up" } }
         }
         distinct_on: move_id
@@ -54,7 +54,7 @@ const GET_POKEMON_INFO = gql`
       }
       egg_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "egg" } }
         }
         distinct_on: move_id
@@ -65,7 +65,7 @@ const GET_POKEMON_INFO = gql`
       }
       tm_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "machine" } }
         }
         distinct_on: move_id
@@ -90,4 +90,4 @@ const GET_POKEMON_LIST = gql`
   }
 `;
 
-export {GET_POKEMON_INFO, GET_POKEMON_LIST}
+export { GET_POKEMON_INFO, GET_POKEMON_LIST };
