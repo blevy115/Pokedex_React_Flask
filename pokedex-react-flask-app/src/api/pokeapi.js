@@ -47,8 +47,20 @@ const GET_POKEMON_INFO = gql`
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
         level
       }
@@ -59,8 +71,20 @@ const GET_POKEMON_INFO = gql`
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
       tm_moves: pokemon_v2_pokemonmoves(
@@ -70,8 +94,20 @@ const GET_POKEMON_INFO = gql`
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
     }

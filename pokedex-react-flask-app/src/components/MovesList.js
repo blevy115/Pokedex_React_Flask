@@ -26,10 +26,17 @@ export default function MovesList({ levelMoves, eggMoves, tmMoves }) {
       </select>
       <ul>
         {moves[moveType].map((move, i) => {
+          const hasFlavourText = move.moveInfo.flavourText.length > 0;
           return (
             <li key={i}>
               {move.level ? `Level ${move.level} ` : undefined}
-              {move.pokemon_v2_move.name}
+              {move.moveInfo.name} Type:{move.moveInfo.type.name} Kind:
+              {move.moveInfo.kind.name}
+              <span className="HoverToSee">
+                {hasFlavourText
+                  ? `: ${move.moveInfo.flavourText[0].flavor_text}`
+                  : undefined}
+              </span>
             </li>
           );
         })}
