@@ -40,17 +40,20 @@ export default function PokemonCard() {
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
         <PokemonImages id={params.pokemonId} />
-        <div style={{ display: "none" }}>
+        <div>
           <p>Generation: {info.generation_id}</p>
           {info.has_gender_differences ? (
             <p>Has Gender Differences</p>
           ) : undefined}
           <p>Types</p>
-          <ul>
+          <ul style={{ listStyleType: "none" }}>
             {types.map((type) => {
               return (
                 <li key={type.pokemon_v2_type.id}>
-                  {type.pokemon_v2_type.name}
+                  <img
+                    src={`/icons/types/${type.pokemon_v2_type.name}.png`}
+                    alt={`${type.pokemon_v2_type.name} icon`}
+                  />
                 </li>
               );
             })}
@@ -80,7 +83,7 @@ export default function PokemonCard() {
                     {ability.is_hidden && " (Hidden)"}
                     <span className="HoverToSee">
                       {hasAbilityText
-                        ? `: ${ability.pokemon_v2_ability.text[0].short_effect}`
+                        ? ability.pokemon_v2_ability.text[0].short_effect
                         : undefined}
                     </span>
                   </li>

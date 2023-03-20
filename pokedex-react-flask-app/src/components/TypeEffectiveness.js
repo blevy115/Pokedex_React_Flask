@@ -29,11 +29,15 @@ export default function TypeEffectiveness({ types }) {
       {weak.length > 0 && (
         <>
           <p>Weak to</p>
-          <ul>
+          <ul style={{ listStyleType: "none" }}>
             {weak.map((type, index) => {
               return (
                 <li key={index}>
-                  {type.name}: {type.multiplier}x
+                  <img
+                    src={`/icons/types/${type.name}.png`}
+                    alt={`${type.name} icon`}
+                  />{" "}
+                  x {type.multiplier}
                 </li>
               );
             })}
@@ -43,11 +47,15 @@ export default function TypeEffectiveness({ types }) {
       {resistant.length > 0 && (
         <>
           <p>Resistant to</p>
-          <ul>
+          <ul style={{ listStyleType: "none" }}>
             {resistant.map((type, index) => {
               return (
                 <li key={index}>
-                  {type.name}: {type.multiplier}x
+                  <img
+                    src={`/icons/types/${type.name}.png`}
+                    alt={`${type.name} icon`}
+                  />{" "}
+                  x {type.multiplier}
                 </li>
               );
             })}
@@ -57,11 +65,15 @@ export default function TypeEffectiveness({ types }) {
       {immune.length > 0 && (
         <>
           <p>Immune to</p>
-          <ul>
+          <ul style={{ listStyleType: "none" }}>
             {immune.map((type, index) => {
               return (
                 <li key={index}>
-                  {type.name}: {type.multiplier}x
+                  <img
+                    src={`/icons/types/${type.name}.png`}
+                    alt={`${type.name} icon`}
+                  />{" "}
+                  x {type.multiplier}
                 </li>
               );
             })}
