@@ -42,36 +42,72 @@ const GET_POKEMON_INFO = gql`
 
       level_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "level-up" } }
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
         level
       }
       egg_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "egg" } }
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
       tm_moves: pokemon_v2_pokemonmoves(
         where: {
-          pokemon_id: { _eq: 1 }
+          pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "machine" } }
         }
         distinct_on: move_id
       ) {
-        pokemon_v2_move {
+        moveInfo: pokemon_v2_move {
           name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
     }
@@ -90,4 +126,4 @@ const GET_POKEMON_LIST = gql`
   }
 `;
 
-export {GET_POKEMON_INFO, GET_POKEMON_LIST}
+export { GET_POKEMON_INFO, GET_POKEMON_LIST };
