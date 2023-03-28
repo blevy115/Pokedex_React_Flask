@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import config  # we’ll discuss the config file next
+from config import config  
+
+from flask_graphql import GraphQLView
 
 db = SQLAlchemy( )
 
@@ -14,5 +16,16 @@ def create_app(config_name):
 
     from .api import api as api_blueprint  # We will discuss blueprints shortly as well
     app.register_blueprint(api_blueprint, url_prefix="/api/")
+
+    from .schema import schema
+
+    app.add_url_rule(
+        '/graphql',
+        view_func=GraphQLView.as_view(
+            'graphql',
+            schema=schema,
+            graphiql=True
+        )
+    )
 
     return app
