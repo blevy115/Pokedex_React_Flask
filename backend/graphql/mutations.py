@@ -32,32 +32,7 @@ class PokemonMutation(graphene.Mutation):
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
-
-    
-# class ProfileMutation(graphene.Mutation):
-#     class Arguments:
-#         first_name = graphene.String(required=True)
-#         last_name = graphene.String(required=True)
-#         user_id = graphene.Int(required=True)
-#         skills = graphene.List(SkillInput)
-
-#     profile = graphene.Field(lambda: Profile)
-
-#     def mutate(self, info, first_name, last_name, user_id, skills):
-#         user = UserModel.query.get(user_id)
-
-#         profile = ProfileModel(first_name=first_name, last_name=last_name)
-
-#         skill_list = [SkillModel(name=input_skill.name) for input_skill in skills]
-
-#         profile.skills.extend(skill_list)
-
-#         db.session.add(profile)
-
-#         user.profile=profile
-#         db.session.commit()
-
-#         return ProfileMutation(profile=profile)
+ 
     
 class Mutation(graphene.ObjectType):
     mutate_user = UserMutation.Field()

@@ -2,4 +2,6 @@ from flask import Blueprint
 
 api = Blueprint("api", __name__)
 
-# from . import views, errors
+@api.route('/hello')
+def hello():
+    return 'Hello from my Blueprint!'

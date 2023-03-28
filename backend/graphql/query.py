@@ -43,14 +43,3 @@ class Query(graphene.ObjectType):
         query = Pokemon.get_query(info)
         user = UserModel.query.get(user_id)
         return query.join(UserPokemonModel).filter_by(user=user).all()
-
-    # profiles = graphene.List(
-    #     lambda: Profile,  id=graphene.Int())
-    
-    # def resolve_profiles(self, info, id=None):
-    #     query = Profile.get_query(info)
-
-    #     if id:
-    #         query = query.filter(
-    #             ProfileModel.id == id)
-    #     return query.all()
