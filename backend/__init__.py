@@ -28,13 +28,13 @@ def create_app(config_name):
         return User.query.get(int(user_id))
     
         # blueprint for auth routes in our app
-    from .auth import auth as auth_blueprint
+    from .api.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     # blueprint for non-auth parts of app
-    from .main import main as main_blueprint
+    
+    from .api.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-    bcrypt = Bcrypt(app)
 
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix="/api")
