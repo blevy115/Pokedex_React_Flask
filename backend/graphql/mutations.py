@@ -3,11 +3,12 @@ from backend import db
 from ..graphql.objects import UserObject as User, PokemonObject as Pokemon
 from ..models import User as UserModel, Pokemon as PokemonModel
 
+
 class UserMutation(graphene.Mutation):
     class Arguments:
         email = graphene.String(required=True)
-        user_name =  graphene.String(required=True)
-        password =  graphene.String(required=True)
+        user_name = graphene.String(required=True)
+        password = graphene.String(required=True)
     user = graphene.Field(lambda: User)
 
     def mutate(self, info, email, user_name, password):
@@ -17,7 +18,8 @@ class UserMutation(graphene.Mutation):
         db.session.commit()
 
         return UserMutation(user=user)
-    
+
+
 class PokemonMutation(graphene.Mutation):
     class Arguments:
         pokemon_id = graphene.Int()
@@ -32,8 +34,8 @@ class PokemonMutation(graphene.Mutation):
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
- 
-    
+
+
 class Mutation(graphene.ObjectType):
     mutate_user = UserMutation.Field()
     mutate_pokemon = PokemonMutation.Field()

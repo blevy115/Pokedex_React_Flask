@@ -1,6 +1,6 @@
 import graphene
 from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyConnectionField 
+from graphene_sqlalchemy import SQLAlchemyConnectionField
 
 from ..models import User as UserModel, \
     Pokemon as PokemonModel, \
@@ -8,7 +8,9 @@ from ..models import User as UserModel, \
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon \
-    
+
+
+
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
 
@@ -23,7 +25,7 @@ class Query(graphene.ObjectType):
         if user_name:
             query = query.filter(UserModel.user_name == user_name)
         return query.all()
-    
+
     all_users = SQLAlchemyConnectionField(User.connection)
 
     pokemons = graphene.List(
@@ -38,7 +40,7 @@ class Query(graphene.ObjectType):
         if pokemon_id:
             query = query.filter(PokemonModel.pokemon_id == pokemon_id)
         return query.all()
-    
+
     def resolve_user_pokemons(self, info, user_id):
         query = Pokemon.get_query(info)
         user = UserModel.query.get(user_id)
