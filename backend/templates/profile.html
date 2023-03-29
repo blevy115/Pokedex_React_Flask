@@ -4,4 +4,20 @@
 <h1 class="title">
   Welcome, {{ name }}!
 </h1>
+
+
+<form method="POST" action="/pokemon">
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="pokemon_id" name="pokemon_id" placeholder="Your pokemon id" autofocus="">
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input class="input is-large" type="name" name="name" placeholder="Your Pokemon name">
+        </div>
+    </div>
+    <button class="button is-block is-info is-large is-fullwidth">Favourite</button>
+</form>
 {% endblock %}

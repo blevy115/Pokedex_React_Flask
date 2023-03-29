@@ -36,6 +36,9 @@ def create_app(config_name):
     from .api.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .api.pokemon import pokemon as pokemon_blueprint
+    app.register_blueprint(pokemon_blueprint)
+
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix="/api")
 
