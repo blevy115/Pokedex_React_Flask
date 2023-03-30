@@ -1,18 +1,23 @@
 import { gql } from "@apollo/client";
 
-const GET_USERS_LIST = gql`
-  query {
-    users {
-      id
-      name
-    }
-}`;
-
-const GET_SAVE_POKEMON = gql`
-query{
-    pokemons{
+const LOGIN_MUTATION = gql`
+  mutation loginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
         name
+        email
+      }
     }
-}`
+  }
+`;
 
-export { GET_USERS_LIST, GET_SAVE_POKEMON }
+const LOGOUT_MUTATION = gql`
+  mutation logoutMutation {
+    logout {
+      token
+    }
+  }
+`;
+
+export { LOGIN_MUTATION, LOGOUT_MUTATION };
