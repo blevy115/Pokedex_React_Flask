@@ -9,6 +9,7 @@ import {
 import "./App.css";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Signup from "./components/Signup";
 import Home from "./views/Home";
 import PokemonCard from "./views/PokemonCard";
 
@@ -25,6 +26,8 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Home />} />
         <Route

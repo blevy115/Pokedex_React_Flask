@@ -35,20 +35,23 @@ class LogoutMutation(graphene.Mutation):
         return LogoutMutation(token=None)
 
 
-class UserMutation(graphene.Mutation):
+class SignupMutation(graphene.Mutation):
     class Arguments:
         email = graphene.String(required=True)
-        user_name = graphene.String(required=True)
+        name = graphene.String(required=True)
         password = graphene.String(required=True)
+
     user = graphene.Field(lambda: User)
+    token = graphene.String()
 
-    def mutate(self, info, email, user_name, password):
-        user = UserModel(email=email, user_name=user_name, password=password)
+    def mutate(self, info, email, name, password):
+        new_user = UserModel(email=email, name=name, password=generate_password_hash(
+            password, method='sha256'))
 
-        db.session.add(user)
+        db.session.add(new_user)
         db.session.commit()
 
-        return UserMutation(user=user)
+        return SignupMutation(user=new_user, token="success")
 
 
 class PokemonMutation(graphene.Mutation):
@@ -68,7 +71,7 @@ class PokemonMutation(graphene.Mutation):
 
 
 class Mutation(graphene.ObjectType):
-    mutate_user = UserMutation.Field()
+    signup = SignupMutation.Field()
     mutate_pokemon = PokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()

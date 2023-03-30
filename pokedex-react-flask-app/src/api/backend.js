@@ -20,4 +20,17 @@ const LOGOUT_MUTATION = gql`
   }
 `;
 
-export { LOGIN_MUTATION, LOGOUT_MUTATION };
+const SIGNUP_MUTATION = gql`
+  mutation signupMutation($name: String!, $email: String!, $password: String!) {
+    signup(name: $name, email: $email, password: $password) {
+      token
+      user {
+        name
+        email
+        password
+      }
+    }
+  }
+`;
+
+export { LOGIN_MUTATION, LOGOUT_MUTATION, SIGNUP_MUTATION };
