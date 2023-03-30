@@ -8,9 +8,9 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./views/Home";
 import PokemonCard from "./views/PokemonCard";
-
 
 function PokemonCardErrorElement() {
   return (
@@ -24,13 +24,15 @@ function PokemonCardErrorElement() {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/pokemon/:pokemonId"
-        element={<PokemonCard />}
-        errorElement={<PokemonCardErrorElement />}
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/pokemon/:pokemonId"
+          element={<PokemonCard />}
+          errorElement={<PokemonCardErrorElement />}
+        />
+      </Route>
     </>
   )
 );
