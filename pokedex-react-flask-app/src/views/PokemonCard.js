@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_POKEMON_INFO } from "../api/pokeapi";
-import { CHECK_POKEMON_EXISTS, GET_USER_POKEMONS } from "../api/backend";
+import {
+  CHECK_POKEMON_EXISTS,
+  GET_USER_POKEMONS,
+  POKEMON_MUTATION,
+} from "../api/backend";
 
 // import { POKEMON_MUTATION, USER_POKEMON_MUTATION, CHECK_POKEMON_EXISTS, GET_USER_POKEMONS } from "../api/backend";
 import TypeEffectiveness from "../components/TypeEffectiveness";
@@ -12,42 +16,59 @@ import { pokemonAPIClient, backEndClient } from "../api/clients";
 
 export default function PokemonCard() {
   const params = useParams();
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("user"));
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
-    client: pokemonAPIClient
+    client: pokemonAPIClient,
   });
-  const {data: pokemonExistsData, loading: pokemonDataLoading} = useQuery(CHECK_POKEMON_EXISTS, {
-    variables: { pokemon_id: parseInt(params.pokemonId) },
-    client: backEndClient
-  })
-  console.log(user)
-  const {data: userPokemonsData, loading: userPoekmonsLoading} = useQuery(GET_USER_POKEMONS, {
-    variables: { user_id: user.id },
-    client: backEndClient
-  })
+  const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
+    CHECK_POKEMON_EXISTS,
+    {
+      variables: { pokemon_id: parseInt(params.pokemonId) },
+      client: backEndClient,
+    }
+  );
+  const { data: userPokemonsData, loading: userPoekmonsLoading } = useQuery(
+    GET_USER_POKEMONS,
+    {
+      variables: { user_id: user.id },
+      client: backEndClient,
+    }
+  );
 
-  console.log(userPoekmonsLoading, userPokemonsData)
-  
-  // const [createPokemon] = useMutation(POKEMON_MUTATION)
-  // const [createUserPokemonLink] = useMutation(USER_POKEMON_MUTATION)
-  console.log(pokemonExistsData, pokemonDataLoading)
-  if (loading) return <p>Loading...</p>;
-  const {
+  const [createPokemon] = useMutation(POKEMON_MUTATION, {
+    client: backEndClient,
+  });
+
+  console.log(userPoekmonsLoading, userPokemonsData);
+  console.log(pokemonExistsData?.pokemons.length)
+
+  const name = !loading ? data.pokemon_details[0].name : undefined
+
+  useEffect(() => {
+    if (
+      !loading &&
+      name &&
+      !pokemonDataLoading &&
+      pokemonExistsData.pokemons.length == 0
+    ) {
+      createPokemon({
+        variables: { pokemon_id: params.pokemonId, name: name },
+      });
+    }
+  }, [
     name,
-    types,
-    info,
-    stats,
-    abilities,
-    level_moves,
-    egg_moves,
-    tm_moves,
-  } = data.pokemon_details[0];
+    params.pokemonId,
+    createPokemon,
+    loading,
+    pokemonDataLoading,
+    pokemonExistsData,
+  ]);
 
-  // useEffect(() => {
-  //   if (!loading) return
-  //   console.log(pokemonExistsData, pokemonDataLoading)
-  // }, [loading, pokemonExistsData, pokemonDataLoading]) 
+  if (loading) return <p>Loading...</p>;
+  const { types, info, stats, abilities, level_moves, egg_moves, tm_moves } =
+    data.pokemon_details[0];
+
   return (
     <>
       <Link to="/">Back to List</Link>
