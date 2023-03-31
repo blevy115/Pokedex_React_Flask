@@ -64,20 +64,22 @@ const POKEMON_MUTATION = gql`
   }
 `;
 
-// const USER_POKEMON_MUTATION = gql`
-//   mutation userPokemonMutation($user_id: String!, pokemon_id: Int!) {
-//     mutate_user_pokemon(userId: $user_id, pokemonId: $pokemon_id){
-//         token
-//     }
-//   }
-// `;
+const USER_POKEMON_MUTATION = gql`
+  mutation userPokemonMutation($user_id: String!, $pokemon_id: Int!) {
+    mutateUserPokemon(userId: $user_id, pokemonId: $pokemon_id) {
+      userPokemon {
+        pokemonId
+      }
+    }
+  }
+`;
 
 export {
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
   SIGNUP_MUTATION,
   POKEMON_MUTATION,
-  //   USER_POKEMON_MUTATION,
+  USER_POKEMON_MUTATION,
   CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
 };

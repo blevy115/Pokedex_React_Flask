@@ -5,6 +5,7 @@ from ..graphql.objects import UserObject as User, PokemonObject as Pokemon, User
 from ..models import User as UserModel, Pokemon as PokemonModel, UserPokemonAssociation as UserPokemonModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
+from graphql_relay import from_global_id
 
 
 class LoginMutation(graphene.Mutation):
@@ -52,7 +53,7 @@ class SignupMutation(graphene.Mutation):
         db.session.commit()
 
         return SignupMutation(user=new_user, token="success")
-    
+
 
 class PokemonMutation(graphene.Mutation):
     class Arguments:
@@ -68,29 +69,31 @@ class PokemonMutation(graphene.Mutation):
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
-    
-# class UserPokemonMutation(graphene.Mutation):
-#     class Arguments:
-#         user_id = graphene.Int()
-#         pokemon_id = graphene.Int()
-        
-#     user_pokemon = graphene.Field(lambda: UserPokemon)
 
 
-#     def mutate(self, info, pokemon_id, user_id):
-#         pokemon = PokemonModel.query.filter_by(id=pokemon_id).first()
-#         user = UserModel.query.filter_by(id=user_id).first()
+class UserPokemonMutation(graphene.Mutation):
+    class Arguments:
+        user_id = graphene.String()
+        pokemon_id = graphene.Int()
 
-#         if current_user.is_authenticated and current_user.id == user.id:
-#             current_user.pokemons.append(pokemon)
-#             db.session.commit()
+    user_pokemon = graphene.Field(lambda: UserPokemon)
 
-#         return UserPokemonMutation(token="success")
+    def mutate(self, info, pokemon_id, user_id):
+        type_name, original_id = from_global_id(user_id)
+        pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
+        user = UserModel.query.filter_by(id=int(original_id)).first()
+        user_pokemon = UserPokemonModel(user_id=user.id, pokemon_id=pokemon.id)
+
+        if user and pokemon:
+            user.pokemons.append(pokemon)
+            db.session.commit()
+
+        return UserPokemonMutation(user_pokemon=user_pokemon)
 
 
 class Mutation(graphene.ObjectType):
     signup = SignupMutation.Field()
     mutate_pokemon = PokemonMutation.Field()
-    # mutate_user_pokemon = UserPokemonMutation.Field()
+    mutate_user_pokemon = UserPokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()

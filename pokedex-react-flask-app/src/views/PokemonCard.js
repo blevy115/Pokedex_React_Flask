@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_POKEMON_INFO } from "../api/pokeapi";
@@ -6,9 +6,9 @@ import {
   CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
+  USER_POKEMON_MUTATION,
 } from "../api/backend";
 
-// import { POKEMON_MUTATION, USER_POKEMON_MUTATION, CHECK_POKEMON_EXISTS, GET_USER_POKEMONS } from "../api/backend";
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
@@ -28,22 +28,24 @@ export default function PokemonCard() {
       client: backEndClient,
     }
   );
-  const { data: userPokemonsData, loading: userPoekmonsLoading } = useQuery(
-    GET_USER_POKEMONS,
-    {
-      variables: { user_id: user.id },
-      client: backEndClient,
-    }
-  );
+  const {
+    data: userPokemonsData,
+    loading: userPokemonsLoading,
+    refetch: refetchUserPokemons,
+  } = useQuery(GET_USER_POKEMONS, {
+    variables: { user_id: user.id },
+    client: backEndClient,
+  });
 
   const [createPokemon] = useMutation(POKEMON_MUTATION, {
     client: backEndClient,
   });
 
-  console.log(userPoekmonsLoading, userPokemonsData);
-  console.log(pokemonExistsData?.pokemons.length)
+  const [linkUserToPokemon] = useMutation(USER_POKEMON_MUTATION, {
+    client: backEndClient,
+  });
 
-  const name = !loading ? data.pokemon_details[0].name : undefined
+  const name = !loading ? data.pokemon_details[0].name : undefined;
 
   useEffect(() => {
     if (
@@ -64,6 +66,25 @@ export default function PokemonCard() {
     pokemonDataLoading,
     pokemonExistsData,
   ]);
+
+  async function handleFavouritingPokemon(e) {
+    e.preventDefault();
+    await linkUserToPokemon({
+      variables: {
+        user_id: user.id,
+        pokemon_id: params.pokemonId,
+      },
+    });
+    refetchUserPokemons();
+  }
+
+  const disableFavoutiting = useMemo(() => {
+    return !userPokemonsLoading
+      ? userPokemonsData.userPokemons.some(
+          (pokemon) => pokemon.pokemonId == params.pokemonId
+        )
+      : undefined;
+  }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
   const { types, info, stats, abilities, level_moves, egg_moves, tm_moves } =
@@ -87,6 +108,12 @@ export default function PokemonCard() {
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
         <PokemonImages id={params.pokemonId} />
+        <button
+          onClick={handleFavouritingPokemon}
+          disabled={disableFavoutiting}
+        >
+          Favourite
+        </button>
         <div>
           <p>Generation: {info.generation_id}</p>
           {info.has_gender_differences ? (
