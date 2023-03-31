@@ -2,17 +2,36 @@ import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_INFO } from "../api/pokeapi";
+import { CHECK_POKEMON_EXISTS, GET_USER_POKEMONS } from "../api/backend";
+
+// import { POKEMON_MUTATION, USER_POKEMON_MUTATION, CHECK_POKEMON_EXISTS, GET_USER_POKEMONS } from "../api/backend";
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
-import { pokemonAPIClient } from "../api/clients";
+import { pokemonAPIClient, backEndClient } from "../api/clients";
 
 export default function PokemonCard() {
   const params = useParams();
+  const user = JSON.parse(localStorage.getItem("user"))
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient
   });
+  const {data: pokemonExistsData, loading: pokemonDataLoading} = useQuery(CHECK_POKEMON_EXISTS, {
+    variables: { pokemon_id: parseInt(params.pokemonId) },
+    client: backEndClient
+  })
+  console.log(user)
+  const {data: userPokemonsData, loading: userPoekmonsLoading} = useQuery(GET_USER_POKEMONS, {
+    variables: { user_id: user.id },
+    client: backEndClient
+  })
+
+  console.log(userPoekmonsLoading, userPokemonsData)
+  
+  // const [createPokemon] = useMutation(POKEMON_MUTATION)
+  // const [createUserPokemonLink] = useMutation(USER_POKEMON_MUTATION)
+  console.log(pokemonExistsData, pokemonDataLoading)
   if (loading) return <p>Loading...</p>;
   const {
     name,
@@ -24,6 +43,11 @@ export default function PokemonCard() {
     egg_moves,
     tm_moves,
   } = data.pokemon_details[0];
+
+  // useEffect(() => {
+  //   if (!loading) return
+  //   console.log(pokemonExistsData, pokemonDataLoading)
+  // }, [loading, pokemonExistsData, pokemonDataLoading]) 
   return (
     <>
       <Link to="/">Back to List</Link>

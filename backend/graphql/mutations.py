@@ -1,8 +1,8 @@
 import graphene
 from backend import db
 from flask import session
-from ..graphql.objects import UserObject as User, PokemonObject as Pokemon
-from ..models import User as UserModel, Pokemon as PokemonModel
+from ..graphql.objects import UserObject as User, PokemonObject as Pokemon, UserPokemonObject as UserPokemon
+from ..models import User as UserModel, Pokemon as PokemonModel, UserPokemonAssociation as UserPokemonModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
 
@@ -52,7 +52,7 @@ class SignupMutation(graphene.Mutation):
         db.session.commit()
 
         return SignupMutation(user=new_user, token="success")
-
+    
 
 class PokemonMutation(graphene.Mutation):
     class Arguments:
@@ -68,10 +68,29 @@ class PokemonMutation(graphene.Mutation):
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
+    
+# class UserPokemonMutation(graphene.Mutation):
+#     class Arguments:
+#         user_id = graphene.Int()
+#         pokemon_id = graphene.Int()
+        
+#     user_pokemon = graphene.Field(lambda: UserPokemon)
+
+
+#     def mutate(self, info, pokemon_id, user_id):
+#         pokemon = PokemonModel.query.filter_by(id=pokemon_id).first()
+#         user = UserModel.query.filter_by(id=user_id).first()
+
+#         if current_user.is_authenticated and current_user.id == user.id:
+#             current_user.pokemons.append(pokemon)
+#             db.session.commit()
+
+#         return UserPokemonMutation(token="success")
 
 
 class Mutation(graphene.ObjectType):
     signup = SignupMutation.Field()
     mutate_pokemon = PokemonMutation.Field()
+    # mutate_user_pokemon = UserPokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()
