@@ -5,11 +5,13 @@ import { GET_POKEMON_INFO } from "../api/pokeapi";
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
+import { pokemonAPIClient } from "../api/clients";
 
 export default function PokemonCard() {
   const params = useParams();
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
+    client: pokemonAPIClient
   });
   if (loading) return <p>Loading...</p>;
   const {

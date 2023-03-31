@@ -1,26 +1,44 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
-
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+  Route,
+  Link,
+} from "react-router-dom";
 import "./App.css";
-import Main from "./views/Main";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Signup from "./components/Signup";
+import Home from "./views/Home";
 import PokemonCard from "./views/PokemonCard";
 
-let router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Main />,
-  },
-  {
-    path: "pokemon/:pokemonId",
-    element: <PokemonCard />,
-    errorElement: (
-      <>
-        <Link to="/">Back to List</Link>
-        <h2>Not valid Pokemon ID</h2>
-      </>
-    ),
-  },
-]);
+function PokemonCardErrorElement() {
+  return (
+    <>
+      <Link to="/">Back to List</Link>
+      <h2>Not valid Pokemon ID</h2>
+    </>
+  );
+}
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/pokemon/:pokemonId"
+          element={<PokemonCard />}
+          errorElement={<PokemonCardErrorElement />}
+        />
+      </Route>
+    </>
+  )
+);
 
 export default function App() {
   return <RouterProvider router={router} />;
