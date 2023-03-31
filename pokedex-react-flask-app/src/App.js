@@ -10,6 +10,7 @@ import "./App.css";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Signup from "./components/Signup";
+import Favourites from "./views/Favourites";
 import Home from "./views/Home";
 import PokemonCard from "./views/PokemonCard";
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
           element={<PokemonCard />}
           errorElement={<PokemonCardErrorElement />}
         />
+        <Route path="/favourites" element = {<Favourites />}/>
       </Route>
     </>
   )
