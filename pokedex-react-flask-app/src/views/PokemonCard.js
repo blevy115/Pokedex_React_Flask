@@ -22,43 +22,52 @@ export default function PokemonCard() {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
   });
-  const {
-    data: pokemonExistsData,
-    loading: pokemonDataLoading,
-    refetch: refetchPokemonData,
-  } = useQuery(CHECK_POKEMON_EXISTS, {
-    variables: { pokemon_id: parseInt(params.pokemonId) },
-    client: backEndClient,
-  });
-  const {
-    data: userPokemonsData,
-    loading: userPokemonsLoading,
-    refetch: refetchUserPokemons,
-  } = useQuery(GET_USER_POKEMONS, {
-    variables: { user_id: user.id },
-    client: backEndClient,
-  });
+  const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
+    CHECK_POKEMON_EXISTS,
+    {
+      variables: { pokemon_id: parseInt(params.pokemonId) },
+      client: backEndClient,
+    }
+  );
+  const { data: userPokemonsData, loading: userPokemonsLoading } = useQuery(
+    GET_USER_POKEMONS,
+    {
+      variables: { user_id: user.id },
+      client: backEndClient,
+    }
+  );
 
   const [createPokemon] = useMutation(POKEMON_MUTATION, {
     client: backEndClient,
+    refetchQueries: [
+      {
+        query: CHECK_POKEMON_EXISTS,
+        variables: { pokemon_id: parseInt(params.pokemonId) },
+      },
+    ],
   });
 
   const [linkUserToPokemon] = useMutation(USER_POKEMON_MUTATION, {
     client: backEndClient,
+    refetchQueries: [
+      {
+        query: GET_USER_POKEMONS,
+        variables: { user_id: user.id },
+      },
+    ],
   });
 
   const [increaseShinyCount] = useMutation(INCREASE_SHINY_COUNT, {
     client: backEndClient,
+    refetchQueries: [
+      {
+        query: GET_USER_POKEMONS,
+        variables: { user_id: user.id },
+      },
+    ],
   });
 
   const name = !loading ? data.pokemon_details[0].name : undefined;
-
-  async function createPokemonValue(name) {
-    await createPokemon({
-      variables: { pokemon_id: params.pokemonId, name: name },
-    });
-    refetchPokemonData();
-  }
 
   useEffect(() => {
     if (
@@ -67,30 +76,30 @@ export default function PokemonCard() {
       !pokemonDataLoading &&
       pokemonExistsData.pokemons.length === 0
     ) {
-      createPokemonValue(name);
+      createPokemon({
+        variables: { pokemon_id: params.pokemonId, name: name },
+      });
     }
   }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
-  async function handleFavouritingPokemon(e) {
+  function handleFavouritingPokemon(e) {
     e.preventDefault();
-    await linkUserToPokemon({
+    linkUserToPokemon({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
       },
     });
-    refetchUserPokemons();
   }
 
-  async function handleIncreasingShinyCount(e) {
+  function handleIncreasingShinyCount(e) {
     e.preventDefault();
-    await increaseShinyCount({
+    increaseShinyCount({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
       },
     });
-    refetchUserPokemons();
   }
 
   const isAFavourite = useMemo(() => {

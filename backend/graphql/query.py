@@ -12,7 +12,6 @@ from ..graphql.objects import UserObject as User, \
     UserPokemonObject as UserPokemon
 
 
-
 class Query(graphene.ObjectType):
     node = relay.Node.Field()
 
