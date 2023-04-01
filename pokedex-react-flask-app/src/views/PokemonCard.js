@@ -7,6 +7,7 @@ import {
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
   USER_POKEMON_MUTATION,
+  INCREASE_SHINY_COUNT,
 } from "../api/backend";
 
 import TypeEffectiveness from "../components/TypeEffectiveness";
@@ -21,13 +22,14 @@ export default function PokemonCard() {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
   });
-  const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
-    CHECK_POKEMON_EXISTS,
-    {
-      variables: { pokemon_id: parseInt(params.pokemonId) },
-      client: backEndClient,
-    }
-  );
+  const {
+    data: pokemonExistsData,
+    loading: pokemonDataLoading,
+    refetch: refetchPokemonData,
+  } = useQuery(CHECK_POKEMON_EXISTS, {
+    variables: { pokemon_id: parseInt(params.pokemonId) },
+    client: backEndClient,
+  });
   const {
     data: userPokemonsData,
     loading: userPokemonsLoading,
@@ -45,27 +47,29 @@ export default function PokemonCard() {
     client: backEndClient,
   });
 
+  const [increaseShinyCount] = useMutation(INCREASE_SHINY_COUNT, {
+    client: backEndClient,
+  });
+
   const name = !loading ? data.pokemon_details[0].name : undefined;
+
+  async function createPokemonValue(name) {
+    await createPokemon({
+      variables: { pokemon_id: params.pokemonId, name: name },
+    });
+    refetchPokemonData();
+  }
 
   useEffect(() => {
     if (
       !loading &&
       name &&
       !pokemonDataLoading &&
-      pokemonExistsData.pokemons.length == 0
+      pokemonExistsData.pokemons.length === 0
     ) {
-      createPokemon({
-        variables: { pokemon_id: params.pokemonId, name: name },
-      });
+      createPokemonValue(name);
     }
-  }, [
-    name,
-    params.pokemonId,
-    createPokemon,
-    loading,
-    pokemonDataLoading,
-    pokemonExistsData,
-  ]);
+  }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
   async function handleFavouritingPokemon(e) {
     e.preventDefault();
@@ -78,13 +82,32 @@ export default function PokemonCard() {
     refetchUserPokemons();
   }
 
-  const disableFavoutiting = useMemo(() => {
+  async function handleIncreasingShinyCount(e) {
+    e.preventDefault();
+    await increaseShinyCount({
+      variables: {
+        user_id: user.id,
+        pokemon_id: params.pokemonId,
+      },
+    });
+    refetchUserPokemons();
+  }
+
+  const isAFavourite = useMemo(() => {
     return !userPokemonsLoading
       ? userPokemonsData.userPokemons.some(
-          (pokemon) => pokemon.pokemonId == params.pokemonId
+          (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
         )
       : undefined;
   }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
+
+  const shinyCounter = useMemo(() => {
+    if (!isAFavourite) return undefined;
+    const userPokemon = userPokemonsData.userPokemons.find(
+      (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
+    );
+    return userPokemon.shinyCounter;
+  }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
   const { types, info, stats, abilities, level_moves, egg_moves, tm_moves } =
@@ -108,14 +131,17 @@ export default function PokemonCard() {
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
         <PokemonImages id={params.pokemonId} />
-        <button
-          onClick={handleFavouritingPokemon}
-          disabled={disableFavoutiting}
-        >
+        <button onClick={handleFavouritingPokemon} disabled={isAFavourite}>
           Favourite
         </button>
         <div>
           <p>Generation: {info.generation_id}</p>
+          {isAFavourite && (
+            <div>
+              <h2>Shiny Attempts: {shinyCounter}</h2>
+              <button onClick={handleIncreasingShinyCount}>Increase</button>
+            </div>
+          )}
           {info.has_gender_differences ? (
             <p>Has Gender Differences</p>
           ) : undefined}

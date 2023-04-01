@@ -43,11 +43,13 @@ class Query(graphene.ObjectType):
             query = query.filter(PokemonModel.pokemon_id == pokemon_id)
         return query.all()
 
-    user_pokemons = graphene.List(lambda: Pokemon, user_id=graphene.String(
+    user_pokemons = graphene.List(lambda: UserPokemon, user_id=graphene.String(
         required=True))
 
     def resolve_user_pokemons(self, info, user_id):
         type_name, original_id = from_global_id(user_id)
-        query = Pokemon.get_query(info)
-        user = UserModel.query.get(int(original_id))
-        return query.join(UserPokemonModel).filter_by(user_id=user.id).all()
+        query = UserPokemon.get_query(info)
+        if original_id:
+            query = query.filter_by(user_id=original_id)
+        user_pokemons = query.all()
+        return user_pokemons

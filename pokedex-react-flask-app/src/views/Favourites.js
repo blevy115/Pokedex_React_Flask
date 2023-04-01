@@ -17,6 +17,7 @@ export default function Favourites() {
   );
 
   if (userPokemonsLoading) return <p>Loading...</p>;
+
   if (userPokemonsData.userPokemons.length === 0)
     return <p>Please add some favourites</p>;
 
@@ -27,9 +28,10 @@ export default function Favourites() {
           return (
             <li
               key={i}
-              onClick={() => navigate(`/pokemon/${pokemon.pokemonId}`)}
+              onClick={() => navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)}
             >
-              {pokemon.name}
+              {pokemon.pokemons.name} <br /> Shiny Attempts:{" "}
+              {pokemon.shinyCounter}
             </li>
           );
         })}

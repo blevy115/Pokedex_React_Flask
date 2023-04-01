@@ -47,8 +47,11 @@ const CHECK_POKEMON_EXISTS = gql`
 const GET_USER_POKEMONS = gql`
   query getUserPokemons($user_id: String!) {
     userPokemons(userId: $user_id) {
-      name
-      pokemonId
+      pokemons {
+        pokemonId
+        name
+      }
+      shinyCounter
     }
   }
 `;
@@ -67,6 +70,16 @@ const POKEMON_MUTATION = gql`
 const USER_POKEMON_MUTATION = gql`
   mutation userPokemonMutation($user_id: String!, $pokemon_id: Int!) {
     mutateUserPokemon(userId: $user_id, pokemonId: $pokemon_id) {
+      userPokemon {
+        pokemonId
+      }
+    }
+  }
+`;
+
+const INCREASE_SHINY_COUNT = gql`
+  mutation increaseShinyCount($user_id: String!, $pokemon_id: Int!) {
+    increaseShinyCount(userId: $user_id, pokemonId: $pokemon_id) {
       userPokemon {
         pokemonId
       }
