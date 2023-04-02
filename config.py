@@ -12,7 +12,8 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = f'postgresql://{ environ.get("USER") }:postgres@localhost:5432/pokedexapp'
-    SECRET_KEY = 'secret-key-goes-here'
+    SECRET_KEY = 'secret-key-goes-here',
+    SESSION_TYPE = 'filesystem'
 
 
 class TestingConfig(Config):

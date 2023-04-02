@@ -7,14 +7,15 @@ const pokemonAPIClient = new ApolloClient({
 
 const backEndClient = new ApolloClient({
   uri: "http://localhost:5000/graphql",
-  request: (operation) => {
-    const token = localStorage.getItem("token");
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : "",
-      },
-    });
-  },
+  credentials: "include",
+  // request: (operation) => {
+  //   const token = localStorage.getItem("token");
+  //   operation.setContext({
+  //     headers: {
+  //       authorization: token ? `Bearer ${token}` : "",
+  //     },
+  //   });
+  // },
   cache: new InMemoryCache(),
 });
 
