@@ -1,4 +1,5 @@
 import React from "react";
+import NavBar from "../components/NavBar";
 import { useQuery } from "@apollo/client";
 import { backEndClient } from "../api/clients";
 import { GET_USER_POKEMONS } from "../api/backend";
@@ -18,24 +19,28 @@ export default function Favourites() {
 
   if (userPokemonsLoading) return <p>Loading...</p>;
 
-  if (userPokemonsData.userPokemons.length === 0)
-    return <p>Please add some favourites</p>;
-
   return (
-    <>
-      <ul>
-        {userPokemonsData.userPokemons.map((pokemon, i) => {
-          return (
-            <li
-              key={i}
-              onClick={() => navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)}
-            >
-              {pokemon.pokemons.name} <br /> Shiny Attempts:{" "}
-              {pokemon.shinyCounter}
-            </li>
-          );
-        })}
-      </ul>
-    </>
+    <div className="App">
+      <NavBar />
+      {userPokemonsData.userPokemons.length === 0 ? (
+        <p>Please add some favourites</p>
+      ) : (
+        <ul>
+          {userPokemonsData.userPokemons.map((pokemon, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() =>
+                  navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)
+                }
+              >
+                {pokemon.pokemons.name} <br /> Shiny Attempts:{" "}
+                {pokemon.shinyCounter}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }

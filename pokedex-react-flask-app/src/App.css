@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -11,6 +15,16 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+@font-face {
+  font-family: 'PokemonHollow';
+  src: url('../public/fonts/pokemon/PokemonHollow.ttf');
+}
+
+@font-face {
+  font-family: 'PokemonSolid';
+  src: url('../public/fonts/pokemon/PokemonSolid.ttf');
 }
 
 .App-header {
@@ -49,8 +63,13 @@
 }
 
 .auth-title {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  font-size: 4rem;
+  margin: 1.5rem 0;
+  font-family: 'PokemonSolid';
+  font-weight: lighter;
+  color: #f9ca07; /* set the text color to white */
+  -webkit-text-stroke: 3.5px #3b57a3; /* add a blue stroke around the text */
+  text-align: center;
 }
 
 .auth-description {
@@ -86,9 +105,9 @@
 .auth-form {
   width: 30rem;
   padding: 2rem;
-  border: 1px solid #ccc;
+  border: 1px solid #b9b9b9;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #b9b9b9e8;
 }
 
 .auth-form-title {
@@ -134,4 +153,44 @@
 .auth-redirect {
   display: flex;
   justify-content: end;
+}
+
+
+nav {
+  background-color: #f2f2f2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; /* make sure the navbar is on top of other elements */
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav li {
+  float: left;
+}
+
+nav li a {
+  display: block;
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  background-color: #ddd;
+}
+
+.logout {
+  float: right; /* move the Logout button to the right */
+}
+
+h1 {
+  margin-top: 50px; /* add some space below the navbar */
 }
