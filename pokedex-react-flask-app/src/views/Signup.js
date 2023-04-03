@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { backEndClient } from "../api/clients";
 import { useNavigate } from "react-router-dom";
 import { SIGNUP_MUTATION } from "../api/backend";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -42,28 +43,41 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <h1>Signup</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Name:</label>
-        <input type="name" id="name" value={name} onChange={handleNameChange} />
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-
-        {/* <label htmlFor="confirmPassword">Confirm Password:</label>
+    <div className="auth-container">
+      <div className="auth-form-container">
+        <form className="auth-form" onSubmit={handleSubmit}>
+        <h1 className="auth-title">Pokemon Companion</h1>
+        <div className="auth-redirect">
+            <Link to="/login">Already have an account, Log In</Link>
+          </div>
+          <div className="auth-form-field">
+            <label htmlFor="auth-name">Name:</label>
+            <input
+              type="name"
+              id="auth-name"
+              value={name}
+              onChange={handleNameChange}
+            />
+          </div>
+          <div className="auth-form-field">
+          <label htmlFor="auth-email">Email:</label>
+          <input
+            type="email"
+            id="auth-email"
+            value={email}
+            onChange={handleEmailChange}
+          />
+          </div>
+          <div className="auth-form-field">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
+          {/* <label htmlFor="confirmPassword">Confirm Password:</label>
         <input
           type="password"
           id="confirmPassword"
@@ -71,8 +85,9 @@ export default function Signup() {
           onChange={handleConfirmPasswordChange}
         /> */}
 
-        <button type="submit">Submit</button>
-      </form>
+          <button className="auth-form-submit" type="submit">Sign Up</button>
+        </form>
+      </div>
     </div>
   );
 }
