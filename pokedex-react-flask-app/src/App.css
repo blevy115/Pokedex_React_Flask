@@ -194,3 +194,16 @@ nav li a:hover {
 h1 {
   margin-top: 50px; /* add some space below the navbar */
 }
+
+.pokemon-list {
+  padding: 0;
+  list-style-type: none;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.pokemon-list-item{
+  margin: 0 auto;
+  width: max-content;
+  padding: 0 2em;
+}

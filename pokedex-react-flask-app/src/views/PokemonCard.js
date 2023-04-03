@@ -14,6 +14,7 @@ import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
+import NavBar from "../components/NavBar";
 
 export default function PokemonCard() {
   const params = useParams();
@@ -123,8 +124,8 @@ export default function PokemonCard() {
     data.pokemon_details[0];
 
   return (
-    <>
-      <Link to="/">Back to List</Link>
+    <div>
+      <NavBar />
       <div style={{ margin: "auto", width: "60%" }}>
         <div
           style={{
@@ -207,6 +208,6 @@ export default function PokemonCard() {
           tmMoves={tm_moves}
         />
       </div>
-    </>
+    </div>
   );
 }

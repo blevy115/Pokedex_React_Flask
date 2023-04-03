@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 export default function PokemonList({ list }) {
   let navigate = useNavigate();
   return (
-    <ul style={{ listStyleType: "none" }}>
+    <ul className="pokemon-list">
       {list.map(({ name, id }) => (
-        <li key={id} onClick={() => navigate(`/pokemon/${id}`)}>
+        <li className="pokemon-list-item" key={id} onClick={() => navigate(`/pokemon/${id}`)}>
           {name}
         </li>
       ))}
