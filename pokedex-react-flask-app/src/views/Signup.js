@@ -37,7 +37,7 @@ export default function Signup() {
         }
         localStorage.setItem("token", response.data.signup.token);
         localStorage.setItem("user", JSON.stringify(response.data.signup.user));
-        navigate("/login", { replace: true });
+        navigate("/", { replace: true });
       })
       .catch((error) => console.log(error));
   };
@@ -46,10 +46,10 @@ export default function Signup() {
     <div className="auth-container">
       <div className="auth-form-container">
         <form className="auth-form" onSubmit={handleSubmit}>
-        <h1 className="auth-title">Pokemon Companion</h1>
-        <div className="auth-redirect">
+          <div className="auth-redirect">
             <Link to="/login">Already have an account, Log In</Link>
           </div>
+          <h1 className="auth-title">Pok&eacute;mon Companion</h1>
           <div className="auth-form-field">
             <label htmlFor="auth-name">Name:</label>
             <input
@@ -60,13 +60,13 @@ export default function Signup() {
             />
           </div>
           <div className="auth-form-field">
-          <label htmlFor="auth-email">Email:</label>
-          <input
-            type="email"
-            id="auth-email"
-            value={email}
-            onChange={handleEmailChange}
-          />
+            <label htmlFor="auth-email">Email:</label>
+            <input
+              type="email"
+              id="auth-email"
+              value={email}
+              onChange={handleEmailChange}
+            />
           </div>
           <div className="auth-form-field">
             <label htmlFor="password">Password:</label>
@@ -85,7 +85,9 @@ export default function Signup() {
           onChange={handleConfirmPasswordChange}
         /> */}
 
-          <button className="auth-form-submit" type="submit">Sign Up</button>
+          <button className="auth-form-submit" type="submit">
+            Sign Up
+          </button>
         </form>
       </div>
     </div>

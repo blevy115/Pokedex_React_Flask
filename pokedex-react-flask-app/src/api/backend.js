@@ -28,7 +28,7 @@ const SIGNUP_MUTATION = gql`
       user {
         name
         email
-        password
+        id
       }
     }
   }

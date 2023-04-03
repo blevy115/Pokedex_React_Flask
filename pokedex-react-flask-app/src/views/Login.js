@@ -38,10 +38,11 @@ export default function Login() {
     <div className="auth-container">
       <div className="auth-form-container">
         <form className="auth-form" onSubmit={handleSubmit}>
-        <h1 className="auth-title">Pokemon Companion</h1>
           <div className="auth-redirect">
             <Link to="/signup">Need an account, Sign Up</Link>
           </div>
+          <h1 className="auth-title">Pok&eacute;mon Companion</h1>
+
           <div className="auth-form-field">
             <label htmlFor="auth-email">Email:</label>
             <input
@@ -62,7 +63,9 @@ export default function Login() {
               required
             />
           </div>
-          <button className="auth-form-submit" type="submit">Log In</button>
+          <button className="auth-form-submit" type="submit">
+            Log In
+          </button>
         </form>
       </div>
     </div>
