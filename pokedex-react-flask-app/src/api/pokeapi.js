@@ -118,7 +118,7 @@ const GET_POKEMON_LIST_BY_NAME = gql`
   query GetPokemonList($name: String!) {
     pokemon_list: pokemon_v2_pokemon(
       where: { name: { _ilike: $name } }
-      order_by: { name: asc }
+      order_by: { id: asc }
     ) {
       id
       name

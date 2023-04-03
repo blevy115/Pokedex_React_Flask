@@ -15,6 +15,7 @@ import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 import NavBar from "../components/NavBar";
+import { formatPokemonName } from "../helpers/format";
 
 export default function PokemonCard() {
   const params = useParams();
@@ -137,7 +138,7 @@ export default function PokemonCard() {
           <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
             Previous
           </Link>
-          <p style={{ textAlign: "center" }}>{name}</p>
+          <p style={{ textAlign: "center" }}>{formatPokemonName(name)} #{params.pokemonId}</p>
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
         <PokemonImages id={params.pokemonId} />

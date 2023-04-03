@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { backEndClient } from "../api/clients";
 import { GET_USER_POKEMONS } from "../api/backend";
 import { useNavigate } from "react-router-dom";
+import { formatPokemonName } from "../helpers/format";
 
 export default function Favourites() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -34,7 +35,7 @@ export default function Favourites() {
                   navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)
                 }
               >
-                {pokemon.pokemons.name} <br /> Shiny Attempts:{" "}
+                {formatPokemonName(pokemon.pokemons.name)} #{pokemon.pokemons.pokemonId}<br /> Shiny Attempts:{" "}
                 {pokemon.shinyCounter}
               </li>
             );
