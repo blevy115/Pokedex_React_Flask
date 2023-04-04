@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { formatPokemonName } from "../helpers/format";
 import { handleImageError } from "../helpers/error";
+import { getSprite } from "../helpers/pictures";
 
 export default function PokemonList({ list }) {
   let navigate = useNavigate();
@@ -16,10 +17,7 @@ export default function PokemonList({ list }) {
           <p>
             {formatPokemonName(name)} #{id}
           </p>
-          <img
-            onError={handleImageError}
-            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
-          />
+          <img onError={handleImageError} src={getSprite(id)} />
         </li>
       ))}
     </ul>

@@ -6,6 +6,7 @@ import { GET_USER_POKEMONS } from "../api/backend";
 import { useNavigate } from "react-router-dom";
 import { formatPokemonName } from "../helpers/format";
 import { handleImageError } from "../helpers/error";
+import { getAnimatedSprite } from "../helpers/pictures";
 
 export default function Favourites() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -29,27 +30,25 @@ export default function Favourites() {
       ) : (
         <div className="favourites-list">
           {userPokemonsData.userPokemons.map((pokemon, i) => {
+            const { name, pokemonId } = pokemon.pokemons;
             return (
               <div
                 className="favourites-list-item"
                 key={i}
-                onClick={() =>
-                  navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)
-                }
+                onClick={() => navigate(`/pokemon/${pokemonId}`)}
               >
                 <p>
-                  {formatPokemonName(pokemon.pokemons.name)} #
-                  {pokemon.pokemons.pokemonId}
+                  {formatPokemonName(name)} #{pokemonId}
                 </p>
                 <img
                   className="favourite-image"
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon.pokemons.pokemonId}.gif`}
+                  src={getAnimatedSprite(pokemonId)}
                   onError={handleImageError}
                 />
                 <p>
-                {pokemon.shinyCounter !== 0 && (
-                   <>Shiny Attempts: {pokemon.shinyCounter}</>
-                )}
+                  {pokemon.shinyCounter !== 0 && (
+                    <>Shiny Attempts: {pokemon.shinyCounter}</>
+                  )}
                 </p>
               </div>
             );

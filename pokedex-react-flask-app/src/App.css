@@ -208,6 +208,10 @@ h1 {
   align-items: center;
 }
 
+.pokemon-list-item p {
+  margin: 1em;
+}
+
 .favourites-list {
   display: grid;
   grid-template-columns: repeat(6, 1fr); /* 6 columns by default */
