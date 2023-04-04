@@ -5,6 +5,7 @@ import { backEndClient } from "../api/clients";
 import { GET_USER_POKEMONS } from "../api/backend";
 import { useNavigate } from "react-router-dom";
 import { formatPokemonName } from "../helpers/format";
+import { handleImageError } from "../helpers/error";
 
 export default function Favourites() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -26,21 +27,34 @@ export default function Favourites() {
       {userPokemonsData.userPokemons.length === 0 ? (
         <p>Please add some favourites</p>
       ) : (
-        <ul>
+        <div className="favourites-list">
           {userPokemonsData.userPokemons.map((pokemon, i) => {
             return (
-              <li
+              <div
+                className="favourites-list-item"
                 key={i}
                 onClick={() =>
                   navigate(`/pokemon/${pokemon.pokemons.pokemonId}`)
                 }
               >
-                {formatPokemonName(pokemon.pokemons.name)} #{pokemon.pokemons.pokemonId}<br /> Shiny Attempts:{" "}
-                {pokemon.shinyCounter}
-              </li>
+                <p>
+                  {formatPokemonName(pokemon.pokemons.name)} #
+                  {pokemon.pokemons.pokemonId}
+                </p>
+                <img
+                  className="favourite-image"
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokemon.pokemons.pokemonId}.gif`}
+                  onError={handleImageError}
+                />
+                <p>
+                {pokemon.shinyCounter !== 0 && (
+                   <>Shiny Attempts: {pokemon.shinyCounter}</>
+                )}
+                </p>
+              </div>
             );
           })}
-        </ul>
+        </div>
       )}
     </div>
   );

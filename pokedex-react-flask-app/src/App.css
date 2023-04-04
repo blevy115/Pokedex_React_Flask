@@ -158,8 +158,6 @@
 
 nav {
   background-color: #f2f2f2;
-  top: 0;
-  left: 0;
   width: 100%;
   z-index: 1; /* make sure the navbar is on top of other elements */
 }
@@ -208,4 +206,55 @@ h1 {
   padding: 0 2em;
   display: flex;
   align-items: center;
+}
+
+.favourites-list {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 6 columns by default */
+  grid-gap: 20px;
+  margin: 20px;
+  max-height: 89vh;
+  overflow: auto;
+  margin-right: 0;
+  padding-right: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  .favourites-list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Reduce to 4 columns at the second breakpoint */
+@media screen and (max-width: 768px) {
+  .favourites-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .favourites-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Reduce to 2 columns at the third breakpoint */
+@media screen and (max-width: 400px) {
+  .favourites-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.favourites-list-item {
+  min-height: 200px;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0 0.5em;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.favourite-image {
+  flex-grow: 1;
 }
