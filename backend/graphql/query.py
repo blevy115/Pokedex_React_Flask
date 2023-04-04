@@ -43,12 +43,17 @@ class Query(graphene.ObjectType):
         return query.all()
 
     user_pokemons = graphene.List(lambda: UserPokemon, user_id=graphene.String(
-        required=True))
+        required=True), order_by=graphene.String())
 
-    def resolve_user_pokemons(self, info, user_id):
+    def resolve_user_pokemons(self, info, user_id, order_by=None):
         type_name, original_id = from_global_id(user_id)
         query = UserPokemon.get_query(info)
         if original_id:
             query = query.filter_by(user_id=original_id)
+
         user_pokemons = query.all()
+
+        if order_by is not None:
+            user_pokemons = sorted(
+                user_pokemons, key=lambda p: p.pokemons.pokemon_id)
         return user_pokemons

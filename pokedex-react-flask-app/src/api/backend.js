@@ -46,7 +46,7 @@ const CHECK_POKEMON_EXISTS = gql`
 
 const GET_USER_POKEMONS = gql`
   query getUserPokemons($user_id: String!) {
-    userPokemons(userId: $user_id) {
+    userPokemons(userId: $user_id, orderBy: "pokemonId") {
       pokemons {
         pokemonId
         name
