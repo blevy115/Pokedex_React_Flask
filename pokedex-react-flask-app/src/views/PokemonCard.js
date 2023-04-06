@@ -13,6 +13,7 @@ import {
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import MovesList from "../components/MovesList";
+import StatChart from "../components/StatChart";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 import NavBar from "../components/NavBar";
 import { formatPokemonName } from "../helpers/format";
@@ -138,7 +139,9 @@ export default function PokemonCard() {
           <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
             Previous
           </Link>
-          <p style={{ textAlign: "center" }}>{formatPokemonName(name)} #{params.pokemonId}</p>
+          <p style={{ textAlign: "center" }}>
+            {formatPokemonName(name)} #{params.pokemonId}
+          </p>
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
         <PokemonImages id={params.pokemonId} />
@@ -173,16 +176,7 @@ export default function PokemonCard() {
             types={types.map((type) => type.pokemon_v2_type.name)}
           />
           <p>Stats</p>
-          <ul>
-            {stats.map((stat) => {
-              return (
-                <li key={stat.pokemon_v2_stat.id}>
-                  {stat.pokemon_v2_stat.name}: {stat.base_stat}{" "}
-                  <b>{stat.effort ? `${stat.effort} EV` : undefined}</b>
-                </li>
-              );
-            })}
-          </ul>
+          <StatChart stats={stats} />
           <p>Abilities</p>
           <ol>
             {abilities.map((ability) => {

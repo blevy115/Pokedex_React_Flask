@@ -262,3 +262,7 @@ h1 {
 .favourite-image {
   flex-grow: 1;
 }
+
+.stat-container {
+  min-height: 500px;
+}
