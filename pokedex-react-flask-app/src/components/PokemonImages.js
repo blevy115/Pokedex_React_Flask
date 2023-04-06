@@ -1,12 +1,5 @@
 import React, { useState, useRef } from "react";
-
-const getImagePath = (id) => {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-};
-
-const getShinyImagePath = (id) => {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png`;
-};
+import { getImage, getShinyImage } from "../helpers/pictures";
 
 export default function PokemonImages({ id }) {
   const [loading, setLoading] = useState(true);
@@ -32,11 +25,19 @@ export default function PokemonImages({ id }) {
       >
         <div>
           <p style={{ textAlign: "center" }}>Regular</p>
-          <img className="PokemonImage" src={getImagePath(id)} onLoad={imageLoaded} />
+          <img
+            className="PokemonImage"
+            src={getImage(id)}
+            onLoad={imageLoaded}
+          />
         </div>
         <div>
           <p style={{ textAlign: "center" }}>Shiny</p>
-          <img className="PokemonImage" src={getShinyImagePath(id)} onLoad={imageLoaded} />
+          <img
+            className="PokemonImage"
+            src={getShinyImage(id)}
+            onLoad={imageLoaded}
+          />
         </div>
       </div>
     </>

@@ -5,11 +5,13 @@ import {
   RouterProvider,
   Route,
   Link,
+  Navigate
 } from "react-router-dom";
 import "./App.css";
-import Login from "./components/Login";
+import Login from "./views/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Signup from "./components/Signup";
+import AuthRoute from "./components/AuthRoute";
+import Signup from "./views/Signup";
 import Favourites from "./views/Favourites";
 import Home from "./views/Home";
 import PokemonCard from "./views/PokemonCard";
@@ -26,9 +28,10 @@ function PokemonCardErrorElement() {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+    <Route  element={<AuthRoute />}>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-
+      </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Home />} />
         <Route
@@ -38,6 +41,7 @@ const router = createBrowserRouter(
         />
         <Route path="/favourites" element = {<Favourites />}/>
       </Route>
+      <Route path="*" element={<Navigate to="/" />}></Route>
     </>
   )
 );

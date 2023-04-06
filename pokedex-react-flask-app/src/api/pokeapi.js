@@ -114,11 +114,11 @@ const GET_POKEMON_INFO = gql`
   }
 `;
 
-const GET_POKEMON_LIST = gql`
+const GET_POKEMON_LIST_BY_NAME = gql`
   query GetPokemonList($name: String!) {
     pokemon_list: pokemon_v2_pokemon(
       where: { name: { _ilike: $name } }
-      order_by: { name: asc }
+      order_by: { id: asc }
     ) {
       id
       name
@@ -126,4 +126,15 @@ const GET_POKEMON_LIST = gql`
   }
 `;
 
-export { GET_POKEMON_INFO, GET_POKEMON_LIST };
+const GET_POKEMON_LIST_BY_ID = gql`
+  query GetPokemonList($id: Int!) {
+    pokemon_list: pokemon_v2_pokemon(
+      where: { id: { _eq: $id } }
+    ) {
+      id
+      name
+    }
+  }
+`;
+
+export { GET_POKEMON_INFO, GET_POKEMON_LIST_BY_NAME, GET_POKEMON_LIST_BY_ID };
