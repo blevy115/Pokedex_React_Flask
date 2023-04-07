@@ -176,7 +176,7 @@ export default function PokemonCard() {
             types={types.map((type) => type.pokemon_v2_type.name)}
           />
           <p>Stats</p>
-          <StatChart stats={stats} />
+          <StatChart stats={stats} isAFavourite={isAFavourite} />
           <p>Abilities</p>
           <ol>
             {abilities.map((ability) => {

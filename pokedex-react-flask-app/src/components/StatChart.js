@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { convertStats, calculateStats } from "../helpers/statModifier";
 
 import {
   Chart as ChartJS,
@@ -51,29 +52,37 @@ const options = {
   },
 };
 
-export default function StatChart({ stats }) {
+export default function StatChart({ stats, isAFavourite }) {
+  const convertedStats = useMemo(() => convertStats(stats), [stats]);
+  const calculatedStatsValues = useMemo(() => calculateStats(stats), [stats]);
+
   const data = useMemo(() => {
     return {
-      labels: stats.map((stat) => stat.pokemon_v2_stat.name),
+      labels: isAFavourite
+        ? Object.keys(calculatedStatsValues)
+        : Object.keys(convertedStats),
       datasets: [
         {
           label: "Stats",
-          data: stats.map((stat) => stat.base_stat),
+          data: isAFavourite
+            ? Object.values(calculatedStatsValues)
+            : Object.values(convertedStats),
           backgroundColor: "rgba(255, 99, 132, 0.2)",
           borderColor: "rgba(255, 99, 132, 1)",
           borderWidth: 1,
         },
       ],
     };
-  }, []);
+  }, [convertedStats, calculatedStatsValues]);
+
   return (
     <div className="stat-container">
-    <Radar
-      data={data}
-      options={options}
-      plugins={[ChartDataLabels]}
-      redraw={true}
-    />
+      <Radar
+        data={data}
+        options={options}
+        plugins={[ChartDataLabels]}
+        redraw={true}
+      />
     </div>
   );
 }
