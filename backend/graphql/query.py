@@ -5,11 +5,13 @@ from graphql_relay import from_global_id
 
 from ..models import User as UserModel, \
     Pokemon as PokemonModel, \
-    UserPokemonAssociation as UserPokemonModel
+    UserPokemonAssociation as UserPokemonModel, \
+    Nature as NatureModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
-    UserPokemonObject as UserPokemon
+    UserPokemonObject as UserPokemon, \
+    NatureObject as Nature
 
 
 class Query(graphene.ObjectType):
@@ -57,3 +59,10 @@ class Query(graphene.ObjectType):
             user_pokemons = sorted(
                 user_pokemons, key=lambda p: p.pokemons.pokemon_id)
         return user_pokemons
+    
+    natures = graphene.List(
+        lambda: Nature, name=graphene.String(), increased_stat=graphene.String(), decreased_stat = graphene.String()
+    )
+    
+    def resolve_natures(self, info):
+        return NatureModel.query.all()

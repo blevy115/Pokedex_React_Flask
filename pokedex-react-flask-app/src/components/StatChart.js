@@ -1,5 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { convertStats, calculateStats } from "../helpers/statModifier";
+import { useQuery } from "@apollo/client";
+import { GET_NATURES } from "../api/backend";
+import { backEndClient } from "../api/clients";
 
 import {
   Chart as ChartJS,
@@ -53,8 +56,20 @@ const options = {
 };
 
 export default function StatChart({ stats, isAFavourite }) {
+  const { data: natureData, loading: natureDataLoading } = useQuery(
+    GET_NATURES,
+    {
+      client: backEndClient,
+    }
+  );
+  const [selectedNature, setSelectedNature] = useState({});
   const convertedStats = useMemo(() => convertStats(stats), [stats]);
   const calculatedStatsValues = useMemo(() => calculateStats(stats), [stats]);
+
+  useEffect(() => {
+    if (natureDataLoading || !isAFavourite) return;
+    setSelectedNature(natureData.natures[0]);
+  }, [natureData, isAFavourite, stats]);
 
   const data = useMemo(() => {
     return {
@@ -76,13 +91,33 @@ export default function StatChart({ stats, isAFavourite }) {
   }, [convertedStats, calculatedStatsValues]);
 
   return (
-    <div className="stat-container">
-      <Radar
-        data={data}
-        options={options}
-        plugins={[ChartDataLabels]}
-        redraw={true}
-      />
-    </div>
+    <>
+      <div className="stat-container">
+        <Radar
+          data={data}
+          options={options}
+          plugins={[ChartDataLabels]}
+          redraw={true}
+        />
+      </div>
+      {!natureDataLoading && isAFavourite && selectedNature ? (
+        <select
+          value={selectedNature.name}
+          onChange={(e) =>
+            setSelectedNature(
+              natureData.natures.find(
+                (nature) => nature.name === e.target.value
+              )
+            )
+          }
+        >
+          {natureData.natures.map((nature, i) => (
+            <option key={i} value={nature.name}>
+              {nature.name}
+            </option>
+          ))}
+        </select>
+      ) : undefined}
+    </>
   );
 }
