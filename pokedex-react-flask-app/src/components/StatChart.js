@@ -25,6 +25,8 @@ ChartJS.register(
   Legend
 );
 
+const levelOptions = Array.from({ length: 100 }, (_, index) => index + 1);
+
 const options = {
   maintainAspectRatio: false,
   scales: {
@@ -63,9 +65,9 @@ export default function StatChart({ stats, isAFavourite }) {
     }
   );
   const [selectedNature, setSelectedNature] = useState({});
+  const [level, setLevel] = useState(50)
   const convertedStats = useMemo(() => convertStats(stats), [stats]);
-  const calculatedStatsValues = useMemo(() => calculateStats(stats), [stats]);
-
+  const calculatedStatsValues = useMemo(() => calculateStats({baseStats: stats, nature: selectedNature, level}), [stats, selectedNature, level]);
   useEffect(() => {
     if (natureDataLoading || !isAFavourite) return;
     setSelectedNature(natureData.natures[0]);
@@ -100,7 +102,8 @@ export default function StatChart({ stats, isAFavourite }) {
           redraw={true}
         />
       </div>
-      {!natureDataLoading && isAFavourite && selectedNature ? (
+      {!natureDataLoading && isAFavourite ? (
+        <>
         <select
           value={selectedNature.name}
           onChange={(e) =>
@@ -117,6 +120,14 @@ export default function StatChart({ stats, isAFavourite }) {
             </option>
           ))}
         </select>
+        <select value={level} onChange={(e) => setLevel(parseInt(e.target.value))}>
+        {levelOptions.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+        </>
       ) : undefined}
     </>
   );

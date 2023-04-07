@@ -21,15 +21,15 @@ const defaultValue = {
   speed: 0,
 };
 
-function calculateStats(
-  stats,
+function calculateStats({
+  baseStats,
   level = 50,
-  nature = [{ up: "attack", down: "attack" }],
+  nature = { name: "", increasedStat: "", decreasedStat: "" },
   ivs = { ...defaultValue },
-  evs = { ...defaultValue }
-) {
+  evs = { ...defaultValue },
+}) {
   const calculatedValues = {};
-  for (const stat of stats) {
+  for (const stat of baseStats) {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
     if (name === "hp") {
@@ -40,10 +40,10 @@ function calculateStats(
         ((2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100 + 5;
     }
 
-    if (nature["up"] === name) {
+    if (nature["increasedStat"] === name) {
       calculatedValues[name] *= 1.1;
     }
-    if (nature["down"] === name) {
+    if (nature["decreasedStat"] === name) {
       calculatedValues[name] *= 0.9;
     }
   }
