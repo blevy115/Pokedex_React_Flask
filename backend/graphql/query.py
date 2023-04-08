@@ -59,10 +59,15 @@ class Query(graphene.ObjectType):
             user_pokemons = sorted(
                 user_pokemons, key=lambda p: p.pokemons.pokemon_id)
         return user_pokemons
-    
+
     natures = graphene.List(
-        lambda: Nature, name=graphene.String(), increased_stat=graphene.String(), decreased_stat = graphene.String()
+        lambda: Nature, name=graphene.String(), increased_stat=graphene.String(), decreased_stat=graphene.String(), order_by=graphene.String()
     )
-    
-    def resolve_natures(self, info):
-        return NatureModel.query.all()
+
+    def resolve_natures(self, info, order_by=None):
+        natures = NatureModel.query.all()
+
+        if order_by is not None:
+            natures = sorted(
+                natures, key=lambda n: n.name)
+        return natures

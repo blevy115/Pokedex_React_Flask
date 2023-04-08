@@ -87,15 +87,15 @@ const INCREASE_SHINY_COUNT = gql`
   }
 `;
 
-const GET_NATURES =  gql`
+const GET_NATURES = gql`
   query getNatures {
-    natures {
+    natures(orderBy: "name") {
       name
       increasedStat
       decreasedStat
     }
   }
-`
+`;
 
 export {
   LOGIN_MUTATION,
@@ -106,5 +106,5 @@ export {
   CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
   INCREASE_SHINY_COUNT,
-  GET_NATURES
+  GET_NATURES,
 };
