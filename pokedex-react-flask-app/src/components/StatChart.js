@@ -66,33 +66,33 @@ const options = {
   },
 };
 
-export default function StatChart({ stats, isAFavourite }) {
+export default function StatChart({ baseStats, isAFavourite }) {
   const { data: natureData, loading: natureDataLoading } = useQuery(
     GET_NATURES,
     {
       client: backEndClient,
     }
   );
-  const [selectedNature, setSelectedNature] = useState({});
+  const [nature, setNature] = useState({});
   const [level, setLevel] = useState(50);
   const [ivs, setIvs] = useState({ ...defaultValue });
   const [evs, setEvs] = useState({ ...defaultValue });
-  const convertedStats = useMemo(() => convertStats(stats), [stats]);
+  const convertedStats = useMemo(() => convertStats(baseStats), [baseStats]);
   const calculatedStatsValues = useMemo(
     () =>
       calculateStats({
-        baseStats: stats,
-        nature: selectedNature,
+        baseStats,
+        nature,
         level,
         ivs,
         evs,
       }),
-    [stats, selectedNature, level, ivs, evs]
+    [baseStats, nature, level, ivs, evs]
   );
   useEffect(() => {
     if (natureDataLoading || !isAFavourite) return;
-    setSelectedNature(natureData.natures[0]);
-  }, [natureData, isAFavourite, stats]);
+    setNature(natureData.natures[0]);
+  }, [natureData, isAFavourite, baseStats]);
 
   const data = useMemo(() => {
     return {
@@ -154,9 +154,9 @@ export default function StatChart({ stats, isAFavourite }) {
           <label htmlFor="nature-select">Nature</label>
           <select
             id="nature-select"
-            value={selectedNature.name}
+            value={nature.name}
             onChange={(e) =>
-              setSelectedNature(
+              setNature(
                 natureData.natures.find(
                   (nature) => nature.name === e.target.value
                 )

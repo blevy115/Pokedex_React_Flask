@@ -274,5 +274,8 @@ h1 {
 
 .value-element {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+  flex: 1;
+  flex-basis: 0;
+  margin: 0 1em;
 }

@@ -11,34 +11,50 @@
     OtherStats = (((2 * Base_Stat + IV + (EV/4))* Level/100) + 5) * Nature
     
 */
+const statOrder = [
+  "hp",
+  "attack",
+  "defense",
+  "speed",
+  "special-defense",
+  "special-attack",
+];
 
-function calculateStats({
-  baseStats,
-  level,
-  nature,
-  ivs,
-  evs,
-}) {
+function orderStats(stats) {
+  return Object.fromEntries(
+    Object.entries(stats).sort(
+      ([key1], [key2]) => statOrder.indexOf(key1) - statOrder.indexOf(key2)
+    )
+  );
+}
+
+function calculateStats({ baseStats, level, nature, ivs, evs }) {
   const calculatedValues = {};
   for (const stat of baseStats) {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
     if (name === "hp") {
       calculatedValues[name] =
-      Math.trunc((Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100) + level + 10;
+        Math.trunc(
+          (Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100
+        ) +
+        level +
+        10;
     } else {
       calculatedValues[name] =
-      Math.trunc(Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level / 100) + 5;
+        Math.trunc(
+          (Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100
+        ) + 5;
     }
 
     if (nature["increasedStat"] === name) {
       calculatedValues[name] = Math.trunc(calculatedValues[name] * 1.1);
     }
     if (nature["decreasedStat"] === name) {
-      calculatedValues[name] =  Math.trunc(calculatedValues[name] * 0.9);
+      calculatedValues[name] = Math.trunc(calculatedValues[name] * 0.9);
     }
   }
-  return calculatedValues;
+  return orderStats(calculatedValues);
 }
 
 function convertStats(stats) {
@@ -48,7 +64,7 @@ function convertStats(stats) {
     acc[name] = baseStat;
     return acc;
   }, {});
-  return convertedValues;
+  return orderStats(convertedValues);
 }
 
 export { convertStats, calculateStats };
