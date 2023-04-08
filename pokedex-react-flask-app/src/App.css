@@ -266,3 +266,13 @@ h1 {
 .stat-container {
   min-height: 500px;
 }
+
+.values-container {
+  display: flex;
+  justify-content: space-evenly
+}
+
+.value-element {
+  display: flex;
+  flex-direction: column
+}

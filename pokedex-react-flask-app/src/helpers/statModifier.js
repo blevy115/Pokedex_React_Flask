@@ -2,7 +2,7 @@
     1. array of 6 stats at base value
     2. Level
     3. Nature
-    4. 6 iv values
+    4. Iv values
     5. EV Spread
 
     Note HP is calutlated differently
@@ -12,21 +12,12 @@
     
 */
 
-const defaultValue = {
-  hp: 0,
-  attack: 0,
-  defense: 0,
-  "special-attack": 0,
-  "special-defense": 0,
-  speed: 0,
-};
-
 function calculateStats({
   baseStats,
-  level = 50,
-  nature = { name: "", increasedStat: "", decreasedStat: "" },
-  ivs = { ...defaultValue },
-  evs = { ...defaultValue },
+  level,
+  nature,
+  ivs,
+  evs,
 }) {
   const calculatedValues = {};
   for (const stat of baseStats) {
@@ -34,17 +25,17 @@ function calculateStats({
     const baseStat = stat.base_stat;
     if (name === "hp") {
       calculatedValues[name] =
-        ((2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100 + level + 10;
+      Math.trunc((Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100) + level + 10;
     } else {
       calculatedValues[name] =
-        ((2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100 + 5;
+      Math.trunc(Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level / 100) + 5;
     }
 
     if (nature["increasedStat"] === name) {
-      calculatedValues[name] *= 1.1;
+      calculatedValues[name] = Math.trunc(calculatedValues[name] * 1.1);
     }
     if (nature["decreasedStat"] === name) {
-      calculatedValues[name] *= 0.9;
+      calculatedValues[name] =  Math.trunc(calculatedValues[name] * 0.9);
     }
   }
   return calculatedValues;
