@@ -279,3 +279,17 @@ h1 {
   flex-basis: 0;
   margin: 0 1em;
 }
+
+#shiny-button {
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+#shiny-button-active {
+  background-color: lightgrey;
+  border: 1px solid lightgrey;
+  border-radius: 1em;
+  cursor: pointer;
+}
