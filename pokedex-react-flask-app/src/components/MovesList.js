@@ -10,9 +10,9 @@ export default function MovesList({ id, generation }) {
   const [moveType, setMoveType] = useState(moveTypes[0]);
 
   useEffect(() => {
-    setGenerationId(generation)
-    setMoveType(moveTypes[0])
-  }, [id])
+    setGenerationId(generation);
+    setMoveType(moveTypes[0]);
+  }, [id]);
 
   const { data, loading } = useQuery(GET_POKEMON_MOVES, {
     variables: { id, generationId },
@@ -45,26 +45,32 @@ export default function MovesList({ id, generation }) {
 
   return (
     <>
-      <select
-        id="MoveTypeSelector"
-        value={moveType}
-        onChange={(e) => setMoveType(e.target.value)}
-      >
-        {moveTypes.map((type, i) => {
-          return (
-            <option key={i} value={type}>
-              {type}
-            </option>
-          );
-        })}
-      </select>
-      <select
-        id="MoveGenerationSelector"
-        value={generationId}
-        onChange={(e) => setGenerationId(parseInt(e.target.value))}
-      >
-        {generationOptions}
-      </select>
+      <div>
+        <label htmlFor="MoveGenerationSelector">Generation</label>
+        <select
+          id="MoveGenerationSelector"
+          value={generationId}
+          onChange={(e) => setGenerationId(parseInt(e.target.value))}
+        >
+          {generationOptions}
+        </select>
+      </div>
+      <div>
+        <label htmlFor="MoveTypeSelector">Move Type</label>
+        <select
+          id="MoveTypeSelector"
+          value={moveType}
+          onChange={(e) => setMoveType(e.target.value)}
+        >
+          {moveTypes.map((type, i) => {
+            return (
+              <option key={i} value={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       {pokemonExistsInGeneration ? (
         moves[moveType].length > 0 ? (
           <ul>
