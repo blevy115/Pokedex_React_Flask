@@ -12,11 +12,11 @@ import {
 
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
-import MovesList from "../components/MovesList";
 import StatChart from "../components/StatChart";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 import NavBar from "../components/NavBar";
 import { formatPokemonName } from "../helpers/format";
+import MovesList from "../components/MovesList";
 
 export default function PokemonCard() {
   const params = useParams();
@@ -122,9 +122,7 @@ export default function PokemonCard() {
   }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
-  const { types, info, stats, abilities, level_moves, egg_moves, tm_moves } =
-    data.pokemon_details[0];
-
+  const { types, info, stats, abilities } = data.pokemon_details[0];
   return (
     <div>
       <NavBar />
@@ -198,9 +196,8 @@ export default function PokemonCard() {
           </ol>
         </div>
         <MovesList
-          levelMoves={level_moves.slice().sort((a, b) => a.level - b.level)}
-          eggMoves={egg_moves}
-          tmMoves={tm_moves}
+          id={parseInt(params.pokemonId)}
+          generation={info.generation_id}
         />
       </div>
     </div>
