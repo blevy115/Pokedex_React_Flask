@@ -127,25 +127,35 @@ export default function PokemonCard() {
     <div>
       <NavBar />
       <div style={{ margin: "auto", width: "60%" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-          }}
-        >
+        <div id="pokemon-headers-container">
           <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
             Previous
           </Link>
-          <p style={{ textAlign: "center" }}>
+          <p id="pokemon-title">
             {formatPokemonName(name)} #{params.pokemonId}
           </p>
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
-        <PokemonImages id={params.pokemonId} />
-        <button onClick={handleFavouritingPokemon} disabled={isAFavourite}>
+        <button
+          id="favourite-button"
+          onClick={handleFavouritingPokemon}
+          disabled={isAFavourite}
+        >
           Favourite
         </button>
+        <PokemonImages id={params.pokemonId} />
+        <ul className="type-list">
+          {types.map((type) => {
+            return (
+              <li key={type.pokemon_v2_type.id}>
+                <img
+                  src={`/icons/types/${type.pokemon_v2_type.name}.png`}
+                  alt={`${type.pokemon_v2_type.name} icon`}
+                />
+              </li>
+            );
+          })}
+        </ul>
         <div>
           <p>Generation: {info.generation_id}</p>
           {isAFavourite && (
@@ -158,18 +168,6 @@ export default function PokemonCard() {
             <p>Has Gender Differences</p>
           ) : undefined}
           <p>Types</p>
-          <ul style={{ listStyleType: "none" }}>
-            {types.map((type) => {
-              return (
-                <li key={type.pokemon_v2_type.id}>
-                  <img
-                    src={`/icons/types/${type.pokemon_v2_type.name}.png`}
-                    alt={`${type.pokemon_v2_type.name} icon`}
-                  />
-                </li>
-              );
-            })}
-          </ul>
           <TypeEffectiveness
             types={types.map((type) => type.pokemon_v2_type.name)}
           />

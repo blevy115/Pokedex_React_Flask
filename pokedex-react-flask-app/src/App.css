@@ -293,3 +293,50 @@ h1 {
   border-radius: 1em;
   cursor: pointer;
 }
+
+.type-list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+#type-effectiveness-container {
+  display: flex; 
+  justify-content: space-evenly;
+}
+
+.type-effectiveness-list-container {
+  display: flex; 
+  flex-direction: column;
+}
+
+.type-effectiveness-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#pokemon-headers-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#favourite-button {
+  display: flex;
+  margin: 1em auto;
+}
+
+#pokemon-title {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+#pokemon-image-container {
+  text-align: center;
+}
+
+.pokemon-move {
+  display: flex;
+  align-items: center;
+}

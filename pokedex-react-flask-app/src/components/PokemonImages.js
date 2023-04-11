@@ -9,7 +9,7 @@ export default function PokemonImages({ id }) {
 
   return (
     <>
-      <div style={{ textAlign: "center" }}>
+      <div id="pokemon-image-container">
         <button
           id={`shiny-button${artworkIsShiny ? "-active" : ""}`}
           onClick={() => setArtworkIsShiny(!artworkIsShiny)}
@@ -17,7 +17,7 @@ export default function PokemonImages({ id }) {
           <img src={`/icons/symbols/shiny.png`} />
         </button>
 
-        <p style={{ textAlign: "center" }}>{artworkIsShiny ? "Shiny" : "Regular"}</p>
+        <p>{artworkIsShiny ? "Shiny" : "Regular"}</p>
         <img
           className="PokemonImage"
           src={artworkIsShiny ? getShinyImage(id) : getImage(id)}

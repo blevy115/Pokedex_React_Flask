@@ -67,7 +67,7 @@ export default function MovesList({ id, generation }) {
               const hasFlavourText = move.moveInfo.flavourText.length > 0;
               return (
                 <li key={i}>
-                  <span style={{ display: "flex", alignItems: "center" }}>
+                  <span className="pokemon-move">
                     {move.level ? `Level ${move.level} ` : undefined}
                     {move.moveInfo.name}
                     <img

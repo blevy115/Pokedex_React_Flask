@@ -25,11 +25,11 @@ export default function TypeEffectiveness({ types }) {
   const { weak, resistant, immune } =
     categorizeEffectiveness(typeEffectiveness);
   return (
-    <>
+    <div id="type-effectiveness-container">
       {weak.length > 0 && (
-        <>
+        <div className="type-effectiveness-list-container">
           <p>Weak to</p>
-          <ul style={{ listStyleType: "none" }}>
+          <ul className="type-effectiveness-list">
             {weak.map((type, index) => {
               return (
                 <li key={index}>
@@ -42,12 +42,12 @@ export default function TypeEffectiveness({ types }) {
               );
             })}
           </ul>
-        </>
+        </div>
       )}
       {resistant.length > 0 && (
-        <>
+        <div className="type-effectiveness-list-container">
           <p>Resistant to</p>
-          <ul style={{ listStyleType: "none" }}>
+          <ul className="type-effectiveness-list">
             {resistant.map((type, index) => {
               return (
                 <li key={index}>
@@ -60,12 +60,12 @@ export default function TypeEffectiveness({ types }) {
               );
             })}
           </ul>
-        </>
+        </div>
       )}
       {immune.length > 0 && (
-        <>
+        <div className="type-effectiveness-list-container">
           <p>Immune to</p>
-          <ul style={{ listStyleType: "none" }}>
+          <ul className="type-effectiveness-list">
             {immune.map((type, index) => {
               return (
                 <li key={index}>
@@ -78,8 +78,8 @@ export default function TypeEffectiveness({ types }) {
               );
             })}
           </ul>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 }
