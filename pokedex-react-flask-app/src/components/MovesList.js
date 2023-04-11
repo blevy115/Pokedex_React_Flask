@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_MOVES } from "../api/pokeapi";
 import { pokemonAPIClient } from "../api/clients";
@@ -8,6 +8,11 @@ const moveTypes = ["level", "egg", "tm"];
 export default function MovesList({ id, generation }) {
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(moveTypes[0]);
+
+  useEffect(() => {
+    setGenerationId(generation)
+    setMoveType(moveTypes[0])
+  }, [id])
 
   const { data, loading } = useQuery(GET_POKEMON_MOVES, {
     variables: { id, generationId },
@@ -26,9 +31,9 @@ export default function MovesList({ id, generation }) {
     return options;
   }, [generation]);
 
-  if (loading) return <>Loinding ... </>;
+  if (loading) return <p>Loading...</p>;
 
-  const { level_moves, egg_moves, tm_moves } = data.pokemon_details[0];
+  const { level_moves, egg_moves, tm_moves } = data.pokemon_move_details[0];
 
   const pokemonExistsInGeneration = level_moves.length > 0;
 
@@ -56,7 +61,7 @@ export default function MovesList({ id, generation }) {
       <select
         id="MoveGenerationSelector"
         value={generationId}
-        onChange={(e) => setGenerationId(e.target.value)}
+        onChange={(e) => setGenerationId(parseInt(e.target.value))}
       >
         {generationOptions}
       </select>

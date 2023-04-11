@@ -44,83 +44,85 @@ const GET_POKEMON_INFO = gql`
 `;
 
 const GET_POKEMON_MOVES = gql`
-query getPokemonInfo($id: Int!, $generationId: Int!) {
-  pokemon_details: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
-    level_moves: pokemon_v2_pokemonmoves(
-      where: {
-        pokemon_id: { _eq: $id }
-        pokemon_v2_movelearnmethod: { name: { _eq: "level-up" } }
-        pokemon_v2_versiongroup: {generation_id: {_eq: $generationId}}
+  query getPokemonMoveInfo($id: Int!, $generationId: Int!) {
+    pokemon_move_details: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
+      id
+      level_moves: pokemon_v2_pokemonmoves(
+        where: {
+          pokemon_id: { _eq: $id }
+          pokemon_v2_movelearnmethod: { name: { _eq: "level-up" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
+        }
+        order_by: { move_id: asc, level: asc }
+        distinct_on: [move_id, level]
+      ) {
+        moveInfo: pokemon_v2_move {
+          name
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
+        }
+        level
       }
-      distinct_on: move_id
-    ) {
-      moveInfo: pokemon_v2_move {
-        name
-        kind: pokemon_v2_movedamageclass {
-          name
+      egg_moves: pokemon_v2_pokemonmoves(
+        where: {
+          pokemon_id: { _eq: $id }
+          pokemon_v2_movelearnmethod: { name: { _eq: "egg" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
         }
-        type: pokemon_v2_type {
+        distinct_on: move_id
+      ) {
+        moveInfo: pokemon_v2_move {
           name
-        }
-        flavourText: pokemon_v2_moveflavortexts(
-          where: { pokemon_v2_language: { name: { _eq: "en" } } }
-          distinct_on: language_id
-        ) {
-          flavor_text
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
-      level
-    }
-    egg_moves: pokemon_v2_pokemonmoves(
-      where: {
-        pokemon_id: { _eq: $id }
-        pokemon_v2_movelearnmethod: { name: { _eq: "egg" } }
-        pokemon_v2_versiongroup: {generation_id: {_eq: $generationId}}
-      }
-      distinct_on: move_id
-    ) {
-      moveInfo: pokemon_v2_move {
-        name
-        kind: pokemon_v2_movedamageclass {
+      tm_moves: pokemon_v2_pokemonmoves(
+        where: {
+          pokemon_id: { _eq: $id }
+          pokemon_v2_movelearnmethod: { name: { _eq: "machine" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
+        }
+        distinct_on: move_id
+      ) {
+        moveInfo: pokemon_v2_move {
           name
-        }
-        type: pokemon_v2_type {
-          name
-        }
-        flavourText: pokemon_v2_moveflavortexts(
-          where: { pokemon_v2_language: { name: { _eq: "en" } } }
-          distinct_on: language_id
-        ) {
-          flavor_text
-        }
-      }
-    }
-    tm_moves: pokemon_v2_pokemonmoves(
-      where: {
-        pokemon_id: { _eq: $id }
-        pokemon_v2_movelearnmethod: { name: { _eq: "machine" } }
-        pokemon_v2_versiongroup: {generation_id: {_eq: $generationId}}
-      }
-      distinct_on: move_id
-    ) {
-      moveInfo: pokemon_v2_move {
-        name
-        kind: pokemon_v2_movedamageclass {
-          name
-        }
-        type: pokemon_v2_type {
-          name
-        }
-        flavourText: pokemon_v2_moveflavortexts(
-          where: { pokemon_v2_language: { name: { _eq: "en" } } }
-          distinct_on: language_id
-        ) {
-          flavor_text
+          kind: pokemon_v2_movedamageclass {
+            name
+          }
+          type: pokemon_v2_type {
+            name
+          }
+          flavourText: pokemon_v2_moveflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            flavor_text
+          }
         }
       }
     }
   }
-}
 `;
 
 const GET_POKEMON_LIST_BY_NAME = gql`

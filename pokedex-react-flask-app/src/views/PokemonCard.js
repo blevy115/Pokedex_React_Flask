@@ -24,6 +24,7 @@ export default function PokemonCard() {
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
+    fetchPolicy: 'cache-first',
   });
   const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
     CHECK_POKEMON_EXISTS,

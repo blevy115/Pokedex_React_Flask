@@ -1,8 +1,23 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
+function getKeyFields(existing, { generationId }) {
+  if (generationId) {
+    return ["id", "generationId"];
+  }
+  return ["id"];
+}
+
+const pokemonAPICache = new InMemoryCache({
+  typePolicies: {
+    pokemon_v2_pokemon: {
+      keyFields: getKeyFields,
+    },
+  },
+});
+
 const pokemonAPIClient = new ApolloClient({
   uri: "https://beta.pokeapi.co/graphql/v1beta/",
-  cache: new InMemoryCache(),
+  cache: pokemonAPICache,
 });
 
 const backEndClient = new ApolloClient({
