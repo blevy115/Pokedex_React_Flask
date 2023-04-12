@@ -13,6 +13,7 @@ import {
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import StatChart from "../components/StatChart";
+import Abilities from "../components/Abilities";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 import NavBar from "../components/NavBar";
 import { formatPokemonName } from "../helpers/format";
@@ -24,7 +25,7 @@ export default function PokemonCard() {
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
-    fetchPolicy: 'cache-first',
+    fetchPolicy: "cache-first",
   });
   const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
     CHECK_POKEMON_EXISTS,
@@ -175,24 +176,7 @@ export default function PokemonCard() {
           <p>Stats</p>
           <StatChart baseStats={stats} isAFavourite={isAFavourite} />
           <p>Abilities</p>
-          <ol>
-            {abilities.map((ability) => {
-              const hasAbilityText = ability.pokemon_v2_ability.text.length > 0;
-              return (
-                <div key={ability.pokemon_v2_ability.id}>
-                  <li>
-                    {ability.pokemon_v2_ability.name}
-                    {ability.is_hidden && " (Hidden)"}
-                    <span className="HoverToSee">
-                      {hasAbilityText
-                        ? ability.pokemon_v2_ability.text[0].short_effect
-                        : undefined}
-                    </span>
-                  </li>
-                </div>
-              );
-            })}
-          </ol>
+          <Abilities abilities={abilities} />
         </div>
         <MovesList
           id={parseInt(params.pokemonId)}

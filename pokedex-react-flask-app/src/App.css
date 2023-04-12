@@ -389,3 +389,7 @@ h1 {
   text-align: center;
   cursor: pointer;
 }
+
+.pokemon-image {
+  max-width: 25em;
+}

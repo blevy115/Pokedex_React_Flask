@@ -19,7 +19,7 @@ export default function PokemonImages({ id }) {
 
         <p>{artworkIsShiny ? "Shiny" : "Regular"}</p>
         <img
-          className="PokemonImage"
+          className="pokemon-image"
           src={artworkIsShiny ? getShinyImage(id) : getImage(id)}
           alt={`${artworkIsShiny ? "shiny-" : ""}official-artwork`}
         />
