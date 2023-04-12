@@ -58,6 +58,8 @@ const GET_POKEMON_MOVES = gql`
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -83,6 +85,8 @@ const GET_POKEMON_MOVES = gql`
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -107,6 +111,8 @@ const GET_POKEMON_MOVES = gql`
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }

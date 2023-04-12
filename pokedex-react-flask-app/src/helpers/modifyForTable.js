@@ -14,6 +14,8 @@ function modifyMovesForTable({
     },
     { Header: "Type", accessor: "type", Cell: TypeImageComponent },
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "PP", accessor: "pp" },
+    { Header: "Accuracy", accessor: "accuracy" },
   ];
   if (hasLevel) {
     columns.unshift({ Header: "Level", accessor: "level" });
@@ -25,6 +27,8 @@ function modifyMovesForTable({
       name: move.moveInfo.name,
       type: move.moveInfo.type.name,
       kind: move.moveInfo.kind.name,
+      pp: move.moveInfo.pp,
+      accuracy: `${move.moveInfo.accuracy || "—"}%`,
       popupText: hasFlavourText
         ? move.moveInfo.flavourText[0].flavor_text
         : undefined,
