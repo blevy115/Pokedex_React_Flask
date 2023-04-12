@@ -2,17 +2,30 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_MOVES } from "../api/pokeapi";
 import { pokemonAPIClient } from "../api/clients";
+import { modifyMovesForTable } from "../helpers/modifyForTable";
+import Table from "./Table";
 
 const moveTypes = ["level", "egg", "tm"];
 
 export default function MovesList({ id, generation }) {
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(moveTypes[0]);
+  const [currentPopup, setCurrentPopup] = useState({
+    popupText: null,
+    index: null,
+  });
 
   useEffect(() => {
     setGenerationId(generation);
     setMoveType(moveTypes[0]);
   }, [id]);
+
+  useEffect(() => {
+    setCurrentPopup({
+      popupText: null,
+      index: null,
+    });
+  }, [id, generationId, moveType]);
 
   const { data, loading } = useQuery(GET_POKEMON_MOVES, {
     variables: { id, generationId },
@@ -33,6 +46,20 @@ export default function MovesList({ id, generation }) {
 
   if (loading) return <p>Loading...</p>;
 
+  const handlePopupClick = ({ popupText, index }) => {
+    if (
+      popupText &&
+      (currentPopup.popupText !== popupText || currentPopup.index !== index)
+    ) {
+      setCurrentPopup({ popupText, index });
+    } else {
+      setCurrentPopup({
+        popupText: null,
+        index: null,
+      });
+    }
+  };
+
   const { level_moves, egg_moves, tm_moves } = data.pokemon_move_details[0];
 
   const pokemonExistsInGeneration = level_moves.length > 0;
@@ -42,6 +69,41 @@ export default function MovesList({ id, generation }) {
     egg: egg_moves,
     tm: tm_moves,
   };
+
+  const PopUpComponent = ({ value, row }) => {
+    const popupText = row.original.popupText;
+
+    return (
+      <span
+        className="popup-location"
+        onClick={() =>
+          handlePopupClick({ popupText: popupText, index: row.index })
+        }
+      >
+        {value}
+        {currentPopup.popupText === popupText &&
+          currentPopup.index === row.index && (
+            <div className="popup">{popupText}</div>
+          )}
+      </span>
+    );
+  };
+
+  const TypeImageComponent = ({ value }) => {
+    return <img src={`/icons/types/${value}.png`} alt={`${value} icon`} />;
+  };
+
+  const KindImageComponent = ({ value }) => {
+    return <img src={`/icons/kinds/${value}.png`} alt={`${value} icon`} />;
+  };
+
+  const { tableData, columns } = modifyMovesForTable({
+    moves: moves[moveType],
+    hasLevel: moveType === "level",
+    PopUpComponent,
+    TypeImageComponent,
+    KindImageComponent,
+  });
 
   return (
     <>
@@ -73,32 +135,9 @@ export default function MovesList({ id, generation }) {
       </div>
       {pokemonExistsInGeneration ? (
         moves[moveType].length > 0 ? (
-          <ul>
-            {moves[moveType].map((move, i) => {
-              const hasFlavourText = move.moveInfo.flavourText.length > 0;
-              return (
-                <li key={i}>
-                  <span className="pokemon-move">
-                    {move.level ? `Level ${move.level} ` : undefined}
-                    {move.moveInfo.name}
-                    <img
-                      src={`/icons/types/${move.moveInfo.type.name}.png`}
-                      alt={`${move.moveInfo.type.name} icon`}
-                    />
-                    <img
-                      src={`/icons/kinds/${move.moveInfo.kind.name}.png`}
-                      alt={`${move.moveInfo.kind.name} icon`}
-                    />
-                  </span>
-                  <span className="HoverToSee">
-                    {hasFlavourText
-                      ? move.moveInfo.flavourText[0].flavor_text
-                      : undefined}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+          <>
+            <Table data={tableData} columns={columns} />
+          </>
         ) : (
           <p>No Moves Found</p>
         )
