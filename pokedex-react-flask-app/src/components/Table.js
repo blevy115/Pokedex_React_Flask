@@ -1,11 +1,11 @@
 import React from "react";
 import { useTable } from "react-table";
 
-export default function Table({ data, columns }) {
-
+export default function Table({ data, columns, columnsEqualSize = false }) {
   const tableInstance = useTable({ columns, data });
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance;
 
   return (
     <table className="table" {...getTableProps()}>
@@ -13,7 +13,20 @@ export default function Table({ data, columns }) {
         {headerGroups.map((headerGroup, i) => (
           <tr key={i} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, j) => (
-              <th key={j} {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th
+                key={j}
+                {...column.getHeaderProps()}
+                style={
+                  columnsEqualSize
+                    ? {
+                        // set the width of each column to a fraction of the total grid width
+                        width: `${100 / headerGroup.headers.length}%`,
+                      }
+                    : {}
+                }
+              >
+                {column.render("Header")}
+              </th>
             ))}
           </tr>
         ))}
@@ -24,7 +37,11 @@ export default function Table({ data, columns }) {
           return (
             <tr key={i} {...row.getRowProps()}>
               {row.cells.map((cell, j) => {
-                return <td key={j} {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                return (
+                  <td key={j} {...cell.getCellProps()}>
+                    {cell.render("Cell")}
+                  </td>
+                );
               })}
             </tr>
           );

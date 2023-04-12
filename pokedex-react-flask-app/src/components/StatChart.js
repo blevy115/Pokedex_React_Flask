@@ -250,7 +250,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
               ))}
             </select>
           </div>
-          <Table data={tableData} columns={columns} />
+          <Table data={tableData} columns={columns} columnsEqualSize={true}/>
         </>
       ) : undefined}
     </>
