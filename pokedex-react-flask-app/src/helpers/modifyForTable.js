@@ -38,4 +38,17 @@ function modifyMovesForTable({
   return { columns, tableData };
 }
 
-export { modifyMovesForTable };
+function modifyStatsForTable({ headers, ivs, evs, StatComponent }) {
+  const columns = headers.map((stat) => ({
+    Header: stat,
+    accessor: stat,
+    Cell: StatComponent,
+  }));
+  const tableData = [
+    { ...ivs, rowType: "iv" },
+    { ...evs, rowType: "ev" },
+  ];
+  return { columns, tableData };
+}
+
+export { modifyMovesForTable, modifyStatsForTable };

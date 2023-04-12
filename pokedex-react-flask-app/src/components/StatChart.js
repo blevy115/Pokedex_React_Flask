@@ -1,8 +1,10 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { convertStats, calculateStats } from "../helpers/statModifier";
 import { useQuery } from "@apollo/client";
 import { GET_NATURES } from "../api/backend";
 import { backEndClient } from "../api/clients";
+import { modifyStatsForTable } from "../helpers/modifyForTable";
+import Table from "./Table";
 
 import {
   Chart as ChartJS,
@@ -77,6 +79,12 @@ export default function StatChart({ baseStats, isAFavourite }) {
   const [level, setLevel] = useState(50);
   const [ivs, setIvs] = useState({ ...defaultValue });
   const [evs, setEvs] = useState({ ...defaultValue });
+
+  const [lastUpdatedCell, setLastUpdatedCell] = useState({
+    row: null,
+    column: null,
+  });
+
   const convertedStats = useMemo(() => convertStats(baseStats), [baseStats]);
   const calculatedStatsValues = useMemo(
     () =>
@@ -93,6 +101,13 @@ export default function StatChart({ baseStats, isAFavourite }) {
     if (natureDataLoading || !isAFavourite) return;
     setNature(natureData.natures[0]);
   }, [natureData, isAFavourite, baseStats]);
+
+  useEffect(() => {
+    setLastUpdatedCell({
+      row: null,
+      column: null,
+    });
+  }, [nature, level]);
 
   const data = useMemo(() => {
     return {
@@ -139,6 +154,51 @@ export default function StatChart({ baseStats, isAFavourite }) {
     }
   }
 
+  const StatComponent = ({ row, value, column }) => {
+    const max = row.original.rowType === "iv" ? "31" : "252";
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+      if (
+        inputRef.current &&
+        lastUpdatedCell.column === column.id &&
+        lastUpdatedCell.row === row.original.rowType
+      ) {
+        inputRef.current.focus();
+      }
+    }, [lastUpdatedCell, row, column]);
+
+    const handleChange = async (event) => {
+      if (row.original.rowType === "iv") {
+        await handleIvChange(event, column.id);
+      }
+      if (row.original.rowType === "ev") {
+        await handleEvChange(event, column.id);
+      }
+      setLastUpdatedCell({ row: row.original.rowType, column: column.id });
+    };
+    return (
+      <div className="stat-table-cell">
+        <input
+          className="stat-table-input"
+          type="number"
+          value={Number(value).toString()}
+          min="0"
+          max={max}
+          onChange={handleChange}
+          ref={inputRef}
+        />
+      </div>
+    );
+  };
+
+  const { tableData, columns } = modifyStatsForTable({
+    headers: Object.keys(defaultValue),
+    ivs,
+    evs,
+    StatComponent,
+  });
+
   return (
     <>
       <div className="stat-container">
@@ -183,38 +243,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
               ))}
             </select>
           </div>
-          <p>Ivs</p>
-          <div className="values-container">
-            {Object.keys(ivs).map((iv, i) => (
-              <div key={i} className="value-element">
-                <label htmlFor={`${iv}-iv`}>{iv}</label>
-                <input
-                  id={`${iv}-iv`}
-                  value={Number(ivs[iv]).toString()}
-                  type="number"
-                  min="0"
-                  max="31"
-                  onChange={(event) => handleIvChange(event, iv)}
-                />
-              </div>
-            ))}
-          </div>
-          <p>Evs</p>
-          <div className="values-container">
-            {Object.keys(evs).map((ev, i) => (
-              <div key={i} className="value-element">
-                <label htmlFor={`${ev}-ev`}>{ev}</label>
-                <input
-                  id={`${ev}-ev`}
-                  value={Number(evs[ev]).toString()}
-                  type="number"
-                  min="0"
-                  max="252"
-                  onChange={(event) => handleEvChange(event, ev)}
-                />
-              </div>
-            ))}
-          </div>
+          <Table data={tableData} columns={columns} />
         </>
       ) : undefined}
     </>
