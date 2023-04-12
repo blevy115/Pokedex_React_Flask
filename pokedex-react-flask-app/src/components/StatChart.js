@@ -181,12 +181,19 @@ export default function StatChart({ baseStats, isAFavourite }) {
       <div className="stat-table-cell">
         <input
           className="stat-table-input"
-          type="number"
+          type="text"
           value={Number(value).toString()}
           min="0"
           max={max}
           onChange={handleChange}
           ref={inputRef}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            const { target } = e;
+            target.focus();
+            const length = target.value.length;
+            target.setSelectionRange(length, length);
+          }}
         />
       </div>
     );
