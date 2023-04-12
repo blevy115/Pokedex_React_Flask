@@ -7,8 +7,13 @@ const GET_POKEMON_INFO = gql`
       name
 
       info: pokemon_v2_pokemonspecy {
-        generation_id
         has_gender_differences
+      }
+
+      form: pokemon_v2_pokemonforms {
+        pokemon_v2_versiongroup {
+          generation_id
+        }
       }
 
       types: pokemon_v2_pokemontypes {

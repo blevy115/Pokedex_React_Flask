@@ -124,7 +124,8 @@ export default function PokemonCard() {
   }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
-  const { types, info, stats, abilities } = data.pokemon_details[0];
+  const { types, info, stats, abilities, form } = data.pokemon_details[0];
+
   return (
     <div>
       <NavBar />
@@ -159,7 +160,7 @@ export default function PokemonCard() {
           })}
         </ul>
         <div>
-          <p>Generation: {info.generation_id}</p>
+          <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
           {isAFavourite && (
             <div>
               <h2>Shiny Attempts: {shinyCounter}</h2>
@@ -180,7 +181,7 @@ export default function PokemonCard() {
         </div>
         <MovesList
           id={parseInt(params.pokemonId)}
-          generation={info.generation_id}
+          generation={form[0].pokemon_v2_versiongroup.generation_id}
         />
       </div>
     </div>
