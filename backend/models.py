@@ -33,11 +33,11 @@ class Pokemon(db.Model):
 
     def __repr__(self):
         return f"Pokemon {self.name}"
-    
+
+
 class Nature(db.Model):
     __tablename__ = 'nature'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     increased_stat = db.Column(db.String(20), nullable=False)
     decreased_stat = db.Column(db.String(20), nullable=False)
-

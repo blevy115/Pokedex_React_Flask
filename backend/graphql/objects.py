@@ -19,12 +19,14 @@ class PokemonObject(SQLAlchemyObjectType):
         model = PokemonModel
         interfaces = (relay.Node, )
 
+
 class UserPokemonObject(SQLAlchemyObjectType):
     class Meta:
         model = UserPokemonModel
         interfaces = (relay.Node, )
 
+
 class NatureObject(SQLAlchemyObjectType):
     class Meta:
         model = NatureModel
-        interfaces = (relay.Node,)
+        interfaces = (relay.Node, )

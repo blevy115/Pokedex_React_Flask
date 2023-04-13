@@ -218,25 +218,25 @@ export default function StatChart({ baseStats, isAFavourite }) {
       </div>
       {!natureDataLoading && isAFavourite ? (
         <>
-        <div className="select-input">
-          <label htmlFor="nature-select">Nature:</label>
-          <select
-            id="nature-select"
-            value={nature.name}
-            onChange={(e) =>
-              setNature(
-                natureData.natures.find(
-                  (nature) => nature.name === e.target.value
+          <div className="select-input">
+            <label htmlFor="nature-select">Nature:</label>
+            <select
+              id="nature-select"
+              value={nature.name}
+              onChange={(e) =>
+                setNature(
+                  natureData.natures.find(
+                    (nature) => nature.name === e.target.value
+                  )
                 )
-              )
-            }
-          >
-            {natureData.natures.map((nature, i) => (
-              <option key={i} value={nature.name}>
-                {nature.name}
-              </option>
-            ))}
-          </select>
+              }
+            >
+              {natureData.natures.map((nature, i) => (
+                <option key={i} value={nature.name}>
+                  {nature.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="select-input">
             <label htmlFor="level-select">Level:</label>
@@ -252,7 +252,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
               ))}
             </select>
           </div>
-          <Table data={tableData} columns={columns} columnsEqualSize={true}/>
+          <Table data={tableData} columns={columns} columnsEqualSize={true} />
         </>
       ) : undefined}
     </>
