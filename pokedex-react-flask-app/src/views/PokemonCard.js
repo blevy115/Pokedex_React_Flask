@@ -87,12 +87,30 @@ export default function PokemonCard() {
     }
   }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
+  const isAFavourite = useMemo(() => {
+    return !userPokemonsLoading
+      ? userPokemonsData.userPokemons.some(
+          (pokemon) =>
+            pokemon.pokemons.pokemonId == params.pokemonId && pokemon.isActive
+        )
+      : undefined;
+  }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
+
+  const shinyCounter = useMemo(() => {
+    if (!isAFavourite) return undefined;
+    const userPokemon = userPokemonsData.userPokemons.find(
+      (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
+    );
+    return userPokemon.shinyCounter;
+  }, [isAFavourite, userPokemonsData, params.pokemonId]);
+
   function handleFavouritingPokemon(e) {
     e.preventDefault();
     linkUserToPokemon({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
+        is_active: !isAFavourite,
       },
     });
   }
@@ -106,22 +124,6 @@ export default function PokemonCard() {
       },
     });
   }
-
-  const isAFavourite = useMemo(() => {
-    return !userPokemonsLoading
-      ? userPokemonsData.userPokemons.some(
-          (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
-        )
-      : undefined;
-  }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
-
-  const shinyCounter = useMemo(() => {
-    if (!isAFavourite) return undefined;
-    const userPokemon = userPokemonsData.userPokemons.find(
-      (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
-    );
-    return userPokemon.shinyCounter;
-  }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
   const { types, info, stats, abilities, form } = data.pokemon_details[0];
@@ -142,9 +144,9 @@ export default function PokemonCard() {
         <button
           id="favourite-button"
           onClick={handleFavouritingPokemon}
-          disabled={isAFavourite}
+          // disabled={isAFavourite}
         >
-          Favourite
+          {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         <PokemonImages id={params.pokemonId} />
         <ul className="type-list">

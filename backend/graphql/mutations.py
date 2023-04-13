@@ -75,17 +75,26 @@ class UserPokemonMutation(graphene.Mutation):
     class Arguments:
         user_id = graphene.String()
         pokemon_id = graphene.Int()
+        is_active = graphene.Boolean()
 
     user_pokemon = graphene.Field(lambda: UserPokemon)
 
-    def mutate(self, info, pokemon_id, user_id):
+    def mutate(self, info, pokemon_id, user_id, is_active):
         type_name, original_id = from_global_id(user_id)
         pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
         user = UserModel.query.filter_by(id=int(original_id)).first()
-        user_pokemon = UserPokemonModel(user_id=user.id, pokemon_id=pokemon.id)
 
         if user and pokemon:
-            db.session.add(user_pokemon)
+            user_pokemon = UserPokemonModel.query.filter_by(
+                user_id=user.id, pokemon_id=pokemon.id).first()
+
+            if user_pokemon:
+                user_pokemon.is_active = is_active
+            else:
+                user_pokemon = UserPokemonModel(
+                    user_id=user.id, pokemon_id=pokemon.id)
+                db.session.add(user_pokemon)
+
             db.session.commit()
 
         return UserPokemonMutation(user_pokemon=user_pokemon)

@@ -51,6 +51,7 @@ const GET_USER_POKEMONS = gql`
         pokemonId
         name
       }
+      isActive
       shinyCounter
     }
   }
@@ -68,8 +69,8 @@ const POKEMON_MUTATION = gql`
 `;
 
 const USER_POKEMON_MUTATION = gql`
-  mutation userPokemonMutation($user_id: String!, $pokemon_id: Int!) {
-    mutateUserPokemon(userId: $user_id, pokemonId: $pokemon_id) {
+  mutation userPokemonMutation($user_id: String!, $pokemon_id: Int!, $is_active: Boolean!) {
+    mutateUserPokemon(userId: $user_id, pokemonId: $pokemon_id, isActive: $is_active) {
       userPokemon {
         pokemonId
       }
