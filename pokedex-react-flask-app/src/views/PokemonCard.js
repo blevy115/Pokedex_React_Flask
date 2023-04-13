@@ -9,15 +9,16 @@ import {
   USER_POKEMON_MUTATION,
   INCREASE_SHINY_COUNT,
 } from "../api/backend";
+import { pokemonAPIClient, backEndClient } from "../api/clients";
 
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
 import StatChart from "../components/StatChart";
 import Abilities from "../components/Abilities";
-import { pokemonAPIClient, backEndClient } from "../api/clients";
 import NavBar from "../components/NavBar";
-import { formatPokemonName } from "../helpers/format";
 import MovesList from "../components/MovesList";
+
+import { formatPokemonName } from "../helpers/format";
 
 export default function PokemonCard() {
   const params = useParams();
@@ -25,7 +26,6 @@ export default function PokemonCard() {
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
-    fetchPolicy: "cache-first",
   });
   const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
     CHECK_POKEMON_EXISTS,
