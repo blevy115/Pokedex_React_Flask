@@ -29,40 +29,39 @@ function orderStats(stats) {
 }
 
 function calculateStats({ baseStats, level, nature, ivs, evs }) {
-  const calculatedValues = {};
-  for (const stat of baseStats) {
+  const calculatedValues = baseStats.reduce((stats, stat) => {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
     if (name === "hp") {
-      calculatedValues[name] =
+      stats[name] =
         Math.trunc(
           (Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100
         ) +
-        level +
-        10;
+        (level + 10);
     } else {
-      calculatedValues[name] =
+      stats[name] =
         Math.trunc(
           (Math.trunc(2 * baseStat + ivs[name] + evs[name] / 4) * level) / 100
         ) + 5;
     }
 
     if (nature["increasedStat"] === name) {
-      calculatedValues[name] = Math.trunc(calculatedValues[name] * 1.1);
+      stats[name] = Math.trunc(stats[name] * 1.1);
     }
     if (nature["decreasedStat"] === name) {
-      calculatedValues[name] = Math.trunc(calculatedValues[name] * 0.9);
+      stats[name] = Math.trunc(stats[name] * 0.9);
     }
-  }
+    return stats;
+  }, {});
   return orderStats(calculatedValues);
 }
 
 function convertStats(stats) {
-  const convertedValues = stats.reduce((acc, stat) => {
+  const convertedValues = stats.reduce((stats, stat) => {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
-    acc[name] = baseStat;
-    return acc;
+    stats[name] = baseStat;
+    return stats;
   }, {});
   return orderStats(convertedValues);
 }
