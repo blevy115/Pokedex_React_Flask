@@ -78,9 +78,9 @@ const USER_POKEMON_MUTATION = gql`
   }
 `;
 
-const INCREASE_SHINY_COUNT = gql`
-  mutation increaseShinyCount($user_id: String!, $pokemon_id: Int!) {
-    increaseShinyCount(userId: $user_id, pokemonId: $pokemon_id) {
+const SHINY_COUNTER_MUTATION = gql`
+  mutation shinyCounterMutation($user_id: String!, $pokemon_id: Int!, $operation: String!, $value: Int) {
+    mutateShinyCounter(userId: $user_id, pokemonId: $pokemon_id, operation: $operation, value: $value) {
       userPokemon {
         pokemonId
       }
@@ -106,6 +106,6 @@ export {
   USER_POKEMON_MUTATION,
   CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
-  INCREASE_SHINY_COUNT,
+  SHINY_COUNTER_MUTATION,
   GET_NATURES,
 };

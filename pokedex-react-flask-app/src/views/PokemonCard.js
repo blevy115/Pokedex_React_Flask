@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_POKEMON_INFO } from "../api/pokeapi";
@@ -7,7 +7,7 @@ import {
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
   USER_POKEMON_MUTATION,
-  INCREASE_SHINY_COUNT,
+  SHINY_COUNTER_MUTATION,
 } from "../api/backend";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 
@@ -23,6 +23,7 @@ import { formatPokemonName } from "../helpers/format";
 export default function PokemonCard() {
   const params = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [shinyCounterInput, setShinyCounterInput] = useState("");
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
@@ -62,7 +63,7 @@ export default function PokemonCard() {
     ],
   });
 
-  const [increaseShinyCount] = useMutation(INCREASE_SHINY_COUNT, {
+  const [shinyCounterMutation] = useMutation(SHINY_COUNTER_MUTATION, {
     client: backEndClient,
     refetchQueries: [
       {
@@ -73,19 +74,6 @@ export default function PokemonCard() {
   });
 
   const name = !loading ? data.pokemon_details[0].name : undefined;
-
-  useEffect(() => {
-    if (
-      !loading &&
-      name &&
-      !pokemonDataLoading &&
-      pokemonExistsData.pokemons.length === 0
-    ) {
-      createPokemon({
-        variables: { pokemon_id: params.pokemonId, name: name },
-      });
-    }
-  }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
   const isAFavourite = useMemo(() => {
     return !userPokemonsLoading
@@ -104,6 +92,23 @@ export default function PokemonCard() {
     return userPokemon.shinyCounter;
   }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
+  useEffect(() => {
+    if (
+      !loading &&
+      name &&
+      !pokemonDataLoading &&
+      pokemonExistsData.pokemons.length === 0
+    ) {
+      createPokemon({
+        variables: { pokemon_id: params.pokemonId, name: name },
+      });
+    }
+  }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
+
+  useEffect(() => {
+    setShinyCounterInput("");
+  }, [shinyCounter]);
+
   function handleFavouritingPokemon(e) {
     e.preventDefault();
     linkUserToPokemon({
@@ -117,10 +122,34 @@ export default function PokemonCard() {
 
   function handleIncreasingShinyCount(e) {
     e.preventDefault();
-    increaseShinyCount({
+    shinyCounterMutation({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
+        operation: "increment",
+      },
+    });
+  }
+
+  function handleDecreasingShinyCount(e) {
+    e.preventDefault();
+    shinyCounterMutation({
+      variables: {
+        user_id: user.id,
+        pokemon_id: params.pokemonId,
+        operation: "decrement",
+      },
+    });
+  }
+
+  function handleCustomShinyCount(e) {
+    e.preventDefault();
+    shinyCounterMutation({
+      variables: {
+        user_id: user.id,
+        pokemon_id: params.pokemonId,
+        operation: "set",
+        value: shinyCounterInput,
       },
     });
   }
@@ -166,7 +195,35 @@ export default function PokemonCard() {
           {isAFavourite && (
             <div>
               <h2>Shiny Attempts: {shinyCounter}</h2>
+
+              <form onSubmit={handleCustomShinyCount}>
+                <label>
+                  Enter a Shiny Count:
+                  <input
+                    type="text"
+                    value={shinyCounterInput}
+                    onChange={(event) =>
+                      setShinyCounterInput(event.target.value)
+                    }
+                  />
+                </label>
+                <button
+                  disabled={
+                    !Number.isInteger(parseFloat(shinyCounterInput)) ||
+                    parseInt(shinyCounterInput) < 0
+                  }
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </form>
               <button onClick={handleIncreasingShinyCount}>Increase</button>
+              <button
+                disabled={shinyCounter === 0}
+                onClick={handleDecreasingShinyCount}
+              >
+                Decrease
+              </button>
             </div>
           )}
           {info.has_gender_differences ? (
