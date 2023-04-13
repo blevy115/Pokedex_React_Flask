@@ -107,8 +107,8 @@ export default function MovesList({ id, generation }) {
 
   return (
     <>
-      <div>
-        <label htmlFor="MoveGenerationSelector">Generation</label>
+      <div className="select-input">
+        <label htmlFor="MoveGenerationSelector">Generation:</label>
         <select
           id="MoveGenerationSelector"
           value={generationId}
@@ -117,8 +117,8 @@ export default function MovesList({ id, generation }) {
           {generationOptions}
         </select>
       </div>
-      <div>
-        <label htmlFor="MoveTypeSelector">Move Type</label>
+      <div className="select-input">
+        <label htmlFor="MoveTypeSelector">Move Type:</label>
         <select
           id="MoveTypeSelector"
           value={moveType}

@@ -35,25 +35,24 @@ export default function Abilities({ abilities }) {
           ? ability.pokemon_v2_ability.text[0].short_effect
           : null;
         return (
-          <div key={i}>
-            <li
-              className="popup-location"
-              onClick={() => {
-                handlePopupClick({
-                  popupText: popupText,
-                  index: i,
-                });
-              }}
-            >
-              {ability.pokemon_v2_ability.name}
-              {ability.is_hidden && " (Hidden)"}
-              {hasAbilityText &&
-                currentPopup.popupText === popupText &&
-                currentPopup.index === i && (
-                  <div className="popup">{popupText}</div>
-                )}
-            </li>
-          </div>
+          <li
+            key={i}
+            className="popup-location"
+            onClick={() => {
+              handlePopupClick({
+                popupText: popupText,
+                index: i,
+              });
+            }}
+          >
+            {ability.pokemon_v2_ability.name}
+            {ability.is_hidden && " (Hidden)"}
+            {hasAbilityText &&
+              currentPopup.popupText === popupText &&
+              currentPopup.index === i && (
+                <div className="popup">{popupText}</div>
+              )}
+          </li>
         );
       })}
     </ol>

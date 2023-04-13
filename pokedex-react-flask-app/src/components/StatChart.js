@@ -218,7 +218,8 @@ export default function StatChart({ baseStats, isAFavourite }) {
       </div>
       {!natureDataLoading && isAFavourite ? (
         <>
-          <label htmlFor="nature-select">Nature</label>
+        <div className="select-input">
+          <label htmlFor="nature-select">Nature:</label>
           <select
             id="nature-select"
             value={nature.name}
@@ -236,8 +237,9 @@ export default function StatChart({ baseStats, isAFavourite }) {
               </option>
             ))}
           </select>
-          <div>
-            <label htmlFor="level-select">Level</label>
+          </div>
+          <div className="select-input">
+            <label htmlFor="level-select">Level:</label>
             <select
               id="level-select"
               value={level}
