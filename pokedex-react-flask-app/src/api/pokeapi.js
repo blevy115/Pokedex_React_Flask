@@ -7,8 +7,13 @@ const GET_POKEMON_INFO = gql`
       name
 
       info: pokemon_v2_pokemonspecy {
-        generation_id
         has_gender_differences
+      }
+
+      form: pokemon_v2_pokemonforms {
+        pokemon_v2_versiongroup {
+          generation_id
+        }
       }
 
       types: pokemon_v2_pokemontypes {
@@ -39,16 +44,27 @@ const GET_POKEMON_INFO = gql`
         }
         is_hidden
       }
+    }
+  }
+`;
 
+const GET_POKEMON_MOVES = gql`
+  query getPokemonMoveInfo($id: Int!, $generationId: Int!) {
+    pokemon_move_details: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
+      id
       level_moves: pokemon_v2_pokemonmoves(
         where: {
           pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "level-up" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
         }
-        distinct_on: move_id
+        order_by: { move_id: asc, level: asc }
+        distinct_on: [move_id, level]
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -68,11 +84,14 @@ const GET_POKEMON_INFO = gql`
         where: {
           pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "egg" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
         }
         distinct_on: move_id
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -91,11 +110,14 @@ const GET_POKEMON_INFO = gql`
         where: {
           pokemon_id: { _eq: $id }
           pokemon_v2_movelearnmethod: { name: { _eq: "machine" } }
+          pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
         }
         distinct_on: move_id
       ) {
         moveInfo: pokemon_v2_move {
           name
+          pp
+          accuracy
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -128,13 +150,16 @@ const GET_POKEMON_LIST_BY_NAME = gql`
 
 const GET_POKEMON_LIST_BY_ID = gql`
   query GetPokemonList($id: Int!) {
-    pokemon_list: pokemon_v2_pokemon(
-      where: { id: { _eq: $id } }
-    ) {
+    pokemon_list: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
       id
       name
     }
   }
 `;
 
-export { GET_POKEMON_INFO, GET_POKEMON_LIST_BY_NAME, GET_POKEMON_LIST_BY_ID };
+export {
+  GET_POKEMON_INFO,
+  GET_POKEMON_MOVES,
+  GET_POKEMON_LIST_BY_NAME,
+  GET_POKEMON_LIST_BY_ID,
+};

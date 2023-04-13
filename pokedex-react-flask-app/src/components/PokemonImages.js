@@ -1,44 +1,28 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { getImage, getShinyImage } from "../helpers/pictures";
 
 export default function PokemonImages({ id }) {
-  const [loading, setLoading] = useState(true);
-  const imageCounter = useRef(0);
-  const imageLoaded = () => {
-    imageCounter.current += 1;
-    if (imageCounter.current == 2) {
-      // Number of Images
-      setLoading(false);
-    }
-  };
+  const [artworkIsShiny, setArtworkIsShiny] = useState();
+  useEffect(() => {
+    setArtworkIsShiny(false);
+  }, [id]);
+
   return (
     <>
-      <div style={{ display: loading ? "block" : "none", textAlign: "center" }}>
-        Loading images...
-      </div>
-      <div
-        style={{
-          display: loading ? "none" : "flex",
-          justifyContent: "center",
-          alignItems: "space-between",
-        }}
-      >
-        <div>
-          <p style={{ textAlign: "center" }}>Regular</p>
-          <img
-            className="PokemonImage"
-            src={getImage(id)}
-            onLoad={imageLoaded}
-          />
-        </div>
-        <div>
-          <p style={{ textAlign: "center" }}>Shiny</p>
-          <img
-            className="PokemonImage"
-            src={getShinyImage(id)}
-            onLoad={imageLoaded}
-          />
-        </div>
+      <div id="pokemon-image-container">
+        <button
+          id={`shiny-button${artworkIsShiny ? "-active" : ""}`}
+          onClick={() => setArtworkIsShiny(!artworkIsShiny)}
+        >
+          <img src={`/icons/symbols/shiny.png`} />
+        </button>
+
+        <p>{artworkIsShiny ? "Shiny" : "Regular"}</p>
+        <img
+          className="pokemon-image"
+          src={artworkIsShiny ? getShinyImage(id) : getImage(id)}
+          alt={`${artworkIsShiny ? "shiny-" : ""}official-artwork`}
+        />
       </div>
     </>
   );

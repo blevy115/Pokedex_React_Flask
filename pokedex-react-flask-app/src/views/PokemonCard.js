@@ -9,12 +9,15 @@ import {
   USER_POKEMON_MUTATION,
   INCREASE_SHINY_COUNT,
 } from "../api/backend";
+import { pokemonAPIClient, backEndClient } from "../api/clients";
 
 import TypeEffectiveness from "../components/TypeEffectiveness";
 import PokemonImages from "../components/PokemonImages";
-import MovesList from "../components/MovesList";
-import { pokemonAPIClient, backEndClient } from "../api/clients";
+import StatChart from "../components/StatChart";
+import Abilities from "../components/Abilities";
 import NavBar from "../components/NavBar";
+import MovesList from "../components/MovesList";
+
 import { formatPokemonName } from "../helpers/format";
 
 export default function PokemonCard() {
@@ -121,32 +124,43 @@ export default function PokemonCard() {
   }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
-  const { types, info, stats, abilities, level_moves, egg_moves, tm_moves } =
-    data.pokemon_details[0];
+  const { types, info, stats, abilities, form } = data.pokemon_details[0];
 
   return (
     <div>
       <NavBar />
       <div style={{ margin: "auto", width: "60%" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "center",
-          }}
-        >
+        <div id="pokemon-headers-container">
           <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
             Previous
           </Link>
-          <p style={{ textAlign: "center" }}>{formatPokemonName(name)} #{params.pokemonId}</p>
+          <p id="pokemon-title">
+            {formatPokemonName(name)} #{params.pokemonId}
+          </p>
           <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
         </div>
-        <PokemonImages id={params.pokemonId} />
-        <button onClick={handleFavouritingPokemon} disabled={isAFavourite}>
+        <button
+          id="favourite-button"
+          onClick={handleFavouritingPokemon}
+          disabled={isAFavourite}
+        >
           Favourite
         </button>
+        <PokemonImages id={params.pokemonId} />
+        <ul className="type-list">
+          {types.map((type) => {
+            return (
+              <li key={type.pokemon_v2_type.id}>
+                <img
+                  src={`/icons/types/${type.pokemon_v2_type.name}.png`}
+                  alt={`${type.pokemon_v2_type.name} icon`}
+                />
+              </li>
+            );
+          })}
+        </ul>
         <div>
-          <p>Generation: {info.generation_id}</p>
+          <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
           {isAFavourite && (
             <div>
               <h2>Shiny Attempts: {shinyCounter}</h2>
@@ -157,56 +171,17 @@ export default function PokemonCard() {
             <p>Has Gender Differences</p>
           ) : undefined}
           <p>Types</p>
-          <ul style={{ listStyleType: "none" }}>
-            {types.map((type) => {
-              return (
-                <li key={type.pokemon_v2_type.id}>
-                  <img
-                    src={`/icons/types/${type.pokemon_v2_type.name}.png`}
-                    alt={`${type.pokemon_v2_type.name} icon`}
-                  />
-                </li>
-              );
-            })}
-          </ul>
           <TypeEffectiveness
             types={types.map((type) => type.pokemon_v2_type.name)}
           />
           <p>Stats</p>
-          <ul>
-            {stats.map((stat) => {
-              return (
-                <li key={stat.pokemon_v2_stat.id}>
-                  {stat.pokemon_v2_stat.name}: {stat.base_stat}{" "}
-                  <b>{stat.effort ? `${stat.effort} EV` : undefined}</b>
-                </li>
-              );
-            })}
-          </ul>
+          <StatChart baseStats={stats} isAFavourite={isAFavourite} />
           <p>Abilities</p>
-          <ol>
-            {abilities.map((ability) => {
-              const hasAbilityText = ability.pokemon_v2_ability.text.length > 0;
-              return (
-                <div key={ability.pokemon_v2_ability.id}>
-                  <li>
-                    {ability.pokemon_v2_ability.name}
-                    {ability.is_hidden && " (Hidden)"}
-                    <span className="HoverToSee">
-                      {hasAbilityText
-                        ? ability.pokemon_v2_ability.text[0].short_effect
-                        : undefined}
-                    </span>
-                  </li>
-                </div>
-              );
-            })}
-          </ol>
+          <Abilities abilities={abilities} />
         </div>
         <MovesList
-          levelMoves={level_moves.slice().sort((a, b) => a.level - b.level)}
-          eggMoves={egg_moves}
-          tmMoves={tm_moves}
+          id={parseInt(params.pokemonId)}
+          generation={form[0].pokemon_v2_versiongroup.generation_id}
         />
       </div>
     </div>
