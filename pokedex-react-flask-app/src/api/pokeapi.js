@@ -8,6 +8,12 @@ const GET_POKEMON_INFO = gql`
 
       info: pokemon_v2_pokemonspecy {
         has_gender_differences
+        pokedexes: pokemon_v2_pokemondexnumbers {
+          pokedex_number
+          pokemon_v2_pokedex {
+            name
+          }
+        }
       }
 
       form: pokemon_v2_pokemonforms {
@@ -163,3 +169,13 @@ export {
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
 };
+
+
+
+
+
+// pokemon_v2_pokedexversiongroups(distinct_on: version_group_id) {
+//   pokemon_v2_versiongroup {
+//     generation_id
+//   }
+// }

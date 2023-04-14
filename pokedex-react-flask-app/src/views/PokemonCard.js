@@ -26,6 +26,7 @@ export default function PokemonCard() {
   const params = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const [shinyCounterInput, setShinyCounterInput] = useState("");
+  const [selectedDex, setSelectedDex] = useState("");
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
@@ -158,7 +159,6 @@ export default function PokemonCard() {
 
   if (loading) return <p>Loading...</p>;
   const { types, info, stats, abilities, form } = data.pokemon_details[0];
-
   return (
     <div>
       <NavBar />
@@ -204,6 +204,34 @@ export default function PokemonCard() {
           <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
           {isAFavourite && (
             <div>
+              <h3>Regional Pokedexes</h3>
+              <select
+                value={selectedDex}
+                onChange={(e) => setSelectedDex(e.target.value)}
+              >
+                <option value="">Select a Pokedex</option>
+                {info.pokedexes.map((pokedex, i) => (
+                  <option key={i} value={pokedex.pokemon_v2_pokedex.name}>
+                    {pokedex.pokemon_v2_pokedex.name}
+                  </option>
+                ))}
+              </select>
+              <p>
+                Selected option:{" "}
+                {selectedDex
+                  ? info.pokedexes.find(
+                      (pokedex) =>
+                        pokedex.pokemon_v2_pokedex.name === selectedDex
+                    )?.pokedex_number
+                  : undefined}
+              </p>
+              {/* {info.pokedex.map((pokedex, i) => {
+                return (
+                  <p key={i}>
+                    {pokedex.pokemon_v2_pokedex.name}: #{pokedex.pokedex_number} 
+                  </p>
+                )
+              })} */}
               <h2>Shiny Attempts: {shinyCounter}</h2>
 
               <form onSubmit={handleCustomShinyCount}>
