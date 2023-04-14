@@ -55,7 +55,7 @@ export default function PokemonCard() {
     ],
   });
 
-  const [linkUserToPokemon] = useMutation(USER_POKEMON_MUTATION, {
+  const [mutateUserPokemonRelation] = useMutation(USER_POKEMON_MUTATION, {
     client: backEndClient,
     refetchQueries: [
       {
@@ -111,9 +111,9 @@ export default function PokemonCard() {
     setShinyCounterInput("");
   }, [shinyCounter]);
 
-  function handleFavouritingPokemon(e) {
+  function handleUserPokemonLinking(e) {
     e.preventDefault();
-    linkUserToPokemon({
+    mutateUserPokemonRelation({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
@@ -184,11 +184,7 @@ export default function PokemonCard() {
             />
           </div>
         </div>
-        <button
-          id="favourite-button"
-          onClick={handleFavouritingPokemon}
-          // disabled={isAFavourite}
-        >
+        <button id="favourite-button" onClick={handleUserPokemonLinking}>
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         <PokemonImages id={params.pokemonId} />
@@ -223,6 +219,7 @@ export default function PokemonCard() {
                 </label>
                 <button
                   disabled={
+                    isNaN(shinyCounterInput) ||
                     !Number.isInteger(parseFloat(shinyCounterInput)) ||
                     parseInt(shinyCounterInput) < 0
                   }
