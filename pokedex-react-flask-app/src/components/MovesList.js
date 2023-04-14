@@ -74,7 +74,7 @@ export default function MovesList({ id, generation }) {
     const popupText = row.original.popupText;
 
     return (
-      <span
+      <div
         className="popup-location"
         onClick={() =>
           handlePopupClick({ popupText: popupText, index: row.index })
@@ -85,7 +85,7 @@ export default function MovesList({ id, generation }) {
           currentPopup.index === row.index && (
             <div className="popup">{popupText}</div>
           )}
-      </span>
+      </div>
     );
   };
 

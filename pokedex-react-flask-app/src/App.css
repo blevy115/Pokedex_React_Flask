@@ -353,7 +353,9 @@ h1 {
   border: 1px solid gray;
   padding: 10px;
   z-index: 999;
-  white-space: nowrap;
+  width: 300%;
+  max-width: max-content;
+  border-radius: 0.5em;
 }
 
 .popup-content {
@@ -400,6 +402,7 @@ h1 {
 
 .abilities-list > li {
   width: fit-content;
+  min-width: 100px;
 }
 
 #pokemon-headers-container > div {
