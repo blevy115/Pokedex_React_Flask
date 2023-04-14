@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_POKEMON_INFO } from "../api/pokeapi";
@@ -7,7 +7,6 @@ import {
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
   USER_POKEMON_MUTATION,
-  SHINY_COUNTER_MUTATION,
 } from "../api/backend";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 
@@ -17,6 +16,7 @@ import StatChart from "../components/StatChart";
 import Abilities from "../components/Abilities";
 import NavBar from "../components/NavBar";
 import MovesList from "../components/MovesList";
+import FavouritedFeatures from "../components/FavouritedFeatures";
 
 import { formatPokemonName } from "../helpers/format";
 import { getSprite } from "../helpers/pictures";
@@ -25,8 +25,7 @@ import { handleImageError } from "../helpers/error";
 export default function PokemonCard() {
   const params = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
-  const [shinyCounterInput, setShinyCounterInput] = useState("");
-  const [selectedDex, setSelectedDex] = useState("");
+
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
@@ -66,16 +65,6 @@ export default function PokemonCard() {
     ],
   });
 
-  const [shinyCounterMutation] = useMutation(SHINY_COUNTER_MUTATION, {
-    client: backEndClient,
-    refetchQueries: [
-      {
-        query: GET_USER_POKEMONS,
-        variables: { user_id: user.id },
-      },
-    ],
-  });
-
   const name = !loading ? data.pokemon_details[0].name : undefined;
 
   const isAFavourite = useMemo(() => {
@@ -86,14 +75,6 @@ export default function PokemonCard() {
         )
       : undefined;
   }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
-
-  const shinyCounter = useMemo(() => {
-    if (!isAFavourite) return undefined;
-    const userPokemon = userPokemonsData.userPokemons.find(
-      (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
-    );
-    return userPokemon.shinyCounter;
-  }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   useEffect(() => {
     if (
@@ -108,10 +89,6 @@ export default function PokemonCard() {
     }
   }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
-  useEffect(() => {
-    setShinyCounterInput("");
-  }, [shinyCounter]);
-
   function handleUserPokemonLinking(e) {
     e.preventDefault();
     mutateUserPokemonRelation({
@@ -119,40 +96,6 @@ export default function PokemonCard() {
         user_id: user.id,
         pokemon_id: params.pokemonId,
         is_active: !isAFavourite,
-      },
-    });
-  }
-
-  function handleIncreasingShinyCount(e) {
-    e.preventDefault();
-    shinyCounterMutation({
-      variables: {
-        user_id: user.id,
-        pokemon_id: params.pokemonId,
-        operation: "increment",
-      },
-    });
-  }
-
-  function handleDecreasingShinyCount(e) {
-    e.preventDefault();
-    shinyCounterMutation({
-      variables: {
-        user_id: user.id,
-        pokemon_id: params.pokemonId,
-        operation: "decrement",
-      },
-    });
-  }
-
-  function handleCustomShinyCount(e) {
-    e.preventDefault();
-    shinyCounterMutation({
-      variables: {
-        user_id: user.id,
-        pokemon_id: params.pokemonId,
-        operation: "set",
-        value: shinyCounterInput,
       },
     });
   }
@@ -203,67 +146,11 @@ export default function PokemonCard() {
         <div>
           <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
           {isAFavourite && (
-            <div>
-              <h3>Regional Pokedexes</h3>
-              <select
-                value={selectedDex}
-                onChange={(e) => setSelectedDex(e.target.value)}
-              >
-                <option value="">Select a Pokedex</option>
-                {info.pokedexes.map((pokedex, i) => (
-                  <option key={i} value={pokedex.pokemon_v2_pokedex.name}>
-                    {pokedex.pokemon_v2_pokedex.name}
-                  </option>
-                ))}
-              </select>
-              <p>
-                Selected option:{" "}
-                {selectedDex
-                  ? info.pokedexes.find(
-                      (pokedex) =>
-                        pokedex.pokemon_v2_pokedex.name === selectedDex
-                    )?.pokedex_number
-                  : undefined}
-              </p>
-              {/* {info.pokedex.map((pokedex, i) => {
-                return (
-                  <p key={i}>
-                    {pokedex.pokemon_v2_pokedex.name}: #{pokedex.pokedex_number} 
-                  </p>
-                )
-              })} */}
-              <h2>Shiny Attempts: {shinyCounter}</h2>
-
-              <form onSubmit={handleCustomShinyCount}>
-                <label>
-                  Enter a Shiny Count:
-                  <input
-                    type="text"
-                    value={shinyCounterInput}
-                    onChange={(event) =>
-                      setShinyCounterInput(event.target.value)
-                    }
-                  />
-                </label>
-                <button
-                  disabled={
-                    isNaN(shinyCounterInput) ||
-                    !Number.isInteger(parseFloat(shinyCounterInput)) ||
-                    parseInt(shinyCounterInput) < 0
-                  }
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-              <button onClick={handleIncreasingShinyCount}>Increase</button>
-              <button
-                disabled={shinyCounter === 0}
-                onClick={handleDecreasingShinyCount}
-              >
-                Decrease
-              </button>
-            </div>
+            <FavouritedFeatures
+              pokemonId={params.pokemonId}
+              pokedexes={info.pokedexes}
+              userPokemonsData={userPokemonsData}
+            />
           )}
           {info.has_gender_differences ? (
             <p>Has Gender Differences</p>

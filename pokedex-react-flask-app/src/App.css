@@ -419,3 +419,12 @@ h1 {
 .hide {
   visibility: hidden;
 }
+
+#regional-pokedex-selector {
+  display: flex;
+  align-items: center;
+}
+
+#regional-pokedex-selector > p {
+  margin: 0 0 0 1em;
+}
