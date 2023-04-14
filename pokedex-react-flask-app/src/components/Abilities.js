@@ -28,7 +28,7 @@ export default function Abilities({ abilities }) {
   };
 
   return (
-    <ol>
+    <ol className="abilities-list">
       {abilities.map((ability, i) => {
         const hasAbilityText = ability.pokemon_v2_ability.text.length > 0;
         const popupText = hasAbilityText

@@ -19,6 +19,8 @@ import NavBar from "../components/NavBar";
 import MovesList from "../components/MovesList";
 
 import { formatPokemonName } from "../helpers/format";
+import { getSprite } from "../helpers/pictures";
+import { handleImageError } from "../helpers/error";
 
 export default function PokemonCard() {
   const params = useParams();
@@ -162,13 +164,25 @@ export default function PokemonCard() {
       <NavBar />
       <div style={{ margin: "auto", width: "60%" }}>
         <div id="pokemon-headers-container">
-          <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
-            Previous
-          </Link>
+          <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
+            <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+              Previous
+            </Link>
+            <img
+              onError={handleImageError}
+              src={getSprite(parseInt(params.pokemonId) - 1)}
+            />
+          </div>
           <p id="pokemon-title">
             {formatPokemonName(name)} #{params.pokemonId}
           </p>
-          <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
+          <div>
+            <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
+            <img
+              onError={handleImageError}
+              src={getSprite(parseInt(params.pokemonId) + 1)}
+            />
+          </div>
         </div>
         <button
           id="favourite-button"
