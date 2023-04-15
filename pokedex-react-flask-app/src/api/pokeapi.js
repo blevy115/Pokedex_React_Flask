@@ -71,6 +71,7 @@ const GET_POKEMON_MOVES = gql`
           name
           pp
           accuracy
+          power
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -98,6 +99,7 @@ const GET_POKEMON_MOVES = gql`
           name
           pp
           accuracy
+          power
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -124,6 +126,7 @@ const GET_POKEMON_MOVES = gql`
           name
           pp
           accuracy
+          power
           kind: pokemon_v2_movedamageclass {
             name
           }
@@ -169,10 +172,6 @@ export {
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
 };
-
-
-
-
 
 // pokemon_v2_pokedexversiongroups(distinct_on: version_group_id) {
 //   pokemon_v2_versiongroup {

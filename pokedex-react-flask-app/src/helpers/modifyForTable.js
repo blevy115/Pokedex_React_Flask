@@ -14,6 +14,7 @@ function modifyMovesForTable({
     },
     { Header: "Type", accessor: "type", Cell: TypeImageComponent },
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
     { Header: "PP", accessor: "pp" },
     { Header: "Accuracy", accessor: "accuracy" },
   ];
@@ -27,6 +28,7 @@ function modifyMovesForTable({
       name: move.moveInfo.name,
       type: move.moveInfo.type.name,
       kind: move.moveInfo.kind.name,
+      power: move.moveInfo.power || "—",
       pp: move.moveInfo.pp,
       accuracy: `${move.moveInfo.accuracy || "—"}%`,
       popupText: hasFlavourText
