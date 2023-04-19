@@ -151,7 +151,7 @@
 
 .auth-redirect {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 nav {
@@ -204,6 +204,13 @@ h1 {
   padding: 0 2em;
   display: flex;
   align-items: center;
+}
+
+.moves-list {
+  padding: 0;
+  list-style-type: none;
+  max-height: 70vh;
+  overflow: auto;
 }
 
 .pokemon-list-item p {

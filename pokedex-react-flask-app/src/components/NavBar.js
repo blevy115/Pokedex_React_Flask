@@ -24,7 +24,10 @@ export default function NavBar() {
     <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/pokemon">Pokemon</Link>
+        </li>
+        <li>
+          <Link to="/moves">Moves</Link>
         </li>
         <li>
           <Link to="/favourites">Favourites</Link>

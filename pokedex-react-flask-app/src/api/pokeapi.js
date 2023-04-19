@@ -166,11 +166,24 @@ const GET_POKEMON_LIST_BY_ID = gql`
   }
 `;
 
+const GET_MOVES_LIST_BY_NAME = gql`
+  query GetMovesList($name: String!) {
+    moves_list: pokemon_v2_move(
+      where: { name: { _ilike: $name } }
+      order_by: { name: asc }
+    ) {
+      id
+      name
+    }
+  }
+`;
+
 export {
   GET_POKEMON_INFO,
   GET_POKEMON_MOVES,
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
+  GET_MOVES_LIST_BY_NAME,
 };
 
 // pokemon_v2_pokedexversiongroups(distinct_on: version_group_id) {
