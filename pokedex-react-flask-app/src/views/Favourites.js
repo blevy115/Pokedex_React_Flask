@@ -21,15 +21,18 @@ export default function Favourites() {
   );
 
   if (userPokemonsLoading) return <p>Loading...</p>;
+  const activeFavourites = userPokemonsData.userPokemons.filter(
+    (pokemon) => pokemon.isActive
+  );
 
   return (
     <div className="App">
       <NavBar />
-      {userPokemonsData.userPokemons.length === 0 ? (
+      {activeFavourites.length === 0 ? (
         <p>Please add some favourites</p>
       ) : (
         <div className="favourites-list">
-          {userPokemonsData.userPokemons.map((pokemon, i) => {
+          {activeFavourites.map((pokemon, i) => {
             const { name, pokemonId } = pokemon.pokemons;
             return (
               <div

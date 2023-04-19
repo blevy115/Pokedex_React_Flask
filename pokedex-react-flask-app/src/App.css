@@ -353,7 +353,9 @@ h1 {
   border: 1px solid gray;
   padding: 10px;
   z-index: 999;
-  white-space: nowrap;
+  width: 300%;
+  max-width: max-content;
+  border-radius: 0.5em;
 }
 
 .popup-content {
@@ -396,4 +398,33 @@ h1 {
 
 .select-input > label {
   margin-right: 1em;
+}
+
+.abilities-list > li {
+  width: fit-content;
+  min-width: 100px;
+}
+
+#pokemon-headers-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+
+#pokemon-headers-container img {
+  margin-top: 0.5em;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+#regional-pokedex-selector {
+  display: flex;
+  align-items: center;
+}
+
+#regional-pokedex-selector > p {
+  margin: 0 0 0 1em;
 }

@@ -12,6 +12,7 @@ class UserPokemonAssociation(db.Model):
         'user_pokemon', cascade='all, delete-orphan'))
     pokemons = db.relationship('Pokemon', backref=db.backref(
         'user_pokemon', cascade='all, delete-orphan'))
+    is_active = db.Column(db.Boolean, default = True)
 
 
 class User(db.Model, UserMixin):

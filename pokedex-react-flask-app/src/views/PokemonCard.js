@@ -7,7 +7,6 @@ import {
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
   USER_POKEMON_MUTATION,
-  INCREASE_SHINY_COUNT,
 } from "../api/backend";
 import { pokemonAPIClient, backEndClient } from "../api/clients";
 
@@ -17,12 +16,16 @@ import StatChart from "../components/StatChart";
 import Abilities from "../components/Abilities";
 import NavBar from "../components/NavBar";
 import MovesList from "../components/MovesList";
+import FavouritedFeatures from "../components/FavouritedFeatures";
 
 import { formatPokemonName } from "../helpers/format";
+import { getSprite } from "../helpers/pictures";
+import { handleImageError } from "../helpers/error";
 
 export default function PokemonCard() {
   const params = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
+
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
@@ -52,17 +55,7 @@ export default function PokemonCard() {
     ],
   });
 
-  const [linkUserToPokemon] = useMutation(USER_POKEMON_MUTATION, {
-    client: backEndClient,
-    refetchQueries: [
-      {
-        query: GET_USER_POKEMONS,
-        variables: { user_id: user.id },
-      },
-    ],
-  });
-
-  const [increaseShinyCount] = useMutation(INCREASE_SHINY_COUNT, {
+  const [mutateUserPokemonRelation] = useMutation(USER_POKEMON_MUTATION, {
     client: backEndClient,
     refetchQueries: [
       {
@@ -73,6 +66,15 @@ export default function PokemonCard() {
   });
 
   const name = !loading ? data.pokemon_details[0].name : undefined;
+
+  const isAFavourite = useMemo(() => {
+    return !userPokemonsLoading
+      ? userPokemonsData.userPokemons.some(
+          (pokemon) =>
+            pokemon.pokemons.pokemonId == params.pokemonId && pokemon.isActive
+        )
+      : undefined;
+  }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
 
   useEffect(() => {
     if (
@@ -87,64 +89,46 @@ export default function PokemonCard() {
     }
   }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
 
-  function handleFavouritingPokemon(e) {
+  function handleUserPokemonLinking(e) {
     e.preventDefault();
-    linkUserToPokemon({
+    mutateUserPokemonRelation({
       variables: {
         user_id: user.id,
         pokemon_id: params.pokemonId,
+        is_active: !isAFavourite,
       },
     });
   }
-
-  function handleIncreasingShinyCount(e) {
-    e.preventDefault();
-    increaseShinyCount({
-      variables: {
-        user_id: user.id,
-        pokemon_id: params.pokemonId,
-      },
-    });
-  }
-
-  const isAFavourite = useMemo(() => {
-    return !userPokemonsLoading
-      ? userPokemonsData.userPokemons.some(
-          (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
-        )
-      : undefined;
-  }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
-
-  const shinyCounter = useMemo(() => {
-    if (!isAFavourite) return undefined;
-    const userPokemon = userPokemonsData.userPokemons.find(
-      (pokemon) => pokemon.pokemons.pokemonId == params.pokemonId
-    );
-    return userPokemon.shinyCounter;
-  }, [isAFavourite, userPokemonsData, params.pokemonId]);
 
   if (loading) return <p>Loading...</p>;
   const { types, info, stats, abilities, form } = data.pokemon_details[0];
-
   return (
     <div>
       <NavBar />
       <div style={{ margin: "auto", width: "60%" }}>
         <div id="pokemon-headers-container">
-          <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
-            Previous
-          </Link>
+          <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
+            <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+              Previous
+            </Link>
+            <img
+              onError={handleImageError}
+              src={getSprite(parseInt(params.pokemonId) - 1)}
+            />
+          </div>
           <p id="pokemon-title">
             {formatPokemonName(name)} #{params.pokemonId}
           </p>
-          <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
+          <div>
+            <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
+            <img
+              onError={handleImageError}
+              src={getSprite(parseInt(params.pokemonId) + 1)}
+            />
+          </div>
         </div>
-        <button
-          id="favourite-button"
-          onClick={handleFavouritingPokemon}
-          disabled={isAFavourite}
-        >
-          Favourite
+        <button id="favourite-button" onClick={handleUserPokemonLinking}>
+          {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         <PokemonImages id={params.pokemonId} />
         <ul className="type-list">
@@ -162,10 +146,11 @@ export default function PokemonCard() {
         <div>
           <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
           {isAFavourite && (
-            <div>
-              <h2>Shiny Attempts: {shinyCounter}</h2>
-              <button onClick={handleIncreasingShinyCount}>Increase</button>
-            </div>
+            <FavouritedFeatures
+              pokemonId={params.pokemonId}
+              pokedexes={info.pokedexes}
+              userPokemonsData={userPokemonsData}
+            />
           )}
           {info.has_gender_differences ? (
             <p>Has Gender Differences</p>

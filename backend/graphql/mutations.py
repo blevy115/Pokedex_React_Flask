@@ -75,31 +75,42 @@ class UserPokemonMutation(graphene.Mutation):
     class Arguments:
         user_id = graphene.String()
         pokemon_id = graphene.Int()
+        is_active = graphene.Boolean()
 
     user_pokemon = graphene.Field(lambda: UserPokemon)
 
-    def mutate(self, info, pokemon_id, user_id):
+    def mutate(self, info, pokemon_id, user_id, is_active):
         type_name, original_id = from_global_id(user_id)
         pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
         user = UserModel.query.filter_by(id=int(original_id)).first()
-        user_pokemon = UserPokemonModel(user_id=user.id, pokemon_id=pokemon.id)
 
         if user and pokemon:
-            db.session.add(user_pokemon)
+            user_pokemon = UserPokemonModel.query.filter_by(
+                user_id=user.id, pokemon_id=pokemon.id).first()
+
+            if user_pokemon:
+                user_pokemon.is_active = is_active
+            else:
+                user_pokemon = UserPokemonModel(
+                    user_id=user.id, pokemon_id=pokemon.id)
+                db.session.add(user_pokemon)
+
             db.session.commit()
 
         return UserPokemonMutation(user_pokemon=user_pokemon)
 
 
-class IncrementShinyCounter(graphene.Mutation):
+class ShinyCounterMutation(graphene.Mutation):
     class Arguments:
         user_id = graphene.String()
         pokemon_id = graphene.Int()
+        operation = graphene.String(required=True)
+        value = graphene.Int()
 
     ok = graphene.Boolean()
     user_pokemon = graphene.Field(lambda: UserPokemon)
 
-    def mutate(self, info,  pokemon_id, user_id):
+    def mutate(self, info,  pokemon_id, user_id, operation, value=None):
         type_name, original_id = from_global_id(user_id)
         pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
         user = UserModel.query.filter_by(id=int(original_id)).first()
@@ -107,13 +118,20 @@ class IncrementShinyCounter(graphene.Mutation):
             user_id=user.id, pokemon_id=pokemon.id).first()
 
         if not user_pokemon:
-            return IncrementShinyCounter(ok=False, user_pokemon=None)
+            return ShinyCounterMutation(ok=False, user_pokemon=None)
 
-        user_pokemon.shiny_counter += 1
+        if operation == "increment":
+            user_pokemon.shiny_counter += 1
+        elif operation == "decrement":
+            user_pokemon.shiny_counter -= 1
+        elif operation == "set" and value is not None and value > -1:
+            user_pokemon.shiny_counter = value
+        else:
+            return ShinyCounterMutation(ok=False, user_pokemon=None)
 
         db.session.commit()
 
-        return IncrementShinyCounter(ok=True, user_pokemon=user_pokemon)
+        return ShinyCounterMutation(ok=True, user_pokemon=user_pokemon)
 
 
 class Mutation(graphene.ObjectType):
@@ -122,4 +140,4 @@ class Mutation(graphene.ObjectType):
     mutate_user_pokemon = UserPokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()
-    increase_shiny_count = IncrementShinyCounter.Field()
+    mutate_shiny_counter = ShinyCounterMutation.Field()
