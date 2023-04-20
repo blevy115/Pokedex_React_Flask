@@ -183,6 +183,10 @@ nav li a:hover {
   background-color: #ddd;
 }
 
+nav li a.active {
+  background-color: #ccc;
+}
+
 .logout {
   float: right; /* move the Logout button to the right */
 }

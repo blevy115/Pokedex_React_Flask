@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { LOGOUT_MUTATION } from "../api/backend";
 import { backEndClient } from "../api/clients";
 import { useMutation } from "@apollo/client";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function NavBar() {
   const [, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -21,16 +21,16 @@ export default function NavBar() {
   };
 
   return (
-    <nav>
+    <nav id="nav-bar">
       <ul>
         <li>
-          <Link to="/pokemon">Pokemon</Link>
+          <NavLink to="/pokemon" activeclassname="active">Pokemon</NavLink>
         </li>
         <li>
-          <Link to="/moves">Moves</Link>
+          <NavLink to="/moves" activeclassname="active">Moves</NavLink>
         </li>
         <li>
-          <Link to="/favourites">Favourites</Link>
+          <NavLink to="/favourites" activeclassname="active">Favourites</NavLink>
         </li>
         <li className="logout">
           <a href="#" onClick={handleLogout}>
