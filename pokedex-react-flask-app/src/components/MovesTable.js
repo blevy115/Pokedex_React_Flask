@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_POKEMON_MOVES } from "../api/pokeapi";
 import { pokemonAPIClient } from "../api/clients";
 import { modifyMovesForTable } from "../helpers/modifyForTable";
+import { useNavigate } from "react-router-dom";
 import Table from "./Table";
 
 const moveTypes = {
@@ -15,6 +16,7 @@ const moveTypes = {
 const defaultMoveLearnMethod = "level";
 
 export default function MovesTable({ id, generation }) {
+  const navigate = useNavigate();
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
   const [currentPopup, setCurrentPopup] = useState({
@@ -73,7 +75,6 @@ export default function MovesTable({ id, generation }) {
 
   const PopUpComponent = ({ value, row }) => {
     const popupText = row.original.popupText;
-
     return (
       <div
         className="popup-location"
@@ -84,7 +85,12 @@ export default function MovesTable({ id, generation }) {
         {value}
         {currentPopup.popupText === popupText &&
           currentPopup.index === row.index && (
-            <div className="popup">{popupText}</div>
+            <div className="popup">
+              <p>{popupText}</p>
+              <a onClick={() => navigate(`/moves/${row.original.moveId}`)}>
+                More Info
+              </a>
+            </div>
           )}
       </div>
     );
