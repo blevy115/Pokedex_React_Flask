@@ -1,8 +1,8 @@
 import graphene
 from backend import db
 from flask import session
-from ..graphql.objects import UserObject as User, PokemonObject as Pokemon, UserPokemonObject as UserPokemon
-from ..models import User as UserModel, Pokemon as PokemonModel, UserPokemonAssociation as UserPokemonModel
+from ..graphql.objects import UserObject as User, PokemonObject as Pokemon, UserPokemonObject as UserPokemon, MoveObject as Move
+from ..models import User as UserModel, Pokemon as PokemonModel, UserPokemonAssociation as UserPokemonModel, Move as MoveModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
 from graphql_relay import from_global_id
@@ -69,6 +69,21 @@ class PokemonMutation(graphene.Mutation):
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
+    
+class MoveMutation(graphene.Mutation):
+    class Arguments:
+        move_id = graphene.Int()
+        name = graphene.String(required=True)
+
+    move = graphene.Field(lambda: Move)
+
+    def mutate(self, info, move_id, name):
+        move = MoveModel(move_id=move_id, name=name)
+
+        db.session.add(move)
+        db.session.commit()
+
+        return MoveMutation(move=move)
 
 
 class UserPokemonMutation(graphene.Mutation):

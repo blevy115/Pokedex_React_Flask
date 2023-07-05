@@ -35,6 +35,12 @@ class Pokemon(db.Model):
     def __repr__(self):
         return f"Pokemon {self.name}"
 
+class Move(db.Model):
+    __tablename__ = 'move'
+    id = db.Column(db.Integer, primary_key=True)
+    move_id = db.Column(db.Integer)
+    name = db.Column(db.db.String(50))
+
 
 class Nature(db.Model):
     __tablename__ = 'nature'

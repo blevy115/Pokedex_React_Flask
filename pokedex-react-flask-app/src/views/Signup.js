@@ -37,7 +37,7 @@ export default function Signup() {
         }
         localStorage.setItem("token", response.data.signup.token);
         localStorage.setItem("user", JSON.stringify(response.data.signup.user));
-        navigate("/", { replace: true });
+        navigate("/pokemon", { replace: true });
       })
       .catch((error) => console.log(error));
   };

@@ -25,6 +25,7 @@ function modifyMovesForTable({
     const hasFlavourText = move.moveInfo.flavourText.length > 0;
     const modifiedMove = {
       id: i,
+      moveId: move.moveInfo.id,
       name: move.moveInfo.name,
       type: move.moveInfo.type.name,
       kind: move.moveInfo.kind.name,

@@ -15,7 +15,7 @@ import PokemonImages from "../components/PokemonImages";
 import StatChart from "../components/StatChart";
 import Abilities from "../components/Abilities";
 import NavBar from "../components/NavBar";
-import MovesList from "../components/MovesList";
+import MovesTable from "../components/MovesTable";
 import FavouritedFeatures from "../components/FavouritedFeatures";
 
 import { formatPokemonName } from "../helpers/format";
@@ -152,6 +152,10 @@ export default function PokemonCard() {
               userPokemonsData={userPokemonsData}
             />
           )}
+          <MovesTable
+            id={parseInt(params.pokemonId)}
+            generation={form[0].pokemon_v2_versiongroup.generation_id}
+          />
           {info.has_gender_differences ? (
             <p>Has Gender Differences</p>
           ) : undefined}
@@ -164,10 +168,6 @@ export default function PokemonCard() {
           <p>Abilities</p>
           <Abilities abilities={abilities} />
         </div>
-        <MovesList
-          id={parseInt(params.pokemonId)}
-          generation={form[0].pokemon_v2_versiongroup.generation_id}
-        />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ from graphene_sqlalchemy import SQLAlchemyObjectType
 
 from ..models import User as UserModel, \
     Pokemon as PokemonModel, \
+    Move as MoveModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel
 
@@ -18,6 +19,11 @@ class PokemonObject(SQLAlchemyObjectType):
     class Meta:
         model = PokemonModel
         interfaces = (relay.Node, )
+
+class MoveObject(SQLAlchemyObjectType):
+    class Meta:
+        model = MoveModel
+        interfaces = (relay.Node,)
 
 
 class UserPokemonObject(SQLAlchemyObjectType):

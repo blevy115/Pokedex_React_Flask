@@ -151,7 +151,7 @@
 
 .auth-redirect {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 nav {
@@ -183,6 +183,10 @@ nav li a:hover {
   background-color: #ddd;
 }
 
+nav li a.active {
+  background-color: #ccc;
+}
+
 .logout {
   float: right; /* move the Logout button to the right */
 }
@@ -204,6 +208,14 @@ h1 {
   padding: 0 2em;
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+
+.moves-list {
+  padding: 0;
+  list-style-type: none;
+  max-height: 70vh;
+  overflow: auto;
 }
 
 .pokemon-list-item p {
@@ -427,4 +439,11 @@ h1 {
 
 #regional-pokedex-selector > p {
   margin: 0 0 0 1em;
+}
+
+
+#move-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

@@ -13,14 +13,25 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRoute from "./components/AuthRoute";
 import Signup from "./views/Signup";
 import Favourites from "./views/Favourites";
-import Home from "./views/Home";
+import PokemonSearch from "./views/PokemonSearch";
 import PokemonCard from "./views/PokemonCard";
+import MoveSearch from "./views/MoveSearch";
+import MoveCard from "./views/MoveCard";
 
 function PokemonCardErrorElement() {
   return (
     <>
-      <Link to="/">Back to List</Link>
+      <Link to="/pokemon">Back to List</Link>
       <h2>Not valid Pokemon ID</h2>
+    </>
+  );
+}
+
+function MoveCardErrorElement() {
+  return (
+    <>
+      <Link to="/moves">Back to List</Link>
+      <h2>Not valid Move ID</h2>
     </>
   );
 }
@@ -33,15 +44,21 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       </Route>
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Home />} />
+        <Route path="/pokemon" element={<PokemonSearch />} />
+        <Route path="/moves" element={<MoveSearch />} />
         <Route
           path="/pokemon/:pokemonId"
           element={<PokemonCard />}
           errorElement={<PokemonCardErrorElement />}
         />
+        <Route
+          path="/moves/:moveId"
+          element={<MoveCard />}
+          errorElement={<MoveCardErrorElement />}
+        />
         <Route path="/favourites" element = {<Favourites />}/>
       </Route>
-      <Route path="*" element={<Navigate to="/" />}></Route>
+      <Route path="*" element={<Navigate to="/pokemon" />}></Route>
     </>
   )
 );
