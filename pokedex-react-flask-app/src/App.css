@@ -274,7 +274,8 @@ h1 {
 }
 
 .stat-container {
-  min-height: 500px;
+  height: 30vh;
+  width: 99%;
 }
 
 .values-container {
@@ -309,6 +310,7 @@ h1 {
   display: flex;
   justify-content: center;
   padding: 0;
+  margin-top: 0;
 }
 
 #type-effectiveness-container {
@@ -343,7 +345,9 @@ h1 {
 }
 
 #pokemon-image-container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .pokemon-move {
@@ -405,7 +409,7 @@ h1 {
 }
 
 .pokemon-image {
-  max-width: 25em;
+  max-height: 25vh;
 }
 
 .select-input > label {
@@ -426,6 +430,7 @@ h1 {
 
 #pokemon-headers-container img {
   margin-top: 0.5em;
+  max-height: 7vh;
 }
 
 .hide {
@@ -435,12 +440,12 @@ h1 {
 #regional-pokedex-selector {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 
 #regional-pokedex-selector > p {
   margin: 0 0 0 1em;
 }
-
 
 #move-info {
   display: flex;

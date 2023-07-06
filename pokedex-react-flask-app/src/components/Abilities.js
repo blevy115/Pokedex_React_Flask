@@ -1,32 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { Tooltip } from "react-tooltip";
 
 export default function Abilities({ abilities }) {
-  const [currentPopup, setCurrentPopup] = useState({
-    popupText: null,
-    index: null,
-  });
-
-  useEffect(() => {
-    setCurrentPopup({
-      popupText: null,
-      index: null,
-    });
-  }, [abilities]);
-
-  const handlePopupClick = ({ popupText, index }) => {
-    if (
-      popupText &&
-      (currentPopup.popupText !== popupText || currentPopup.index !== index)
-    ) {
-      setCurrentPopup({ popupText, index });
-    } else {
-      setCurrentPopup({
-        popupText: null,
-        index: null,
-      });
-    }
-  };
-
   return (
     <ol className="abilities-list">
       {abilities.map((ability, i) => {
@@ -38,20 +13,30 @@ export default function Abilities({ abilities }) {
           <li
             key={i}
             className="popup-location"
-            onClick={() => {
-              handlePopupClick({
-                popupText: popupText,
-                index: i,
-              });
-            }}
+            data-tip
+            data-tooltip-id={ability.pokemon_v2_ability.id}
           >
             {ability.pokemon_v2_ability.name}
             {ability.is_hidden && " (Hidden)"}
-            {hasAbilityText &&
-              currentPopup.popupText === popupText &&
-              currentPopup.index === i && (
-                <div className="popup">{popupText}</div>
-              )}
+            {hasAbilityText && (
+              <Tooltip
+                id={ability.pokemon_v2_ability.id}
+                effect="solid"
+                arrowColor="#fff"
+                className="skills-tooltip"
+                clickable
+                openOnClick
+                opacity={1}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  cursor: "default",
+                }}
+              >
+                {popupText}
+              </Tooltip>
+            )}
           </li>
         );
       })}

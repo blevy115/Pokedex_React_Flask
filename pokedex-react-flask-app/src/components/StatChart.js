@@ -40,18 +40,6 @@ const defaultValue = {
 
 const options = {
   maintainAspectRatio: false,
-  scales: {
-    r: {
-      suggestedMin: 0, // Set the minimum value of the scale to 0
-      suggestedMax: 140, // Set the maximum value of the scale to 200
-      stepSize: 40, // Set the step size of the scale to 50
-      ticks: {
-        display: false,
-        beginAtZero: true, // Start the ticks at zero
-        precision: 0, // Set the precision of the ticks to 0
-      },
-    },
-  },
   plugins: {
     legend: {
       display: false,
@@ -76,7 +64,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
     }
   );
   const [nature, setNature] = useState({});
-  const [level, setLevel] = useState(50);
+  const [level, setLevel] = useState(10);
   const [ivs, setIvs] = useState({ ...defaultValue });
   const [evs, setEvs] = useState({ ...defaultValue });
 
@@ -126,7 +114,22 @@ export default function StatChart({ baseStats, isAFavourite }) {
         },
       ],
     };
-  }, [convertedStats, calculatedStatsValues]);
+  }, [convertedStats, calculatedStatsValues, isAFavourite]);
+
+  const scales = useMemo(() => {
+   return {
+      r: {
+        suggestedMin: 0, // Set the minimum value of the scale to 0
+        suggestedMax: 140 * level / 100, // Set the maximum value of the scale to 200
+        stepSize: 40 * level / 100, // Set the step size of the scale to 50
+        ticks: {
+          display: false,
+          beginAtZero: true, // Start the ticks at zero
+          precision: 0, // Set the precision of the ticks to 0
+        },
+      },
+    }
+  }, [level])
 
   function handleIvChange(event, iv) {
     const inputValue = event.target.value;
@@ -211,7 +214,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
       <div className="stat-container">
         <Radar
           data={data}
-          options={options}
+          options={{...options, scales}}
           plugins={[ChartDataLabels]}
           redraw={true}
         />

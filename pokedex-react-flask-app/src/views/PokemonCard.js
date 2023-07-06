@@ -16,7 +16,8 @@ import StatChart from "../components/StatChart";
 import Abilities from "../components/Abilities";
 import NavBar from "../components/NavBar";
 import MovesTable from "../components/MovesTable";
-import FavouritedFeatures from "../components/FavouritedFeatures";
+import ShinyCounter from "../components/ShinyCounter";
+import GenerationSelector from "../components/GenerationSelector";
 
 import { formatPokemonName } from "../helpers/format";
 import { getSprite } from "../helpers/pictures";
@@ -64,7 +65,7 @@ export default function PokemonCard() {
       },
     ],
   });
-
+  console.log(data)
   const name = !loading ? data.pokemon_details[0].name : undefined;
 
   const isAFavourite = useMemo(() => {
@@ -105,70 +106,88 @@ export default function PokemonCard() {
   return (
     <div>
       <NavBar />
-      <div style={{ margin: "auto", width: "60%" }}>
-        <div id="pokemon-headers-container">
-          <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
-            <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
-              Previous
-            </Link>
-            <img
-              onError={handleImageError}
-              src={getSprite(parseInt(params.pokemonId) - 1)}
-            />
+
+      <div
+        style={{
+          margin: "0 1rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr",
+        }}
+      >
+        <div>
+          <div id="pokemon-headers-container">
+            <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
+              <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+                Previous
+              </Link>
+              <img
+                onError={handleImageError}
+                src={getSprite(parseInt(params.pokemonId) - 1)}
+              />
+            </div>
+            <p id="pokemon-title">
+              {formatPokemonName(name)} #{params.pokemonId}
+            </p>
+
+            <div>
+              <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
+                Next
+              </Link>
+              <img
+                onError={handleImageError}
+                src={getSprite(parseInt(params.pokemonId) + 1)}
+              />
+            </div>
           </div>
-          <p id="pokemon-title">
-            {formatPokemonName(name)} #{params.pokemonId}
-          </p>
+          <button id="favourite-button" onClick={handleUserPokemonLinking}>
+            {isAFavourite ? "Unfavourite" : "Favourite"}
+          </button>
+          <PokemonImages id={params.pokemonId} />
+          <ul className="type-list">
+            {types.map((type) => {
+              return (
+                <li key={type.pokemon_v2_type.id}>
+                  <img
+                    src={`/icons/types/${type.pokemon_v2_type.name}.png`}
+                    alt={`${type.pokemon_v2_type.name} icon`}
+                  />
+                </li>
+              );
+            })}
+          </ul>
           <div>
-            <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>Next</Link>
-            <img
-              onError={handleImageError}
-              src={getSprite(parseInt(params.pokemonId) + 1)}
+          {info.has_gender_differences ? (
+              <p style={{textAlign:"center"}}>Has Gender Differences</p>
+            ) : undefined}
+            <GenerationSelector
+              generation={form[0].pokemon_v2_versiongroup.generation_id}
+              pokedexes={info.pokedexes}
+            />
+            <p style={{textAlign:"center", marginTop:0}}>Abilities</p>
+            <Abilities abilities={abilities} />
+            <p style={{textAlign:"center", marginBottom:0}}>Type Effectiveness</p>
+            <TypeEffectiveness
+              types={types.map((type) => type.pokemon_v2_type.name)}
             />
           </div>
         </div>
-        <button id="favourite-button" onClick={handleUserPokemonLinking}>
-          {isAFavourite ? "Unfavourite" : "Favourite"}
-        </button>
-        <PokemonImages id={params.pokemonId} />
-        <ul className="type-list">
-          {types.map((type) => {
-            return (
-              <li key={type.pokemon_v2_type.id}>
-                <img
-                  src={`/icons/types/${type.pokemon_v2_type.name}.png`}
-                  alt={`${type.pokemon_v2_type.name} icon`}
-                />
-              </li>
-            );
-          })}
-        </ul>
         <div>
-          <p>Generation: {form[0].pokemon_v2_versiongroup.generation_id}</p>
-          {isAFavourite && (
-            <FavouritedFeatures
-              pokemonId={params.pokemonId}
-              pokedexes={info.pokedexes}
-              userPokemonsData={userPokemonsData}
-            />
-          )}
+          <p style={{ textAlign: "center" }}>Stats</p>
+          <StatChart baseStats={stats} isAFavourite={isAFavourite} />
           <MovesTable
             id={parseInt(params.pokemonId)}
             generation={form[0].pokemon_v2_versiongroup.generation_id}
           />
-          {info.has_gender_differences ? (
-            <p>Has Gender Differences</p>
-          ) : undefined}
-          <p>Types</p>
-          <TypeEffectiveness
-            types={types.map((type) => type.pokemon_v2_type.name)}
-          />
-          <p>Stats</p>
-          <StatChart baseStats={stats} isAFavourite={isAFavourite} />
-          <p>Abilities</p>
-          <Abilities abilities={abilities} />
         </div>
+        {/* </div> */}
       </div>
+      {isAFavourite && (
+        <ShinyCounter
+          pokemonId={params.pokemonId}
+          userPokemonsData={userPokemonsData}
+        />
+      )}
     </div>
+    // </div>
   );
 }

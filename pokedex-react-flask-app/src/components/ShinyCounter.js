@@ -3,16 +3,9 @@ import { useMutation } from "@apollo/client";
 import { GET_USER_POKEMONS, SHINY_COUNTER_MUTATION } from "../api/backend";
 import { backEndClient } from "../api/clients";
 
-export default function FavouritedFeatures({
-  pokemonId,
-  userPokemonsData,
-  pokedexes,
-}) {
+export default function ShinyCounter({ pokemonId, userPokemonsData }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [shinyCounterInput, setShinyCounterInput] = useState("");
-  const [selectedDex, setSelectedDex] = useState(
-    pokedexes[0].pokemon_v2_pokedex.name
-  );
 
   const [shinyCounterMutation] = useMutation(SHINY_COUNTER_MUTATION, {
     client: backEndClient,
@@ -71,27 +64,6 @@ export default function FavouritedFeatures({
 
   return (
     <div>
-      <h3>Regional Pokedexes</h3>
-      <div id="regional-pokedex-selector">
-        <select
-          value={selectedDex}
-          onChange={(e) => setSelectedDex(e.target.value)}
-        >
-          {pokedexes.map((pokedex, i) => (
-            <option key={i} value={pokedex.pokemon_v2_pokedex.name}>
-              {pokedex.pokemon_v2_pokedex.name}
-            </option>
-          ))}
-        </select>
-        <p>
-          #
-          {
-            pokedexes.find(
-              (pokedex) => pokedex.pokemon_v2_pokedex.name === selectedDex
-            ).pokedex_number
-          }
-        </p>
-      </div>
       <h2>Shiny Attempts: {shinyCounter}</h2>
 
       <form onSubmit={handleCustomShinyCount}>
