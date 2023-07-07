@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { memo, useState, useMemo, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { useQuery } from "@apollo/client";
 import { GET_POKEMON_MOVES } from "../api/pokeapi";
@@ -16,7 +16,7 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-const MovesTable = React.memo(({ id, generation }) => {
+const MovesTable = memo(function MovesTable({ id, generation }) {
   const navigate = useNavigate();
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
@@ -66,7 +66,6 @@ const MovesTable = React.memo(({ id, generation }) => {
             alignItems: "center",
             flexDirection: "column",
             cursor: "default",
-           
           }}
         >
           {popupText}
@@ -87,11 +86,25 @@ const MovesTable = React.memo(({ id, generation }) => {
   };
 
   const TypeImageComponent = ({ value }) => {
-    return <img src={`/icons/types/${value}.png`} alt={`${value} icon`} />;
+    return (
+      <img
+        className="table-image"
+        src={`/icons/types/${value}.png`}
+        alt={`${value} icon`}
+
+      />
+    );
   };
 
   const KindImageComponent = ({ value }) => {
-    return <img src={`/icons/kinds/${value}.png`} alt={`${value} icon`} />;
+    return (
+      <img
+        className="table-image"
+        src={`/icons/kinds/${value}.png`}
+        alt={`${value} icon`}
+
+      />
+    );
   };
 
   const { tableData, columns } = modifyMovesForTable({
@@ -102,6 +115,8 @@ const MovesTable = React.memo(({ id, generation }) => {
     KindImageComponent,
   });
 
+  // const numberOfImages = columns.filter((c)=> c.isImage).length * tableData.length
+  
   return (
     <>
       <div className="select-input">
@@ -130,9 +145,9 @@ const MovesTable = React.memo(({ id, generation }) => {
           })}
         </select>
       </div>
-      {moves.length > 0 ? (
+      {moves.length > 0? (
         <>
-          <Table data={tableData} columns={columns} />
+          <Table data={tableData} columns={columns}/>
         </>
       ) : (
         <p>No Moves Found</p>
@@ -140,7 +155,5 @@ const MovesTable = React.memo(({ id, generation }) => {
     </>
   );
 });
-
-MovesTable.displayName = "MovesTable";
 
 export default MovesTable;

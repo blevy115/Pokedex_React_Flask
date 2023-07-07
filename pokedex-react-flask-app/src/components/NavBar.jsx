@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { LOGOUT_MUTATION } from "../api/backend";
 import { backEndClient } from "../api/clients";
 import { useMutation } from "@apollo/client";
 import { useNavigate, NavLink } from "react-router-dom";
 
-export default function NavBar() {
+const NavBar = () => {
   const [, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const navigate = useNavigate();
 
@@ -24,13 +24,19 @@ export default function NavBar() {
     <nav id="nav-bar">
       <ul>
         <li>
-          <NavLink to="/pokemon" activeclassname="active">Pokemon</NavLink>
+          <NavLink to="/pokemon" activeclassname="active">
+            Pokemon
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/moves" activeclassname="active">Moves</NavLink>
+          <NavLink to="/moves" activeclassname="active">
+            Moves
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/favourites" activeclassname="active">Favourites</NavLink>
+          <NavLink to="/favourites" activeclassname="active">
+            Favourites
+          </NavLink>
         </li>
         <li className="logout">
           <a href="#" onClick={handleLogout}>
@@ -40,4 +46,6 @@ export default function NavBar() {
       </ul>
     </nav>
   );
-}
+};
+
+export default NavBar;

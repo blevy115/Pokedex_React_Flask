@@ -4,7 +4,7 @@ import { backEndClient } from "../api/clients";
 import { useMutation } from "@apollo/client";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginMutation] = useMutation(LOGIN_MUTATION, {
@@ -70,4 +70,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

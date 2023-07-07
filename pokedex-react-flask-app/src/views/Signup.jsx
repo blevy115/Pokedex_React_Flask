@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { SIGNUP_MUTATION } from "../api/backend";
 import { Link } from "react-router-dom";
 
-export default function Signup() {
+const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -92,4 +92,6 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+};
+
+export default Signup;

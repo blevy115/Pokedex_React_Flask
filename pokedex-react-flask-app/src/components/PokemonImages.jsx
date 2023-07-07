@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getImage, getShinyImage } from "../helpers/pictures";
 
-export default function PokemonImages({ id }) {
+const PokemonImages = ({ id }) => {
   const [artworkIsShiny, setArtworkIsShiny] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ export default function PokemonImages({ id }) {
           id={`shiny-button${artworkIsShiny ? "-active" : ""}`}
           onClick={() => setArtworkIsShiny(!artworkIsShiny)}
         >
-          <img style={{height: "30px"}} src={`/icons/symbols/shiny.png`} />
+          <img style={{ height: "30px" }} src={`/icons/symbols/shiny.png`} />
         </button>
 
         <img
@@ -22,4 +22,6 @@ export default function PokemonImages({ id }) {
       </div>
     </>
   );
-}
+};
+
+export default PokemonImages;

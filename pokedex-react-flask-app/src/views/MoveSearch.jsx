@@ -1,22 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import {
-  GET_POKEMON_LIST_BY_NAME,
-  GET_POKEMON_LIST_BY_ID,
-} from "../api/pokeapi";
-import PokemonList from "../components/PokemonList";
+import { GET_MOVES_LIST_BY_NAME } from "../api/pokeapi";
+import MovesList from "../components/MovesList";
 import { pokemonAPIClient } from "../api/clients";
 import NavBar from "../components/NavBar";
 
-export default function PokemonSearch() {
+const MoveSearch = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [textInput, setTextInput] = useState("");
   const { data: list, loading: loadingList } = useQuery(
-    !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
+    GET_MOVES_LIST_BY_NAME,
     {
-      variables: !parseInt(textInput)
-        ? { name: `%${textInput}%` }
-        : { id: parseInt(textInput) },
+      variables: { name: `%${textInput}%` },
+
       skip: !textInput,
       client: pokemonAPIClient,
     }
@@ -33,15 +29,15 @@ export default function PokemonSearch() {
       <NavBar />
       <h2>Welcome {user?.name}</h2>
 
-      <p>Search For Pokemon</p>
+      <p>Search For Moves</p>
       <input
         ref={inputRef}
         value={textInput}
         onChange={(val) => setTextInput(val.target.value)}
       ></input>
-      {!loadingList && list ? (
-        <PokemonList list={list.pokemon_list} />
-      ) : undefined}
+      {!loadingList && list ? <MovesList list={list.moves_list} /> : undefined}
     </div>
   );
-}
+};
+
+export default MoveSearch;

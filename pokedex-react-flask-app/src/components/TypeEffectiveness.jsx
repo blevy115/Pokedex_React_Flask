@@ -1,5 +1,5 @@
 import React from "react";
-import getTypeEffectiveness from "../helpers/getTypeEffectiveness";
+import { getTypeEffectiveness } from "../helpers/getTypeEffectiveness";
 
 function categorizeEffectiveness(relations) {
   const result = {
@@ -20,7 +20,7 @@ function categorizeEffectiveness(relations) {
   return result;
 }
 
-export default function TypeEffectiveness({ types }) {
+const TypeEffectiveness = ({ types }) => {
   const typeEffectiveness = getTypeEffectiveness(types);
   const { weak, resistant, immune } =
     categorizeEffectiveness(typeEffectiveness);
@@ -82,4 +82,6 @@ export default function TypeEffectiveness({ types }) {
       )}
     </div>
   );
-}
+};
+
+export default TypeEffectiveness;

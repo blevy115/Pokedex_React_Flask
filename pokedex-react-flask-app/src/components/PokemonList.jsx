@@ -1,22 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { formatPokemonName } from "../helpers/format";
+import { handleImageError } from "../helpers/error";
+import { getSprite } from "../helpers/pictures";
 
-export default function MovesList({ list }) {
+const PokemonList = ({ list }) => {
   let navigate = useNavigate();
   return (
-    <ul className="moves-list">
+    <ul className="pokemon-list">
       {list.map(({ name, id }) => (
         <li
-          className="moves-list-item"
+          className="pokemon-list-item"
           key={id}
-          onClick={() => navigate(`/moves/${id}`)}
+          onClick={() => navigate(`/pokemon/${id}`)}
         >
           <p>
             {formatPokemonName(name)} #{id}
           </p>
+          <img onError={handleImageError} src={getSprite(id)} />
         </li>
       ))}
     </ul>
   );
-}
+};
+
+export default PokemonList;

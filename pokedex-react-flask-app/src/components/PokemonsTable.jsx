@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { formatPokemonName } from "../helpers/format";
 import { handleImageError } from "../helpers/error";
 import { getSprite } from "../helpers/pictures";
-import mergePokemonEntries from "../helpers/mergePokemonEntries";
+import { mergePokemonEntries } from "../helpers/mergePokemonEntries";
 
 const moveTypes = {
   level: 1,
@@ -17,7 +17,7 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-export default function PokemonsTable({ id, generation }) {
+const PokemonsTable = ({ id, generation }) => {
   let navigate = useNavigate();
 
   const [generationId, setGenerationId] = useState(generation);
@@ -48,7 +48,7 @@ export default function PokemonsTable({ id, generation }) {
   if (loading) return <p>Loading...</p>;
 
   const { pokemons } = data.move[0];
-  console.log(data)
+  console.log(data);
 
   return (
     <>
@@ -112,4 +112,6 @@ export default function PokemonsTable({ id, generation }) {
       )}
     </>
   );
-}
+};
+
+export default PokemonsTable;

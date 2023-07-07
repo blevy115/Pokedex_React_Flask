@@ -1,9 +1,8 @@
 import React from "react";
 import { useTable } from "react-table";
 
-export default function Table({ data, columns, columnsEqualSize = false }) {
+const Table = ({ data, columns, columnsEqualSize = false }) => {
   const tableInstance = useTable({ columns, data });
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
@@ -49,4 +48,6 @@ export default function Table({ data, columns, columnsEqualSize = false }) {
       </tbody>
     </table>
   );
-}
+};
+
+export default Table;

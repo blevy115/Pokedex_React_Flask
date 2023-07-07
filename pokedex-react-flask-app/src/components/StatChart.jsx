@@ -56,7 +56,7 @@ const options = {
   },
 };
 
-export default function StatChart({ baseStats, isAFavourite }) {
+const StatChart = ({ baseStats, isAFavourite }) => {
   const { data: natureData, loading: natureDataLoading } = useQuery(
     GET_NATURES,
     {
@@ -117,19 +117,19 @@ export default function StatChart({ baseStats, isAFavourite }) {
   }, [convertedStats, calculatedStatsValues, isAFavourite]);
 
   const scales = useMemo(() => {
-   return {
+    return {
       r: {
         suggestedMin: 0, // Set the minimum value of the scale to 0
-        suggestedMax: 140 * level / 100, // Set the maximum value of the scale to 200
-        stepSize: 40 * level / 100, // Set the step size of the scale to 50
+        suggestedMax: (140 * level) / 100, // Set the maximum value of the scale to 200
+        stepSize: (40 * level) / 100, // Set the step size of the scale to 50
         ticks: {
           display: false,
           beginAtZero: true, // Start the ticks at zero
           precision: 0, // Set the precision of the ticks to 0
         },
       },
-    }
-  }, [level])
+    };
+  }, [level]);
 
   function handleIvChange(event, iv) {
     const inputValue = event.target.value;
@@ -214,7 +214,7 @@ export default function StatChart({ baseStats, isAFavourite }) {
       <div className="stat-container">
         <Radar
           data={data}
-          options={{...options, scales}}
+          options={{ ...options, scales }}
           plugins={[ChartDataLabels]}
           redraw={true}
         />
@@ -260,4 +260,6 @@ export default function StatChart({ baseStats, isAFavourite }) {
       ) : undefined}
     </>
   );
-}
+};
+
+export default StatChart;

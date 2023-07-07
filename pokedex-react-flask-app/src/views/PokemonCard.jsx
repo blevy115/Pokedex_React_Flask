@@ -23,7 +23,7 @@ import { formatPokemonName } from "../helpers/format";
 import { getSprite } from "../helpers/pictures";
 import { handleImageError } from "../helpers/error";
 
-export default function PokemonCard() {
+const PokemonCard = () => {
   const params = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -65,7 +65,6 @@ export default function PokemonCard() {
       },
     ],
   });
-  console.log(data)
   const name = !loading ? data.pokemon_details[0].name : undefined;
 
   const isAFavourite = useMemo(() => {
@@ -156,16 +155,18 @@ export default function PokemonCard() {
             })}
           </ul>
           <div>
-          {info.has_gender_differences ? (
-              <p style={{textAlign:"center"}}>Has Gender Differences</p>
+            {info.has_gender_differences ? (
+              <p style={{ textAlign: "center" }}>Has Gender Differences</p>
             ) : undefined}
             <GenerationSelector
               generation={form[0].pokemon_v2_versiongroup.generation_id}
               pokedexes={info.pokedexes}
             />
-            <p style={{textAlign:"center", marginTop:0}}>Abilities</p>
+            <p style={{ textAlign: "center", marginTop: 0 }}>Abilities</p>
             <Abilities abilities={abilities} />
-            <p style={{textAlign:"center", marginBottom:0}}>Type Effectiveness</p>
+            <p style={{ textAlign: "center", marginBottom: 0 }}>
+              Type Effectiveness
+            </p>
             <TypeEffectiveness
               types={types.map((type) => type.pokemon_v2_type.name)}
             />
@@ -190,4 +191,6 @@ export default function PokemonCard() {
     </div>
     // </div>
   );
-}
+};
+
+export default PokemonCard;

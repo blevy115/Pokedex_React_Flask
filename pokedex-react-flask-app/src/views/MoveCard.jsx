@@ -6,7 +6,7 @@ import { GET_MOVE_INFO } from "../api/pokeapi";
 import { pokemonAPIClient } from "../api/clients";
 import PokemonsTable from "../components/PokemonsTable";
 
-export default function MoveCard() {
+const MoveCard = () => {
   const params = useParams();
 
   const { data, loading } = useQuery(GET_MOVE_INFO, {
@@ -46,4 +46,6 @@ export default function MoveCard() {
       <PokemonsTable id={parseInt(params.moveId)} generation={generation_id} />
     </div>
   );
-}
+};
+
+export default MoveCard;

@@ -1,10 +1,12 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 
-export default function AuthRoute() {
+const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("token");
-  if (isAuthenticated) {
-    return <Navigate to="/pokemon" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
   }
   return <Outlet />;
-}
+};
+
+export default ProtectedRoute;

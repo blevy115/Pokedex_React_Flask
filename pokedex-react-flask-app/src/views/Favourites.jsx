@@ -8,7 +8,7 @@ import { formatPokemonName } from "../helpers/format";
 import { handleImageError } from "../helpers/error";
 import { getAnimatedSprite } from "../helpers/pictures";
 
-export default function Favourites() {
+const Favourites = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   let navigate = useNavigate();
 
@@ -60,4 +60,6 @@ export default function Favourites() {
       )}
     </div>
   );
-}
+};
+
+export default Favourites;

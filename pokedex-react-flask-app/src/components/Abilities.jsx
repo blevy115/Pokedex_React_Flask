@@ -1,7 +1,7 @@
 import React from "react";
 import { Tooltip } from "react-tooltip";
 
-export default function Abilities({ abilities }) {
+const Abilities = ({ abilities }) => {
   return (
     <ol className="abilities-list">
       {abilities.map((ability, i) => {
@@ -43,3 +43,5 @@ export default function Abilities({ abilities }) {
     </ol>
   );
 }
+
+export default Abilities

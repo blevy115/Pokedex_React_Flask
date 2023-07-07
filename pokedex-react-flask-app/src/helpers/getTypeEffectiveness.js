@@ -1,6 +1,6 @@
 import all_types from "../data/all_types.json";
 
-export default function getTypeEffectiveness(types) {
+function getTypeEffectiveness(types) {
   const multipliers = {};
 
   types.forEach((type) => {
@@ -36,3 +36,5 @@ export default function getTypeEffectiveness(types) {
 
   return multipliers;
 }
+
+export { getTypeEffectiveness };

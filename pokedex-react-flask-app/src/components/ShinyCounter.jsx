@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { GET_USER_POKEMONS, SHINY_COUNTER_MUTATION } from "../api/backend";
 import { backEndClient } from "../api/clients";
 
-export default function ShinyCounter({ pokemonId, userPokemonsData }) {
+const ShinyCounter = ({ pokemonId, userPokemonsData }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [shinyCounterInput, setShinyCounterInput] = useState("");
 
@@ -95,4 +95,6 @@ export default function ShinyCounter({ pokemonId, userPokemonsData }) {
       </button>
     </div>
   );
-}
+};
+
+export default ShinyCounter;
