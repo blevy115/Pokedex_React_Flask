@@ -1,6 +1,7 @@
-import React, { memo, useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import { useQuery } from "@apollo/client";
+import { motion, AnimatePresence } from "framer-motion";
 import { GET_POKEMON_MOVES } from "../api/pokeapi";
 import { pokemonAPIClient } from "../api/clients";
 import { modifyMovesForTable } from "../helpers/modifyForTable";
@@ -16,7 +17,7 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-const MovesTable = memo(function MovesTable({ id, generation }) {
+const MovesTable = ({ id, generation }) => {
   const navigate = useNavigate();
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
@@ -43,7 +44,42 @@ const MovesTable = memo(function MovesTable({ id, generation }) {
     return options;
   }, [generation]);
 
-  if (loading) return <p>Loading...</p>;
+  const SelectComponent = () => {
+    return (
+      <>
+        <div className="select-input">
+          <label htmlFor="MoveGenerationSelector">Generation:</label>
+          <select
+            id="MoveGenerationSelector"
+            value={generationId}
+            onChange={(e) => setGenerationId(parseInt(e.target.value))}
+          >
+            {generationOptions}
+          </select>
+        </div>
+        <div className="select-input">
+          <label htmlFor="MoveTypeSelector">Move Type:</label>
+          <select
+            id="MoveTypeSelector"
+            value={moveType}
+            onChange={(e) => setMoveType(e.target.value)}
+          >
+            {Object.keys(moveTypes).map((type, i) => {
+              return (
+                <option key={i} value={type}>
+                  {type}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      </>
+    );
+  };
+
+  if (loading) {
+    return <SelectComponent />;
+  }
 
   const { moves } = data.pokemon_move_details[0];
 
@@ -91,7 +127,6 @@ const MovesTable = memo(function MovesTable({ id, generation }) {
         className="table-image"
         src={`/icons/types/${value}.png`}
         alt={`${value} icon`}
-
       />
     );
   };
@@ -102,7 +137,6 @@ const MovesTable = memo(function MovesTable({ id, generation }) {
         className="table-image"
         src={`/icons/kinds/${value}.png`}
         alt={`${value} icon`}
-
       />
     );
   };
@@ -115,45 +149,28 @@ const MovesTable = memo(function MovesTable({ id, generation }) {
     KindImageComponent,
   });
 
-  // const numberOfImages = columns.filter((c)=> c.isImage).length * tableData.length
-  
   return (
     <>
-      <div className="select-input">
-        <label htmlFor="MoveGenerationSelector">Generation:</label>
-        <select
-          id="MoveGenerationSelector"
-          value={generationId}
-          onChange={(e) => setGenerationId(parseInt(e.target.value))}
+      <SelectComponent />
+      <AnimatePresence>
+        <motion.div
+          key={JSON.stringify(tableData)}
+          initial={{ opacity: 0 }}
+          animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
+          exit={{ display: "none" }}
+          transition={{ duration: 0.5 }}
         >
-          {generationOptions}
-        </select>
-      </div>
-      <div className="select-input">
-        <label htmlFor="MoveTypeSelector">Move Type:</label>
-        <select
-          id="MoveTypeSelector"
-          value={moveType}
-          onChange={(e) => setMoveType(e.target.value)}
-        >
-          {Object.keys(moveTypes).map((type, i) => {
-            return (
-              <option key={i} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      {moves.length > 0? (
-        <>
-          <Table data={tableData} columns={columns}/>
-        </>
-      ) : (
-        <p>No Moves Found</p>
-      )}
+          {moves.length > 0 ? (
+            <>
+              <Table data={tableData} columns={columns} />
+            </>
+          ) : (
+            <p>No Moves Found</p>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
-});
+};
 
 export default MovesTable;
