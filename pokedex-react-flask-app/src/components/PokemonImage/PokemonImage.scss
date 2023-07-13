@@ -1,0 +1,28 @@
+.app__pokemon-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pokemon-image {
+    max-height: 30vh;
+    min-height: 250px;
+  }
+
+  .shiny-button {
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 1em;
+    cursor: pointer;
+    box-shadow: 0 0 2px black;
+  }
+
+  & .active {
+    background-color: lightgrey;
+    border: 1px solid lightgrey;
+    box-shadow: 0 0 2px darkgray;
+  }
+
+  .shiny-button-image {
+    height: 30px;
+  }
+}

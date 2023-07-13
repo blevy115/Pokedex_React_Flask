@@ -5,20 +5,23 @@ import {
   RouterProvider,
   Route,
   Link,
-  Navigate
+  Navigate,
 } from "react-router-dom";
-import "./App.css";
-import Login from "./views/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AuthRoute from "./components/AuthRoute";
-import Signup from "./views/Signup";
-import Favourites from "./views/Favourites";
-import PokemonSearch from "./views/PokemonSearch";
-import PokemonCard from "./views/PokemonCard";
-import MoveSearch from "./views/MoveSearch";
-import MoveCard from "./views/MoveCard";
 
-function PokemonCardErrorElement() {
+import {
+  Favourites,
+  PokemonDetail,
+  PokemonSearch,
+  MoveDetail,
+  MoveSearch,
+  Login,
+  Signup,
+} from "./pages";
+import { ProtectedRoute, AuthRoute } from "./wrapper/routes";
+
+import "./App.css";
+
+function PokemonDetailErrorElement() {
   return (
     <>
       <Link to="/pokemon">Back to List</Link>
@@ -27,7 +30,7 @@ function PokemonCardErrorElement() {
   );
 }
 
-function MoveCardErrorElement() {
+function MoveDetailErrorElement() {
   return (
     <>
       <Link to="/moves">Back to List</Link>
@@ -39,24 +42,24 @@ function MoveCardErrorElement() {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-    <Route  element={<AuthRoute />}>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route element={<AuthRoute />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/pokemon" element={<PokemonSearch />} />
         <Route path="/moves" element={<MoveSearch />} />
         <Route
           path="/pokemon/:pokemonId"
-          element={<PokemonCard />}
-          errorElement={<PokemonCardErrorElement />}
+          element={<PokemonDetail />}
+          errorElement={<PokemonDetailErrorElement />}
         />
         <Route
           path="/moves/:moveId"
-          element={<MoveCard />}
-          errorElement={<MoveCardErrorElement />}
+          element={<MoveDetail />}
+          errorElement={<MoveDetailErrorElement />}
         />
-        <Route path="/favourites" element = {<Favourites />}/>
+        <Route path="/favourites" element={<Favourites />} />
       </Route>
       <Route path="*" element={<Navigate to="/pokemon" />}></Route>
     </>
@@ -64,5 +67,9 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <div className="app">
+      <RouterProvider router={router} />
+    </div>
+  );
 }

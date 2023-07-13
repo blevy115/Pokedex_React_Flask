@@ -28,7 +28,7 @@ function orderStats(stats) {
   );
 }
 
-function calculateStats({ baseStats, level, nature, ivs, evs }) {
+export function calculateStats({ baseStats, level, nature, ivs, evs }) {
   const calculatedValues = baseStats.reduce((stats, stat) => {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
@@ -56,7 +56,7 @@ function calculateStats({ baseStats, level, nature, ivs, evs }) {
   return orderStats(calculatedValues);
 }
 
-function convertStats(stats) {
+export function convertStats(stats) {
   const convertedValues = stats.reduce((stats, stat) => {
     const name = stat.pokemon_v2_stat.name;
     const baseStat = stat.base_stat;
@@ -65,5 +65,3 @@ function convertStats(stats) {
   }, {});
   return orderStats(convertedValues);
 }
-
-export { convertStats, calculateStats };

@@ -1,0 +1,119 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f1f1f1;
+  background-image: url("https://wallpapercave.com/wp/wp2098819.jpg");
+  background-size: cover;
+}
+
+.auth-title {
+  font-size: 4rem;
+  margin: 1.5rem 0;
+  font-family: "PokemonSolid";
+  font-weight: lighter;
+  color: #f9ca07; /* set the text color to white */
+  -webkit-text-stroke: 3.5px #3b57a3; /* add a blue stroke around the text */
+  text-align: center;
+}
+
+.auth-description {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.auth-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  border-radius: 15px;
+  border: none;
+  background-color: #0077cc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.auth-button:hover {
+  background-color: #0059b3;
+}
+
+.auth-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.auth-form {
+  width: 30rem;
+  padding: 2rem;
+  border: 2px solid #b9b9b9;
+  border-radius: 5px;
+  background-color: rgba(185, 185, 185, 0.95);
+  box-shadow: 0 0 20px black;
+}
+
+.auth-form-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.auth-form-field {
+  margin-bottom: 1rem;
+}
+
+.auth-form-field label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-form-field input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.auth-form-submit {
+  display: block;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #0077cc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.auth-form-submit:hover {
+  background-color: #0059b3;
+}
+
+.auth-redirect {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 500px) {
+  .auth-form-container {
+    margin-top: 0;
+    max-width: 100%;
+  }
+
+  .auth-form {
+    width: 100%;
+    margin: 0;
+  }
+
+  .auth-title {
+    font-size: 3rem;
+  }
+}

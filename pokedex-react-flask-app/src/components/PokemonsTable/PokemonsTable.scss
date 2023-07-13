@@ -1,0 +1,27 @@
+.pokemon-list-item-sprite {
+  cursor: pointer;
+}
+
+.move-tm {
+  text-align: center;
+}
+
+.game-tm-list {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  align-items: center;
+  padding-left: 0;
+  margin: 0;
+}
+
+.game-tm-item {
+  margin: 1em 0;
+  text-transform: uppercase;
+  margin-top: 0;
+}
+
+.app__move-pokemon-table {
+  width: 80%;
+  margin: 0 auto;
+}
