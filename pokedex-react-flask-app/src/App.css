@@ -31,3 +31,7 @@
 .hide {
   visibility: hidden;
 }
+
+.no-wrap {
+  white-space: nowrap;
+}

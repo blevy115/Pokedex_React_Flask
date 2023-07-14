@@ -10,15 +10,11 @@ import {
   mergeTmEntries,
 } from "../../helpers/mergeEntries";
 import { formatPokemonName } from "../../helpers/format";
-
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
-
-import { Table } from "../";
-
 import { modifyPokemon } from "../../helpers/modifyForTable";
 
-import { TypeList } from "../";
+import { Table, TypeList } from "../";
 
 import "./PokemonsTable.scss";
 
@@ -26,7 +22,6 @@ const moveTypes = {
   level: 1,
   egg: 2,
   tutor: 3,
-  tm: 4,
 };
 
 const defaultMoveLearnMethod = "level";
@@ -40,6 +35,15 @@ const PokemonsTable = ({ id, generation, tm }) => {
   const tmByGeneration = useMemo(() => {
     return mergeTmEntries(tm);
   }, [id]);
+
+  useEffect(() => {
+    if (tmByGeneration[generationId]) {
+      moveTypes["tm"] = 4;
+    } else {
+      delete moveTypes["tm"];
+      setMoveType("level");
+    }
+  }, [generationId]);
 
   useEffect(() => {
     setGenerationId(generation);
@@ -70,7 +74,7 @@ const PokemonsTable = ({ id, generation, tm }) => {
   const SpriteComponent = ({ value }) => {
     return (
       <img
-        className="pokemon-list-item-sprite clickable" 
+        className="pokemon-list-item-sprite clickable"
         onError={handleImageError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
@@ -78,13 +82,16 @@ const PokemonsTable = ({ id, generation, tm }) => {
     );
   };
 
-  const NameComponent = ({value}) => {
+  const NameComponent = ({ value }) => {
     return (
-      <p className="pokemon-list-item-name clickable" onClick={() => navigate(`/pokemon/${value.id}`)}>
+      <p
+        className="pokemon-list-item-name clickable"
+        onClick={() => navigate(`/pokemon/${value.id}`)}
+      >
         {value.name}
       </p>
-    )
-  }
+    );
+  };
 
   const TypesImageComponent = ({ value }) => {
     return <TypeList types={value} />;

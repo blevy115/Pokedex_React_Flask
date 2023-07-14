@@ -6,6 +6,7 @@
 .type-effectiveness-list-container {
   display: flex;
   flex-direction: column;
+  margin: 0 1em;
 
   p {
     margin-bottom: 0;
@@ -15,4 +16,8 @@
 .type-effectiveness-list {
   list-style-type: none;
   padding: 0;
+
+  li {
+    white-space: nowrap;
+  }
 }

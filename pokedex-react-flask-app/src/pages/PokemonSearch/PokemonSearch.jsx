@@ -18,7 +18,7 @@ const PokemonSearch = () => {
     !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
     {
       variables: !parseInt(textInput)
-        ? { name: `%${textInput}%` }
+        ? { name: `%${textInput.replace(" ", "-")}%` }
         : { id: parseInt(textInput) },
       skip: !textInput,
       client: pokemonAPIClient,

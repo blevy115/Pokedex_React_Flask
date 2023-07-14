@@ -4,3 +4,13 @@
   margin-top: 1rem;
   padding: 0.5rem;
 }
+
+.moves-table {
+    height: calc(50vh - 150px);
+    overflow-y: scroll;
+
+    @media screen and (max-width: 800px) {
+        height: auto;
+        overflow-y: auto;
+      }
+}

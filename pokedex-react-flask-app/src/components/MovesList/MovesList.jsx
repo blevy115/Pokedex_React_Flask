@@ -7,7 +7,7 @@ import "./MovesList.scss";
 
 const MovesList = ({ list }) => {
   let navigate = useNavigate();
-  console.log(list);
+
   return (
     <ul className="app__moves-list">
       {list.map(({ name, id, type, kind }) => (

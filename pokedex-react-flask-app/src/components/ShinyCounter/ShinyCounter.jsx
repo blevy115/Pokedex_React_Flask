@@ -69,7 +69,7 @@ const ShinyCounter = ({ pokemonId, userPokemonsData }) => {
   }
 
   return (
-    <div>
+    <div style={{display: "none"}}>
       <h2>Shiny Attempts: {shinyCounter}</h2>
 
       <form onSubmit={handleCustomShinyCount}>

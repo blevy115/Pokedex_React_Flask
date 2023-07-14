@@ -22,6 +22,7 @@ const RatioPieChart = ({ value1, value2 }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         displayColors: false,
@@ -54,7 +55,7 @@ const GenderRatio = ({ hasDifference, rate }) => {
         <p>{genderRatio.alt}</p>
       ) : (
         <>
-          <h4>Gender Rate</h4>
+          <h4>Gender Ratio</h4>
           <div className="gender-ratio-container">
             <RatioPieChart
               value1={genderRatio.male}

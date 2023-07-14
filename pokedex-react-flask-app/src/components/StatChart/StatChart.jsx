@@ -17,7 +17,11 @@ import { GET_NATURES } from "../../api/queries/backend";
 import { backEndClient } from "../../api/clients";
 
 import { modifyStats } from "../../helpers/modifyForTable";
-import { convertStats, calculateStats } from "../../helpers/statModifier";
+import {
+  convertStats,
+  calculateStats,
+  calculateStatsTotal,
+} from "../../helpers/statModifier";
 import { formatPokemonName } from "../../helpers/format";
 
 import { Table } from "../";
@@ -104,6 +108,12 @@ const StatChart = ({ baseStats, isAFavourite }) => {
       }),
     [baseStats, nature, level, ivs, evs]
   );
+
+  const baseStatTotal = useMemo(
+    () => calculateStatsTotal(baseStats),
+    [baseStats]
+  );
+
   useEffect(() => {
     if (natureDataLoading || !isAFavourite) return;
     setNature(natureData.natures[0]);
@@ -246,6 +256,7 @@ const StatChart = ({ baseStats, isAFavourite }) => {
           redraw={false}
         />
       </div>
+      <p className="text-center">Base Stats Total: {baseStatTotal}</p>
       {!natureDataLoading && isAFavourite ? (
         <>
           <div className="select-input">

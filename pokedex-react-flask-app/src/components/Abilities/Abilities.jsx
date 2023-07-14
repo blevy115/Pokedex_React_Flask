@@ -20,7 +20,7 @@ const Abilities = ({ abilities }) => {
           return (
             <li
               key={i}
-              className="clickable"
+              className="clickable no-wrap"
               data-tip
               data-tooltip-id={tooltipId}
             >

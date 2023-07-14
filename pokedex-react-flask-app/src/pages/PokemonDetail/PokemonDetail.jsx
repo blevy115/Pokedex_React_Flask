@@ -28,6 +28,7 @@ import {
 import { formatPokemonName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
 import { handleImageError } from "../../helpers/error";
+import { getEvYield } from "../../helpers/statModifier";
 
 import "./PokemonDetail.scss";
 
@@ -113,7 +114,9 @@ const PokemonDetail = () => {
     data.pokemon_details[0];
 
   const generation = form[0].pokemon_v2_versiongroup.generation_id;
-  
+
+  const evYield = getEvYield(stats);
+
   return (
     <div className="app__pokemon-detail">
       <div className="app-pokemon-detail-info">
@@ -127,10 +130,10 @@ const PokemonDetail = () => {
               <HiOutlineChevronLeft />
             </Link>
           </div>
-          <p className="pokemon-name">
-            {formatPokemonName(name)} #{params.pokemonId}
-          </p>
-
+          <div className="pokemon-name">
+            <p>#{params.pokemonId}</p>
+            <p>{formatPokemonName(name)}</p>
+          </div>
           <div>
             <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
               <img
@@ -142,7 +145,10 @@ const PokemonDetail = () => {
             </Link>
           </div>
         </div>
-
+        <GenerationSelector
+          generation={generation}
+          pokedexes={info.pokedexes}
+        />
         <PokemonImage id={params.pokemonId} />
         <TypeList types={types} />
         <button
@@ -151,20 +157,36 @@ const PokemonDetail = () => {
         >
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
-        <div className="pokemon-detail-characteristics">
-          <p>Generation: {generation}</p>
-          <p>Height: {(height / 10).toFixed(1)} m</p>
-          <p>Weight: {(weight / 10).toFixed(1)} kg</p>
+        <div className="pokemon-details-info-traits">
+          <div>
+            <div className="pokemon-detail-characteristics">
+              <p>Generation: {generation}</p>
+              <p className="no-wrap">Height: {(height / 10).toFixed(1)} m</p>
+              <p className="no-wrap">Weight: {(weight / 10).toFixed(1)} kg</p>
+            </div>
+            <Abilities abilities={abilities} />
+            <div className="text-center">
+              <h4>EV Yield</h4>
+              {Object.entries(evYield.evs).map((stat) => {
+                return (
+                  <p key={stat[0]} className="no-wrap">
+                    {formatPokemonName(stat[0])}: {stat[1]}
+                  </p>
+                );
+              })}
+              <p>Total: {evYield.total}</p>
+            </div>
+          </div>
+          <div>
+            <GenderRatio
+              hasDifference={info.has_gender_differences}
+              rate={info.gender_rate}
+            />
+            <TypeEffectiveness
+              types={types.map((type) => type.pokemon_v2_type.name)}
+            />
+          </div>
         </div>
-        <GenderRatio hasDifference={info.has_gender_differences} rate={info.gender_rate}/>
-          <GenerationSelector
-            generation={generation}
-            pokedexes={info.pokedexes}
-          />
-          <Abilities abilities={abilities} />
-          <TypeEffectiveness
-            types={types.map((type) => type.pokemon_v2_type.name)}
-          />
         {isAFavourite && (
           <ShinyCounter
             pokemonId={params.pokemonId}

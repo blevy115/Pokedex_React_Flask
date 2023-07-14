@@ -159,6 +159,7 @@ const MovesTable = ({ id, generation }) => {
           animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
           exit={{ display: "none" }}
           transition={{ duration: 0.5 }}
+          className="moves-table"
         >
           {moves.length > 0 ? (
             <>

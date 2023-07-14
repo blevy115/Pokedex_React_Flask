@@ -3,10 +3,17 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
 
-  .pokemon-detail-characteristics {
+  .pokemon-details-info-traits {
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .pokemon-detail-characteristics {
+    text-align: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -27,8 +34,13 @@
   }
 
   .pokemon-name {
-    text-align: center;
-    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 0;
+    }
   }
 }
 
