@@ -21,6 +21,7 @@ import {
   MovesTable,
   ShinyCounter,
   GenerationSelector,
+  GenderRatio,
   TypeList,
 } from "../../components";
 
@@ -112,6 +113,7 @@ const PokemonDetail = () => {
     data.pokemon_details[0];
 
   const generation = form[0].pokemon_v2_versiongroup.generation_id;
+  
   return (
     <div className="app__pokemon-detail">
       <div className="app-pokemon-detail-info">
@@ -154,10 +156,7 @@ const PokemonDetail = () => {
           <p>Height: {(height / 10).toFixed(1)} m</p>
           <p>Weight: {(weight / 10).toFixed(1)} kg</p>
         </div>
-        <div>
-          {info.has_gender_differences ? (
-            <p className="text-center">Has Gender Differences</p>
-          ) : undefined}
+        <GenderRatio hasDifference={info.has_gender_differences} rate={info.gender_rate}/>
           <GenerationSelector
             generation={generation}
             pokedexes={info.pokedexes}
@@ -166,7 +165,6 @@ const PokemonDetail = () => {
           <TypeEffectiveness
             types={types.map((type) => type.pokemon_v2_type.name)}
           />
-        </div>
         {isAFavourite && (
           <ShinyCounter
             pokemonId={params.pokemonId}

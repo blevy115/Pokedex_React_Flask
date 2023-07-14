@@ -10,6 +10,10 @@ const GET_POKEMON_INFO = gql`
 
       info: pokemon_v2_pokemonspecy {
         has_gender_differences
+        gender_rate
+        is_legendary
+        is_mythical
+        is_baby
         pokedexes: pokemon_v2_pokemondexnumbers {
           pokedex_number
           pokemon_v2_pokedex {
