@@ -123,16 +123,16 @@ const PokemonDetail = () => {
         <div className="pokemon-headers">
           <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
             <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+              <HiOutlineChevronLeft />
               <img
                 onError={handleImageError}
                 src={getSprite(parseInt(params.pokemonId) - 1)}
               />
-              <HiOutlineChevronLeft />
             </Link>
           </div>
           <div className="pokemon-name">
             <p>#{params.pokemonId}</p>
-            <p>{formatPokemonName(name)}</p>
+            <h3>{formatPokemonName(name)}</h3>
           </div>
           <div>
             <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>

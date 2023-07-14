@@ -24,7 +24,7 @@
 
   div a {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 
     svg {
@@ -40,6 +40,10 @@
 
     p {
       margin: 0;
+    }
+
+    h3 {
+      margin-top: 0.25rem;
     }
   }
 }
