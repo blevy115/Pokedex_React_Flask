@@ -156,7 +156,8 @@ const MovesTable = ({ id, generation }) => {
         <motion.div
           key={JSON.stringify(tableData)}
           initial={{ opacity: 0 }}
-          animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
+          animate={{ opacity: 1 }}
+          // animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
           exit={{ display: "none" }}
           transition={{ duration: 0.5 }}
           className="moves-table"

@@ -6,11 +6,14 @@
 }
 
 .moves-table {
+  @media screen and (min-width: 801px) {
     height: calc(50vh - 150px);
     overflow-y: scroll;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
 
-    @media screen and (max-width: 800px) {
-        height: auto;
-        overflow-y: auto;
-      }
+    &::-webkit-scrollbar {
+      display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+    }
+  }
 }
