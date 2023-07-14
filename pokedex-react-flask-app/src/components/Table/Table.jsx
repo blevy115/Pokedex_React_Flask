@@ -1,6 +1,8 @@
 import React from "react";
 import { useTable } from "react-table";
 
+import { formatPokemonName } from "../../helpers/format";
+
 import "./Table.scss";
 
 const Table = ({
@@ -33,7 +35,7 @@ const Table = ({
                       : {}
                   }
                 >
-                  {column.render("Header")}
+                  {formatPokemonName(column.render("Header"))}
                 </th>
               ))}
             </tr>

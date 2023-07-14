@@ -2,12 +2,14 @@ import React from "react";
 import { Tooltip } from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 
+import { formatPokemonName } from "../../helpers/format";
+
 import "./Abilities.scss";
 
 const Abilities = ({ abilities }) => {
   return (
-    <div>
-      <p className="text-center">Abilities</p>
+    <div className="app__abilities">
+      <h4 className="text-center">Abilities</h4>
       <ol className="abilities-list">
         {abilities.map((ability, i) => {
           const tooltipId = uuidv4();
@@ -22,8 +24,8 @@ const Abilities = ({ abilities }) => {
               data-tip
               data-tooltip-id={tooltipId}
             >
-              {ability.pokemon_v2_ability.name}
-              {ability.is_hidden && " (Hidden)"}
+              {ability.is_hidden && " (Hidden) "}
+              {formatPokemonName(ability.pokemon_v2_ability.name)}
               {hasAbilityText && (
                 <Tooltip
                   id={tooltipId}

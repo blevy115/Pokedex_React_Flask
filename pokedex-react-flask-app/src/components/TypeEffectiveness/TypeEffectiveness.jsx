@@ -29,7 +29,7 @@ const TypeEffectiveness = ({ types }) => {
     categorizeEffectiveness(typeEffectiveness);
   return (
     <div className="app__type-effectiveness">
-      <p className="text-center">Type Effectiveness</p>
+      <h4 className="text-center">Type Effectiveness</h4>
       <div className="type-effectiveness-lists">
         {weak.length > 0 && (
           <div className="type-effectiveness-list-container">

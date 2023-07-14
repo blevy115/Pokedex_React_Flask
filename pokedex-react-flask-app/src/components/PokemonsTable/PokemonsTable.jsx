@@ -70,13 +70,21 @@ const PokemonsTable = ({ id, generation, tm }) => {
   const SpriteComponent = ({ value }) => {
     return (
       <img
-        className="pokemon-list-item-sprite"
+        className="pokemon-list-item-sprite clickable" 
         onError={handleImageError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />
     );
   };
+
+  const NameComponent = ({value}) => {
+    return (
+      <p className="pokemon-list-item-name clickable" onClick={() => navigate(`/pokemon/${value.id}`)}>
+        {value.name}
+      </p>
+    )
+  }
 
   const TypesImageComponent = ({ value }) => {
     return <TypeList types={value} />;
@@ -98,6 +106,7 @@ const PokemonsTable = ({ id, generation, tm }) => {
   const { tableData, columns } = modifyPokemon({
     pokemons: mergePokemonEntries(pokemons),
     SpriteComponent,
+    NameComponent,
     TypesImageComponent,
     LevelComponent,
     hasLevelData: moveType === "level",

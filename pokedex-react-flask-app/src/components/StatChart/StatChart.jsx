@@ -18,6 +18,7 @@ import { backEndClient } from "../../api/clients";
 
 import { modifyStats } from "../../helpers/modifyForTable";
 import { convertStats, calculateStats } from "../../helpers/statModifier";
+import { formatPokemonName } from "../../helpers/format";
 
 import { Table } from "../";
 
@@ -49,11 +50,24 @@ const options = {
     legend: {
       display: false,
     },
+    tooltip: {
+      displayColors: false,
+      bodyAlign: "center",
+      titleFont: {
+        size: 15,
+      },
+      bodyFont: {
+        size: 16,
+      },
+    },
     datalabels: {
       color: "black",
       anchor: "end",
       align: "start",
       offset: 10,
+      font: {
+        size: 14,
+      },
       formatter: function (value) {
         return value;
       },
@@ -105,17 +119,21 @@ const StatChart = ({ baseStats, isAFavourite }) => {
   const data = useMemo(() => {
     return {
       labels: isAFavourite
-        ? Object.keys(calculatedStatsValues)
-        : Object.keys(convertedStats),
+        ? Object.keys(calculatedStatsValues).map((val) =>
+            formatPokemonName(val)
+          )
+        : Object.keys(convertedStats).map((val) => formatPokemonName(val)),
       datasets: [
         {
-          label: "Stats",
+          // label: "Stats",
           data: isAFavourite
             ? Object.values(calculatedStatsValues)
             : Object.values(convertedStats),
           backgroundColor: "rgba(255, 99, 132, 0.2)",
           borderColor: "rgba(255, 99, 132, 1)",
           borderWidth: 1,
+          pointHoverRadius: 7, // Adjust the hover radius
+          pointRadius: 5, // Adjust the radius
         },
       ],
     };
