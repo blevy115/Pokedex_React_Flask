@@ -67,10 +67,11 @@ const options = {
     datalabels: {
       color: "black",
       anchor: "end",
-      align: "start",
-      offset: 10,
+      align: "end",
+      offset: -11,
       font: {
         size: 14,
+        weight: 600,
       },
       formatter: function (value) {
         return value;
