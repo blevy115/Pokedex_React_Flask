@@ -68,7 +68,7 @@ const options = {
       color: "black",
       anchor: "end",
       align: "end",
-      offset: -11,
+      offset: -10,
       font: {
         size: 14,
         weight: 600,
@@ -136,15 +136,14 @@ const StatChart = ({ baseStats, isAFavourite }) => {
         : Object.keys(convertedStats).map((val) => formatPokemonName(val)),
       datasets: [
         {
-          // label: "Stats",
           data: isAFavourite
             ? Object.values(calculatedStatsValues)
             : Object.values(convertedStats),
           backgroundColor: "rgba(255, 99, 132, 0.2)",
           borderColor: "rgba(255, 99, 132, 1)",
           borderWidth: 1,
-          pointHoverRadius: 7, // Adjust the hover radius
-          pointRadius: 5, // Adjust the radius
+          pointHoverRadius: 7,
+          pointRadius: 5,
         },
       ],
     };
@@ -153,13 +152,13 @@ const StatChart = ({ baseStats, isAFavourite }) => {
   const scales = useMemo(() => {
     return {
       r: {
-        suggestedMin: 0, // Set the minimum value of the scale to 0
-        suggestedMax: (140 * level) / 100, // Set the maximum value of the scale to 200
-        stepSize: (40 * level) / 100, // Set the step size of the scale to 50
+        suggestedMin: 0,
+        suggestedMax: (140 * level) / 100,
+        stepSize: (40 * level) / 100,
         ticks: {
           display: false,
-          beginAtZero: true, // Start the ticks at zero
-          precision: 0, // Set the precision of the ticks to 0
+          beginAtZero: true,
+          precision: 0,
         },
       },
     };

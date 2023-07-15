@@ -8,7 +8,7 @@ const GenerationSelector = ({ pokedexes }) => {
   );
 
   return (
-    <div className="regional-pokedex-selector">
+    <div className="app__regional-pokedex-selector">
       <div className="regional-pokedex-selector-container">
         <p>Pokedex: </p>
         <select

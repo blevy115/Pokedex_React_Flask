@@ -9,6 +9,7 @@ import { pokemonAPIClient } from "../../api/clients";
 import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
+
 import { Table } from "../";
 
 import "./MovesTable.scss";

@@ -1,4 +1,5 @@
-const ratios = {
+// Rate determined by response from pokeapi call
+const ratiosByRate = {
   0: {
     male: 100,
     female: 0,
@@ -30,10 +31,10 @@ const ratios = {
   "-1": {
     male: null,
     female: null,
-    alt: "Gender Unknown",
+    unknown: "Gender Unknown",
   },
 };
 
-export function getGenderRate(rate) {
-    return ratios[rate]
+export function getGenderRatio(rate) {
+    return ratiosByRate[rate]
 }

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 
-import { getGenderRate } from "../../helpers/getGenderRate";
+import { getGenderRatio } from "../../helpers/getGenderRatio";
 
 import "./GenderRatio.scss";
 
@@ -46,13 +46,13 @@ const RatioPieChart = ({ value1, value2 }) => {
 
 const GenderRatio = ({ hasDifference, rate }) => {
   const genderRatio = useMemo(() => {
-    return getGenderRate(rate);
+    return getGenderRatio(rate);
   }, [rate]);
 
   return (
     <div className="app__gender-ratio">
-      {genderRatio.alt ? (
-        <p>{genderRatio.alt}</p>
+      {genderRatio.unknown ? (
+        <p>{genderRatio.unknown}</p>
       ) : (
         <>
           <h4>Gender Ratio</h4>

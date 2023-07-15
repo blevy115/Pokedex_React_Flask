@@ -73,13 +73,18 @@ export function calculateStatsTotal(stats) {
   );
 }
 
-export function getEvYield(stats){
-  const evStats = stats.filter((stat) => stat.effort > 0).reduce((stats, stat) => {
-    const name = stat.pokemon_v2_stat.name;
-    const effort = stat.effort;
-    stats["evs"][name] = effort;
-    stats["total"] += effort
-    return stats;
-  }, {total: 0, evs: {}});
-  return evStats
+export function getEvYield(stats) {
+  const evStats = stats
+    .filter((stat) => stat.effort > 0)
+    .reduce(
+      (stats, stat) => {
+        const name = stat.pokemon_v2_stat.name;
+        const effort = stat.effort;
+        stats["evs"][name] = effort;
+        stats["total"] += effort;
+        return stats;
+      },
+      { total: 0, evs: {} }
+    );
+  return evStats;
 }
