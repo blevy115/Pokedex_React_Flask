@@ -1,0 +1,16 @@
+.app__moves-list {
+  padding: 0;
+  list-style-type: none;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.app__moves-list-item {
+  margin: 1em auto;
+  padding: 0 2em;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  max-width: 500px;
+  justify-content: space-between;
+}

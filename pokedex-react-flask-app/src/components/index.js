@@ -1,0 +1,14 @@
+export { default as Abilities } from "./Abilities/Abilities";
+export { default as GenderRatio } from "./GenderRatio/GenderRatio";
+export { default as GenerationSelector } from "./GenerationSelector/GenerationSelector";
+export { default as MovesList } from "./MovesList/MovesList";
+export { default as MovesTable } from "./MovesTable/MovesTable";
+export { default as NavBar } from "./NavBar/NavBar";
+export { default as PokemonImage } from "./PokemonImage/PokemonImage";
+export { default as PokemonList } from "./PokemonList/PokemonList";
+export { default as PokemonsTable } from "./PokemonsTable/PokemonsTable";
+export { default as ShinyCounter } from "./ShinyCounter/ShinyCounter";
+export { default as StatChart } from "./StatChart/StatChart";
+export { default as Table } from "./Table/Table";
+export { default as TypeEffectiveness } from "./TypeEffectiveness/TypeEffectiveness";
+export { default as TypeList } from "./TypeList/TypeList";

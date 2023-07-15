@@ -1,4 +1,6 @@
-function modifyMovesForTable({
+import { formatPokemonName } from "./format";
+
+function modifyMoves({
   moves,
   hasLevel = false,
   TypeImageComponent,
@@ -41,7 +43,45 @@ function modifyMovesForTable({
   return { columns, tableData };
 }
 
-function modifyStatsForTable({ headers, ivs, evs, StatComponent }) {
+function modifyPokemon({
+  pokemons,
+  hasLevelData = false,
+  SpriteComponent,
+  NameComponent,
+  TypesImageComponent,
+  LevelComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Types", accessor: "types", Cell: TypesImageComponent },
+  ];
+  if (hasLevelData) {
+    columns.push({
+      Header: "Level",
+      accessor: "level",
+      Cell: LevelComponent,
+    });
+  }
+
+  const tableData = pokemons.map((pokemon, i) => {
+    const pokemonData = pokemon.pokemon_v2_pokemon;
+    const modifiedPokemon = {
+      id: i,
+      pokemonId: `#${pokemonData.id}`,
+      spriteId: pokemonData.id,
+      name: { name: formatPokemonName(pokemonData.name), id: pokemonData.id },
+      types: pokemonData.types,
+    };
+    return hasLevelData
+      ? { ...modifiedPokemon, level: pokemon.values }
+      : modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
+function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
     accessor: stat,
@@ -54,4 +94,4 @@ function modifyStatsForTable({ headers, ivs, evs, StatComponent }) {
   return { columns, tableData };
 }
 
-export { modifyMovesForTable, modifyStatsForTable };
+export { modifyMoves, modifyPokemon, modifyStats };

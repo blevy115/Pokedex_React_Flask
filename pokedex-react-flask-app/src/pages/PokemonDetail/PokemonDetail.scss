@@ -1,0 +1,54 @@
+.app__pokemon-detail {
+  margin: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+
+  .pokemon-details-info-traits {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .pokemon-detail-characteristics {
+    text-align: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pokemon-headers {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  div a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    svg {
+      font-size: 1.5em;
+      color: black;
+    }
+  }
+
+  .pokemon-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 0;
+    }
+
+    h3 {
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+.favourite-button {
+  display: block;
+  margin: 1em auto;
+}

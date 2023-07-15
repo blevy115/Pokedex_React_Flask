@@ -1,0 +1,15 @@
+.app__abilities {
+    margin-bottom: 2em;
+}
+
+.abilities-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  padding-left: 0;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

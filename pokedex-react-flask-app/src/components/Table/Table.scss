@@ -1,0 +1,12 @@
+.table {
+  width: 100%;
+  text-align: center;
+  margin: 1em auto;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+}
