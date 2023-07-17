@@ -40,6 +40,11 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/abilities" activeclassname="active">
+            Abilities
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/favourites" activeclassname="active">
             Favourites
           </NavLink>
@@ -78,6 +83,11 @@ const NavBar = () => {
                 <li>
                   <NavLink to="/moves" activeclassname="active">
                     Moves
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/abilities" activeclassname="active">
+                    Abilities
                   </NavLink>
                 </li>
                 <li>

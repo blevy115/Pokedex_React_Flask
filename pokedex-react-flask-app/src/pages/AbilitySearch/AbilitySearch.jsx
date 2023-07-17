@@ -31,7 +31,7 @@ const AbilitySearch = () => {
     <div className="app__ability-search">
       <h2 className="header-text">Welcome {user?.name}</h2>
       <div className="app__ability-search-field">
-        <label htmlFor="app__ability-search-field">Search For abilities</label>
+        <label htmlFor="app__ability-search-field">Search For Abilities</label>
         <input
           id="ability-search-field"
           ref={inputRef}

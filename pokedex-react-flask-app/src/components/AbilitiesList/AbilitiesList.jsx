@@ -12,7 +12,7 @@ const AbilitiesList = ({ list }) => {
     <ul className="app__abilities-list">
       {list.map(({ name, id }) => (
         <li
-          className="app_abilities-list-item"
+          className="app__abilities-list-item"
           key={id}
           onClick={() => navigate(`/abilities/${id}`)}
         >

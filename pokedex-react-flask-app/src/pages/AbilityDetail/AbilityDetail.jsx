@@ -8,7 +8,7 @@ import { ABILITY_MUTATION } from "../../api/queries/backend";
 
 import { formatPokemonName } from "../../helpers/format";
 
-// import { PokemonsTable } from "../../components";
+import { AbilityPokemonsTable } from "../../components";
 
 import "./AbilityDetail.scss";
 
@@ -36,20 +36,16 @@ const AbilityDetail = () => {
 
   if (loading) return <p>Loading...</p>;
 
-  const { generation_id, flavor, effect_text } = data.ability[0];
+  const { flavor, effect_text } = data.ability[0];
 
-  console.log(generation_id, flavor, effect_text);
   return (
     <div className="app__ability">
       <div className="app__ability-info">
         <h3>{formatPokemonName(name)}</h3>
         <p>{flavor[0] && flavor[0].text}</p>
+        <p>{effect_text[0] && effect_text[0].effect}</p>
       </div>
-      {/* <PokemonsTable
-        id={parseInt(params.abilityId)}
-        generation={generation_id}
-        tm={tm}
-      /> */}
+      <AbilityPokemonsTable id={parseInt(params.abilityId)} />
     </div>
   );
 };

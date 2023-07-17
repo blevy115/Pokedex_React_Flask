@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,6 +8,8 @@ import { formatPokemonName } from "../../helpers/format";
 import "./Abilities.scss";
 
 const Abilities = ({ abilities }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="app__abilities">
       <h4 className="text-center">Abilities</h4>
@@ -43,6 +46,14 @@ const Abilities = ({ abilities }) => {
                   }}
                 >
                   {popupText}
+                  <button
+                    className="popup-button"
+                    onClick={() =>
+                      navigate(`/abilities/${ability.pokemon_v2_ability.id}`)
+                    }
+                  >
+                    More Info
+                  </button>
                 </Tooltip>
               )}
             </li>

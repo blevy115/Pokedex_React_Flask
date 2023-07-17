@@ -221,7 +221,7 @@ const GET_ABILITY_INFO = gql`
 `;
 
 const GET_ABILITY_POKEMONS = gql`
-  query getAbilityPokemons($id: Int!, $generationId: Int!) {
+  query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
       pokemons: pokemon_v2_pokemonabilities {
         is_hidden
@@ -333,4 +333,6 @@ export {
 //     distinct_on: [pokemon_id, level]
 //     where: {
 
-// flavor: pokemon_v2_abilityflavortexts(where: {pokemon_v2_language: {name: {_eq: "en"}}, pokemon_v2_versiongroup: {generation_id: {_eq: 8}}})
+// flavor: pokemon_v2_abilityflavortexts(where:
+//   {pokemon_v2_language: {name: {_eq: "en"}}, pokemon_v2_versiongroup: {generation_id: {_eq: 8}}
+// })
