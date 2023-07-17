@@ -8,7 +8,7 @@ import { MOVE_MUTATION } from "../../api/queries/backend";
 
 import { formatPokemonName } from "../../helpers/format";
 
-import { PokemonsTable } from "../../components";
+import { MovePokemonsTable } from "../../components";
 
 import "./MoveDetail.scss";
 
@@ -62,7 +62,7 @@ const MoveDetail = () => {
         <p>Accuracy: {accuracy}</p>
         <p>PP: {pp}</p>
       </div>
-      <PokemonsTable
+      <MovePokemonsTable
         id={parseInt(params.moveId)}
         generation={generation_id}
         tm={tm}
