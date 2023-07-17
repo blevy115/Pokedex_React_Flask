@@ -5,11 +5,17 @@ from graphql_relay import from_global_id
 
 from ..models import User as UserModel, \
     Pokemon as PokemonModel, \
+    Move as MoveModel, \
+    Ability as AbilityModel, \
+    Item as ItemModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
+    MoveObject as Move, \
+    AbilityObject as Ability, \
+    ItemObject as Item, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature
 
@@ -42,6 +48,32 @@ class Query(graphene.ObjectType):
             query = query.filter(PokemonModel.name == name)
         if pokemon_id:
             query = query.filter(PokemonModel.pokemon_id == pokemon_id)
+        return query.all()
+
+    moves = graphene.List(
+        lambda: Move, name=graphene.String(), move_id=graphene.Int()
+    )
+
+    def resolve_moves(self, info, name=None, move_id=None):
+        query = Move.get_query(info)
+
+        if name:
+            query = query.filter(MoveModel.name == name)
+        if move_id:
+            query = query.filter(MoveModel.move_id == move_id)
+        return query.all()
+
+    abilities = graphene.List(
+        lambda: Ability, name=graphene.String(), ability_id=graphene.Int()
+    )
+
+    def resolve_abilities(self, info, name=None, ability_id=None):
+        query = Ability.get_query(info)
+
+        if name:
+            query = query.filter(AbilityModel.name == name)
+        if ability_id:
+            query = query.filter(AbilityModel.ability_id == ability_id)
         return query.all()
 
     user_pokemons = graphene.List(lambda: UserPokemon, user_id=graphene.String(
