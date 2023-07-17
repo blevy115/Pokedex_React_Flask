@@ -1,4 +1,5 @@
 export { default as Abilities } from "./Abilities/Abilities";
+export { default as AbilitiesList } from "./AbilitiesList/AbilitiesList";
 export { default as GenderRatio } from "./GenderRatio/GenderRatio";
 export { default as GenerationSelector } from "./GenerationSelector/GenerationSelector";
 export { default as MovesList } from "./MovesList/MovesList";

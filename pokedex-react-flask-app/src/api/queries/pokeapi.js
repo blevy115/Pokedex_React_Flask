@@ -153,6 +153,18 @@ const GET_MOVES_LIST_BY_NAME = gql`
   }
 `;
 
+const GET_ABILITIES_LIST_BY_NAME = gql`
+  query getAbilityList($name: String!) {
+    abilities_list: pokemon_v2_ability(
+      where: { name: { _ilike: $name }, is_main_series: { _eq: true } }
+      order_by: { name: asc }
+    ) {
+      id
+      name
+    }
+  }
+`;
+
 const GET_MOVE_INFO = gql`
   query getMoveInfo($id: Int!) {
     move: pokemon_v2_move(where: { id: { _eq: $id } }) {
@@ -182,6 +194,46 @@ const GET_MOVE_INFO = gql`
         version_group_id
         pokemon_v2_item {
           name
+        }
+      }
+    }
+  }
+`;
+
+const GET_ABILITY_INFO = gql`
+  query getAbilityInfo($id: Int!) {
+    ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
+      name
+      generation_id
+      flavor: pokemon_v2_abilityflavortexts(
+        where: { pokemon_v2_language: { name: { _eq: "en" } } }
+        distinct_on: language_id
+      ) {
+        text: flavor_text
+      }
+      effect_text: pokemon_v2_abilityeffecttexts(
+        where: { pokemon_v2_language: { name: { _eq: "en" } } }
+      ) {
+        effect
+      }
+    }
+  }
+`;
+
+const GET_ABILITY_POKEMONS = gql`
+  query getAbilityPokemons($id: Int!, $generationId: Int!) {
+    ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
+      pokemons: pokemon_v2_pokemonabilities {
+        is_hidden
+        pokemon_v2_pokemon {
+          id
+          name
+          types: pokemon_v2_pokemontypes {
+            pokemon_v2_type {
+              name
+              id
+            }
+          }
         }
       }
     }
@@ -240,8 +292,26 @@ export {
   GET_POKEMON_LIST_BY_ID,
   GET_MOVES_LIST_BY_NAME,
   GET_MOVE_INFO,
+  GET_ABILITIES_LIST_BY_NAME,
+  GET_ABILITY_INFO,
   GET_MOVE_POKEMONS,
+  GET_ABILITY_POKEMONS,
 };
+
+// const GET_DEFAULT_POKEMON_LIST_BY_ID = gql`
+//   query getPokemonList($id: Int!) {
+//     pokemon_list: pokemon_v2_pokemon(where: { id: { _eq: $id }, is_default: {_eq: true} }) {
+//       id
+//       name
+//       types: pokemon_v2_pokemontypes {
+//         pokemon_v2_type {
+//           name
+//           id
+//         }
+//       }
+//     }
+//   }
+// `;
 
 //Older COde, might be usefull in the future
 
@@ -262,3 +332,5 @@ export {
 //   pokemons: pokemon_v2_pokemonmoves(
 //     distinct_on: [pokemon_id, level]
 //     where: {
+
+// flavor: pokemon_v2_abilityflavortexts(where: {pokemon_v2_language: {name: {_eq: "en"}}, pokemon_v2_versiongroup: {generation_id: {_eq: 8}}})
