@@ -81,11 +81,11 @@ const ABILITY_MUTATION = gql`
 `;
 
 const ITEM_MUTATION = gql`
-  mutation pokemonMutation($name: String!, $pokemon_id: Int!) {
-    mutatePokemon(name: $name, pokemonId: $pokemon_id) {
-      pokemon {
+  mutation itemMutation($name: String!, $item_id: Int!) {
+    mutateItem(name: $name, itemId: $item_id) {
+      item {
         name
-        pokemonId
+        itemId
       }
     }
   }

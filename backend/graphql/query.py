@@ -75,6 +75,19 @@ class Query(graphene.ObjectType):
         if ability_id:
             query = query.filter(AbilityModel.ability_id == ability_id)
         return query.all()
+    
+    items = graphene.List(
+        lambda: Item, name=graphene.String(), item_id=graphene.Int()
+    )
+
+    def resolve_items(self, info, name=None, item_id=None):
+        query = Item.get_query(info)
+
+        if name:
+            query = query.filter(ItemModel.name == name)
+        if item_id:
+            query = query.filter(ItemModel.item_id == item_id)
+        return query.all()
 
     user_pokemons = graphene.List(lambda: UserPokemon, user_id=graphene.String(
         required=True), order_by=graphene.String())

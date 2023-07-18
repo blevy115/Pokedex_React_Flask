@@ -134,6 +134,27 @@ class AbilityMutation(graphene.Mutation):
         db.session.commit()
 
         return AbilityMutation(ability=ability)
+    
+class ItemMutation(graphene.Mutation):
+    class Arguments:
+        item_id = graphene.Int()
+        name = graphene.String(required=True)
+
+    item = graphene.Field(lambda: Item)
+
+    def mutate(self, info, item_id, name):
+        item = ItemModel(item_id=item_id, name=name)
+
+        existing_item = ItemModel.query.filter(
+            ItemModel.name == name and ItemModel.item_id == item_id).first()
+
+        if existing_item:
+            return ItemMutation(item=existing_item)
+
+        db.session.add(item)
+        db.session.commit()
+
+        return ItemMutation(item=item)
 
 
 class UserPokemonMutation(graphene.Mutation):
@@ -201,6 +222,7 @@ class ShinyCounterMutation(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     signup = SignupMutation.Field()
+    mutate_item = ItemMutation.Field()
     mutate_pokemon = PokemonMutation.Field()
     mutate_move = MoveMutation.Field()
     mutate_ability = AbilityMutation.Field()
