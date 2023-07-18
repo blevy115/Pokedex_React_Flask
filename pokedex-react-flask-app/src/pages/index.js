@@ -1,5 +1,7 @@
 export { default as AbilityDetail } from "./AbilityDetail/AbilityDetail";
 export { default as AbilitySearch } from "./AbilitySearch/AbilitySearch";
+export { default as ItemDetail } from "./ItemDetail/ItemDetail";
+export { default as ItemSearch } from "./ItemSearch/ItemSearch";
 export { default as Favourites } from "./Favourites/Favourites";
 export { default as MoveDetail } from "./MoveDetail/MoveDetail";
 export { default as MoveSearch } from "./MoveSearch/MoveSearch";

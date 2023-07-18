@@ -45,6 +45,11 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/items" activeclassname="active">
+            Items
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/favourites" activeclassname="active">
             Favourites
           </NavLink>
@@ -76,22 +81,47 @@ const NavBar = () => {
               <HiX onClick={() => setToggle(false)} />
               <ul>
                 <li>
-                  <NavLink to="/pokemon" activeclassname="active">
+                  <NavLink
+                    to="/pokemon"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
                     Pokemon
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/moves" activeclassname="active">
+                  <NavLink
+                    to="/moves"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
                     Moves
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/abilities" activeclassname="active">
+                  <NavLink
+                    to="/abilities"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
                     Abilities
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/favourites" activeclassname="active">
+                  <NavLink
+                    to="/items"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Items
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/favourites"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
                     Favourites
                   </NavLink>
                 </li>
