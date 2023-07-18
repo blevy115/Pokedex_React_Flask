@@ -56,6 +56,22 @@ const GET_POKEMON_INFO = gql`
         }
         is_hidden
       }
+
+      held_items: pokemon_v2_pokemonitems(
+        where: { pokemon_v2_pokemon: { is_default: { _eq: true } } }
+      ) {
+        rarity
+        pokemon_v2_item {
+          name
+          id
+        }
+        pokemon_v2_version {
+          pokemon_v2_versiongroup {
+            generation_id
+            name
+          }
+        }
+      }
     }
   }
 `;
@@ -131,6 +147,18 @@ const GET_POKEMON_LIST_BY_ID = gql`
           id
         }
       }
+    }
+  }
+`;
+
+const GET_ITEMS_LIST_BY_NAME = gql`
+  query getItemList($name: String!) {
+    items_list: pokemon_v2_item(
+      where: { name: { _ilike: $name } }
+      order_by: { name: asc }
+    ) {
+      id
+      name
     }
   }
 `;
@@ -220,6 +248,34 @@ const GET_ABILITY_INFO = gql`
   }
 `;
 
+const GET_ITEM_INFO = gql`
+  query getItemInfo($id: Int!) {
+    item: pokemon_v2_item(where: { id: { _eq: $id } }) {
+      name
+      category: pokemon_v2_itemcategory {
+        id
+        name
+      }
+      flavor: pokemon_v2_itemflavortexts(
+        where: { pokemon_v2_language: { name: { _eq: "en" } } }
+        distinct_on: language_id
+      ) {
+        text: flavor_text
+      }
+      held_by_pokemon: pokemon_v2_pokemonitems(
+        distinct_on: pokemon_id
+        where: { pokemon_v2_pokemon: { is_default: { _eq: true } } }
+      ) {
+        pokemon_v2_pokemon {
+          name
+          id
+        }
+        rarity
+      }
+    }
+  }
+`;
+
 const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
@@ -294,6 +350,8 @@ export {
   GET_MOVE_INFO,
   GET_ABILITIES_LIST_BY_NAME,
   GET_ABILITY_INFO,
+  GET_ITEMS_LIST_BY_NAME,
+  GET_ITEM_INFO,
   GET_MOVE_POKEMONS,
   GET_ABILITY_POKEMONS,
 };

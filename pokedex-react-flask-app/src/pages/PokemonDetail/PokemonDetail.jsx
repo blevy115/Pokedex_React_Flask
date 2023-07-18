@@ -22,6 +22,7 @@ import {
   GenerationSelector,
   GenderRatio,
   TypeList,
+  HeldItems,
 } from "../../components";
 
 import { formatPokemonName } from "../../helpers/format";
@@ -92,8 +93,16 @@ const PokemonDetail = () => {
   }
 
   if (loading) return <p>Loading...</p>;
-  const { height, weight, types, info, stats, abilities, form } =
-    data.pokemon_details[0];
+  const {
+    height,
+    weight,
+    types,
+    info,
+    stats,
+    abilities,
+    form,
+    held_items: heldItems,
+  } = data.pokemon_details[0];
 
   const generation = form[0].pokemon_v2_versiongroup.generation_id;
 
@@ -160,6 +169,7 @@ const PokemonDetail = () => {
             </div>
           </div>
           <div>
+            {heldItems.length > 0 && <HeldItems items={heldItems} />}
             <GenderRatio
               hasDifference={info.has_gender_differences}
               rate={info.gender_rate}

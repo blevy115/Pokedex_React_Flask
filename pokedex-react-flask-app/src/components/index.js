@@ -2,6 +2,8 @@ export { default as Abilities } from "./Abilities/Abilities";
 export { default as AbilitiesList } from "./AbilitiesList/AbilitiesList";
 export { default as GenderRatio } from "./GenderRatio/GenderRatio";
 export { default as GenerationSelector } from "./GenerationSelector/GenerationSelector";
+export { default as ItemsList } from "./ItemsList/ItemsList";
+export { default as HeldItems } from "./HeldItems/HeldItems";
 export { default as MovesList } from "./MovesList/MovesList";
 export { default as MovesTable } from "./MovesTable/MovesTable";
 export { default as NavBar } from "./NavBar/NavBar";
