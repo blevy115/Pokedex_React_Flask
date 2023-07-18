@@ -1,6 +1,13 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { getSprite } from "../../helpers/pictures";
+
+import { modifyPokemon } from "../../helpers/modifyForTable";
+import { handleImageError } from "../../helpers/error";
+
+import {Table, TypeList} from "../"
+
 const ItemPokemonTable = ({list}) => {
   const navigate = useNavigate();
   const generationOptions = useMemo(
@@ -15,6 +22,40 @@ const ItemPokemonTable = ({list}) => {
   }, [generationOptions]);
 
   if (!generation) return null;
+
+  const SpriteComponent = ({ value }) => {
+    return (
+      <img
+        className="pokemon-list-item-sprite clickable"
+        onError={handleImageError}
+        src={getSprite(value)}
+        onClick={() => navigate(`/pokemon/${value}`)}
+      />
+    );
+  };
+
+  const NameComponent = ({ value }) => {
+    return (
+      <p
+        className="pokemon-list-item-name clickable"
+        onClick={() => navigate(`/pokemon/${value.id}`)}
+      >
+        {value.name}
+      </p>
+    );
+  };
+
+  const TypesImageComponent = ({ value }) => {
+    return <TypeList types={value} />;
+  };
+  
+  const { tableData, columns } = modifyPokemon({
+    pokemons: list[generation],
+    SpriteComponent,
+    NameComponent,
+    TypesImageComponent,
+    hasItemRarityData: true
+  });
 
   return (
     <>
@@ -32,17 +73,13 @@ const ItemPokemonTable = ({list}) => {
           );
         })}
       </select>
-    <ul>
-      {list[generation].map((pokemon, i) => (
-        <li
-          key={i}
-          onClick={() => navigate(`/pokemon/${pokemon.pokemon.id}`)}
-          style={{ cursor: "pointer" }}
-        >
-          {pokemon.pokemon.name} {pokemon.rarity}%
-        </li>
-      ))}
-    </ul>
+      {list[generation].length > 0 ? (
+        <div>
+          <Table data={tableData} columns={columns} />
+        </div>
+      ) : (
+        <p>No Pokemons Found</p>
+      )}
     </>
   );
 };

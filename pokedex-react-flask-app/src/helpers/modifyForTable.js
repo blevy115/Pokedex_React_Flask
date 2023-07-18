@@ -47,6 +47,7 @@ function modifyPokemon({
   pokemons,
   hasLevelData = false,
   hasHiddenData = false,
+  hasItemRarityData = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
@@ -73,6 +74,12 @@ function modifyPokemon({
       Cell: IsHiddenComponent,
     });
   }
+  if (hasItemRarityData) {
+    columns.push({
+      Header: "Rarity",
+      accessor: "rarity",
+    });
+  }
 
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
@@ -87,6 +94,7 @@ function modifyPokemon({
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
     if (hasHiddenData)
       return { ...modifiedPokemon, isHidden: pokemon.is_hidden };
+    if (hasItemRarityData) return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
     return modifiedPokemon;
   });
   return { columns, tableData };

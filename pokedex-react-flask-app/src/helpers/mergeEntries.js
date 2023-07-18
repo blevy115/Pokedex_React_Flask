@@ -29,7 +29,7 @@ export function mergePokemonEntries(arr) {
 export function mergePokemonEntriesHeldItems(arr) {
   const merged = arr.reduce((acc, cur) => {
     const {
-      pokemon_v2_pokemon: pokemon,
+      pokemon_v2_pokemon,
       pokemon_v2_version: {
         pokemon_v2_versiongroup: { generation_id },
       },
@@ -38,22 +38,22 @@ export function mergePokemonEntriesHeldItems(arr) {
     if (!acc[generation_id]) {
       acc[generation_id] = [
         {
-          pokemon,
+          pokemon_v2_pokemon,
           rarity,
         },
       ];
     } else {
       const existingItemIndex = acc[generation_id].findIndex(
-        (existingItem) => existingItem.pokemon.name === pokemon.name
+        (existingItem) => existingItem.pokemon_v2_pokemon.name === pokemon_v2_pokemon.name
       );
       if (existingItemIndex === -1) {
         acc[generation_id].push({
-          pokemon,
+          pokemon_v2_pokemon,
           rarity,
         });
       } else if (rarity > acc[generation_id][existingItemIndex].rarity) {
         acc[generation_id][existingItemIndex] = {
-          pokemon,
+          pokemon_v2_pokemon,
           rarity,
         };
       }

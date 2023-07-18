@@ -268,6 +268,12 @@ const GET_ITEM_INFO = gql`
         pokemon_v2_pokemon {
           name
           id
+          types: pokemon_v2_pokemontypes {
+            pokemon_v2_type {
+              name
+              id
+            }
+          }
         }
         rarity
         pokemon_v2_version {
