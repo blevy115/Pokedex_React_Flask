@@ -263,7 +263,6 @@ const GET_ITEM_INFO = gql`
         text: flavor_text
       }
       held_by_pokemon: pokemon_v2_pokemonitems(
-        distinct_on: pokemon_id
         where: { pokemon_v2_pokemon: { is_default: { _eq: true } } }
       ) {
         pokemon_v2_pokemon {
@@ -271,6 +270,12 @@ const GET_ITEM_INFO = gql`
           id
         }
         rarity
+        pokemon_v2_version {
+          pokemon_v2_versiongroup {
+            generation_id
+            name
+          }
+        }
       }
     }
   }

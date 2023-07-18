@@ -26,6 +26,44 @@ export function mergePokemonEntries(arr) {
   return merged;
 }
 
+export function mergePokemonEntriesHeldItems(arr) {
+  const merged = arr.reduce((acc, cur) => {
+    const {
+      pokemon_v2_pokemon: pokemon,
+      pokemon_v2_version: {
+        pokemon_v2_versiongroup: { generation_id },
+      },
+      rarity,
+    } = cur;
+    if (!acc[generation_id]) {
+      acc[generation_id] = [
+        {
+          pokemon,
+          rarity,
+        },
+      ];
+    } else {
+      const existingItemIndex = acc[generation_id].findIndex(
+        (existingItem) => existingItem.pokemon.name === pokemon.name
+      );
+      if (existingItemIndex === -1) {
+        acc[generation_id].push({
+          pokemon,
+          rarity,
+        });
+      } else if (rarity > acc[generation_id][existingItemIndex].rarity) {
+        acc[generation_id][existingItemIndex] = {
+          pokemon,
+          rarity,
+        };
+      }
+    }
+    return acc;
+  }, {});
+
+  return merged;
+}
+
 export function mergeTmEntries(arr) {
   const merged = arr.reduce((acc, cur) => {
     const machine = cur.pokemon_v2_item.name;

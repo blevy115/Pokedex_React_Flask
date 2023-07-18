@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { pokemonAPIClient, backEndClient } from "../../api/clients";
@@ -7,14 +7,14 @@ import { GET_ITEM_INFO } from "../../api/queries/pokeapi";
 import { ITEM_MUTATION } from "../../api/queries/backend";
 
 import { formatPokemonName } from "../../helpers/format";
+import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
 
-// import { ItemPokemonsTable } from "../../components";
+import { ItemPokemonTable } from "../../components";
 
 import "./ItemDetail.scss";
 
 const ItemDetail = () => {
   const params = useParams();
-  const navigate = useNavigate();
 
   const { data, loading } = useQuery(GET_ITEM_INFO, {
     variables: { id: parseInt(params.itemId) },
@@ -37,7 +37,6 @@ const ItemDetail = () => {
 
   if (loading) return <p>Loading...</p>;
 
-  console.log(data);
   const { flavor, held_by_pokemon: heldByPokemon, category } = data.item[0];
 
   return (
@@ -47,18 +46,7 @@ const ItemDetail = () => {
         <p>{flavor[0] && flavor[0].text}</p>
         <p>{category && category.name}</p>
       </div>
-      <ul>
-        {heldByPokemon.map((pokemon, i) => (
-          <li
-            key={i}
-            onClick={() => navigate(`/pokemon/${pokemon.pokemon_v2_pokemon.id}`)}
-            style={{cursor: "pointer"}}
-          >
-            {pokemon.pokemon_v2_pokemon.name} {pokemon.rarity}%
-          </li>
-        ))}
-      </ul>
-      {/* <ItemPokemonsTable id={parseInt(params.itemId)} /> */}
+      < ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)}/>
     </div>
   );
 };
