@@ -9,10 +9,17 @@ class Config:
         pass
 
 
+class ProductionConfig(Config):
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@your-production-database-url/pokedexapp_prod'
+    SECRET_KEY = environ.get("PRODUCTION_SECRET_KEY")
+    SESSION_TYPE = 'filesystem'
+
+
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = f'postgresql://{ environ.get("USER") }:postgres@localhost:5432/pokedexapp'
-    SECRET_KEY = 'secret-key-goes-here',
+    SECRET_KEY = environ.get("DEVELOPMENT_SECRET_KEY"),
     SESSION_TYPE = 'filesystem'
 
 
@@ -26,5 +33,6 @@ class TestingConfig(Config):
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
-
-    'default': DevelopmentConfig}
+    'production': ProductionConfig,  # Add the production configuration
+    'default': DevelopmentConfig  # Set the default configuration to development
+}
