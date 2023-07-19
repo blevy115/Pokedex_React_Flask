@@ -5,6 +5,8 @@ import { getItemSprite } from "../../helpers/pictures";
 
 import { modifyHeldItems } from "../../helpers/modifyHeldItems";
 
+import "./HeldItems.scss";
+
 const HeldItems = ({ items }) => {
   const navigate = useNavigate();
   const itemsByGeneration = useMemo(() => modifyHeldItems(items), [items]);
@@ -20,29 +22,33 @@ const HeldItems = ({ items }) => {
 
   if (!itemsByGeneration || !generation) return null;
 
-  const generationItems = itemsByGeneration[generation].sort((a, b) => a.rarity - b.rarity)
+  const generationItems = itemsByGeneration[generation].sort(
+    (a, b) => a.rarity - b.rarity
+  );
 
   return (
-    <div>
+    <div className="app__held-item">
       <h4>Held Items</h4>
-      <label htmlFor="HeldItemGenerationSelector">Generation:</label>
-      <select
-        id="HeldItemGenerationSelector"
-        value={generation}
-        onChange={(e) => setGeneration(parseInt(e.target.value))}
-      >
-        {generationOptions.map((type, i) => {
-          return (
-            <option key={i} value={type}>
-              {type}
-            </option>
-          );
-        })}
-      </select>
-      <ul style={{ listStyleType: "none" }}>
+      <div className="select-input">
+        <label htmlFor="HeldItemGenerationSelector">Generation:</label>
+        <select
+          id="HeldItemGenerationSelector"
+          value={generation}
+          onChange={(e) => setGeneration(parseInt(e.target.value))}
+        >
+          {generationOptions.map((type, i) => {
+            return (
+              <option key={i} value={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <ul className="held-item-list">
         {generationItems.map((item, i) => (
           <li
-            style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            className="held-item-list-item"
             key={i}
             onClick={() => navigate(`/items/${item.id}`)}
           >

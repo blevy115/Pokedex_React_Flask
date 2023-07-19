@@ -6,14 +6,11 @@ import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
 import { handleImageError } from "../../helpers/error";
 
-import {Table, TypeList} from "../"
+import { Table, TypeList } from "../";
 
-const ItemPokemonTable = ({list}) => {
+const ItemPokemonTable = ({ list }) => {
   const navigate = useNavigate();
-  const generationOptions = useMemo(
-    () => Object.keys(list),
-    [list]
-  );
+  const generationOptions = useMemo(() => Object.keys(list), [list]);
 
   const [generation, setGeneration] = useState();
 
@@ -48,31 +45,33 @@ const ItemPokemonTable = ({list}) => {
   const TypesImageComponent = ({ value }) => {
     return <TypeList types={value} />;
   };
-  
+
   const { tableData, columns } = modifyPokemon({
     pokemons: list[generation],
     SpriteComponent,
     NameComponent,
     TypesImageComponent,
-    hasItemRarityData: true
+    hasItemRarityData: true,
   });
 
   return (
-    <>
-    <label htmlFor="HeldItemPokemonGenerationSelector">Generation:</label>
-      <select
-        id="HeldItemPokemonGenerationSelector"
-        value={generation}
-        onChange={(e) => setGeneration(parseInt(e.target.value))}
-      >
-        {generationOptions.map((type, i) => {
-          return (
-            <option key={i} value={type}>
-              {type}
-            </option>
-          );
-        })}
-      </select>
+    <div className="app__item-pokemon-table">
+      <div className="select-input">
+        <label htmlFor="HeldItemPokemonGenerationSelector">Generation:</label>
+        <select
+          id="HeldItemPokemonGenerationSelector"
+          value={generation}
+          onChange={(e) => setGeneration(parseInt(e.target.value))}
+        >
+          {generationOptions.map((type, i) => {
+            return (
+              <option key={i} value={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       {list[generation].length > 0 ? (
         <div>
           <Table data={tableData} columns={columns} />
@@ -80,7 +79,7 @@ const ItemPokemonTable = ({list}) => {
       ) : (
         <p>No Pokemons Found</p>
       )}
-    </>
+    </div>
   );
 };
 

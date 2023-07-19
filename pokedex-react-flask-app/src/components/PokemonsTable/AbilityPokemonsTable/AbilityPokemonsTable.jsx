@@ -66,7 +66,7 @@ const AbilityPokemonsTable = ({ id }) => {
   });
 
   return (
-    <div className="app__move-pokemon-table">
+    <div className="app__ability-pokemon-table">
       {pokemons.length > 0 ? (
         <div>
           <Table data={tableData} columns={columns} />

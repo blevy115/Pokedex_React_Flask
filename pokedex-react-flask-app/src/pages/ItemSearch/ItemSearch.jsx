@@ -27,8 +27,6 @@ const ItemSearch = () => {
     inputRef.current.focus();
   }, []);
 
-
-console.log(list, loadingList)
   return (
     <div className="app__item-search">
       <h2 className="header-text">Welcome {user?.name}</h2>
