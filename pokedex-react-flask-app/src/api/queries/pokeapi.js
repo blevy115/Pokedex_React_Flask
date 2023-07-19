@@ -58,7 +58,11 @@ const GET_POKEMON_INFO = gql`
       }
 
       held_items: pokemon_v2_pokemonitems(
-        where: { pokemon_v2_pokemon: { is_default: { _eq: true } } }
+        where: {
+          pokemon_v2_pokemon: {
+            pokemon_v2_pokemonforms: { is_mega: { _eq: false } }
+          }
+        }
       ) {
         rarity
         pokemon_v2_item {
@@ -263,7 +267,11 @@ const GET_ITEM_INFO = gql`
         text: flavor_text
       }
       held_by_pokemon: pokemon_v2_pokemonitems(
-        where: { pokemon_v2_pokemon: { is_default: { _eq: true } } }
+        where: {
+          pokemon_v2_pokemon: {
+            pokemon_v2_pokemonforms: { is_mega: { _eq: false } }
+          }
+        }
       ) {
         pokemon_v2_pokemon {
           name
@@ -290,11 +298,14 @@ const GET_ITEM_INFO = gql`
 const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
-      pokemons: pokemon_v2_pokemonabilities {
+      pokemons: pokemon_v2_pokemonabilities(
+        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
+      ) {
         is_hidden
         pokemon_v2_pokemon {
           id
           name
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
@@ -319,6 +330,7 @@ const GET_MOVE_POKEMONS = gql`
           move_learn_method_id: { _eq: $moveLearnMethodId }
           pokemon_v2_versiongroup: { generation_id: { _eq: $generationId } }
         }
+        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
       ) {
         version_group_id
         pokemon_v2_versiongroup {
@@ -329,6 +341,7 @@ const GET_MOVE_POKEMONS = gql`
         pokemon_v2_pokemon {
           id
           name
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
