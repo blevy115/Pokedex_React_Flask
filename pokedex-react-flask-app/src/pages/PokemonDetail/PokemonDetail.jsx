@@ -5,7 +5,6 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 
 import { GET_POKEMON_INFO } from "../../api/queries/pokeapi";
 import {
-  CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
   POKEMON_MUTATION,
   USER_POKEMON_MUTATION,
@@ -23,6 +22,7 @@ import {
   GenerationSelector,
   GenderRatio,
   TypeList,
+  HeldItems,
 } from "../../components";
 
 import { formatPokemonName } from "../../helpers/format";
@@ -40,13 +40,7 @@ const PokemonDetail = () => {
     variables: { id: parseInt(params.pokemonId) },
     client: pokemonAPIClient,
   });
-  const { data: pokemonExistsData, loading: pokemonDataLoading } = useQuery(
-    CHECK_POKEMON_EXISTS,
-    {
-      variables: { pokemon_id: parseInt(params.pokemonId) },
-      client: backEndClient,
-    }
-  );
+
   const { data: userPokemonsData, loading: userPokemonsLoading } = useQuery(
     GET_USER_POKEMONS,
     {
@@ -55,14 +49,8 @@ const PokemonDetail = () => {
     }
   );
 
-  const [createPokemon] = useMutation(POKEMON_MUTATION, {
+  const [createOrGetPokemon] = useMutation(POKEMON_MUTATION, {
     client: backEndClient,
-    refetchQueries: [
-      {
-        query: CHECK_POKEMON_EXISTS,
-        variables: { pokemon_id: parseInt(params.pokemonId) },
-      },
-    ],
   });
 
   const [mutateUserPokemonRelation] = useMutation(USER_POKEMON_MUTATION, {
@@ -86,17 +74,12 @@ const PokemonDetail = () => {
   }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
 
   useEffect(() => {
-    if (
-      !loading &&
-      name &&
-      !pokemonDataLoading &&
-      pokemonExistsData.pokemons.length === 0
-    ) {
-      createPokemon({
+    if (!loading && name) {
+      createOrGetPokemon({
         variables: { pokemon_id: params.pokemonId, name: name },
       });
     }
-  }, [name, params.pokemonId, loading, pokemonDataLoading, pokemonExistsData]);
+  }, [name, params.pokemonId, loading]);
 
   function handleUserPokemonLinking(e) {
     e.preventDefault();
@@ -110,8 +93,16 @@ const PokemonDetail = () => {
   }
 
   if (loading) return <p>Loading...</p>;
-  const { height, weight, types, info, stats, abilities, form } =
-    data.pokemon_details[0];
+  const {
+    height,
+    weight,
+    types,
+    info,
+    stats,
+    abilities,
+    form,
+    held_items: heldItems,
+  } = data.pokemon_details[0];
 
   const generation = form[0].pokemon_v2_versiongroup.generation_id;
 
@@ -178,6 +169,7 @@ const PokemonDetail = () => {
             </div>
           </div>
           <div>
+            {heldItems.length > 0 && <HeldItems items={heldItems} />}
             <GenderRatio
               hasDifference={info.has_gender_differences}
               rate={info.gender_rate}

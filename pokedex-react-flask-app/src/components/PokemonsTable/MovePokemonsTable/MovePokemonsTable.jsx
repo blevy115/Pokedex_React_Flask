@@ -2,21 +2,21 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
-import { pokemonAPIClient } from "../../api/clients";
-import { GET_MOVE_POKEMONS } from "../../api/queries/pokeapi";
+import { pokemonAPIClient } from "../../../api/clients";
+import { GET_MOVE_POKEMONS } from "../../../api/queries/pokeapi";
 
 import {
   mergePokemonEntries,
   mergeTmEntries,
-} from "../../helpers/mergeEntries";
-import { formatPokemonName } from "../../helpers/format";
-import { handleImageError } from "../../helpers/error";
-import { getSprite } from "../../helpers/pictures";
-import { modifyPokemon } from "../../helpers/modifyForTable";
+} from "../../../helpers/mergeEntries";
+import { formatPokemonName } from "../../../helpers/format";
+import { handleImageError } from "../../../helpers/error";
+import { getSprite } from "../../../helpers/pictures";
+import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { Table, TypeList } from "../";
+import { Table, TypeList } from "../..";
 
-import "./PokemonsTable.scss";
+import "./MovePokemonsTable.scss";
 
 const moveTypes = {
   level: 1,
@@ -26,7 +26,7 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-const PokemonsTable = ({ id, generation, tm }) => {
+const MovePokemonsTable = ({ id, generation, tm }) => {
   let navigate = useNavigate();
 
   const [generationId, setGenerationId] = useState(generation);
@@ -167,4 +167,4 @@ const PokemonsTable = ({ id, generation, tm }) => {
   );
 };
 
-export default PokemonsTable;
+export default MovePokemonsTable;

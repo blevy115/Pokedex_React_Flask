@@ -46,10 +46,13 @@ function modifyMoves({
 function modifyPokemon({
   pokemons,
   hasLevelData = false,
+  hasHiddenData = false,
+  hasItemRarityData = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
   LevelComponent,
+  IsHiddenComponent,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
@@ -64,6 +67,19 @@ function modifyPokemon({
       Cell: LevelComponent,
     });
   }
+  if (hasHiddenData) {
+    columns.push({
+      Header: "Hidden",
+      accessor: "isHidden",
+      Cell: IsHiddenComponent,
+    });
+  }
+  if (hasItemRarityData) {
+    columns.push({
+      Header: "Rarity",
+      accessor: "rarity",
+    });
+  }
 
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
@@ -74,9 +90,12 @@ function modifyPokemon({
       name: { name: formatPokemonName(pokemonData.name), id: pokemonData.id },
       types: pokemonData.types,
     };
-    return hasLevelData
-      ? { ...modifiedPokemon, level: pokemon.values }
-      : modifiedPokemon;
+
+    if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
+    if (hasHiddenData)
+      return { ...modifiedPokemon, isHidden: pokemon.is_hidden };
+    if (hasItemRarityData) return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    return modifiedPokemon;
   });
   return { columns, tableData };
 }

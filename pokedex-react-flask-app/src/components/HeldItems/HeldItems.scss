@@ -1,0 +1,15 @@
+.app__held-item {
+  text-align: center;
+
+  .held-item-list {
+    list-style-type: none;
+    padding: 0;
+
+    .held-item-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+}

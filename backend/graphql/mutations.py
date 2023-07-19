@@ -1,8 +1,22 @@
 import graphene
 from backend import db
 from flask import session
-from ..graphql.objects import UserObject as User, PokemonObject as Pokemon, UserPokemonObject as UserPokemon, MoveObject as Move
-from ..models import User as UserModel, Pokemon as PokemonModel, UserPokemonAssociation as UserPokemonModel, Move as MoveModel
+from ..models import User as UserModel, \
+    Pokemon as PokemonModel, \
+    Move as MoveModel, \
+    Ability as AbilityModel, \
+    Item as ItemModel, \
+    UserPokemonAssociation as UserPokemonModel, \
+    Nature as NatureModel
+
+from ..graphql.objects import UserObject as User, \
+    PokemonObject as Pokemon, \
+    MoveObject as Move, \
+    AbilityObject as Ability, \
+    ItemObject as Item, \
+    UserPokemonObject as UserPokemon, \
+    NatureObject as Nature
+
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
 from graphql_relay import from_global_id
@@ -63,13 +77,21 @@ class PokemonMutation(graphene.Mutation):
     pokemon = graphene.Field(lambda: Pokemon)
 
     def mutate(self, info, pokemon_id, name):
+
+        existing_pokemon = PokemonModel.query.filter(
+            PokemonModel.name == name and PokemonModel.pokemon_id == pokemon_id).first()
+
+        if existing_pokemon:
+            return PokemonMutation(pokemon=existing_pokemon)
+
         pokemon = PokemonModel(pokemon_id=pokemon_id, name=name)
 
         db.session.add(pokemon)
         db.session.commit()
 
         return PokemonMutation(pokemon=pokemon)
-    
+
+
 class MoveMutation(graphene.Mutation):
     class Arguments:
         move_id = graphene.Int()
@@ -80,10 +102,59 @@ class MoveMutation(graphene.Mutation):
     def mutate(self, info, move_id, name):
         move = MoveModel(move_id=move_id, name=name)
 
+        existing_move = MoveModel.query.filter(
+            MoveModel.name == name and MoveModel.move_id == move_id).first()
+
+        if existing_move:
+            return MoveMutation(move=existing_move)
+
         db.session.add(move)
         db.session.commit()
 
         return MoveMutation(move=move)
+
+
+class AbilityMutation(graphene.Mutation):
+    class Arguments:
+        ability_id = graphene.Int()
+        name = graphene.String(required=True)
+
+    ability = graphene.Field(lambda: Ability)
+
+    def mutate(self, info, ability_id, name):
+        ability = AbilityModel(ability_id=ability_id, name=name)
+
+        existing_ability = AbilityModel.query.filter(
+            AbilityModel.name == name and AbilityModel.ability_id == ability_id).first()
+
+        if existing_ability:
+            return AbilityMutation(ability=existing_ability)
+
+        db.session.add(ability)
+        db.session.commit()
+
+        return AbilityMutation(ability=ability)
+    
+class ItemMutation(graphene.Mutation):
+    class Arguments:
+        item_id = graphene.Int()
+        name = graphene.String(required=True)
+
+    item = graphene.Field(lambda: Item)
+
+    def mutate(self, info, item_id, name):
+        item = ItemModel(item_id=item_id, name=name)
+
+        existing_item = ItemModel.query.filter(
+            ItemModel.name == name and ItemModel.item_id == item_id).first()
+
+        if existing_item:
+            return ItemMutation(item=existing_item)
+
+        db.session.add(item)
+        db.session.commit()
+
+        return ItemMutation(item=item)
 
 
 class UserPokemonMutation(graphene.Mutation):
@@ -151,7 +222,10 @@ class ShinyCounterMutation(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     signup = SignupMutation.Field()
+    mutate_item = ItemMutation.Field()
     mutate_pokemon = PokemonMutation.Field()
+    mutate_move = MoveMutation.Field()
+    mutate_ability = AbilityMutation.Field()
     mutate_user_pokemon = UserPokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()

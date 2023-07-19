@@ -34,16 +34,6 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-const CHECK_POKEMON_EXISTS = gql`
-  query checkPokemonExists($pokemon_id: Int!) {
-    pokemons(pokemonId: $pokemon_id) {
-      id
-      name
-      pokemonId
-    }
-  }
-`;
-
 const GET_USER_POKEMONS = gql`
   query getUserPokemons($user_id: String!) {
     userPokemons(userId: $user_id, orderBy: "pokemonId") {
@@ -63,6 +53,39 @@ const POKEMON_MUTATION = gql`
       pokemon {
         name
         pokemonId
+      }
+    }
+  }
+`;
+
+const MOVE_MUTATION = gql`
+  mutation moveMutation($name: String!, $move_id: Int!) {
+    mutateMove(name: $name, moveId: $move_id) {
+      move {
+        name
+        moveId
+      }
+    }
+  }
+`;
+
+const ABILITY_MUTATION = gql`
+  mutation abilityMutation($name: String!, $ability_id: Int!) {
+    mutateAbility(name: $name, abilityId: $ability_id) {
+      ability {
+        name
+        abilityId
+      }
+    }
+  }
+`;
+
+const ITEM_MUTATION = gql`
+  mutation itemMutation($name: String!, $item_id: Int!) {
+    mutateItem(name: $name, itemId: $item_id) {
+      item {
+        name
+        itemId
       }
     }
   }
@@ -121,9 +144,32 @@ export {
   LOGOUT_MUTATION,
   SIGNUP_MUTATION,
   POKEMON_MUTATION,
+  MOVE_MUTATION,
+  ABILITY_MUTATION,
+  ITEM_MUTATION,
   USER_POKEMON_MUTATION,
-  CHECK_POKEMON_EXISTS,
   GET_USER_POKEMONS,
   SHINY_COUNTER_MUTATION,
   GET_NATURES,
 };
+
+
+// const CHECK_POKEMON_EXISTS = gql`
+//   query checkPokemonExists($pokemon_id: Int!) {
+//     pokemons(pokemonId: $pokemon_id) {
+//       id
+//       name
+//       pokemonId
+//     }
+//   }
+// `;
+
+// const CHECK_MOVE_EXISTS = gql`
+//   query checkMoveExists($move_id: Int!) {
+//     moves(moveId: $move_id) {
+//       id
+//       name
+//       moveId
+//     }
+//   }
+// `; 

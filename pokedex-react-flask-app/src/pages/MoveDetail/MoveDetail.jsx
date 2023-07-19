@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
-import { pokemonAPIClient } from "../../api/clients";
+import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_MOVE_INFO } from "../../api/queries/pokeapi";
+import { MOVE_MUTATION } from "../../api/queries/backend";
+
 import { formatPokemonName } from "../../helpers/format";
 
-import { PokemonsTable } from "../../components";
+import { MovePokemonsTable } from "../../components";
 
 import "./MoveDetail.scss";
 
@@ -18,9 +20,23 @@ const MoveDetail = () => {
     client: pokemonAPIClient,
   });
 
+  const [createOrGetMove] = useMutation(MOVE_MUTATION, {
+    client: backEndClient,
+  });
+
+  const name = !loading ? data.move[0].name : undefined;
+
+  useEffect(() => {
+    if (!loading && name) {
+      createOrGetMove({
+        variables: { move_id: params.moveId, name: name },
+      });
+    }
+  }, [name, params.moveId, loading]);
+
   if (loading) return <p>Loading...</p>;
 
-  const { name, type, kind, generation_id, pp, accuracy, power, flavor, tm } =
+  const { type, kind, generation_id, pp, accuracy, power, flavor, tm } =
     data.move[0];
 
   return (
@@ -46,7 +62,7 @@ const MoveDetail = () => {
         <p>Accuracy: {accuracy}</p>
         <p>PP: {pp}</p>
       </div>
-      <PokemonsTable
+      <MovePokemonsTable
         id={parseInt(params.moveId)}
         generation={generation_id}
         tm={tm}

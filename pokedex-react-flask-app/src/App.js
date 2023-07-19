@@ -9,7 +9,11 @@ import {
 } from "react-router-dom";
 
 import {
+  AbilityDetail,
+  AbilitySearch,
   Favourites,
+  ItemDetail,
+  ItemSearch,
   PokemonDetail,
   PokemonSearch,
   MoveDetail,
@@ -39,6 +43,24 @@ function MoveDetailErrorElement() {
   );
 }
 
+function AbilityDetailErrorElement() {
+  return (
+    <>
+      <Link to="/abilities">Back to List</Link>
+      <h2>Not valid Ability ID</h2>
+    </>
+  );
+}
+
+function ItemDetailErrorElement() {
+  return (
+    <>
+      <Link to="/items">Back to List</Link>
+      <h2>Not valid Item ID</h2>
+    </>
+  );
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -48,7 +70,19 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/pokemon" element={<PokemonSearch />} />
+        <Route path="/items" element={<ItemSearch />} />
         <Route path="/moves" element={<MoveSearch />} />
+        <Route path="/abilities" element={<AbilitySearch />} />
+        <Route
+          path="/abilities/:abilityId"
+          element={<AbilityDetail />}
+          errorElement={<AbilityDetailErrorElement />}
+        />
+        <Route
+          path="/items/:itemId"
+          element={<ItemDetail />}
+          errorElement={<ItemDetailErrorElement />}
+        />
         <Route
           path="/pokemon/:pokemonId"
           element={<PokemonDetail />}

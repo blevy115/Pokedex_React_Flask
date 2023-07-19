@@ -14,4 +14,8 @@ function getShinyImage(id) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png`;
 }
 
-export { getAnimatedSprite, getSprite, getImage, getShinyImage };
+function getItemSprite(name) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${name}.png` 
+}
+
+export { getAnimatedSprite, getSprite, getImage, getShinyImage, getItemSprite };
