@@ -8,6 +8,8 @@ import { handleImageError } from "../../helpers/error";
 
 import { Table, TypeList } from "../";
 
+import "./ItemPokemonTable.scss";
+
 const ItemPokemonTable = ({ list }) => {
   const navigate = useNavigate();
   const generationOptions = useMemo(() => Object.keys(list), [list]);
