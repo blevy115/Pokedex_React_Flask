@@ -8,7 +8,8 @@ from ..models import User as UserModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
     UserPokemonAssociation as UserPokemonModel, \
-    Nature as NatureModel
+    Nature as NatureModel, \
+    Type as TypeModel
 
 
 class UserObject(SQLAlchemyObjectType):
@@ -50,4 +51,9 @@ class UserPokemonObject(SQLAlchemyObjectType):
 class NatureObject(SQLAlchemyObjectType):
     class Meta:
         model = NatureModel
+        interfaces = (relay.Node, )
+
+class TypeObject(SQLAlchemyObjectType):
+    class Meta:
+        model = TypeModel
         interfaces = (relay.Node, )

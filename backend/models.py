@@ -61,3 +61,9 @@ class Nature(db.Model):
     name = db.Column(db.String(20), nullable=False)
     increased_stat = db.Column(db.String(20), nullable=False)
     decreased_stat = db.Column(db.String(20), nullable=False)
+
+class Type(db.Model):
+    __tablename__ = 'type'
+    id = db.Column(db.Integer, primary_key=True)
+    type_id = db.Column(db.Integer)
+    name = db.Column(db.String(50))
