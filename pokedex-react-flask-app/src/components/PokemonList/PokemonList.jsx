@@ -5,7 +5,7 @@ import { formatPokemonName } from "../../helpers/format";
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
-import { TypeList } from "../";
+import { Types } from "../";
 
 import "./PokemonList.scss";
 
@@ -24,7 +24,7 @@ const PokemonList = ({ list }) => {
 
           <img onError={handleImageError} src={getSprite(id)} />
           <p className="pokemon-name">{formatPokemonName(name)}</p>
-          <TypeList types={types} />
+          <Types types={types} />
         </li>
       ))}
     </ul>

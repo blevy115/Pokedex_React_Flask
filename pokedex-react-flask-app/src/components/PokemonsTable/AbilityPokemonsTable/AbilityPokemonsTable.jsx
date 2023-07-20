@@ -10,7 +10,7 @@ import { handleImageError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { Table, TypeList } from "../..";
+import { Table, Types } from "../..";
 
 import "./AbilityPokemonsTable.scss";
 
@@ -49,7 +49,7 @@ const AbilityPokemonsTable = ({ id }) => {
   };
 
   const TypesImageComponent = ({ value }) => {
-    return <TypeList types={value} />;
+    return <Types types={value} />;
   };
 
   const IsHiddenComponent = ({ value }) => {

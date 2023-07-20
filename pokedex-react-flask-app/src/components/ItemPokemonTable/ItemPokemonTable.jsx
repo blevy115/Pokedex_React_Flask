@@ -6,7 +6,7 @@ import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
 import { handleImageError } from "../../helpers/error";
 
-import { Table, TypeList } from "../";
+import { Table, Types } from "../";
 
 import "./ItemPokemonTable.scss";
 
@@ -45,7 +45,7 @@ const ItemPokemonTable = ({ list }) => {
   };
 
   const TypesImageComponent = ({ value }) => {
-    return <TypeList types={value} />;
+    return <Types types={value} />;
   };
 
   const { tableData, columns } = modifyPokemon({
