@@ -21,7 +21,10 @@ const pokemonAPIClient = new ApolloClient({
 });
 
 const backEndClient = new ApolloClient({
-  uri: "http://localhost:5000/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_BACKEND_URI_PRODUCTION
+      : process.env.REACT_APP_BACKEND_URI_DEVELOPMENT,
   credentials: "include",
   // request: (operation) => {
   //   const token = localStorage.getItem("token");
