@@ -7,7 +7,7 @@ from os import environ
 load_dotenv()
 
 debug_mode = environ.get('FLASK_DEBUG', False) 
-print( debug_mode in ['1', 'True'])
+
 app = create_app('development' if debug_mode in ['1', 'True'] else 'production')
 
 migrate = Migrate(app, db)
