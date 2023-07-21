@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { sortPokemonByTypes } from "../../helpers/sortPokemonByTypes";
@@ -10,8 +10,13 @@ import { Types, Table } from "../";
 
 import "./TypePokemon.scss";
 
-const TypePokemon = ({ name, list, typeId, byType }) => {
+const TypePokemon = ({ name, list, typeId }) => {
   const navigate = useNavigate();
+  const [byType, setbyType] = useState();
+
+  useEffect(() => {
+    setbyType(false);
+  }, []);
 
   const sortedPokemonData = useMemo(
     () => sortPokemonByTypes({ pokemons: list, id: typeId, byType }),
@@ -68,6 +73,13 @@ const TypePokemon = ({ name, list, typeId, byType }) => {
     <div>
       <h4>Pure {name} Pokemon</h4>
       <Table data={pureTableData} columns={pureColumns} />
+      <button
+        onClick={() => {
+          setbyType(!byType);
+        }}
+      >
+        Sort by {byType ? "ID" : "Type"}
+      </button>
       {modifiedSemiData.map(
         ({ data: { columns, tableData }, name: typeName }) => (
           <div key={typeName}>

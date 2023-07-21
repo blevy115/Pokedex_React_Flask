@@ -385,7 +385,9 @@ const GET_TYPE_INFO = gql`
           name
         }
       }
-      pokemons: pokemon_v2_pokemontypes {
+      pokemons: pokemon_v2_pokemontypes(
+        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
+      ) {
         pokemon_v2_pokemon {
           name
           id

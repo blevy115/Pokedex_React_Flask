@@ -13,7 +13,6 @@ import "./TypeDetail.scss";
 
 const TypeDetail = () => {
   const params = useParams();
-  const [byType, setbyType] = useState();
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   const { data, loading } = useQuery(GET_TYPE_INFO, {
@@ -21,7 +20,6 @@ const TypeDetail = () => {
     client: pokemonAPIClient,
   });
   useEffect(() => {
-    setbyType(false);
     window.scrollTo(0, 0);
   }, [data]);
 
@@ -50,21 +48,7 @@ const TypeDetail = () => {
       </div>
       <div className="app__type-table-container">
         {selectedTab === "Pokemon" && (
-          <>
-            <button
-              onClick={() => {
-                setbyType(!byType);
-              }}
-            >
-              Sort by {byType ? "ID" : "Type"}
-            </button>
-            <TypePokemon
-              name={name}
-              list={pokemons}
-              typeId={id}
-              byType={byType}
-            />
-          </>
+          <TypePokemon name={name} list={pokemons} typeId={id} />
         )}
         {selectedTab === "Moves" && <TypeMoves list={moves} />}
       </div>
