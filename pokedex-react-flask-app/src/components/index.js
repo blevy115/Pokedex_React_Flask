@@ -16,4 +16,6 @@ export { default as ShinyCounter } from "./ShinyCounter/ShinyCounter";
 export { default as StatChart } from "./StatChart/StatChart";
 export { default as Table } from "./Table/Table";
 export { default as TypeEffectiveness } from "./TypeEffectiveness/TypeEffectiveness";
-export { default as TypeList } from "./TypeList/TypeList";
+export { default as Types } from "./Types/Types";
+export { default as TypePokemon } from "./TypePokemon/TypePokemon";
+export { default as TypeMoves } from "./TypeMoves/TypeMoves";
