@@ -3,16 +3,17 @@ import { formatPokemonName } from "./format";
 function modifyMoves({
   moves,
   hasLevel = false,
+  hasPopUpText = false,
   TypeImageComponent,
   KindImageComponent,
-  PopUpComponent,
+  NameComponent,
 }) {
   if (moves.length < 0) return { columns: [], tableData: [] };
   const columns = [
     {
       Header: "Name",
       accessor: "name",
-      Cell: PopUpComponent,
+      Cell: NameComponent,
     },
     { Header: "Type", accessor: "type", Cell: TypeImageComponent },
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
@@ -24,7 +25,7 @@ function modifyMoves({
     columns.unshift({ Header: "Level", accessor: "level" });
   }
   const tableData = moves.map((move, i) => {
-    const hasFlavourText = move.moveInfo.flavourText.length > 0;
+    const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
     const modifiedMove = {
       id: i,
       moveId: move.moveInfo.id,

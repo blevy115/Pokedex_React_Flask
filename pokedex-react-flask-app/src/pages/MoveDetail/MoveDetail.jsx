@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { pokemonAPIClient, backEndClient } from "../../api/clients";
@@ -14,6 +14,7 @@ import "./MoveDetail.scss";
 
 const MoveDetail = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const { data, loading } = useQuery(GET_MOVE_INFO, {
     variables: { id: parseInt(params.moveId) },
@@ -39,7 +40,7 @@ const MoveDetail = () => {
   const { type, kind, generation_id, pp, accuracy, power, flavor, tm } =
     data.move[0];
 
-  return (
+    return (
     <div className="app__move">
       <div className="app__move-info">
         <h3>{formatPokemonName(name)}</h3>
@@ -47,8 +48,10 @@ const MoveDetail = () => {
         <p className="move-kind">
           <span>Type:</span>
           <img
+            className="clickable"
             src={`/icons/types/${type.name}.png`}
             alt={`${type.name} icon`}
+            onClick={() => navigate(`/types/${type.id}`)}
           />
         </p>
         <p className="move-kind">
