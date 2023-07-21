@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import {getTypeEffectiveness} from "../../helpers/getTypeEffectiveness";
+import { getTypeEffectiveness } from "../../helpers/getTypeEffectiveness";
+import { getTypeId } from "../../helpers/getTypeId";
 
 import "./TypeEffectiveness.scss";
 
@@ -24,6 +26,7 @@ function categorizeEffectiveness(relations) {
 }
 
 const TypeEffectiveness = ({ types }) => {
+  const navigate = useNavigate();
   const typeEffectiveness = getTypeEffectiveness(types);
   const { weak, resistant, immune } =
     categorizeEffectiveness(typeEffectiveness);
@@ -37,7 +40,11 @@ const TypeEffectiveness = ({ types }) => {
             <ul className="type-effectiveness-list">
               {weak.map((type, index) => {
                 return (
-                  <li key={index}>
+                  <li
+                    className="clickable"
+                    key={index}
+                    onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
+                  >
                     <img
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}
@@ -55,7 +62,11 @@ const TypeEffectiveness = ({ types }) => {
             <ul className="type-effectiveness-list">
               {resistant.map((type, index) => {
                 return (
-                  <li key={index}>
+                  <li
+                    className="clickable"
+                    key={index}
+                    onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
+                  >
                     <img
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}
@@ -73,7 +84,11 @@ const TypeEffectiveness = ({ types }) => {
             <ul className="type-effectiveness-list">
               {immune.map((type, index) => {
                 return (
-                  <li key={index}>
+                  <li
+                    className="clickable"
+                    key={index}
+                    onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
+                  >
                     <img
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}

@@ -20,6 +20,8 @@ import {
   MoveSearch,
   Login,
   Signup,
+  TypeList,
+  TypeDetail,
 } from "./pages";
 import { ProtectedRoute, AuthRoute } from "./wrapper/routes";
 
@@ -73,6 +75,7 @@ const router = createBrowserRouter(
         <Route path="/items" element={<ItemSearch />} />
         <Route path="/moves" element={<MoveSearch />} />
         <Route path="/abilities" element={<AbilitySearch />} />
+        <Route path="/types" element={<TypeList />} />
         <Route
           path="/abilities/:abilityId"
           element={<AbilityDetail />}
@@ -92,6 +95,10 @@ const router = createBrowserRouter(
           path="/moves/:moveId"
           element={<MoveDetail />}
           errorElement={<MoveDetailErrorElement />}
+        />
+         <Route
+          path="/types/:typeId"
+          element={<TypeDetail />}
         />
         <Route path="/favourites" element={<Favourites />} />
       </Route>
