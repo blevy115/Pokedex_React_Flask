@@ -16,7 +16,7 @@ const TypePokemon = ({ name, list, typeId }) => {
 
   useEffect(() => {
     setbyType(false);
-  }, []);
+  }, [typeId]);
 
   const sortedPokemonData = useMemo(
     () => sortPokemonByTypes({ pokemons: list, id: typeId, byType }),
