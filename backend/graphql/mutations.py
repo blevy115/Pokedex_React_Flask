@@ -7,7 +7,8 @@ from ..models import User as UserModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
     UserPokemonAssociation as UserPokemonModel, \
-    Nature as NatureModel
+    Nature as NatureModel, \
+    Type as TypeModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -15,7 +16,8 @@ from ..graphql.objects import UserObject as User, \
     AbilityObject as Ability, \
     ItemObject as Item, \
     UserPokemonObject as UserPokemon, \
-    NatureObject as Nature
+    NatureObject as Nature, \
+    TypeObject as Type
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user

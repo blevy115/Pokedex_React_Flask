@@ -50,6 +50,11 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/types" activeclassname="active">
+            Types
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/favourites" activeclassname="active">
             Favourites
           </NavLink>
@@ -114,6 +119,15 @@ const NavBar = () => {
                     onClick={() => setToggle(false)}
                   >
                     Items
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/types"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Types
                   </NavLink>
                 </li>
                 <li>

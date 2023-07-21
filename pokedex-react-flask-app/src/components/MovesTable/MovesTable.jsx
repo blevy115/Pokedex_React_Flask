@@ -9,6 +9,7 @@ import { pokemonAPIClient } from "../../api/clients";
 import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
+import { getTypeId } from "../../helpers/getTypeId";
 
 import { Table } from "../";
 
@@ -89,7 +90,7 @@ const MovesTable = ({ id, generation }) => {
 
   const { moves } = data.pokemon_move_details[0];
 
-  const PopUpComponent = ({ value, row }) => {
+  const NameComponent = ({ value, row }) => {
     const popupText = row.original.popupText;
     const tooltipId = uuidv4();
     return (
@@ -125,9 +126,10 @@ const MovesTable = ({ id, generation }) => {
   const TypeImageComponent = ({ value }) => {
     return (
       <img
-        className="table-image"
+        className="table-image clickable"
         src={`/icons/types/${value}.png`}
         alt={`${value} icon`}
+        onClick={() => navigate(`/types/${getTypeId(value)}`)}
       />
     );
   };
@@ -145,7 +147,8 @@ const MovesTable = ({ id, generation }) => {
   const { tableData, columns } = modifyMoves({
     moves,
     hasLevel: moveType === "level",
-    PopUpComponent,
+    hasPopUpText: true,
+    NameComponent,
     TypeImageComponent,
     KindImageComponent,
   });

@@ -9,7 +9,8 @@ from ..models import User as UserModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
     UserPokemonAssociation as UserPokemonModel, \
-    Nature as NatureModel
+    Nature as NatureModel, \
+    Type as TypeModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -17,7 +18,8 @@ from ..graphql.objects import UserObject as User, \
     AbilityObject as Ability, \
     ItemObject as Item, \
     UserPokemonObject as UserPokemon, \
-    NatureObject as Nature
+    NatureObject as Nature, \
+    TypeObject as Type
 
 
 class Query(graphene.ObjectType):
@@ -75,7 +77,7 @@ class Query(graphene.ObjectType):
         if ability_id:
             query = query.filter(AbilityModel.ability_id == ability_id)
         return query.all()
-    
+
     items = graphene.List(
         lambda: Item, name=graphene.String(), item_id=graphene.Int()
     )
@@ -116,3 +118,15 @@ class Query(graphene.ObjectType):
             natures = sorted(
                 natures, key=lambda n: n.name)
         return natures
+
+    types = graphene.List(
+        lambda: Type, name=graphene.String(), type_id=graphene.Int(), order_by=graphene.String()
+    )
+
+    def resolve_types(self, info, order_by=None):
+        types = TypeModel.query.all()
+
+        if order_by is not None:
+            types = sorted(
+                types, key=lambda n: n.type_id)
+        return types

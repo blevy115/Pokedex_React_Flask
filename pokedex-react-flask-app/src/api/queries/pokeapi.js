@@ -216,6 +216,7 @@ const GET_MOVE_INFO = gql`
       }
       type: pokemon_v2_type {
         name
+        id
       }
       tm: pokemon_v2_machines(distinct_on: version_group_id) {
         machine_number
@@ -365,6 +366,44 @@ const GET_MOVE_POKEMONS = gql`
   }
 `;
 
+const GET_TYPE_INFO = gql`
+  query getTypeInfo($id: Int!) {
+    pokemon_v2_type(where: { id: { _eq: $id } }) {
+      name
+      id
+      moves: pokemon_v2_moves {
+        id
+        name
+        generation_id
+        pp
+        accuracy
+        power
+        type: pokemon_v2_type {
+          name
+        }
+        kind: pokemon_v2_movedamageclass {
+          name
+        }
+      }
+      pokemons: pokemon_v2_pokemontypes(
+        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
+      ) {
+        pokemon_v2_pokemon {
+          name
+          id
+          types: pokemon_v2_pokemontypes {
+            type_id
+            pokemon_v2_type {
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 export {
   GET_POKEMON_INFO,
   GET_POKEMON_MOVES,
@@ -378,6 +417,7 @@ export {
   GET_ITEM_INFO,
   GET_MOVE_POKEMONS,
   GET_ABILITY_POKEMONS,
+  GET_TYPE_INFO,
 };
 
 // const GET_DEFAULT_POKEMON_LIST_BY_ID = gql`

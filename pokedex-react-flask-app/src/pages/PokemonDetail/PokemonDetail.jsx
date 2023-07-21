@@ -21,7 +21,7 @@ import {
   ShinyCounter,
   GenerationSelector,
   GenderRatio,
-  TypeList,
+  Types,
   HeldItems,
 } from "../../components";
 
@@ -141,7 +141,7 @@ const PokemonDetail = () => {
           pokedexes={info.pokedexes}
         />
         <PokemonImage id={params.pokemonId} />
-        <TypeList types={types} />
+        <Types types={types} />
         <button
           className="favourite-button clickable"
           onClick={handleUserPokemonLinking}

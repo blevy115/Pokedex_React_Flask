@@ -139,6 +139,15 @@ const GET_NATURES = gql`
   }
 `;
 
+const GET_TYPES = gql`
+  query getTypes {
+    types(orderBy: "typeId") {
+      name
+      typeId
+    }
+  }
+`;
+
 export {
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
@@ -151,25 +160,5 @@ export {
   GET_USER_POKEMONS,
   SHINY_COUNTER_MUTATION,
   GET_NATURES,
+  GET_TYPES,
 };
-
-
-// const CHECK_POKEMON_EXISTS = gql`
-//   query checkPokemonExists($pokemon_id: Int!) {
-//     pokemons(pokemonId: $pokemon_id) {
-//       id
-//       name
-//       pokemonId
-//     }
-//   }
-// `;
-
-// const CHECK_MOVE_EXISTS = gql`
-//   query checkMoveExists($move_id: Int!) {
-//     moves(moveId: $move_id) {
-//       id
-//       name
-//       moveId
-//     }
-//   }
-// `; 
