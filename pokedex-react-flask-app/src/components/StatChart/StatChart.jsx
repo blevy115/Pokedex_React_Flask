@@ -22,7 +22,7 @@ import {
   calculateStats,
   calculateStatsTotal,
 } from "../../helpers/statModifier";
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import { Table } from "../";
 
@@ -131,9 +131,9 @@ const StatChart = ({ baseStats, isAFavourite }) => {
     return {
       labels: isAFavourite
         ? Object.keys(calculatedStatsValues).map((val) =>
-            formatPokemonName(val)
+            formatName(val)
           )
-        : Object.keys(convertedStats).map((val) => formatPokemonName(val)),
+        : Object.keys(convertedStats).map((val) => formatName(val)),
       datasets: [
         {
           data: isAFavourite

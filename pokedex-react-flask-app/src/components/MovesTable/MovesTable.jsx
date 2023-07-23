@@ -10,6 +10,7 @@ import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
 import { getTypeId } from "../../helpers/getTypeId";
+import { formatName } from "../../helpers/format";
 
 import { Table } from "../";
 
@@ -95,7 +96,7 @@ const MovesTable = ({ id, generation }) => {
     const tooltipId = uuidv4();
     return (
       <div className="clickable" data-tip data-tooltip-id={tooltipId}>
-        {value}
+        {formatName(value)}
         <Tooltip
           id={tooltipId}
           effect="solid"

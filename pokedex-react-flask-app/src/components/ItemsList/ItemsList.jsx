@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { getItemSprite } from "../../helpers/pictures";
 import { handleImageError } from "../../helpers/error";
 
@@ -19,7 +19,7 @@ const ItemsList = ({ list }) => {
           key={id}
           onClick={() => navigate(`/items/${id}`)}
         >
-          <p>{formatPokemonName(name)}</p>
+          <p>{formatName(name)}</p>
           <img src={getItemSprite(name)} onError={handleImageError}/>
         </li>
       ))}

@@ -6,6 +6,8 @@ import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
 import { handleImageError } from "../../helpers/error";
 
+import { formatName } from "../../helpers/format";
+
 import { Table, Types } from "../";
 
 import "./ItemPokemonTable.scss";
@@ -39,7 +41,7 @@ const ItemPokemonTable = ({ list }) => {
         className="pokemon-list-item-name clickable"
         onClick={() => navigate(`/pokemon/${value.id}`)}
       >
-        {value.name}
+        {formatName(value.name)}
       </p>
     );
   };

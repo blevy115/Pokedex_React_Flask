@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import "./AbilitiesList.scss";
 
@@ -16,7 +16,7 @@ const AbilitiesList = ({ list }) => {
           key={id}
           onClick={() => navigate(`/abilities/${id}`)}
         >
-          <p>{formatPokemonName(name)}</p>
+          <p>{formatName(name)}</p>
         </li>
       ))}
     </ul>

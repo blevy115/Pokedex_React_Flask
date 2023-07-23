@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import "./MovesList.scss";
 
@@ -20,7 +20,7 @@ const MovesList = ({ list }) => {
             src={`/icons/types/${type.name}.png`}
             alt={`${type.name} icon`}
           />
-          <p>{formatPokemonName(name)}</p>
+          <p>{formatName(name)}</p>
           <img
             src={`/icons/kinds/${kind.name}.png`}
             alt={`${kind.name} icon`}

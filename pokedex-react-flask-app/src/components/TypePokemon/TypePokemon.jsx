@@ -5,6 +5,7 @@ import { sortPokemonByTypes } from "../../helpers/sortPokemonByTypes";
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
+import { formatName } from "../../helpers/format";
 
 import { Types, Table } from "../";
 
@@ -41,7 +42,7 @@ const TypePokemon = ({ name, list, typeId }) => {
         className="pokemon-list-item-name clickable"
         onClick={() => navigate(`/pokemon/${value.id}`)}
       >
-        {value.name}
+        {formatName(value.name)}
       </p>
     );
   };

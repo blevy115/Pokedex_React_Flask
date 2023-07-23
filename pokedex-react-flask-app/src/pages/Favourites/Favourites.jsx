@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import { backEndClient } from "../../api/clients";
 import { GET_USER_POKEMONS } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
@@ -43,7 +43,7 @@ const Favourites = () => {
                 onClick={() => navigate(`/pokemon/${pokemonId}`)}
               >
                 <p className="favourites-list-item-header">
-                  #{pokemonId} {formatPokemonName(name)}
+                  #{pokemonId} {formatName(name)}
                 </p>
                 <img
                   className="favourite-image"

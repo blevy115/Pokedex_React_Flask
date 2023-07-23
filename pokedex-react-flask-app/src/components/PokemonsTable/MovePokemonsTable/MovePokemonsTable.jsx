@@ -9,7 +9,7 @@ import {
   mergePokemonEntries,
   mergeTmEntries,
 } from "../../../helpers/mergeEntries";
-import { formatPokemonName } from "../../../helpers/format";
+import { formatName, formatGameName } from "../../../helpers/format";
 import { handleImageError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
@@ -88,7 +88,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         className="pokemon-list-item-name clickable"
         onClick={() => navigate(`/pokemon/${value.id}`)}
       >
-        {value.name}
+        {formatName(value.name)}
       </p>
     );
   };
@@ -102,7 +102,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
       <div>
         {value.map((val, i) => (
           <p key={i}>
-            {formatPokemonName(val.pokemon_v2_versiongroup.name)} Level:{" "}
+            {formatGameName(val.pokemon_v2_versiongroup.name)} Level:{" "}
             {val.level}
           </p>
         ))}
@@ -125,7 +125,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         <ul className="game-tm-list">
           {tmByGeneration[generationId].map((gameTm, i) => (
             <li key={i} className="game-tm-item">
-              {formatPokemonName(gameTm.game)}: {gameTm.machine}
+              {formatGameName(gameTm.game)}: <span className="game-tm-item-number">{gameTm.machine}</span>
             </li>
           ))}
         </ul>

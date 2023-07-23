@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
@@ -23,7 +23,7 @@ const PokemonList = ({ list }) => {
           <p className="pokemon-id"> #{id}</p>
 
           <img onError={handleImageError} src={getSprite(id)} />
-          <p className="pokemon-name">{formatPokemonName(name)}</p>
+          <p className="pokemon-name">{formatName(name)}</p>
           <Types types={types} />
         </li>
       ))}

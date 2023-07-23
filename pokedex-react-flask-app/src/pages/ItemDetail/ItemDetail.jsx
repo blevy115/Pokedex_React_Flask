@@ -6,7 +6,7 @@ import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_ITEM_INFO } from "../../api/queries/pokeapi";
 import { ITEM_MUTATION } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
 
 import { ItemPokemonTable } from "../../components";
@@ -42,7 +42,7 @@ const ItemDetail = () => {
   return (
     <div className="app__item">
       <div className="app__item-info">
-        <h3>{formatPokemonName(name)}</h3>
+        <h3>{formatName(name)}</h3>
         <p>{flavor[0] && flavor[0].text}</p>
         <p>{category && category.name}</p>
       </div>

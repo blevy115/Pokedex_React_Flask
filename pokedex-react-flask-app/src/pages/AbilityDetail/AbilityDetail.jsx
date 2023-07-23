@@ -6,7 +6,7 @@ import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_ABILITY_INFO } from "../../api/queries/pokeapi";
 import { ABILITY_MUTATION } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import { AbilityPokemonsTable } from "../../components";
 
@@ -41,7 +41,7 @@ const AbilityDetail = () => {
   return (
     <div className="app__ability">
       <div className="app__ability-info">
-        <h3>{formatPokemonName(name)}</h3>
+        <h3>{formatName(name)}</h3>
         <p>{flavor[0] && flavor[0].text}</p>
         <p>{effect_text[0] && effect_text[0].effect}</p>
       </div>

@@ -25,7 +25,7 @@ import {
   HeldItems,
 } from "../../components";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
 import { handleImageError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
@@ -123,7 +123,7 @@ const PokemonDetail = () => {
           </div>
           <div className="pokemon-name">
             <p>#{params.pokemonId}</p>
-            <h3>{formatPokemonName(name)}</h3>
+            <h3>{formatName(name)}</h3>
           </div>
           <div>
             <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
@@ -161,7 +161,7 @@ const PokemonDetail = () => {
               {Object.entries(evYield.evs).map((stat) => {
                 return (
                   <p key={stat[0]} className="no-wrap">
-                    {formatPokemonName(stat[0])}: {stat[1]}
+                    {formatName(stat[0])}: {stat[1]}
                   </p>
                 );
               })}

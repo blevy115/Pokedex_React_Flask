@@ -19,8 +19,11 @@
 
 .game-tm-item {
   margin: 1em 0;
-  text-transform: uppercase;
   margin-top: 0;
+
+  .game-tm-item-number {
+    text-transform: uppercase;
+  }
 }
 
 .app__move-pokemon-table {
