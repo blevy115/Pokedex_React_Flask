@@ -1,0 +1,51 @@
+.type-effectiveness-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns with equal width */
+  gap: 100px; /* Gap between columns */
+  margin: 1rem 0;
+  width: auto;
+
+  .type-effectiveness-offense, .type-effectiveness-defense {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .type-effectiveness-relation-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid black;
+    flex-grow: 1;
+    border-radius: 0.5rem;
+  }
+
+  .type-effectiveness-relation {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    border-right: 3px solid red;
+
+    &:last-child {
+        border: none;
+    }
+
+    .type-effectiveness-relations-list {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+
+      .type-effectiveness-relations-item {
+        margin: 3px 0;
+      }
+    }
+
+    p {
+        margin-top: 0;
+    }
+  }
+
+  @media screen and (max-width: 800px){
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

@@ -5,7 +5,9 @@ import { useQuery } from "@apollo/client";
 import { GET_TYPE_INFO } from "../../api/queries/pokeapi";
 import { pokemonAPIClient } from "../../api/clients";
 
-import { TypeMoves, TypePokemon } from "../../components";
+import { formatName } from "../../helpers/format";
+
+import { TypeMoves, TypePokemon, TypeRelations } from "../../components";
 
 const tabs = ["Pokemon", "Moves"];
 
@@ -25,11 +27,11 @@ const TypeDetail = () => {
 
   if (loading) return <>Loading...</>;
   const { name, moves, pokemons, id } = data.pokemon_v2_type[0];
-
   return (
     <>
       <div className="app__type-details-info">
-        <h3>{name}</h3>
+        <h3>{formatName(name)}</h3>
+        <TypeRelations type={name} />
         <div className="app__type-details-tabs-container">
           <ul className="app__type-details-tabs">
             {tabs.map((tab) => (
