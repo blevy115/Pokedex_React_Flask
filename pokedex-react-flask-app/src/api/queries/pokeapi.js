@@ -7,7 +7,7 @@ const GET_POKEMON_INFO = gql`
       name
       height
       weight
-
+      pokemon_species_id
       info: pokemon_v2_pokemonspecy {
         has_gender_differences
         gender_rate
@@ -48,6 +48,12 @@ const GET_POKEMON_INFO = gql`
         pokemon_v2_ability {
           name
           id
+          flavor: pokemon_v2_abilityflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            text: flavor_text
+          }
           text: pokemon_v2_abilityeffecttexts(
             where: { pokemon_v2_language: { name: { _eq: "en" } } }
           ) {
@@ -130,6 +136,7 @@ const GET_POKEMON_LIST_BY_NAME = gql`
     ) {
       id
       name
+      pokemon_species_id
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -145,6 +152,7 @@ const GET_POKEMON_LIST_BY_ID = gql`
     pokemon_list: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
       id
       name
+      pokemon_species_id
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -277,6 +285,7 @@ const GET_ITEM_INFO = gql`
         pokemon_v2_pokemon {
           name
           id
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
@@ -391,6 +400,7 @@ const GET_TYPE_INFO = gql`
         pokemon_v2_pokemon {
           name
           id
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             type_id
             pokemon_v2_type {

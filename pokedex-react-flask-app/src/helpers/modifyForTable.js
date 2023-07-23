@@ -1,5 +1,3 @@
-import { formatPokemonName } from "./format";
-
 function modifyMoves({
   moves,
   hasLevel = false,
@@ -86,16 +84,17 @@ function modifyPokemon({
     const pokemonData = pokemon.pokemon_v2_pokemon;
     const modifiedPokemon = {
       id: i,
-      pokemonId: `#${pokemonData.id}`,
+      pokemonId: `#${pokemonData.pokemon_species_id}`,
       spriteId: pokemonData.id,
-      name: { name: formatPokemonName(pokemonData.name), id: pokemonData.id },
+      name: { name: pokemonData.name, id: pokemonData.id },
       types: pokemonData.types,
     };
 
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
     if (hasHiddenData)
       return { ...modifiedPokemon, isHidden: pokemon.is_hidden };
-    if (hasItemRarityData) return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    if (hasItemRarityData)
+      return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
     return modifiedPokemon;
   });
   return { columns, tableData };
