@@ -16,7 +16,7 @@ const TypeRelations = ({ type }) => {
     <div className="type-effectiveness-relation-container">
       {relations.map(([relation, types]) => (
         <div className="type-effectiveness-relation" key={relation}>
-          <p>{formatName(relation)}</p>
+          <h3>{formatName(relation)}</h3>
           {types.length > 0 ? (
             <div className="type-effectiveness-relations-list">
               {types.map((type) => (
@@ -40,11 +40,11 @@ const TypeRelations = ({ type }) => {
   return (
     <div className="type-effectiveness-container">
       <div className="type-effectiveness-offense">
-        <p className="text-center">Attack</p>
+        <h2 className="text-center">Damage Dealt</h2>
         <TypeRelationsComponent relations={Object.entries(attack)} />
       </div>
       <div className="type-effectiveness-defense">
-        <p className="text-center">Defense</p>
+        <h2 className="text-center">Damage Taken</h2>
         <TypeRelationsComponent relations={Object.entries(defense)} />
       </div>
     </div>

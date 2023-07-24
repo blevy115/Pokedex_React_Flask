@@ -32,7 +32,7 @@ function modifyMoves({
       kind: move.moveInfo.kind.name,
       power: move.moveInfo.power || "—",
       pp: move.moveInfo.pp,
-      accuracy: `${move.moveInfo.accuracy || "—"}%`,
+      accuracy: move.moveInfo.accuracy ? `${move.moveInfo.accuracy}%` : "—",
       popupText: hasFlavourText
         ? move.moveInfo.flavourText[0].flavor_text
         : undefined,
