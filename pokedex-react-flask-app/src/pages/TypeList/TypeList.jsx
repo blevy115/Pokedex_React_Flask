@@ -5,6 +5,8 @@ import { useQuery } from "@apollo/client";
 import { GET_TYPES } from "../../api/queries/backend";
 import { backEndClient } from "../../api/clients";
 
+import { Loading } from "../../components";
+
 import "./TypeList.scss";
 
 const TypeList = () => {
@@ -13,7 +15,7 @@ const TypeList = () => {
     client: backEndClient,
   });
 
-  if (loading) return <>Loading..</>;
+  if (loading) return <Loading />;
 
   return (
     <div className="app__type-list">

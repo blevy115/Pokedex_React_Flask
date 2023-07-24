@@ -23,6 +23,7 @@ import {
   GenderRatio,
   Types,
   HeldItems,
+  Loading,
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
@@ -92,7 +93,7 @@ const PokemonDetail = () => {
     });
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   const {
     height,
     weight,

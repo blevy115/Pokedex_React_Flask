@@ -9,6 +9,8 @@ import { formatName } from "../../helpers/format";
 import { handleImageError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
+import { Loading } from "../../components";
+
 import "./Favourites.scss";
 
 const Favourites = () => {
@@ -23,7 +25,7 @@ const Favourites = () => {
     }
   );
 
-  if (userPokemonsLoading) return <p>Loading...</p>;
+  if (userPokemonsLoading) return <Loading />;
   const activeFavourites = userPokemonsData.userPokemons.filter(
     (pokemon) => pokemon.isActive
   );

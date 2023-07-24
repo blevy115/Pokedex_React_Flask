@@ -7,7 +7,12 @@ import { pokemonAPIClient } from "../../api/clients";
 
 import { formatName } from "../../helpers/format";
 
-import { TypeMoves, TypePokemon, TypeRelations } from "../../components";
+import {
+  Loading,
+  TypeMoves,
+  TypePokemon,
+  TypeRelations,
+} from "../../components";
 
 const tabs = ["Pokemon", "Moves"];
 
@@ -25,12 +30,12 @@ const TypeDetail = () => {
     window.scrollTo(0, 0);
   }, [data]);
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Loading />;
   const { name, moves, pokemons, id } = data.pokemon_v2_type[0];
   return (
     <>
       <div className="app__type-details-info">
-        <h3>{formatName(name)}</h3>
+        <h1>{formatName(name)}</h1>
         <TypeRelations type={name} />
         <div className="app__type-details-tabs-container">
           <ul className="app__type-details-tabs">

@@ -9,7 +9,7 @@ import { ITEM_MUTATION } from "../../api/queries/backend";
 import { formatName } from "../../helpers/format";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
 
-import { ItemPokemonTable } from "../../components";
+import { ItemPokemonTable, Loading } from "../../components";
 
 import "./ItemDetail.scss";
 
@@ -35,7 +35,7 @@ const ItemDetail = () => {
     }
   }, [name, params.itemId, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   const { flavor, held_by_pokemon: heldByPokemon, category } = data.item[0];
 

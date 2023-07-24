@@ -7,6 +7,7 @@ export { default as ItemPokemonTable } from "./ItemPokemonTable/ItemPokemonTable
 export { default as HeldItems } from "./HeldItems/HeldItems";
 export { default as MovesList } from "./MovesList/MovesList";
 export { default as MovesTable } from "./MovesTable/MovesTable";
+export { default as Loading } from "./Loading/Loading";
 export { default as NavBar } from "./NavBar/NavBar";
 export { default as PokemonImage } from "./PokemonImage/PokemonImage";
 export { default as PokemonList } from "./PokemonList/PokemonList";
@@ -19,4 +20,4 @@ export { default as TypeEffectiveness } from "./TypeEffectiveness/TypeEffectiven
 export { default as Types } from "./Types/Types";
 export { default as TypePokemon } from "./TypePokemon/TypePokemon";
 export { default as TypeMoves } from "./TypeMoves/TypeMoves";
-export {default as TypeRelations} from "./TypeRelations/TypeRelations";
+export { default as TypeRelations } from "./TypeRelations/TypeRelations";

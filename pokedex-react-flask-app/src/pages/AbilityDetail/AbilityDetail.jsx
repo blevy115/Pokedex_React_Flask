@@ -8,7 +8,7 @@ import { ABILITY_MUTATION } from "../../api/queries/backend";
 
 import { formatName } from "../../helpers/format";
 
-import { AbilityPokemonsTable } from "../../components";
+import { AbilityPokemonsTable, Loading } from "../../components";
 
 import "./AbilityDetail.scss";
 
@@ -34,7 +34,7 @@ const AbilityDetail = () => {
     }
   }, [name, params.abilityId, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   const { flavor, effect_text } = data.ability[0];
 

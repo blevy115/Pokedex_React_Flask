@@ -8,7 +8,7 @@ import { MOVE_MUTATION } from "../../api/queries/backend";
 
 import { formatName } from "../../helpers/format";
 
-import { MovePokemonsTable } from "../../components";
+import { MovePokemonsTable, Loading } from "../../components";
 
 import "./MoveDetail.scss";
 
@@ -35,12 +35,12 @@ const MoveDetail = () => {
     }
   }, [name, params.moveId, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   const { type, kind, generation_id, pp, accuracy, power, flavor, tm } =
     data.move[0];
 
-    return (
+  return (
     <div className="app__move">
       <div className="app__move-info">
         <h3>{formatName(name)}</h3>

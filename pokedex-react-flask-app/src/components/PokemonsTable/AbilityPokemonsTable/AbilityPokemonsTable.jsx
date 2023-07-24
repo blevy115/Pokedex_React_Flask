@@ -12,7 +12,7 @@ import { modifyPokemon } from "../../../helpers/modifyForTable";
 
 import { formatName } from "../../../helpers/format";
 
-import { Table, Types } from "../..";
+import { Loading, Table, Types } from "../..";
 
 import "./AbilityPokemonsTable.scss";
 
@@ -24,7 +24,7 @@ const AbilityPokemonsTable = ({ id }) => {
     client: pokemonAPIClient,
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading fullscreen={false} />;
 
   const { pokemons } = data.ability[0];
 

@@ -14,7 +14,7 @@ import { handleImageError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { Table, Types } from "../..";
+import { Table, Types, Loading } from "../..";
 
 import "./MovePokemonsTable.scss";
 
@@ -67,7 +67,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return options;
   }, [generation]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading || !loading) return <Loading />;
 
   const { pokemons } = data.move[0];
 
