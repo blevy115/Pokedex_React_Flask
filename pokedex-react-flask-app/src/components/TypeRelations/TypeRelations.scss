@@ -5,7 +5,8 @@
   margin: 1rem 0;
   width: auto;
 
-  .type-effectiveness-offense, .type-effectiveness-defense {
+  .type-effectiveness-offense,
+  .type-effectiveness-defense {
     display: flex;
     flex-direction: column;
   }
@@ -15,7 +16,9 @@
     grid-template-columns: repeat(3, 1fr);
     border: 1px solid black;
     flex-grow: 1;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ffcc00, #ff6a00);
   }
 
   .type-effectiveness-relation {
@@ -23,10 +26,10 @@
     align-items: center;
     flex-direction: column;
     padding: 1rem;
-    border-right: 3px solid red;
+    box-shadow: 2px 0 2px 1px rgba(0, 0, 0, 0.5);
 
     &:last-child {
-        border: none;
+      box-shadow: none;
     }
 
     .type-effectiveness-relations-list {
@@ -36,15 +39,24 @@
 
       .type-effectiveness-relations-item {
         margin: 3px 0;
+        background-color: #fafafa;
+        margin-bottom: 10px;
+        border-radius: 2px;
+        box-shadow: 0 0 1px 0.2px black;
+        color: #333;
+
+        &:hover {
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
       }
     }
 
-    p {
-        margin-top: 0;
+    h3, p {
+      margin-top: 0;
     }
   }
 
-  @media screen and (max-width: 800px){
+  @media screen and (max-width: 800px) {
     grid-template-columns: 1fr;
     gap: 0;
   }

@@ -1,12 +1,12 @@
 import React from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
-
-import "./TypeMoves.scss";
+import { formatName } from "../../helpers/format";
 
 import { Table } from "../";
+
+import "./TypeMoves.scss";
 
 const TypeMoves = ({ list }) => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const TypeMoves = ({ list }) => {
         className="clickable"
         onClick={() => navigate(`/moves/${row.original.moveId}`)}
       >
-        {value}
+        {formatName(value)}
       </div>
     );
   };
