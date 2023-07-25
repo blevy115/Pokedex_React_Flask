@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { formatName } from "../../helpers/format";
+
 import "./GenerationSelector.scss";
 
 const GenerationSelector = ({ pokedexes }) => {
@@ -17,7 +19,7 @@ const GenerationSelector = ({ pokedexes }) => {
         >
           {pokedexes.map((pokedex, i) => (
             <option key={i} value={pokedex.pokemon_v2_pokedex.name}>
-              {pokedex.pokemon_v2_pokedex.name}
+              {formatName(pokedex.pokemon_v2_pokedex.name)}
             </option>
           ))}
         </select>
