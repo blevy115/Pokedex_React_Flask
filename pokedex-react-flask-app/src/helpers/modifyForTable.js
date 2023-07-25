@@ -45,13 +45,13 @@ function modifyMoves({
 function modifyPokemon({
   pokemons,
   hasLevelData = false,
-  hasHiddenData = false,
   hasItemRarityData = false,
+  hasAbilities = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
   LevelComponent,
-  IsHiddenComponent,
+  AbilitiesComponent,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
@@ -66,18 +66,30 @@ function modifyPokemon({
       Cell: LevelComponent,
     });
   }
-  if (hasHiddenData) {
-    columns.push({
-      Header: "Hidden",
-      accessor: "isHidden",
-      Cell: IsHiddenComponent,
-    });
-  }
   if (hasItemRarityData) {
     columns.push({
       Header: "Rarity",
       accessor: "rarity",
     });
+  }
+  if (hasAbilities) {
+    columns.push(
+      {
+        Header: "Ability 1",
+        accessor: "ability-1",
+        Cell: AbilitiesComponent,
+      },
+      {
+        Header: "Ability 2",
+        accessor: "ability-2",
+        Cell: AbilitiesComponent,
+      },
+      {
+        Header: " Hidden Ability",
+        accessor: "ability-hidden",
+        Cell: AbilitiesComponent,
+      }
+    );
   }
 
   const tableData = pokemons.map((pokemon, i) => {
@@ -91,10 +103,24 @@ function modifyPokemon({
     };
 
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
-    if (hasHiddenData)
-      return { ...modifiedPokemon, isHidden: pokemon.is_hidden };
     if (hasItemRarityData)
       return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    if (hasAbilities) {
+      const standardAbilities = pokemonData.abilities.filter(
+        (ability) => !ability.is_hidden
+      );
+      const hiddenAbilities = pokemonData.abilities.filter(
+        (ability) => ability.is_hidden
+      );
+      const modifiedAbilities = {};
+      modifiedAbilities["ability-1"] = standardAbilities[0].pokemon_v2_ability;
+      modifiedAbilities["ability-2"] = standardAbilities[1]
+        ?.pokemon_v2_ability || { name: "None" };
+      modifiedAbilities["ability-hidden"] = hiddenAbilities[0]
+        ?.pokemon_v2_ability || { name: "None" };
+      return { ...modifiedPokemon, ...modifiedAbilities };
+    }
+
     return modifiedPokemon;
   });
   return { columns, tableData };

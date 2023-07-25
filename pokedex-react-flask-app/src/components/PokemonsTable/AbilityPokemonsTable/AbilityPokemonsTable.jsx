@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineCheck } from "react-icons/hi";
 import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../../api/clients";
@@ -54,8 +53,19 @@ const AbilityPokemonsTable = ({ id }) => {
     return <Types types={value} />;
   };
 
-  const IsHiddenComponent = ({ value }) => {
-    return value ? <HiOutlineCheck className="hidden-checkmark" /> : null;
+  const AbilitiesComponent = ({ value }) => {
+    return (
+      <p
+        className={value.id === id ? "text-bold" : value.id ? "clickable" : ""}
+        onClick={() => {
+          if (value.id) {
+            navigate(`/abilities/${value.id}`);
+          }
+        }}
+      >
+        {formatName(value.name)}
+      </p>
+    );
   };
 
   const { tableData, columns } = modifyPokemon({
@@ -63,8 +73,8 @@ const AbilityPokemonsTable = ({ id }) => {
     SpriteComponent,
     NameComponent,
     TypesImageComponent,
-    IsHiddenComponent,
-    hasHiddenData: true,
+    AbilitiesComponent,
+    hasAbilities: true,
   });
 
   return (

@@ -318,6 +318,15 @@ const GET_ABILITY_POKEMONS = gql`
           id
           name
           pokemon_species_id
+          abilities: pokemon_v2_pokemonabilities {
+            is_hidden
+            id
+            pokemon_v2_ability {
+              name
+              id
+            }
+            ability_id
+          }
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
