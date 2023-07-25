@@ -5,11 +5,12 @@ import { formatName } from "../../helpers/format";
 import { getItemSprite } from "../../helpers/pictures";
 import { handleImageError } from "../../helpers/error";
 
-
 import "./ItemsList.scss";
 
 const ItemsList = ({ list }) => {
   let navigate = useNavigate();
+
+  if (list.length === 0) return <p>No Results Found</p>;
 
   return (
     <ul className="app__items-list">
@@ -20,7 +21,7 @@ const ItemsList = ({ list }) => {
           onClick={() => navigate(`/items/${id}`)}
         >
           <p>{formatName(name)}</p>
-          <img src={getItemSprite(name)} onError={handleImageError}/>
+          <img src={getItemSprite(name)} onError={handleImageError} />
         </li>
       ))}
     </ul>

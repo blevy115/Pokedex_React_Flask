@@ -7,7 +7,7 @@ import {
   GET_POKEMON_LIST_BY_ID,
 } from "../../api/queries/pokeapi";
 
-import { PokemonList, DebouncedInput } from "../../components";
+import { PokemonList, DebouncedInput, Loading } from "../../components";
 
 import "./PokemonSearch.scss";
 
@@ -42,10 +42,10 @@ const PokemonSearch = () => {
           ref={inputRef}
           label="Search For Pokemon"
           placeholder="Pokemon"
-          debouceTime={300}
+          debouceTime={400}
         />
       </div>
-
+      {loadingList && <Loading fullscreen={false} />}
       {!loadingList && list ? (
         <PokemonList list={list.pokemon_list} />
       ) : undefined}

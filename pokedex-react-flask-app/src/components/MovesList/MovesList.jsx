@@ -8,6 +8,8 @@ import "./MovesList.scss";
 const MovesList = ({ list }) => {
   let navigate = useNavigate();
 
+  if (list.length === 0) return <p>No Results Found</p>;
+
   return (
     <ul className="app__moves-list">
       {list.map(({ name, id, type, kind }) => (

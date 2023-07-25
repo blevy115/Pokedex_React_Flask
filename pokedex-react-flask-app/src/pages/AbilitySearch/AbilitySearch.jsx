@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { pokemonAPIClient } from "../../api/clients";
 import { GET_ABILITIES_LIST_BY_NAME } from "../../api/queries/pokeapi";
 
-import { AbilitiesList } from "../../components";
+import { AbilitiesList, DebouncedInput, Loading } from "../../components";
 
 import "./AbilitySearch.scss";
 
@@ -31,15 +31,16 @@ const AbilitySearch = () => {
     <div className="app__ability-search">
       <h2 className="header-text">Welcome {user?.name}</h2>
       <div className="app__ability-search-field">
-        <label htmlFor="app__ability-search-field">Search For Abilities</label>
-        <input
-          id="ability-search-field"
+        <DebouncedInput
+          id="app__ability-search-field"
+          onValueChange={setTextInput}
           ref={inputRef}
-          value={textInput}
-          onChange={(val) => setTextInput(val.target.value)}
+          label="Search For Ability"
+          placeholder="Ability"
+          debouceTime={400}
         />
       </div>
-
+      {loadingList && <Loading fullscreen={false} />}
       {!loadingList && list ? (
         <AbilitiesList list={list.abilities_list} />
       ) : undefined}

@@ -12,6 +12,8 @@ import "./PokemonList.scss";
 const PokemonList = ({ list }) => {
   let navigate = useNavigate();
 
+  if (list.length === 0) return <p>No Results Found</p>;
+
   return (
     <ul className="app__pokemon-list">
       {list.map(({ name, id, types }) => (
