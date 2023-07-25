@@ -7,6 +7,8 @@ import { GET_ITEM_INFO } from "../../api/queries/pokeapi";
 import { ITEM_MUTATION } from "../../api/queries/backend";
 
 import { formatName } from "../../helpers/format";
+import { getItemSprite } from "../../helpers/pictures";
+import { handleItemError } from "../../helpers/error";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
 
 import { ItemPokemonTable, Loading } from "../../components";
@@ -42,11 +44,14 @@ const ItemDetail = () => {
   return (
     <div className="app__item">
       <div className="app__item-info">
-        <h3>{formatName(name)}</h3>
+        <div className="app__item-info-header">
+          <img src={getItemSprite(name)} onError={handleItemError} />
+          <h3>{formatName(name)}</h3>
+        </div>
         <p>{flavor[0] && flavor[0].text}</p>
-        <p>{category && category.name}</p>
+        {category && <p>Category: {formatName(category.name)}</p>}
       </div>
-      < ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)}/>
+      <ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)} />
     </div>
   );
 };

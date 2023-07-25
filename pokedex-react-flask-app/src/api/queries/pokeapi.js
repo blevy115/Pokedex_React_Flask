@@ -163,10 +163,11 @@ const GET_POKEMON_LIST_BY_ID = gql`
   }
 `;
 
+//Item Category is Dynamax Crystals which are Event Only / Unobtainable
 const GET_ITEMS_LIST_BY_NAME = gql`
   query getItemList($name: String!) {
     items_list: pokemon_v2_item(
-      where: { name: { _ilike: $name } }
+      where: { name: { _ilike: $name }, item_category_id: { _neq: 49 } }
       order_by: { name: asc }
     ) {
       id
