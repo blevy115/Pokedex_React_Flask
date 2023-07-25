@@ -176,10 +176,11 @@ const GET_ITEMS_LIST_BY_NAME = gql`
   }
 `;
 
+// Removes Shadow Type Moves
 const GET_MOVES_LIST_BY_NAME = gql`
   query getMovesList($name: String!) {
     moves_list: pokemon_v2_move(
-      where: { name: { _ilike: $name } }
+      where: { name: { _ilike: $name }, type_id: { _neq: 10002 } }
       order_by: { name: asc }
     ) {
       id
