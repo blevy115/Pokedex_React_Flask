@@ -3,15 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 import "./Types.scss";
 
-const Types = ({ types }) => {
+const Types = ({ types, pageTypeId = null }) => {
   const navigate = useNavigate();
   return (
     <ul className="type-list">
       {types.map((type) => {
         return (
           <li
-            className="clickable"
-            onClick={() => navigate(`/types/${type.pokemon_v2_type.id}`)}
+            className={
+              pageTypeId !== type.pokemon_v2_type.id ? "clickable" : ""
+            }
+            onClick={() => {
+              if (pageTypeId !== type.pokemon_v2_type.id) {
+                navigate(`/types/${type.pokemon_v2_type.id}`);
+              }
+            }}
             key={type.pokemon_v2_type.id}
           >
             <img

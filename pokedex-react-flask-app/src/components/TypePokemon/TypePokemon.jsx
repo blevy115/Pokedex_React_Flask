@@ -67,7 +67,7 @@ const TypePokemon = ({ name, list, typeId }) => {
   };
 
   const TypesImageComponent = ({ value }) => {
-    return <Types types={value} />;
+    return <Types types={value} pageTypeId={typeId} />;
   };
 
   const { tableData: pureTableData, columns: pureColumns } = modifyPokemon({
