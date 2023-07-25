@@ -28,7 +28,7 @@ import {
 
 import { formatName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
 
 import "./PokemonDetail.scss";
@@ -117,7 +117,7 @@ const PokemonDetail = () => {
             <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
               <HiOutlineChevronLeft />
               <img
-                onError={handleImageError}
+                onError={handleSpriteError}
                 src={getSprite(parseInt(params.pokemonId) - 1)}
               />
             </Link>
@@ -129,7 +129,7 @@ const PokemonDetail = () => {
           <div>
             <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
               <img
-                onError={handleImageError}
+                onError={handleSpriteError}
                 src={getSprite(parseInt(params.pokemonId) + 1)}
               />
 

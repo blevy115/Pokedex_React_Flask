@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 
 import { sortPokemonByTypes } from "../../helpers/sortPokemonByTypes";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
 import { formatName } from "../../helpers/format";
@@ -48,7 +48,7 @@ const TypePokemon = ({ name, list, typeId }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />

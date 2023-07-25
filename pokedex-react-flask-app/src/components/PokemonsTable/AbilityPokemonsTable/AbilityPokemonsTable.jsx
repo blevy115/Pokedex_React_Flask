@@ -6,7 +6,7 @@ import { useQuery } from "@apollo/client";
 import { pokemonAPIClient } from "../../../api/clients";
 import { GET_ABILITY_POKEMONS } from "../../../api/queries/pokeapi";
 
-import { handleImageError } from "../../../helpers/error";
+import { handleSpriteError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
@@ -32,7 +32,7 @@ const AbilityPokemonsTable = ({ id }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />

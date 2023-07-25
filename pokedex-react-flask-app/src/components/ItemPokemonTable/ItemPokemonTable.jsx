@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getSprite } from "../../helpers/pictures";
 
 import { modifyPokemon } from "../../helpers/modifyForTable";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
 
 import { formatName } from "../../helpers/format";
 
@@ -28,7 +28,7 @@ const ItemPokemonTable = ({ list }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />

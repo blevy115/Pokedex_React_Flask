@@ -6,7 +6,7 @@ import { backEndClient } from "../../api/clients";
 import { GET_USER_POKEMONS } from "../../api/queries/backend";
 
 import { formatName } from "../../helpers/format";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
 import { Loading } from "../../components";
@@ -50,7 +50,7 @@ const Favourites = () => {
                 <img
                   className="favourite-image"
                   src={getSprite(pokemonId)}
-                  onError={handleImageError}
+                  onError={handleSpriteError}
                 />
                 <p className="favourites-list-item-shiny-counter">
                   {pokemon.shinyCounter !== 0 && (

@@ -10,7 +10,7 @@ import {
   mergeTmEntries,
 } from "../../../helpers/mergeEntries";
 import { formatName, formatGameName } from "../../../helpers/format";
-import { handleImageError } from "../../../helpers/error";
+import { handleSpriteError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
@@ -75,7 +75,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />
