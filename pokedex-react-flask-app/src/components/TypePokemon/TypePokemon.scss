@@ -1,0 +1,38 @@
+.sort-types-bar-container {
+  display: flex;
+  align-items: center;
+
+  .sort-types-bar-list {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+    flex-wrap: wrap;
+
+    img:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      border-radius: 100%;
+    }
+  }
+}
+
+.type-icon {
+  height: 30px;
+  width: 30px;
+  margin: 0 0.5rem;
+}
+
+.scroll-to-top-button {
+  position: fixed;
+  left: 10px;
+  top: 150px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.scroll-to-top-button:hover {
+  background-color: #0056b3;
+}
