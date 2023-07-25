@@ -130,9 +130,7 @@ const StatChart = ({ baseStats, isAFavourite }) => {
   const data = useMemo(() => {
     return {
       labels: isAFavourite
-        ? Object.keys(calculatedStatsValues).map((val) =>
-            formatName(val)
-          )
+        ? Object.keys(calculatedStatsValues).map((val) => formatName(val))
         : Object.keys(convertedStats).map((val) => formatName(val)),
       datasets: [
         {
@@ -293,7 +291,12 @@ const StatChart = ({ baseStats, isAFavourite }) => {
               ))}
             </select>
           </div>
-          <Table data={tableData} columns={columns} columnsEqualSize={true} />
+          <Table
+            hasFilterValue={false}
+            data={tableData}
+            columns={columns}
+            columnsEqualSize={true}
+          />
         </>
       ) : undefined}
     </div>

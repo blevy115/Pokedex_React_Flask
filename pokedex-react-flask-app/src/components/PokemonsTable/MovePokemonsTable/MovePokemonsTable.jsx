@@ -67,7 +67,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return options;
   }, [generation]);
 
-  if (loading || !loading) return <Loading />;
+  if (loading) return <Loading fullscreen={false}/>;
 
   const { pokemons } = data.move[0];
 
@@ -82,13 +82,13 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     );
   };
 
-  const NameComponent = ({ value }) => {
+  const NameComponent = ({ value, row }) => {
     return (
       <p
         className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${value.id}`)}
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
-        {formatName(value.name)}
+        {formatName(value)}
       </p>
     );
   };

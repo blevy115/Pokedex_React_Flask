@@ -86,7 +86,7 @@ function modifyPokemon({
       id: i,
       pokemonId: `#${pokemonData.pokemon_species_id}`,
       spriteId: pokemonData.id,
-      name: { name: pokemonData.name, id: pokemonData.id },
+      name: pokemonData.name,
       types: pokemonData.types,
     };
 

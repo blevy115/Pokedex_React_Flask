@@ -39,13 +39,13 @@ const AbilityPokemonsTable = ({ id }) => {
     );
   };
 
-  const NameComponent = ({ value }) => {
+  const NameComponent = ({ value, row }) => {
     return (
       <p
         className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${value.id}`)}
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
-        {formatName(value.name)}
+        {formatName(value)}
       </p>
     );
   };
