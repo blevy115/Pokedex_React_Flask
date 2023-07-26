@@ -26,7 +26,9 @@ const Table = ({
   const filteredRows =
     hasFilterValue && filterValue
       ? rows.filter((row) =>
-          row.values.name.toLowerCase().includes(filterValue.toLowerCase())
+          formatName(row.values.name)
+            .toLowerCase()
+            .includes(filterValue.toLowerCase())
         )
       : rows;
 
