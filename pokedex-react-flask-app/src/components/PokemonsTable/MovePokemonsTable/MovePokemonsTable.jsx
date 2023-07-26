@@ -41,8 +41,8 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
       moveTypes["tm"] = 4;
     } else {
       delete moveTypes["tm"];
-      setMoveType("level");
     }
+    setMoveType("level");
   }, [generationId]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return options;
   }, [generation]);
 
-  if (loading) return <Loading fullscreen={false}/>;
+  if (loading) return <Loading fullscreen={false} />;
 
   const { pokemons } = data.move[0];
 
@@ -125,7 +125,8 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         <ul className="game-tm-list">
           {tmByGeneration[generationId].map((gameTm, i) => (
             <li key={i} className="game-tm-item">
-              {formatGameName(gameTm.game)}: <span className="game-tm-item-number">{gameTm.machine}</span>
+              {formatGameName(gameTm.game)}:{" "}
+              <span className="game-tm-item-number">{gameTm.machine}</span>
             </li>
           ))}
         </ul>
@@ -157,7 +158,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         </select>
       </div>
       {pokemons.length > 0 ? (
-        <div>
+        <div className="pokemons-table">
           <Table data={tableData} columns={columns} />
         </div>
       ) : (
