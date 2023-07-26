@@ -311,7 +311,12 @@ const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
       pokemons: pokemon_v2_pokemonabilities(
-        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
+        order_by: {
+          id: asc
+          pokemon_v2_pokemon: { pokemon_species_id: asc }
+          pokemon_id: asc
+        }
+        distinct_on: pokemon_id
       ) {
         is_hidden
         pokemon_v2_pokemon {
