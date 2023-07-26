@@ -36,58 +36,61 @@ const Table = ({
     <>
       {hasFilterValue && (
         <input
+          className="table-filter-input"
           type="text"
           value={filterValue}
           onChange={handleFilterChange}
           placeholder="Search by name..."
         />
       )}
-      {filteredRows.length > 0 ? (
-        <table className="table" {...getTableProps()}>
-          {hasHeaders && (
-            <thead>
-              {headerGroups.map((headerGroup, i) => (
-                <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column, j) => (
-                    <th
-                      key={j}
-                      {...column.getHeaderProps()}
-                      style={
-                        columnsEqualSize
-                          ? {
-                              // set the width of each column to a fraction of the total grid width
-                              width: `${100 / headerGroup.headers.length}%`,
-                            }
-                          : {}
-                      }
-                    >
-                      {formatName(column.render("Header"))}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-          )}
-          <tbody {...getTableBodyProps()} style={tableStyles}>
-            {filteredRows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr key={i} {...row.getRowProps()}>
-                  {row.cells.map((cell, j) => {
-                    return (
-                      <td key={j} {...cell.getCellProps()}>
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      ) : (
-        <p>No Results</p>
-      )}
+      <div className="table-container">
+        {filteredRows.length > 0 ? (
+          <table className="table" {...getTableProps()}>
+            {hasHeaders && (
+              <thead>
+                {headerGroups.map((headerGroup, i) => (
+                  <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column, j) => (
+                      <th
+                        key={j}
+                        {...column.getHeaderProps()}
+                        style={
+                          columnsEqualSize
+                            ? {
+                                // set the width of each column to a fraction of the total grid width
+                                width: `${100 / headerGroup.headers.length}%`,
+                              }
+                            : {}
+                        }
+                      >
+                        {formatName(column.render("Header"))}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+            )}
+            <tbody {...getTableBodyProps()} style={tableStyles}>
+              {filteredRows.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <tr key={i} {...row.getRowProps()}>
+                    {row.cells.map((cell, j) => {
+                      return (
+                        <td key={j} {...cell.getCellProps()}>
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <p>No Results</p>
+        )}
+      </div>
     </>
   );
 };

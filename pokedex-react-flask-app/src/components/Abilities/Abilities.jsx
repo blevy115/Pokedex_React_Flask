@@ -27,7 +27,7 @@ const Abilities = ({ abilities }) => {
               data-tip
               data-tooltip-id={tooltipId}
             >
-              {ability.is_hidden && " (Hidden) "}
+              {ability.is_hidden && " (H) "}
               {formatName(ability.pokemon_v2_ability.name)}
               <Tooltip
                 id={tooltipId}

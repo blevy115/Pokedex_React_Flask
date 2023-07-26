@@ -91,7 +91,7 @@ const TypePokemon = ({ name, list, typeId }) => {
 
   return (
     <div>
-      <h4>Pure {name} Pokemon</h4>
+      <h4>Pure {formatName(name)} Pokemon</h4>
       <Table data={pureTableData} columns={pureColumns} />
       <div ref={typeBarRefs} className="sort-types-bar-container">
         <button

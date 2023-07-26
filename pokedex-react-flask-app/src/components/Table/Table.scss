@@ -10,3 +10,23 @@
 .table td {
   border: 1px solid #ccc;
 }
+
+.table-filter-input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:focus {
+    border-color: #66afe9;
+    box-shadow: 0 2px 8px rgba(102, 175, 233, 0.6);
+  }
+
+  @media screen and (max-width: 700px) {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+}

@@ -3,7 +3,7 @@
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(3, 200px);
   gap: 10px;
-  width: 80%;
+  max-width: 1400px;
   margin: 3em auto;
 
   .app__type-list-item {
@@ -11,12 +11,15 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
+    justify-self: center;
+    padding: 0 1rem;
+
     img {
-      width: 125px;
-      height: 125px;
+      width: 100px;
+      height: 100px;
       @media screen and (max-width: 900px) {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
       }
     }
   }
