@@ -44,7 +44,7 @@ const GET_POKEMON_INFO = gql`
         }
       }
 
-      abilities: pokemon_v2_pokemonabilities(distinct_on: ability_id) {
+      abilities: pokemon_v2_pokemonabilities(order_by: { id: asc }) {
         pokemon_v2_ability {
           name
           id
