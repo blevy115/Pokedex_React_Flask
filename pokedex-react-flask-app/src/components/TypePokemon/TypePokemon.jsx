@@ -16,8 +16,8 @@ const TypePokemon = ({ name, list, typeId }) => {
   const navigate = useNavigate();
   const [byType, setbyType] = useState();
 
-  const elementsRefs = useRef([]);
   const typeBarRefs = useRef(null);
+  const secondaryTypeTableRefsList = useRef([]);
   const secondaryTypeTables = useRef(null);
 
   const isInView = useInView(secondaryTypeTables);
@@ -32,8 +32,8 @@ const TypePokemon = ({ name, list, typeId }) => {
   );
   const { 0: pure, ...semi } = sortedPokemonData;
 
-  const scrollToElement = (index) => {
-    elementsRefs.current[index].scrollIntoView({
+  const scrollToTypeTable = (index) => {
+    secondaryTypeTableRefsList.current[index].scrollIntoView({
       behavior: "smooth",
     });
   };
@@ -109,7 +109,7 @@ const TypePokemon = ({ name, list, typeId }) => {
                 key={name}
                 src={`/icons/symbols/${name}.png`}
                 alt={`${name} symbol`}
-                onClick={() => scrollToElement(i)}
+                onClick={() => scrollToTypeTable(i)}
                 className="type-icon clickable"
               />
             ))}
@@ -131,7 +131,10 @@ const TypePokemon = ({ name, list, typeId }) => {
       <div ref={secondaryTypeTables}>
         {modifiedSemiData.map(
           ({ data: { columns, tableData }, name: typeName }, i) => (
-            <div key={typeName} ref={(el) => (elementsRefs.current[i] = el)}>
+            <div
+              key={typeName}
+              ref={(el) => (secondaryTypeTableRefsList.current[i] = el)}
+            >
               <h4>
                 {typeName === "half"
                   ? `Half ${formatName(name)}`

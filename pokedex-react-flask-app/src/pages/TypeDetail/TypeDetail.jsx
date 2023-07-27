@@ -33,7 +33,7 @@ const TypeDetail = () => {
   if (loading) return <Loading />;
   const { name, moves, pokemons, id } = data.pokemon_v2_type[0];
   return (
-    <>
+    <div className="app_type-details">
       <div className="app__type-details-info">
         <h1>{formatName(name)}</h1>
         <TypeRelations type={name} />
@@ -59,7 +59,7 @@ const TypeDetail = () => {
         )}
         {selectedTab === "Moves" && <TypeMoves list={moves} />}
       </div>
-    </>
+    </div>
   );
 };
 

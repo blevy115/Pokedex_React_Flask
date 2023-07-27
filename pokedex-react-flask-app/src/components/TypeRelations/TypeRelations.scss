@@ -1,7 +1,7 @@
 .type-effectiveness-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two columns with equal width */
-  gap: 100px; /* Gap between columns */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 100px;
   margin: 1rem 0;
   width: auto;
 
@@ -51,7 +51,8 @@
       }
     }
 
-    h3, p {
+    h3,
+    p {
       margin-top: 0;
     }
   }
