@@ -19,6 +19,13 @@
 
   li {
     white-space: nowrap;
+    display: flex;
+    margin: 0.1rem 0;
+    align-items: center;
+
+    .type-effectiveness-list-item-icon {
+      margin-right: 0.25rem;
+    }
   }
 }
 

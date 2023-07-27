@@ -6,6 +6,14 @@ import { getTypeId } from "../../helpers/getTypeId";
 
 import "./TypeEffectiveness.scss";
 
+const formatMultiplier = {
+  4: "4x",
+  2: "2x",
+  0.5: `${String.fromCharCode(189)}x`,
+  0.25: `${String.fromCharCode(188)}x`,
+  0: "0x",
+};
+
 function categorizeEffectiveness(relations) {
   const result = {
     weak: [],
@@ -46,10 +54,11 @@ const TypeEffectiveness = ({ types }) => {
                     onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
                   >
                     <img
+                      className="type-effectiveness-list-item-icon"
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}
-                    />{" "}
-                    x {type.multiplier}
+                    />
+                    {formatMultiplier[type.multiplier]}
                   </li>
                 );
               })}
@@ -68,10 +77,11 @@ const TypeEffectiveness = ({ types }) => {
                     onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
                   >
                     <img
+                      className="type-effectiveness-list-item-icon"
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}
-                    />{" "}
-                    x {type.multiplier}
+                    />
+                    {formatMultiplier[type.multiplier]}
                   </li>
                 );
               })}
@@ -90,10 +100,11 @@ const TypeEffectiveness = ({ types }) => {
                     onClick={() => navigate(`/types/${getTypeId(type.name)}`)}
                   >
                     <img
+                      className="type-effectiveness-list-item-icon"
                       src={`/icons/types/${type.name}.png`}
                       alt={`${type.name} icon`}
-                    />{" "}
-                    x {type.multiplier}
+                    />
+                    {formatMultiplier[type.multiplier]}
                   </li>
                 );
               })}
