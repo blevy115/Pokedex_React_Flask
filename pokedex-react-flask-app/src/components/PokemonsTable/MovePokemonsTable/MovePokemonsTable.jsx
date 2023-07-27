@@ -9,12 +9,12 @@ import {
   mergePokemonEntries,
   mergeTmEntries,
 } from "../../../helpers/mergeEntries";
-import { formatPokemonName } from "../../../helpers/format";
-import { handleImageError } from "../../../helpers/error";
+import { formatName, formatGameName } from "../../../helpers/format";
+import { handleSpriteError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { Table, Types } from "../..";
+import { Table, Types, Loading } from "../..";
 
 import "./MovePokemonsTable.scss";
 
@@ -41,8 +41,8 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
       moveTypes["tm"] = 4;
     } else {
       delete moveTypes["tm"];
-      setMoveType("level");
     }
+    setMoveType("level");
   }, [generationId]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return options;
   }, [generation]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading fullscreen={false} />;
 
   const { pokemons } = data.move[0];
 
@@ -75,20 +75,20 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />
     );
   };
 
-  const NameComponent = ({ value }) => {
+  const NameComponent = ({ value, row }) => {
     return (
       <p
         className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${value.id}`)}
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
-        {value.name}
+        {formatName(value)}
       </p>
     );
   };
@@ -102,7 +102,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
       <div>
         {value.map((val, i) => (
           <p key={i}>
-            {formatPokemonName(val.pokemon_v2_versiongroup.name)} Level:{" "}
+            {formatGameName(val.pokemon_v2_versiongroup.name)} Level:{" "}
             {val.level}
           </p>
         ))}
@@ -125,7 +125,8 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         <ul className="game-tm-list">
           {tmByGeneration[generationId].map((gameTm, i) => (
             <li key={i} className="game-tm-item">
-              {formatPokemonName(gameTm.game)}: {gameTm.machine}
+              {formatGameName(gameTm.game)}:{" "}
+              <span className="game-tm-item-number">{gameTm.machine}</span>
             </li>
           ))}
         </ul>
@@ -157,7 +158,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         </select>
       </div>
       {pokemons.length > 0 ? (
-        <div>
+        <div className="pokemons-table">
           <Table data={tableData} columns={columns} />
         </div>
       ) : (

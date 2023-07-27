@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
-import { handleImageError } from "../../helpers/error";
+import { formatName } from "../../helpers/format";
+import { handleSpriteError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
 
 import { Types } from "../";
@@ -11,6 +11,8 @@ import "./PokemonList.scss";
 
 const PokemonList = ({ list }) => {
   let navigate = useNavigate();
+
+  if (list.length === 0) return <p>No Results Found</p>;
 
   return (
     <ul className="app__pokemon-list">
@@ -22,8 +24,8 @@ const PokemonList = ({ list }) => {
         >
           <p className="pokemon-id"> #{id}</p>
 
-          <img onError={handleImageError} src={getSprite(id)} />
-          <p className="pokemon-name">{formatPokemonName(name)}</p>
+          <img onError={handleSpriteError} src={getSprite(id)} />
+          <p className="pokemon-name">{formatName(name)}</p>
           <Types types={types} />
         </li>
       ))}

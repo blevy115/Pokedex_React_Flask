@@ -5,6 +5,10 @@ import { useQuery } from "@apollo/client";
 import { GET_TYPES } from "../../api/queries/backend";
 import { backEndClient } from "../../api/clients";
 
+import { formatName } from "../../helpers/format";
+
+import { Loading } from "../../components";
+
 import "./TypeList.scss";
 
 const TypeList = () => {
@@ -13,7 +17,7 @@ const TypeList = () => {
     client: backEndClient,
   });
 
-  if (loading) return <>Loading..</>;
+  if (loading) return <Loading />;
 
   return (
     <div className="app__type-list">
@@ -24,11 +28,11 @@ const TypeList = () => {
             key={type.typeId}
             onClick={() => navigate(`/types/${type.typeId}`)}
           >
+            <p className="text-bold">{formatName(type.name)}</p>
             <img
               src={`/icons/symbols/${type.name}.png`}
               alt={`${type.name} symbol`}
             />
-            <p>{type.name}</p>
           </div>
         ))}
       </div>

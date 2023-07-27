@@ -23,11 +23,12 @@ import {
   GenderRatio,
   Types,
   HeldItems,
+  Loading,
 } from "../../components";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
 
 import "./PokemonDetail.scss";
@@ -92,7 +93,7 @@ const PokemonDetail = () => {
     });
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   const {
     height,
     weight,
@@ -116,19 +117,19 @@ const PokemonDetail = () => {
             <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
               <HiOutlineChevronLeft />
               <img
-                onError={handleImageError}
+                onError={handleSpriteError}
                 src={getSprite(parseInt(params.pokemonId) - 1)}
               />
             </Link>
           </div>
           <div className="pokemon-name">
             <p>#{params.pokemonId}</p>
-            <h3>{formatPokemonName(name)}</h3>
+            <h3>{formatName(name)}</h3>
           </div>
           <div>
             <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
               <img
-                onError={handleImageError}
+                onError={handleSpriteError}
                 src={getSprite(parseInt(params.pokemonId) + 1)}
               />
 
@@ -161,7 +162,7 @@ const PokemonDetail = () => {
               {Object.entries(evYield.evs).map((stat) => {
                 return (
                   <p key={stat[0]} className="no-wrap">
-                    {formatPokemonName(stat[0])}: {stat[1]}
+                    {formatName(stat[0])}: {stat[1]}
                   </p>
                 );
               })}

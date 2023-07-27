@@ -1,15 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 import { getItemSprite } from "../../helpers/pictures";
-import { handleImageError } from "../../helpers/error";
-
+import { handleItemError } from "../../helpers/error";
 
 import "./ItemsList.scss";
 
 const ItemsList = ({ list }) => {
   let navigate = useNavigate();
+
+  if (list.length === 0) return <p>No Results Found</p>;
 
   return (
     <ul className="app__items-list">
@@ -19,8 +20,8 @@ const ItemsList = ({ list }) => {
           key={id}
           onClick={() => navigate(`/items/${id}`)}
         >
-          <p>{formatPokemonName(name)}</p>
-          <img src={getItemSprite(name)} onError={handleImageError}/>
+          <p>{formatName(name)}</p>
+          <img src={getItemSprite(name)} onError={handleItemError} />
         </li>
       ))}
     </ul>

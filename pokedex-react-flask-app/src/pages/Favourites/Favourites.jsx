@@ -5,9 +5,11 @@ import { useQuery } from "@apollo/client";
 import { backEndClient } from "../../api/clients";
 import { GET_USER_POKEMONS } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
-import { handleImageError } from "../../helpers/error";
+import { formatName } from "../../helpers/format";
+import { handleSpriteError } from "../../helpers/error";
 import { getSprite } from "../../helpers/pictures";
+
+import { Loading } from "../../components";
 
 import "./Favourites.scss";
 
@@ -23,7 +25,7 @@ const Favourites = () => {
     }
   );
 
-  if (userPokemonsLoading) return <p>Loading...</p>;
+  if (userPokemonsLoading) return <Loading />;
   const activeFavourites = userPokemonsData.userPokemons.filter(
     (pokemon) => pokemon.isActive
   );
@@ -43,12 +45,12 @@ const Favourites = () => {
                 onClick={() => navigate(`/pokemon/${pokemonId}`)}
               >
                 <p className="favourites-list-item-header">
-                  #{pokemonId} {formatPokemonName(name)}
+                  #{pokemonId} {formatName(name)}
                 </p>
                 <img
                   className="favourite-image"
                   src={getSprite(pokemonId)}
-                  onError={handleImageError}
+                  onError={handleSpriteError}
                 />
                 <p className="favourites-list-item-shiny-counter">
                   {pokemon.shinyCounter !== 0 && (

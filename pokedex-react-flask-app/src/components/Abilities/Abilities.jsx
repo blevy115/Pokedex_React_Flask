@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import "./Abilities.scss";
 
@@ -27,35 +27,33 @@ const Abilities = ({ abilities }) => {
               data-tip
               data-tooltip-id={tooltipId}
             >
-              {ability.is_hidden && " (Hidden) "}
-              {formatPokemonName(ability.pokemon_v2_ability.name)}
-              {hasAbilityText && (
-                <Tooltip
-                  id={tooltipId}
-                  effect="solid"
-                  arrowColor="#fff"
-                  className="skills-tooltip"
-                  clickable
-                  openOnClick
-                  opacity={1}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                    cursor: "default",
-                  }}
+              {ability.is_hidden && " (H) "}
+              {formatName(ability.pokemon_v2_ability.name)}
+              <Tooltip
+                id={tooltipId}
+                effect="solid"
+                arrowColor="#fff"
+                className="skills-tooltip"
+                clickable
+                openOnClick
+                opacity={1}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  cursor: "default",
+                }}
+              >
+                {popupText || "No Flavor Text Found"}
+                <button
+                  className="popup-button"
+                  onClick={() =>
+                    navigate(`/abilities/${ability.pokemon_v2_ability.id}`)
+                  }
                 >
-                  {popupText}
-                  <button
-                    className="popup-button"
-                    onClick={() =>
-                      navigate(`/abilities/${ability.pokemon_v2_ability.id}`)
-                    }
-                  >
-                    More Info
-                  </button>
-                </Tooltip>
-              )}
+                  More Info
+                </button>
+              </Tooltip>
             </li>
           );
         })}

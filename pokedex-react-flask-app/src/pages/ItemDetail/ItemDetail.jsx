@@ -6,10 +6,12 @@ import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_ITEM_INFO } from "../../api/queries/pokeapi";
 import { ITEM_MUTATION } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
+import { getItemSprite } from "../../helpers/pictures";
+import { handleItemError } from "../../helpers/error";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
 
-import { ItemPokemonTable } from "../../components";
+import { ItemPokemonTable, Loading } from "../../components";
 
 import "./ItemDetail.scss";
 
@@ -35,18 +37,21 @@ const ItemDetail = () => {
     }
   }, [name, params.itemId, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   const { flavor, held_by_pokemon: heldByPokemon, category } = data.item[0];
 
   return (
     <div className="app__item">
       <div className="app__item-info">
-        <h3>{formatPokemonName(name)}</h3>
+        <div className="app__item-info-header">
+          <img src={getItemSprite(name)} onError={handleItemError} />
+          <h3>{formatName(name)}</h3>
+        </div>
         <p>{flavor[0] && flavor[0].text}</p>
-        <p>{category && category.name}</p>
+        {category && <p>Category: {formatName(category.name)}</p>}
       </div>
-      < ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)}/>
+      <ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)} />
     </div>
   );
 };

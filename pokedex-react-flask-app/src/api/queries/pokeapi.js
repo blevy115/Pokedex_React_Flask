@@ -7,7 +7,7 @@ const GET_POKEMON_INFO = gql`
       name
       height
       weight
-
+      pokemon_species_id
       info: pokemon_v2_pokemonspecy {
         has_gender_differences
         gender_rate
@@ -44,10 +44,16 @@ const GET_POKEMON_INFO = gql`
         }
       }
 
-      abilities: pokemon_v2_pokemonabilities(distinct_on: ability_id) {
+      abilities: pokemon_v2_pokemonabilities(order_by: { id: asc }) {
         pokemon_v2_ability {
           name
           id
+          flavor: pokemon_v2_abilityflavortexts(
+            where: { pokemon_v2_language: { name: { _eq: "en" } } }
+            distinct_on: language_id
+          ) {
+            text: flavor_text
+          }
           text: pokemon_v2_abilityeffecttexts(
             where: { pokemon_v2_language: { name: { _eq: "en" } } }
           ) {
@@ -130,6 +136,7 @@ const GET_POKEMON_LIST_BY_NAME = gql`
     ) {
       id
       name
+      pokemon_species_id
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -145,6 +152,7 @@ const GET_POKEMON_LIST_BY_ID = gql`
     pokemon_list: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
       id
       name
+      pokemon_species_id
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -155,10 +163,11 @@ const GET_POKEMON_LIST_BY_ID = gql`
   }
 `;
 
+//Item Category is Dynamax Crystals which are Event Only / Unobtainable
 const GET_ITEMS_LIST_BY_NAME = gql`
   query getItemList($name: String!) {
     items_list: pokemon_v2_item(
-      where: { name: { _ilike: $name } }
+      where: { name: { _ilike: $name }, item_category_id: { _neq: 49 } }
       order_by: { name: asc }
     ) {
       id
@@ -167,10 +176,11 @@ const GET_ITEMS_LIST_BY_NAME = gql`
   }
 `;
 
+// Removes Shadow Type Moves
 const GET_MOVES_LIST_BY_NAME = gql`
   query getMovesList($name: String!) {
     moves_list: pokemon_v2_move(
-      where: { name: { _ilike: $name } }
+      where: { name: { _ilike: $name }, type_id: { _neq: 10002 } }
       order_by: { name: asc }
     ) {
       id
@@ -277,6 +287,7 @@ const GET_ITEM_INFO = gql`
         pokemon_v2_pokemon {
           name
           id
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
@@ -300,13 +311,27 @@ const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
       pokemons: pokemon_v2_pokemonabilities(
-        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
+        order_by: {
+          id: asc
+          pokemon_v2_pokemon: { pokemon_species_id: asc }
+          pokemon_id: asc
+        }
+        distinct_on: pokemon_id
       ) {
         is_hidden
         pokemon_v2_pokemon {
           id
           name
           pokemon_species_id
+          abilities: pokemon_v2_pokemonabilities {
+            is_hidden
+            id
+            pokemon_v2_ability {
+              name
+              id
+            }
+            ability_id
+          }
           types: pokemon_v2_pokemontypes {
             pokemon_v2_type {
               name
@@ -391,6 +416,7 @@ const GET_TYPE_INFO = gql`
         pokemon_v2_pokemon {
           name
           id
+          pokemon_species_id
           types: pokemon_v2_pokemontypes {
             type_id
             pokemon_v2_type {

@@ -7,13 +7,14 @@ import {
   GET_POKEMON_LIST_BY_ID,
 } from "../../api/queries/pokeapi";
 
-import { PokemonList } from "../../components";
+import { PokemonList, DebouncedInput, Loading } from "../../components";
 
 import "./PokemonSearch.scss";
 
 const PokemonSearch = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
   const [textInput, setTextInput] = useState("");
+
   const { data: list, loading: loadingList } = useQuery(
     !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
     {
@@ -35,15 +36,16 @@ const PokemonSearch = () => {
     <div className="app__pokemon-search">
       <h2 className="header-text">Welcome {user?.name}</h2>
       <div className="app__pokemon-search-field">
-        <label htmlFor="app__pokemon-search-field">Search For Pokemon</label>
-        <input
+        <DebouncedInput
           id="app__pokemon-search-field"
+          onValueChange={setTextInput}
           ref={inputRef}
-          value={textInput}
-          onChange={(val) => setTextInput(val.target.value)}
+          label="Search For Pokemon"
+          placeholder="Pokemon"
+          debouceTime={400}
         />
       </div>
-
+      {loadingList && <Loading fullscreen={false} />}
       {!loadingList && list ? (
         <PokemonList list={list.pokemon_list} />
       ) : undefined}

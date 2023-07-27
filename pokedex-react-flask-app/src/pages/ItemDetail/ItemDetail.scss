@@ -1,3 +1,14 @@
 .app__item-info {
-    text-align: center;
+  text-align: center;
+
+  .app__item-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em 0;
+
+    h3 {
+      margin: 0;
+    }
+  }
 }

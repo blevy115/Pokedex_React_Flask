@@ -10,8 +10,9 @@ import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
 import { getTypeId } from "../../helpers/getTypeId";
+import { formatName } from "../../helpers/format";
 
-import { Table } from "../";
+import { Loading, Table } from "../";
 
 import "./MovesTable.scss";
 
@@ -85,7 +86,12 @@ const MovesTable = ({ id, generation }) => {
   };
 
   if (loading) {
-    return <SelectComponent />;
+    return (
+      <>
+        <SelectComponent />
+        <Loading fullscreen={false}/>
+      </>
+    );
   }
 
   const { moves } = data.pokemon_move_details[0];
@@ -95,7 +101,7 @@ const MovesTable = ({ id, generation }) => {
     const tooltipId = uuidv4();
     return (
       <div className="clickable" data-tip data-tooltip-id={tooltipId}>
-        {value}
+        {formatName(value)}
         <Tooltip
           id={tooltipId}
           effect="solid"

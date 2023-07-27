@@ -6,9 +6,9 @@ import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_MOVE_INFO } from "../../api/queries/pokeapi";
 import { MOVE_MUTATION } from "../../api/queries/backend";
 
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
-import { MovePokemonsTable } from "../../components";
+import { MovePokemonsTable, Loading } from "../../components";
 
 import "./MoveDetail.scss";
 
@@ -35,15 +35,15 @@ const MoveDetail = () => {
     }
   }, [name, params.moveId, loading]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
 
   const { type, kind, generation_id, pp, accuracy, power, flavor, tm } =
     data.move[0];
 
-    return (
+  return (
     <div className="app__move">
       <div className="app__move-info">
-        <h3>{formatPokemonName(name)}</h3>
+        <h3>{formatName(name)}</h3>
         <p>{flavor[0] && flavor[0].text}</p>
         <p className="move-kind">
           <span>Type:</span>

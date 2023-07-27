@@ -22,7 +22,7 @@ import {
   calculateStats,
   calculateStatsTotal,
 } from "../../helpers/statModifier";
-import { formatPokemonName } from "../../helpers/format";
+import { formatName } from "../../helpers/format";
 
 import { Table } from "../";
 
@@ -130,10 +130,8 @@ const StatChart = ({ baseStats, isAFavourite }) => {
   const data = useMemo(() => {
     return {
       labels: isAFavourite
-        ? Object.keys(calculatedStatsValues).map((val) =>
-            formatPokemonName(val)
-          )
-        : Object.keys(convertedStats).map((val) => formatPokemonName(val)),
+        ? Object.keys(calculatedStatsValues).map((val) => formatName(val))
+        : Object.keys(convertedStats).map((val) => formatName(val)),
       datasets: [
         {
           data: isAFavourite
@@ -293,7 +291,12 @@ const StatChart = ({ baseStats, isAFavourite }) => {
               ))}
             </select>
           </div>
-          <Table data={tableData} columns={columns} columnsEqualSize={true} />
+          <Table
+            hasFilterValue={false}
+            data={tableData}
+            columns={columns}
+            columnsEqualSize={true}
+          />
         </>
       ) : undefined}
     </div>

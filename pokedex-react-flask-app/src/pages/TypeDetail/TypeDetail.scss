@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    h1 {
+      margin-bottom: 0;
+    }
 }
 
 .app__type-details-tabs-container {

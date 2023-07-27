@@ -1,16 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineCheck } from "react-icons/hi";
 import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../../api/clients";
 import { GET_ABILITY_POKEMONS } from "../../../api/queries/pokeapi";
 
-import { handleImageError } from "../../../helpers/error";
+import { handleSpriteError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { Table, Types } from "../..";
+import { formatName } from "../../../helpers/format";
+
+import { Loading, Table, Types } from "../..";
 
 import "./AbilityPokemonsTable.scss";
 
@@ -22,7 +23,7 @@ const AbilityPokemonsTable = ({ id }) => {
     client: pokemonAPIClient,
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading fullscreen={false} />;
 
   const { pokemons } = data.ability[0];
 
@@ -30,20 +31,20 @@ const AbilityPokemonsTable = ({ id }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />
     );
   };
 
-  const NameComponent = ({ value }) => {
+  const NameComponent = ({ value, row }) => {
     return (
       <p
         className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${value.id}`)}
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
-        {value.name}
+        {formatName(value)}
       </p>
     );
   };
@@ -52,8 +53,19 @@ const AbilityPokemonsTable = ({ id }) => {
     return <Types types={value} />;
   };
 
-  const IsHiddenComponent = ({ value }) => {
-    return value ? <HiOutlineCheck className="hidden-checkmark" /> : null;
+  const AbilitiesComponent = ({ value }) => {
+    return (
+      <p
+        className={value.id === id ? "text-bold" : value.id ? "clickable" : ""}
+        onClick={() => {
+          if (value.id) {
+            navigate(`/abilities/${value.id}`);
+          }
+        }}
+      >
+        {formatName(value.name)}
+      </p>
+    );
   };
 
   const { tableData, columns } = modifyPokemon({
@@ -61,8 +73,8 @@ const AbilityPokemonsTable = ({ id }) => {
     SpriteComponent,
     NameComponent,
     TypesImageComponent,
-    IsHiddenComponent,
-    hasHiddenData: true,
+    AbilitiesComponent,
+    hasAbilities: true,
   });
 
   return (

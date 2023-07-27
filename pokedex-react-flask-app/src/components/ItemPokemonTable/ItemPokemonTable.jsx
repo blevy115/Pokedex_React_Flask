@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { getSprite } from "../../helpers/pictures";
 
 import { modifyPokemon } from "../../helpers/modifyForTable";
-import { handleImageError } from "../../helpers/error";
+import { handleSpriteError } from "../../helpers/error";
+
+import { formatName } from "../../helpers/format";
 
 import { Table, Types } from "../";
 
@@ -26,20 +28,20 @@ const ItemPokemonTable = ({ list }) => {
     return (
       <img
         className="pokemon-list-item-sprite clickable"
-        onError={handleImageError}
+        onError={handleSpriteError}
         src={getSprite(value)}
         onClick={() => navigate(`/pokemon/${value}`)}
       />
     );
   };
 
-  const NameComponent = ({ value }) => {
+  const NameComponent = ({ value, row }) => {
     return (
       <p
         className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${value.id}`)}
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
-        {value.name}
+        {formatName(value)}
       </p>
     );
   };

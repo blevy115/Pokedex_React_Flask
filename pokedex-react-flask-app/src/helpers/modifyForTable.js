@@ -1,5 +1,3 @@
-import { formatPokemonName } from "./format";
-
 function modifyMoves({
   moves,
   hasLevel = false,
@@ -34,7 +32,7 @@ function modifyMoves({
       kind: move.moveInfo.kind.name,
       power: move.moveInfo.power || "—",
       pp: move.moveInfo.pp,
-      accuracy: `${move.moveInfo.accuracy || "—"}%`,
+      accuracy: move.moveInfo.accuracy ? `${move.moveInfo.accuracy}%` : "—",
       popupText: hasFlavourText
         ? move.moveInfo.flavourText[0].flavor_text
         : undefined,
@@ -47,13 +45,13 @@ function modifyMoves({
 function modifyPokemon({
   pokemons,
   hasLevelData = false,
-  hasHiddenData = false,
   hasItemRarityData = false,
+  hasAbilities = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
   LevelComponent,
-  IsHiddenComponent,
+  AbilitiesComponent,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
@@ -68,34 +66,61 @@ function modifyPokemon({
       Cell: LevelComponent,
     });
   }
-  if (hasHiddenData) {
-    columns.push({
-      Header: "Hidden",
-      accessor: "isHidden",
-      Cell: IsHiddenComponent,
-    });
-  }
   if (hasItemRarityData) {
     columns.push({
       Header: "Rarity",
       accessor: "rarity",
     });
   }
+  if (hasAbilities) {
+    columns.push(
+      {
+        Header: "Ability 1",
+        accessor: "ability-1",
+        Cell: AbilitiesComponent,
+      },
+      {
+        Header: "Ability 2",
+        accessor: "ability-2",
+        Cell: AbilitiesComponent,
+      },
+      {
+        Header: " Hidden Ability",
+        accessor: "ability-hidden",
+        Cell: AbilitiesComponent,
+      }
+    );
+  }
 
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
     const modifiedPokemon = {
       id: i,
-      pokemonId: `#${pokemonData.id}`,
+      pokemonId: `#${pokemonData.pokemon_species_id}`,
       spriteId: pokemonData.id,
-      name: { name: formatPokemonName(pokemonData.name), id: pokemonData.id },
+      name: pokemonData.name,
       types: pokemonData.types,
     };
 
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
-    if (hasHiddenData)
-      return { ...modifiedPokemon, isHidden: pokemon.is_hidden };
-    if (hasItemRarityData) return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    if (hasItemRarityData)
+      return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    if (hasAbilities) {
+      const standardAbilities = pokemonData.abilities.filter(
+        (ability) => !ability.is_hidden
+      );
+      const hiddenAbilities = pokemonData.abilities.filter(
+        (ability) => ability.is_hidden
+      );
+      const modifiedAbilities = {};
+      modifiedAbilities["ability-1"] = standardAbilities[0].pokemon_v2_ability;
+      modifiedAbilities["ability-2"] = standardAbilities[1]
+        ?.pokemon_v2_ability || { name: "None" };
+      modifiedAbilities["ability-hidden"] = hiddenAbilities[0]
+        ?.pokemon_v2_ability || { name: "None" };
+      return { ...modifiedPokemon, ...modifiedAbilities };
+    }
+
     return modifiedPokemon;
   });
   return { columns, tableData };
