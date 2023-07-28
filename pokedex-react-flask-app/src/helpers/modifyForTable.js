@@ -1,10 +1,12 @@
 function modifyMoves({
   moves,
   hasLevel = false,
+  hasTms = false,
   hasPopUpText = false,
   TypeImageComponent,
   KindImageComponent,
   NameComponent,
+  TmComponent,
 }) {
   if (moves.length < 0) return { columns: [], tableData: [] };
   const columns = [
@@ -22,6 +24,9 @@ function modifyMoves({
   if (hasLevel) {
     columns.unshift({ Header: "Level", accessor: "level" });
   }
+  if (hasTms) {
+    columns.unshift({ Header: "TM", accessor: "tm", Cell: TmComponent });
+  }
   const tableData = moves.map((move, i) => {
     const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
     const modifiedMove = {
@@ -37,7 +42,17 @@ function modifyMoves({
         ? move.moveInfo.flavourText[0].flavor_text
         : undefined,
     };
-    return hasLevel ? { level: move.level, ...modifiedMove } : modifiedMove;
+    if (hasLevel) {
+      return { level: move.level, ...modifiedMove };
+    }
+    if (hasTms) {
+      // Optional Chaining used as Gen 9 TM data not available yet
+      return {
+        tm: move.moveInfo.tm[0]?.pokemon_v2_item.name || "—",
+        ...modifiedMove,
+      };
+    }
+    return modifiedMove;
   });
   return { columns, tableData };
 }
