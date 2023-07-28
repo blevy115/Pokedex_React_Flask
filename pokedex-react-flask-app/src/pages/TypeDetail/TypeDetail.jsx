@@ -33,7 +33,7 @@ const TypeDetail = () => {
   if (loading) return <Loading />;
   const { name, moves, pokemons, id } = data.pokemon_v2_type[0];
   return (
-    <div className="app_type-details">
+    <div className={`app__type-details ${name}-color-2`}>
       <div className="app__type-details-info">
         <h1>{formatName(name)} Type</h1>
         <TypeRelations type={name} />

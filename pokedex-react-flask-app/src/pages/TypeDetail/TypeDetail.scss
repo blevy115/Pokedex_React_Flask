@@ -1,41 +1,46 @@
-.app__type-details-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.app__type-details {
+  min-height: calc(100vh - 46px);
+  overflow: auto;
+}
 
-    h1 {
-      margin-bottom: 0;
-    }
+.app__type-details-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin-bottom: 0;
+  }
 }
 
 .app__type-details-tabs-container {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-    // width: fit-content;
-  }
-  
-  /* Styles for the tab items */
-  .app__type-details-tabs {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-  }
-  
-  .app__type-details-tabs-item {
-    padding: 10px 20px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-  }
-  
-  /* Active tab style */
-  .app__type-details-tabs-item.active {
-    border-bottom-color: #007bff; /* Replace with your desired active tab color */
-    font-weight: bold;
-  }
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
 
-  .app__type-table-container {
-    width: 80%;
-    margin: 0 auto;
-  }
+/* Styles for the tab items */
+.app__type-details-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.app__type-details-tabs-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+/* Active tab style */
+.app__type-details-tabs-item.active {
+  border-bottom-color: #007bff; /* Replace with your desired active tab color */
+  font-weight: bold;
+}
+
+.app__type-table-container {
+  width: 80%;
+  margin: 0 auto;
+}

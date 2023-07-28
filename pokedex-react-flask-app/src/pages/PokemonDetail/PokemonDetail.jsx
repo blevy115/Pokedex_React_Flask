@@ -110,7 +110,13 @@ const PokemonDetail = () => {
   const evYield = getEvYield(stats);
 
   return (
-    <div className="app__pokemon-detail">
+    <div
+      className={`app__pokemon-detail ${
+        types.length === 1
+          ? `${types[0].pokemon_v2_type.name}-color-5`
+          : `${types[0].pokemon_v2_type.name}-${types[1].pokemon_v2_type.name}-color-6`
+      }`}
+    >
       <div className="app-pokemon-detail-info">
         <div className="pokemon-headers">
           <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>

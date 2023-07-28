@@ -8,17 +8,17 @@ import { getTypeId } from "../../helpers/getTypeId";
 import "./TypeRelations.scss";
 
 const textToMultiplyerConverter = {
-  "double" : "2x",
-  "half": `${String.fromCharCode(189)}x`,
-  "zero": "0x"
-}
+  double: "2x",
+  half: `${String.fromCharCode(189)}x`,
+  zero: "0x",
+};
 
 const TypeRelations = ({ type }) => {
   const navigate = useNavigate();
   const { attack, defense } = all_types[type];
 
   const TypeRelationsComponent = ({ relations }) => (
-    <div className={`type-effectiveness-relation-container ${type}-color`}>
+    <div className={`type-effectiveness-relation-container ${type}-color-8`}>
       {relations.map(([relation, types]) => (
         <div className="type-effectiveness-relation" key={relation}>
           <h3>{textToMultiplyerConverter[relation]}</h3>
