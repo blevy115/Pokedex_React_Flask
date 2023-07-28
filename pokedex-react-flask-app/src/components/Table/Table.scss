@@ -1,5 +1,10 @@
+.table-container {
+  border-radius: 0.5rem;
+}
+
 .table {
   width: 100%;
+  background-color: white;
   text-align: center;
   margin: 1em auto;
   border-collapse: separate;
@@ -28,5 +33,20 @@
     max-width: 100%;
     margin: 0 auto;
     display: block;
+  }
+}
+
+.table-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  .table-header-name {
+    margin: 0.5rem 0.3rem 0.5rem 0;
+  }
+
+  .table-sort-icon {
+    display: contents;
   }
 }

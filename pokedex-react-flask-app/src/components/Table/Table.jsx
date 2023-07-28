@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 import { formatName } from "../../helpers/format";
 
@@ -13,7 +14,7 @@ const Table = ({
   tableStyles = {},
   hasFilterValue = true,
 }) => {
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns, data }, useSortBy);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
@@ -63,7 +64,25 @@ const Table = ({
                             : {}
                         }
                       >
-                        {formatName(column.render("Header"))}
+                        <span className="table-header-content">
+                          <span className="table-header-name">
+                            {formatName(column.render("Header"))}
+                          </span>
+                          <span
+                            {...column.getSortByToggleProps()}
+                            className="table-sort-icon"
+                          >
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <FaSortDown />
+                              ) : (
+                                <FaSortUp />
+                              )
+                            ) : (
+                              <FaSort />
+                            )}
+                          </span>
+                        </span>
                       </th>
                     ))}
                   </tr>
