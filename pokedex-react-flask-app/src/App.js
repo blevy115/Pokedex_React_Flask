@@ -25,7 +25,7 @@ import {
 } from "./pages";
 import { ProtectedRoute, AuthRoute } from "./wrapper/routes";
 
-import "./App.css";
+import "./App.scss";
 
 function PokemonDetailErrorElement() {
   return (
