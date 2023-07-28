@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { NavBar } from "../../components";
+import { ScrollToTop } from "./";
 
 const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("token");
@@ -9,6 +10,7 @@ const ProtectedRoute = () => {
   }
   return (
     <>
+      <ScrollToTop />
       <NavBar />
       <Outlet />
     </>
