@@ -43,8 +43,8 @@ const MoveDetail = () => {
   return (
     <div className="app__move">
       <div className="app__move-info">
-        <h3>{formatName(name)}</h3>
-        <p>{flavor[0] && flavor[0].text}</p>
+        <h1>{formatName(name)}</h1>
+        <p>Description: {flavor[0] && flavor[0].text}</p>
         <p className="move-kind">
           <span>Type:</span>
           <img

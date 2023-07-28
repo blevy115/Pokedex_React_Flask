@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getItemSprite } from "../../helpers/pictures";
+import { formatName } from "../../helpers/format";
 
 import { modifyHeldItems } from "../../helpers/modifyHeldItems";
 
@@ -53,7 +54,7 @@ const HeldItems = ({ items }) => {
             onClick={() => navigate(`/items/${item.id}`)}
           >
             <img src={getItemSprite(item.name)} />
-            {item.name} {item.rarity}%
+            {formatName(item.name)} {item.rarity}%
           </li>
         ))}
       </ul>

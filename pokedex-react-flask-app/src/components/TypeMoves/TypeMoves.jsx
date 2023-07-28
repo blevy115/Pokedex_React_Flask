@@ -17,7 +17,7 @@ const TypeMoves = ({ list }) => {
         className="clickable"
         onClick={() => navigate(`/moves/${row.original.moveId}`)}
       >
-        {formatName(value)}
+        <p>{formatName(value)}</p>
       </div>
     );
   };

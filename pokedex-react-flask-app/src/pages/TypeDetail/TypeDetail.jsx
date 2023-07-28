@@ -35,7 +35,7 @@ const TypeDetail = () => {
   return (
     <div className="app_type-details">
       <div className="app__type-details-info">
-        <h1>{formatName(name)}</h1>
+        <h1>{formatName(name)} Type</h1>
         <TypeRelations type={name} />
         <div className="app__type-details-tabs-container">
           <ul className="app__type-details-tabs">
