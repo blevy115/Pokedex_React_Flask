@@ -186,12 +186,7 @@ const PokemonDetail = () => {
             />
           </div>
         </div>
-        {isAFavourite && (
-          <ShinyCounter
-            pokemonId={params.pokemonId}
-            userPokemonsData={userPokemonsData}
-          />
-        )}
+        {isAFavourite && <ShinyCounter pokemonId={params.pokemonId} />}
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />

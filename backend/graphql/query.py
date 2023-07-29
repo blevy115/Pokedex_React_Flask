@@ -107,6 +107,19 @@ class Query(graphene.ObjectType):
                 user_pokemons, key=lambda p: p.pokemons.pokemon_id)
         return user_pokemons
 
+    user_pokemon_shiny_count = graphene.Field(lambda: UserPokemon, user_id=graphene.String(
+        required=True), pokemon_id=graphene.Int(required=True))
+
+    def resolve_user_pokemon_shiny_count(self, info, user_id, pokemon_id):
+        type_name, original_id = from_global_id(user_id)
+        pokemon_foreign_id = Pokemon.get_query(info).filter(
+            PokemonModel.pokemon_id == pokemon_id).first().id
+        query = UserPokemon.get_query(info).filter_by(
+            user_id=original_id, pokemon_id=pokemon_foreign_id)
+
+        shiny_count = query.first()
+        return shiny_count
+
     natures = graphene.List(
         lambda: Nature, name=graphene.String(), increased_stat=graphene.String(), decreased_stat=graphene.String(), order_by=graphene.String()
     )
