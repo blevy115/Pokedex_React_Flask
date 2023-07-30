@@ -23,7 +23,7 @@ const DebouncedInput = forwardRef(function DebouncedInput(
   };
 
   return (
-    <>
+    <div className="debounced-input">
       <label>{label}</label>
       <input
         type="text"
@@ -32,7 +32,7 @@ const DebouncedInput = forwardRef(function DebouncedInput(
         placeholder={placeholder || "Type something..."}
         ref={ref}
       />
-    </>
+    </div>
   );
 });
 

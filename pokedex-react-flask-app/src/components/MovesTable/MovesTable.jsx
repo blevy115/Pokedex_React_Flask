@@ -75,7 +75,7 @@ const MovesTable = ({ id, generation }) => {
             {Object.keys(moveTypes).map((type, i) => {
               return (
                 <option key={i} value={type}>
-                  {type}
+                  {formatName(type)}
                 </option>
               );
             })}
