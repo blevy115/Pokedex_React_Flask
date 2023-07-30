@@ -147,9 +147,15 @@ function modifyStats({ headers, ivs, evs, StatComponent }) {
     accessor: stat,
     Cell: StatComponent,
   }));
+
+  columns.unshift({
+    Header: "",
+    accessor: "rowHeader",
+  });
+
   const tableData = [
-    { ...ivs, rowType: "iv" },
-    { ...evs, rowType: "ev" },
+    { rowHeader: "IVs", ...ivs, rowType: "iv" },
+    { rowHeader: "EVs", ...evs, rowType: "ev" },
   ];
   return { columns, tableData };
 }

@@ -297,6 +297,8 @@ const StatChart = ({ baseStats, isAFavourite }) => {
           </div>
           <Table
             hasFilterValue={false}
+            hasSortBy={false}
+            hasRowHeader={true}
             data={tableData}
             columns={columns}
             columnsEqualSize={true}

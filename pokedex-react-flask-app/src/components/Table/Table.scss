@@ -4,15 +4,19 @@
 
 .table {
   width: 100%;
-  background-color: white;
   text-align: center;
   margin: 1em auto;
   border-collapse: separate;
   border-spacing: 0;
 }
 
+.empty-cell {
+  visibility: hidden;
+}
+
 .table th,
 .table td {
+  background-color: white;
   border: 1px solid #ccc;
 }
 

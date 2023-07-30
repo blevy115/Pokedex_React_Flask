@@ -13,6 +13,8 @@ const Table = ({
   hasHeaders = true,
   tableStyles = {},
   hasFilterValue = true,
+  hasSortBy = true,
+  hasRowHeader,
 }) => {
   const tableInstance = useTable({ columns, data }, useSortBy);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -55,11 +57,18 @@ const Table = ({
                       <th
                         key={j}
                         {...column.getHeaderProps()}
+                        className={
+                          hasRowHeader && column.id === "rowHeader"
+                            ? "empty-cell"
+                            : ""
+                        }
                         style={
                           columnsEqualSize
                             ? {
-                                // set the width of each column to a fraction of the total grid width
-                                width: `${100 / headerGroup.headers.length}%`,
+                                width:
+                                  hasRowHeader && column.id === "rowHeader"
+                                    ? "8%"
+                                    : `${100 / headerGroup.headers.length}%`,
                               }
                             : {}
                         }
@@ -68,20 +77,22 @@ const Table = ({
                           <span className="table-header-name">
                             {formatName(column.render("Header"))}
                           </span>
-                          <span
-                            {...column.getSortByToggleProps()}
-                            className="table-sort-icon"
-                          >
-                            {column.isSorted ? (
-                              column.isSortedDesc ? (
-                                <FaSortDown />
+                          {hasSortBy && (
+                            <span
+                              {...column.getSortByToggleProps()}
+                              className="table-sort-icon"
+                            >
+                              {column.isSorted ? (
+                                column.isSortedDesc ? (
+                                  <FaSortDown />
+                                ) : (
+                                  <FaSortUp />
+                                )
                               ) : (
-                                <FaSortUp />
-                              )
-                            ) : (
-                              <FaSort />
-                            )}
-                          </span>
+                                <FaSort />
+                              )}
+                            </span>
+                          )}
                         </span>
                       </th>
                     ))}
