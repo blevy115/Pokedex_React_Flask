@@ -2,6 +2,8 @@
   padding: 0 1rem;
   display: grid;
   grid-template-columns: 1fr 2fr;
+  min-height: calc(100vh - 46px);
+  overflow: auto;
 
   .pokemon-details-info-traits {
     display: flex;

@@ -15,7 +15,7 @@ const ShinyCounter = ({ pokemonId }) => {
   const [shinyCounterInput, setShinyCounterInput] = useState("");
 
   const { data, loading } = useQuery(GET_USER_POKEMON_SHINY_COUNT, {
-    variables: { user_id: user.id, pokemon_id: parseInt(pokemonId) },
+    variables: { user_id: user.id, pokemon_id: pokemonId },
     client: backEndClient,
   });
 
@@ -24,7 +24,7 @@ const ShinyCounter = ({ pokemonId }) => {
     refetchQueries: [
       {
         query: GET_USER_POKEMON_SHINY_COUNT,
-        variables: { user_id: user.id, pokemon_id: parseInt(pokemonId) },
+        variables: { user_id: user.id, pokemon_id: pokemonId },
       },
     ],
   });
