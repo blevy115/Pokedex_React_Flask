@@ -1,13 +1,10 @@
 .app__navbar {
   background-color: #f2f2f2;
   width: 100%;
-  z-index: 1; /* make sure the navbar is on top of other elements */
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  z-index: 2;
 
   @media screen and (max-width: 768px) {
     justify-content: flex-end;

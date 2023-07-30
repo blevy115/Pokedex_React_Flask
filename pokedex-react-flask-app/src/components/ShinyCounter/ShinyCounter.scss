@@ -1,0 +1,24 @@
+.app__shiny-counter {
+  text-align: center;
+  margin-bottom: 1rem;
+
+  .shiny-attempts-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    .shiny-attempts-buttons-container {
+      display: flex;
+      flex-direction: column;
+
+      button {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .shiny-count-input {
+    margin: 0 0.5rem;
+  }
+}

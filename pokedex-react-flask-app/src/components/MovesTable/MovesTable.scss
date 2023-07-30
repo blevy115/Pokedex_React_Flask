@@ -5,6 +5,13 @@
   padding: 0.5rem;
 }
 
-.moves-table {
-  margin: 1rem 0;
+.moves-list-tm-name {
+  text-transform: uppercase;
+}
+
+.app__moves-table {
+  margin-top: 2rem;
+  h3 {
+    margin-bottom: 0.5rem;
+  }
 }

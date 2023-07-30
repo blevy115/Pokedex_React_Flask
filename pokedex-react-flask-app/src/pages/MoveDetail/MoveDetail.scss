@@ -1,3 +1,8 @@
+.app__move {
+  min-height: calc(100vh - 46px);
+  overflow: auto;
+}
+
 .app__move-info {
   display: flex;
   flex-direction: column;

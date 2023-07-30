@@ -75,7 +75,7 @@ const MovesTable = ({ id, generation }) => {
             {Object.keys(moveTypes).map((type, i) => {
               return (
                 <option key={i} value={type}>
-                  {type}
+                  {formatName(type)}
                 </option>
               );
             })}
@@ -89,7 +89,7 @@ const MovesTable = ({ id, generation }) => {
     return (
       <>
         <SelectComponent />
-        <Loading fullscreen={false}/>
+        <Loading fullscreen={false} />
       </>
     );
   }
@@ -101,7 +101,7 @@ const MovesTable = ({ id, generation }) => {
     const tooltipId = uuidv4();
     return (
       <div className="clickable" data-tip data-tooltip-id={tooltipId}>
-        {formatName(value)}
+        <p className="moves-list-name">{formatName(value)}</p>
         <Tooltip
           id={tooltipId}
           effect="solid"
@@ -150,17 +150,24 @@ const MovesTable = ({ id, generation }) => {
     );
   };
 
+  const TmComponent = ({ value }) => {
+    return <p className="moves-list-tm-name">{value}</p>;
+  };
+
   const { tableData, columns } = modifyMoves({
     moves,
     hasLevel: moveType === "level",
+    hasTms: moveType === "tm",
     hasPopUpText: true,
     NameComponent,
     TypeImageComponent,
     KindImageComponent,
+    TmComponent,
   });
 
   return (
-    <>
+    <div className="app__moves-table">
+      <h3 className="text-center">Moves List</h3>
       <SelectComponent />
       <AnimatePresence>
         <motion.div
@@ -181,7 +188,7 @@ const MovesTable = ({ id, generation }) => {
           )}
         </motion.div>
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 

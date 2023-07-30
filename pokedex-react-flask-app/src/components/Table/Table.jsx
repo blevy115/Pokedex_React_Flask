@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy } from "react-table";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 import { formatName } from "../../helpers/format";
 
@@ -12,8 +13,10 @@ const Table = ({
   hasHeaders = true,
   tableStyles = {},
   hasFilterValue = true,
+  hasSortBy = true,
+  hasRowHeader,
 }) => {
-  const tableInstance = useTable({ columns, data });
+  const tableInstance = useTable({ columns, data }, useSortBy);
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
 
@@ -54,16 +57,43 @@ const Table = ({
                       <th
                         key={j}
                         {...column.getHeaderProps()}
+                        className={
+                          hasRowHeader && column.id === "rowHeader"
+                            ? "empty-cell"
+                            : ""
+                        }
                         style={
                           columnsEqualSize
                             ? {
-                                // set the width of each column to a fraction of the total grid width
-                                width: `${100 / headerGroup.headers.length}%`,
+                                width:
+                                  hasRowHeader && column.id === "rowHeader"
+                                    ? "8%"
+                                    : `${100 / headerGroup.headers.length}%`,
                               }
                             : {}
                         }
                       >
-                        {formatName(column.render("Header"))}
+                        <span className="table-header-content">
+                          <span className="table-header-name">
+                            {formatName(column.render("Header"))}
+                          </span>
+                          {hasSortBy && (
+                            <span
+                              {...column.getSortByToggleProps()}
+                              className="table-sort-icon"
+                            >
+                              {column.isSorted ? (
+                                column.isSortedDesc ? (
+                                  <FaSortDown />
+                                ) : (
+                                  <FaSortUp />
+                                )
+                              ) : (
+                                <FaSort />
+                              )}
+                            </span>
+                          )}
+                        </span>
                       </th>
                     ))}
                   </tr>

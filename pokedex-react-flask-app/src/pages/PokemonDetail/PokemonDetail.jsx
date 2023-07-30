@@ -106,19 +106,26 @@ const PokemonDetail = () => {
   } = data.pokemon_details[0];
 
   const generation = form[0].pokemon_v2_versiongroup.generation_id;
+  const pokemonIdInt = parseInt(params.pokemonId);
 
   const evYield = getEvYield(stats);
 
   return (
-    <div className="app__pokemon-detail">
+    <div
+      className={`app__pokemon-detail ${
+        types.length === 1
+          ? `${types[0].pokemon_v2_type.name}-color-5`
+          : `${types[0].pokemon_v2_type.name}-${types[1].pokemon_v2_type.name}-color-6`
+      }`}
+    >
       <div className="app-pokemon-detail-info">
         <div className="pokemon-headers">
-          <div className={parseInt(params.pokemonId) <= 1 ? "hide" : ""}>
-            <Link to={`/pokemon/${parseInt(params.pokemonId) - 1}`}>
+          <div className={pokemonIdInt <= 1 ? "hide" : ""}>
+            <Link to={`/pokemon/${pokemonIdInt - 1}`}>
               <HiOutlineChevronLeft />
               <img
                 onError={handleSpriteError}
-                src={getSprite(parseInt(params.pokemonId) - 1)}
+                src={getSprite(pokemonIdInt - 1)}
               />
             </Link>
           </div>
@@ -127,10 +134,10 @@ const PokemonDetail = () => {
             <h3>{formatName(name)}</h3>
           </div>
           <div>
-            <Link to={`/pokemon/${parseInt(params.pokemonId) + 1}`}>
+            <Link to={`/pokemon/${pokemonIdInt + 1}`}>
               <img
                 onError={handleSpriteError}
-                src={getSprite(parseInt(params.pokemonId) + 1)}
+                src={getSprite(pokemonIdInt + 1)}
               />
 
               <HiOutlineChevronRight />
@@ -149,6 +156,7 @@ const PokemonDetail = () => {
         >
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
+        {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
         <div className="pokemon-details-info-traits">
           <div>
             <div className="pokemon-detail-characteristics">
@@ -180,17 +188,11 @@ const PokemonDetail = () => {
             />
           </div>
         </div>
-        {isAFavourite && (
-          <ShinyCounter
-            pokemonId={params.pokemonId}
-            userPokemonsData={userPokemonsData}
-          />
-        )}
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />
         <MovesTable
-          id={parseInt(params.pokemonId)}
+          id={pokemonIdInt}
           generation={form[0].pokemon_v2_versiongroup.generation_id}
         />
       </div>

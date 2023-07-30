@@ -86,6 +86,7 @@ const GET_POKEMON_INFO = gql`
   }
 `;
 
+// Change Distinct on for pokemon_v2_machines once function is made to sort TMS by game
 const GET_POKEMON_MOVES = gql`
   query getPokemonMoveInfo(
     $id: Int!
@@ -114,6 +115,19 @@ const GET_POKEMON_MOVES = gql`
           }
           type: pokemon_v2_type {
             name
+          }
+          tm: pokemon_v2_machines(
+            where: {
+              pokemon_v2_versiongroup: {
+                pokemon_v2_generation: { id: { _eq: $generationId } }
+              }
+            }
+            distinct_on: machine_number
+          ) {
+            machine_number
+            pokemon_v2_item {
+              name
+            }
           }
           flavourText: pokemon_v2_moveflavortexts(
             where: { pokemon_v2_language: { name: { _eq: "en" } } }
@@ -311,12 +325,7 @@ const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
       pokemons: pokemon_v2_pokemonabilities(
-        order_by: {
-          id: asc
-          pokemon_v2_pokemon: { pokemon_species_id: asc }
-          pokemon_id: asc
-        }
-        distinct_on: pokemon_id
+        order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
       ) {
         is_hidden
         pokemon_v2_pokemon {

@@ -52,11 +52,6 @@ const Favourites = () => {
                   src={getSprite(pokemonId)}
                   onError={handleSpriteError}
                 />
-                <p className="favourites-list-item-shiny-counter">
-                  {pokemon.shinyCounter !== 0 && (
-                    <>Shiny Attempts: {pokemon.shinyCounter}</>
-                  )}
-                </p>
               </div>
             );
           })}

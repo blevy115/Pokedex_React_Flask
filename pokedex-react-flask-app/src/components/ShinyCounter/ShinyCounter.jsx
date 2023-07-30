@@ -1,38 +1,37 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 import { backEndClient } from "../../api/clients";
 import {
-  GET_USER_POKEMONS,
+  GET_USER_POKEMON_SHINY_COUNT,
   SHINY_COUNTER_MUTATION,
 } from "../../api/queries/backend";
 
 import "./ShinyCounter.scss";
 
-const ShinyCounter = ({ pokemonId, userPokemonsData }) => {
+const ShinyCounter = ({ pokemonId }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [shinyCounterInput, setShinyCounterInput] = useState("");
+
+  const { data, loading } = useQuery(GET_USER_POKEMON_SHINY_COUNT, {
+    variables: { user_id: user.id, pokemon_id: pokemonId },
+    client: backEndClient,
+  });
 
   const [shinyCounterMutation] = useMutation(SHINY_COUNTER_MUTATION, {
     client: backEndClient,
     refetchQueries: [
       {
-        query: GET_USER_POKEMONS,
-        variables: { user_id: user.id },
+        query: GET_USER_POKEMON_SHINY_COUNT,
+        variables: { user_id: user.id, pokemon_id: pokemonId },
       },
     ],
   });
 
-  const shinyCounter = useMemo(() => {
-    const userPokemon = userPokemonsData.userPokemons.find(
-      (pokemon) => pokemon.pokemons.pokemonId == pokemonId
-    );
-    return userPokemon.shinyCounter;
-  }, [userPokemonsData, pokemonId]);
-
   useEffect(() => {
     setShinyCounterInput("");
-  }, [shinyCounter]);
+  }, [data]);
 
   function handleIncreasingShinyCount(e) {
     e.preventDefault();
@@ -68,14 +67,31 @@ const ShinyCounter = ({ pokemonId, userPokemonsData }) => {
     });
   }
 
-  return (
-    <div style={{display: "none"}}>
-      <h2>Shiny Attempts: {shinyCounter}</h2>
+  if (loading) return;
 
+  const { shinyCounter } = data.userPokemonShinyCount;
+
+  return (
+    <div className="app__shiny-counter">
+      <div className="shiny-attempts-container">
+        <h3>Shiny Attempts: {shinyCounter}</h3>
+        <div className="shiny-attempts-buttons-container">
+          <button onClick={handleIncreasingShinyCount}>
+            <FaArrowUp />
+          </button>
+          <button
+            disabled={shinyCounter === 0}
+            onClick={handleDecreasingShinyCount}
+          >
+            <FaArrowDown />
+          </button>
+        </div>
+      </div>
       <form onSubmit={handleCustomShinyCount}>
         <label>
-          Enter a Shiny Count:
+          Custom Count:
           <input
+            className="shiny-count-input"
             type="text"
             value={shinyCounterInput}
             onChange={(event) => setShinyCounterInput(event.target.value)}
@@ -92,13 +108,6 @@ const ShinyCounter = ({ pokemonId, userPokemonsData }) => {
           Submit
         </button>
       </form>
-      <button onClick={handleIncreasingShinyCount}>Increase</button>
-      <button
-        disabled={shinyCounter === 0}
-        onClick={handleDecreasingShinyCount}
-      >
-        Decrease
-      </button>
     </div>
   );
 };

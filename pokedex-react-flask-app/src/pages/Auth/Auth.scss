@@ -1,12 +1,21 @@
 .auth-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 0, 0, 0.9),
+    rgba(204, 0, 0, 0.9),
+    rgba(59, 76, 202, 0.9),
+    rgba(255, 222, 0, 0.9),
+    rgba(179, 161, 37, 0.9)
+  );
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f1f1f1;
-  background-image: url("https://wallpapercave.com/wp/wp2098819.jpg");
-  background-size: cover;
 }
 
 .auth-title {
@@ -14,8 +23,8 @@
   margin: 1.5rem 0;
   font-family: "PokemonSolid";
   font-weight: lighter;
-  color: #f9ca07; /* set the text color to white */
-  -webkit-text-stroke: 3.5px #3b57a3; /* add a blue stroke around the text */
+  color: #f9ca07;
+  -webkit-text-stroke: 3.5px #3b57a3;
   text-align: center;
 }
 
@@ -54,7 +63,7 @@
   padding: 2rem;
   border: 2px solid #b9b9b9;
   border-radius: 5px;
-  background-color: rgba(185, 185, 185, 0.95);
+  background-color: rgba(196, 195, 195, 0.95);
   box-shadow: 0 0 20px black;
 }
 

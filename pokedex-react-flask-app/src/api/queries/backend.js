@@ -42,6 +42,13 @@ const GET_USER_POKEMONS = gql`
         name
       }
       isActive
+    }
+  }
+`;
+
+const GET_USER_POKEMON_SHINY_COUNT = gql`
+  query getUserPokemonShinyCount($user_id: String!, $pokemon_id: Int!) {
+    userPokemonShinyCount(userId: $user_id, pokemonId: $pokemon_id) {
       shinyCounter
     }
   }
@@ -158,6 +165,7 @@ export {
   ITEM_MUTATION,
   USER_POKEMON_MUTATION,
   GET_USER_POKEMONS,
+  GET_USER_POKEMON_SHINY_COUNT,
   SHINY_COUNTER_MUTATION,
   GET_NATURES,
   GET_TYPES,

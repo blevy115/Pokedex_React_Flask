@@ -1,0 +1,61 @@
+@use "sass:math";
+
+$type-colors: (
+  --normal: #a8a77a,
+  --fire: #ee8130,
+  --water: #6390f0,
+  --electric: #f7d02c,
+  --grass: #7ac74c,
+  --ice: #96d9d6,
+  --fighting: #c22e28,
+  --poison: #a33ea1,
+  --ground: #e2bf65,
+  --flying: #a98ff3,
+  --psychic: #f95587,
+  --bug: #a6b91a,
+  --rock: #b6a136,
+  --ghost: #735797,
+  --dragon: #6f35fc,
+  --dark: #705746,
+  --steel: #b7b7ce,
+  --fairy: #d685ad,
+);
+
+@function get_opacity($opacity-number) {
+  @if $opacity-number {
+    @return math.div($opacity-number, 10);
+  }
+  @return 1;
+}
+
+@each $color-name-primary, $color-value-primary in $type-colors {
+  $class-name-primary: str-slice($color-name-primary, 3);
+  .#{$class-name-primary}-color {
+    background: rgb($color-value-primary, 1);
+  }
+  @for $i from 1 through 10 {
+    .#{$class-name-primary}-color-#{$i} {
+      background: rgba($color-value-primary, get_opacity($i));
+    }
+  }
+
+  @each $color-name-secondary, $color-value-secondary in $type-colors {
+    $class-name-secondary: str-slice($color-name-secondary, 3);
+    #{$class-name-primary}-#{$class-name-secondary}-color {
+      background: linear-gradient(
+        90deg,
+        rgba($color-value-primary, 1),
+        rgba($color-value-secondary, 1)
+      );
+    }
+    @for $i from 1 through 9 {
+      .#{$class-name-primary}-#{$class-name-secondary}-color-#{$i} {
+        background: linear-gradient(
+          90deg,
+          rgba($color-value-primary, get_opacity($i)),
+          rgba($color-value-secondary, get_opacity($i))
+        );
+      }
+    }
+  }
+}

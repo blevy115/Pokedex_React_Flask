@@ -12,6 +12,8 @@
   src: url("../public/fonts/pokemon/PokemonSolid.ttf");
 }
 
+@import "./helpers/type-colors";
+
 .header-text {
   font-weight: bolder;
 }
@@ -24,8 +26,16 @@
   text-align: center;
 }
 
-.select-input > label {
-  margin-right: 1em;
+.select-input {
+  display: flex;
+  justify-content: space-between;
+  max-width: 10rem;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  select {
+    cursor: pointer;
+  }
 }
 
 .hide {

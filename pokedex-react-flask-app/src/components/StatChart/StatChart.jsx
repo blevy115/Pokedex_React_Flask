@@ -68,7 +68,7 @@ const options = {
       color: "black",
       anchor: "end",
       align: "end",
-      offset: -10,
+      offset: -5,
       font: {
         size: 14,
         weight: 600,
@@ -137,8 +137,8 @@ const StatChart = ({ baseStats, isAFavourite }) => {
           data: isAFavourite
             ? Object.values(calculatedStatsValues)
             : Object.values(convertedStats),
-          backgroundColor: "rgba(255, 99, 132, 0.2)",
-          borderColor: "rgba(255, 99, 132, 1)",
+          backgroundColor: "rgba(0, 0, 0, 0.2)",
+          borderColor: "rgba(0, 0, 0, 1)",
           borderWidth: 1,
           pointHoverRadius: 7,
           pointRadius: 5,
@@ -150,6 +150,10 @@ const StatChart = ({ baseStats, isAFavourite }) => {
   const scales = useMemo(() => {
     return {
       r: {
+        pointLabels: {
+          padding: 21,
+          color: "black",
+        },
         suggestedMin: 0,
         suggestedMax: (140 * level) / 100,
         stepSize: (40 * level) / 100,
@@ -293,6 +297,8 @@ const StatChart = ({ baseStats, isAFavourite }) => {
           </div>
           <Table
             hasFilterValue={false}
+            hasSortBy={false}
+            hasRowHeader={true}
             data={tableData}
             columns={columns}
             columnsEqualSize={true}

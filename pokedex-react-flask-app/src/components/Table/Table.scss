@@ -1,3 +1,7 @@
+.table-container {
+  border-radius: 0.5rem;
+}
+
 .table {
   width: 100%;
   text-align: center;
@@ -6,8 +10,13 @@
   border-spacing: 0;
 }
 
+.empty-cell {
+  visibility: hidden;
+}
+
 .table th,
 .table td {
+  background-color: white;
   border: 1px solid #ccc;
 }
 
@@ -28,5 +37,20 @@
     max-width: 100%;
     margin: 0 auto;
     display: block;
+  }
+}
+
+.table-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  .table-header-name {
+    margin: 0.5rem 0.3rem 0.5rem 0;
+  }
+
+  .table-sort-icon {
+    display: contents;
   }
 }
