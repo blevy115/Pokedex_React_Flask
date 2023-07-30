@@ -6,7 +6,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Do nothing when using the browser's back/forward buttons
+    // Make Back and Forward button act normally
     if (action === "POP") return;
 
     window.scrollTo(0, 0);

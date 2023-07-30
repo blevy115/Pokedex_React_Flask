@@ -20,7 +20,6 @@
   background-color: #ffffff;
 }
 
-/* Styles for the tab items */
 .app__type-details-tabs {
   list-style: none;
   padding: 0;
@@ -34,9 +33,8 @@
   border-bottom: 2px solid transparent;
 }
 
-/* Active tab style */
 .app__type-details-tabs-item.active {
-  border-bottom-color: #007bff; /* Replace with your desired active tab color */
+  border-bottom-color: #007bff;
   font-weight: bold;
 }
 
