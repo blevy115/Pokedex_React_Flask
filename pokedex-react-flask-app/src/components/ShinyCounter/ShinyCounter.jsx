@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 import { backEndClient } from "../../api/clients";
 import {
@@ -71,13 +72,26 @@ const ShinyCounter = ({ pokemonId }) => {
   const { shinyCounter } = data.userPokemonShinyCount;
 
   return (
-    <div>
-      <h2>Shiny Attempts: {shinyCounter}</h2>
-
+    <div className="app__shiny-counter">
+      <div className="shiny-attempts-container">
+        <h3>Shiny Attempts: {shinyCounter}</h3>
+        <div className="shiny-attempts-buttons-container">
+          <button onClick={handleIncreasingShinyCount}>
+            <FaArrowUp />
+          </button>
+          <button
+            disabled={shinyCounter === 0}
+            onClick={handleDecreasingShinyCount}
+          >
+            <FaArrowDown />
+          </button>
+        </div>
+      </div>
       <form onSubmit={handleCustomShinyCount}>
         <label>
-          Enter a Shiny Count:
+          Custom Count:
           <input
+            className="shiny-count-input"
             type="text"
             value={shinyCounterInput}
             onChange={(event) => setShinyCounterInput(event.target.value)}
@@ -94,13 +108,6 @@ const ShinyCounter = ({ pokemonId }) => {
           Submit
         </button>
       </form>
-      <button onClick={handleIncreasingShinyCount}>Increase</button>
-      <button
-        disabled={shinyCounter === 0}
-        onClick={handleDecreasingShinyCount}
-      >
-        Decrease
-      </button>
     </div>
   );
 };

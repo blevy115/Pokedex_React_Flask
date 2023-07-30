@@ -155,6 +155,7 @@ const PokemonDetail = () => {
         >
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
+        {isAFavourite && <ShinyCounter pokemonId={params.pokemonId} />}
         <div className="pokemon-details-info-traits">
           <div>
             <div className="pokemon-detail-characteristics">
@@ -186,7 +187,6 @@ const PokemonDetail = () => {
             />
           </div>
         </div>
-        {isAFavourite && <ShinyCounter pokemonId={params.pokemonId} />}
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />
