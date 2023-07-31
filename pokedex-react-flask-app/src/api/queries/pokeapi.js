@@ -268,13 +268,14 @@ const GET_MOVE_INFO = gql`
   }
 `;
 
+// 728 is the last moveID for Ultra Sun / Moon
 const GET_Z_MOVE_BASE_MOVES = gql`
   query getZMoveBaseMoves($typeId: Int!) {
     moves: pokemon_v2_move(
       where: {
         type_id: { _eq: $typeId }
         move_damage_class_id: { _in: [2, 3] }
-        generation_id: { _lte: 7 }
+        id: { _lte: 728 }
         name: { _nregex: "(--physical|--special)" }
       }
       order_by: { name: asc }
@@ -284,6 +285,9 @@ const GET_Z_MOVE_BASE_MOVES = gql`
       power
       kind: pokemon_v2_movedamageclass {
         name
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
       }
     }
   }
