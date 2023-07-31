@@ -1,3 +1,5 @@
+import { getZMovePower } from "./getZMovePower";
+
 function modifyMoves({
   moves,
   hasLevel = false,
@@ -141,6 +143,35 @@ function modifyPokemon({
   return { columns, tableData };
 }
 
+function modifyMovesForZMoveTable({
+  moves,
+  NameComponent,
+  KindImageComponent,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Z Power", accessor: "zPower" },
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      moveId: move.id,
+      name: move.name,
+      kind: move.kind.name,
+      power: move.power || "—",
+      zPower: getZMovePower({
+        id: move.id,
+        power: move.power,
+        categoryId: move.meta[0].move_meta_category_id,
+      }),
+    };
+    return modifiedMove;
+  });
+  return { columns, tableData };
+}
+
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
@@ -160,4 +191,4 @@ function modifyStats({ headers, ivs, evs, StatComponent }) {
   return { columns, tableData };
 }
 
-export { modifyMoves, modifyPokemon, modifyStats };
+export { modifyMoves, modifyPokemon, modifyStats, modifyMovesForZMoveTable };

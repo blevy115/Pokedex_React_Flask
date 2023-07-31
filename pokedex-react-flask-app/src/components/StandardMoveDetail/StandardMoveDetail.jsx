@@ -2,9 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName } from "../../helpers/format";
-import { getZMovePower } from "../../helpers/getZMovePower";
+import { getZMovePower, getZMoveByType } from "../../helpers/getZMovePower";
 
 import { MovePokemonsTable } from "../";
+
+const finalZMoveId = 728; // USed ID instead of gen because of moves introduced in "lets go"
+const zMoveKinds = [2, 3]; // Physical and Special Moves
 
 const StandardMoveDetail = ({ move }) => {
   const navigate = useNavigate();
@@ -21,6 +24,21 @@ const StandardMoveDetail = ({ move }) => {
     tm,
     meta,
   } = move;
+
+  const zMove =
+    id <= finalZMoveId && zMoveKinds.includes(kind.id)
+      ? getZMoveByType(type.id)
+      : null;
+
+  const ZMovePower =
+    id <= finalZMoveId
+      ? getZMovePower({
+          id,
+          categoryId: meta[0].move_meta_category_id,
+          power,
+        })
+      : null;
+
   return (
     <>
       <div className="app__move-info">
@@ -43,14 +61,21 @@ const StandardMoveDetail = ({ move }) => {
           />
         </p>
         <p>Power: {power}</p>
-        {generation_id <= 7 && (
+        {id <= finalZMoveId && (
           <p style={{ whiteSpace: "pre-line" }}>
-            Z-Move Power:{" "}
-            {getZMovePower({
-              id,
-              categoryId: meta[0].move_meta_category_id,
-              power,
-            })}
+            Z-Move:{" "}
+            {zMove ? (
+              <span
+                className="clickable"
+                onClick={() => navigate(`/moves/${zMove.id}`)}
+              >
+                {formatName(zMove.name)}, Power: {ZMovePower}
+              </span>
+            ) : (
+              <span>
+                Z-{formatName(name)}, {ZMovePower}
+              </span>
+            )}
           </p>
         )}
         <p>Accuracy: {accuracy}</p>

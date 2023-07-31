@@ -4,13 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { formatName, formatZMoveName } from "../../helpers/format";
 import { getZMoveData } from "../../helpers/getZMovePower";
 
+import { StandardZMoveTable, UniqueZMoveTable } from "../";
+
+import "./ZMoveDetail.scss";
+
 const ZMoveDetail = ({ move }) => {
   const navigate = useNavigate();
-  const { id, name, type, kind, pp, flavor } = move;
+  const { id, name, type, kind, pp, flavor, power } = move;
 
   const zMoveData = getZMoveData(id);
-  
-  const isStandardZMove = !zMoveData["pokemon"]
+
+  const isStandardZMove = !zMoveData["pokemon"];
+
   return (
     <>
       <div className="app__move-info">
@@ -26,26 +31,35 @@ const ZMoveDetail = ({ move }) => {
           />
         </p>
         {isStandardZMove ? (
-          <p className="move-kind">
+          <div style={{ marginBottom: "1em" }} className="move-kind">
             <span> Kind:</span>
             <div className="z-move-types-container">
               <img src="/icons/kinds/physical.png" alt="physical icon" />
               <img src="/icons/kinds/special.png" alt="special icon" />
             </div>
-          </p>
+          </div>
         ) : (
-          <p className="move-kind">
-            <span> Kind:</span>
-            <img
-              src={`/icons/kinds/${kind.name}.png`}
-              alt={`${kind.name} icon`}
-            />
-          </p>
+          <>
+            <p className="move-kind">
+              <span> Kind:</span>
+              <img
+                src={`/icons/kinds/${kind.name}.png`}
+                alt={`${kind.name} icon`}
+              />
+            </p>
+            <p>Power: {power}</p>
+          </>
         )}
         <p>PP: {pp}</p>
         <p>Category: Z-Move</p>
       </div>
-      {/* Make COnditional for Unique and Standard Z MOves */}
+      <div className="app__z-move-table-container">
+        {isStandardZMove ? (
+          <StandardZMoveTable typeId={type.id} />
+        ) : (
+          <UniqueZMoveTable />
+        )}
+      </div>
     </>
   );
 };

@@ -23,6 +23,8 @@ export { default as TypeMoves } from "./TypeMoves/TypeMoves";
 export { default as TypeRelations } from "./TypeRelations/TypeRelations";
 export { default as StandardMoveDetail } from "./StandardMoveDetail/StandardMoveDetail";
 export { default as ZMoveDetail } from "./ZMoveDetail/ZMoveDetail";
+export { default as StandardZMoveTable } from "./StandardZMoveTable/StandardZMoveTable";
+export { default as UniqueZMoveTable } from "./UniqueZMoveTable/UniqueZMoveTable";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";
