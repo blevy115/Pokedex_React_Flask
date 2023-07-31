@@ -11,3 +11,7 @@ export function formatGameName(name) {
   .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
   .join("/");
 }
+
+export function formatZMoveName(name) {
+  return name.replace("--physical", "")
+}

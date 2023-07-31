@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
-import { formatName } from "../../helpers/format";
+import { formatName, formatZMoveName } from "../../helpers/format";
+import { isZMove, getZMoveData } from "../../helpers/getZMovePower";
 
 import { Table } from "../";
 
@@ -17,7 +18,7 @@ const TypeMoves = ({ list }) => {
         className="clickable"
         onClick={() => navigate(`/moves/${row.original.moveId}`)}
       >
-        <p>{formatName(value)}</p>
+        <p>{formatName(formatZMoveName(value))}</p>
       </div>
     );
   };
@@ -32,8 +33,14 @@ const TypeMoves = ({ list }) => {
     );
   };
 
-  const KindImageComponent = ({ value }) => {
-    return (
+  const KindImageComponent = ({ value, row }) => {
+    return isZMove(row.original.moveId) &&
+      !getZMoveData(row.original.moveId)["pokemon"] ? (
+      <div className="z-move-types-container">
+        <img src="/icons/kinds/physical.png" alt="physical icon" />
+        <img src="/icons/kinds/special.png" alt="special icon" />
+      </div>
+    ) : (
       <img
         className="table-image"
         src={`/icons/kinds/${value}.png`}

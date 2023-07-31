@@ -49,3 +49,9 @@
 .text-bold {
   font-weight: bold;
 }
+
+.z-move-types-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

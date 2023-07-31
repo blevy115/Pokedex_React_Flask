@@ -21,6 +21,8 @@ export { default as Types } from "./Types/Types";
 export { default as TypePokemon } from "./TypePokemon/TypePokemon";
 export { default as TypeMoves } from "./TypeMoves/TypeMoves";
 export { default as TypeRelations } from "./TypeRelations/TypeRelations";
+export { default as StandardMoveDetail } from "./StandardMoveDetail/StandardMoveDetail";
+export { default as ZMoveDetail } from "./ZMoveDetail/ZMoveDetail";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

@@ -194,7 +194,10 @@ const GET_ITEMS_LIST_BY_NAME = gql`
 const GET_MOVES_LIST_BY_NAME = gql`
   query getMovesList($name: String!) {
     moves_list: pokemon_v2_move(
-      where: { name: { _ilike: $name }, type_id: { _neq: 10002 } }
+      where: {
+        name: { _ilike: $name, _nregex: "(--special)" }
+        type_id: { _neq: 10002 }
+      }
       order_by: { name: asc }
     ) {
       id
@@ -224,6 +227,7 @@ const GET_ABILITIES_LIST_BY_NAME = gql`
 const GET_MOVE_INFO = gql`
   query getMoveInfo($id: Int!) {
     move: pokemon_v2_move(where: { id: { _eq: $id } }) {
+      id
       name
       generation_id
       pp
@@ -236,6 +240,7 @@ const GET_MOVE_INFO = gql`
         text: flavor_text
       }
       kind: pokemon_v2_movedamageclass {
+        id
         name
       }
       type: pokemon_v2_type {
@@ -252,6 +257,33 @@ const GET_MOVE_INFO = gql`
         pokemon_v2_item {
           name
         }
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
+        pokemon_v2_movemetacategory {
+          name
+        }
+      }
+    }
+  }
+`;
+
+const GET_Z_MOVE_BASE_MOVES = gql`
+  query getZMoveBaseMoves($typeId: Int!) {
+    moves: pokemon_v2_move(
+      where: {
+        type_id: { _eq: $typeId }
+        move_damage_class_id: { _in: [2, 3] }
+        generation_id: { _lte: 7 }
+        name: { _nregex: "(--physical|--special)" }
+      }
+      order_by: { name: asc }
+    ) {
+      name
+      id
+      power
+      kind: pokemon_v2_movedamageclass {
+        name
       }
     }
   }
@@ -405,7 +437,7 @@ const GET_TYPE_INFO = gql`
     pokemon_v2_type(where: { id: { _eq: $id } }) {
       name
       id
-      moves: pokemon_v2_moves {
+      moves: pokemon_v2_moves(where: { name: { _nregex: "(--special)" } }) {
         id
         name
         generation_id
@@ -446,6 +478,7 @@ export {
   GET_POKEMON_LIST_BY_ID,
   GET_MOVES_LIST_BY_NAME,
   GET_MOVE_INFO,
+  GET_Z_MOVE_BASE_MOVES,
   GET_ABILITIES_LIST_BY_NAME,
   GET_ABILITY_INFO,
   GET_ITEMS_LIST_BY_NAME,
