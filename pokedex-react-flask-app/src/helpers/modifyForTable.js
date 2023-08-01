@@ -255,6 +255,42 @@ function modifyMoveUniqueZMove({
   return { columns, tableData };
 }
 
+function modifyItemUniqueZMove({
+  data,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  ZMoveComponent,
+  TypeImageComponent,
+  KindImageComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Z-Move", accessor: "zMove", Cell: ZMoveComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+  ];
+
+  const tableData = data.pokemon.map((pokemon) => {
+    const modifiedPokemon = {
+      pokemonId: `#${pokemon.id}`,
+      spriteId: pokemon.id,
+      name: pokemon.name,
+      zMove: {id: data.id, name: data.name},
+      move: data.move,
+      type: data.type.name,
+      kind: data.kind,
+      power: data.power,
+    };
+    return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
@@ -282,4 +318,5 @@ export {
   modifyMovesForUniqueZMoveTable,
   modifyPokemonUniqueZMove,
   modifyMoveUniqueZMove,
+  modifyItemUniqueZMove,
 };

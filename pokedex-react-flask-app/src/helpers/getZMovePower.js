@@ -160,3 +160,12 @@ export function doesMoveHaveUniqueZMoves(moveId) {
   }
   return moveZMoves;
 }
+
+export function doesItemHaveZMove(itemId) {
+  for (const moveId in z_moves) {
+    if (z_moves[moveId].item.id === itemId) {
+      return { id: moveId, ...z_moves[moveId] };
+    }
+  }
+  return null;
+}

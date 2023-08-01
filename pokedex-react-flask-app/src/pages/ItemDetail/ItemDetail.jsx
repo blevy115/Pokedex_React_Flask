@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -10,8 +10,9 @@ import { formatName } from "../../helpers/format";
 import { getItemSprite } from "../../helpers/pictures";
 import { handleItemError } from "../../helpers/error";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
+import { doesItemHaveZMove } from "../../helpers/getZMovePower";
 
-import { ItemPokemonTable, Loading } from "../../components";
+import { ItemPokemonTable, ItemZMoveTable, Loading } from "../../components";
 
 import "./ItemDetail.scss";
 
@@ -22,6 +23,10 @@ const ItemDetail = () => {
     variables: { id: parseInt(params.itemId) },
     client: pokemonAPIClient,
   });
+
+  const zMove = useMemo(() => {
+    return doesItemHaveZMove(parseInt(params.itemId));
+  }, [params.itemId]);
 
   const [createOrGetItem] = useMutation(ITEM_MUTATION, {
     client: backEndClient,
@@ -52,6 +57,7 @@ const ItemDetail = () => {
         {category && <p>Category: {formatName(category.name)}</p>}
       </div>
       <ItemPokemonTable list={mergePokemonEntriesHeldItems(heldByPokemon)} />
+      {zMove && <ItemZMoveTable data={zMove}/>}
     </div>
   );
 };
