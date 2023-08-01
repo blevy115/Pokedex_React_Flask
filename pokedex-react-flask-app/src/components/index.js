@@ -26,6 +26,7 @@ export { default as ZMoveDetail } from "./ZMoveDetail/ZMoveDetail";
 export { default as StandardZMoveTable } from "./StandardZMoveTable/StandardZMoveTable";
 export { default as UniqueZMoveTable } from "./UniqueZMoveTable/UniqueZMoveTable";
 export { default as PokemonZMoveTable } from "./PokemonZMoveTable/PokemonZMoveTable";
+export { default as MoveZMoveTable} from "./MoveZMoveTable/MoveZMoveTable"
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

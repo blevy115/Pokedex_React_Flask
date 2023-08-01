@@ -2,40 +2,42 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName } from "../../helpers/format";
-import { getItemSprite } from "../../helpers/pictures";
-import { handleItemError } from "../../helpers/error";
-import { modifyPokemonUniqueZMove } from "../../helpers/modifyForTable";
+import { getItemSprite, getSprite } from "../../helpers/pictures";
+import { handleItemError, handleSpriteError } from "../../helpers/error";
+import { modifyMoveUniqueZMove } from "../../helpers/modifyForTable";
 
 import { Table } from "../";
 
-const PokemonZMoveTable = ({ move }) => {
+const MoveZMoveTable = ({ moves }) => {
   const navigate = useNavigate();
+
+  const SpriteComponent = ({ value }) => {
+    return (
+      <img
+        className="pokemon-list-item-sprite clickable"
+        onError={handleSpriteError}
+        src={getSprite(value)}
+        onClick={() => navigate(`/pokemon/${value}`)}
+      />
+    );
+  };
 
   const NameComponent = ({ value, row }) => {
     return (
       <p
-        className="move-list-item-name clickable"
-        onClick={() => navigate(`/moves/${row.original.id}`)}
+        className="pokemon-list-item-name clickable"
+        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
       >
         {formatName(value)}
       </p>
     );
   };
+
   const MoveComponent = ({ value }) => {
     return (
       <p className="clickable" onClick={() => navigate(`/moves/${value.id}`)}>
         {formatName(value.name)}
       </p>
-    );
-  };
-  const TypeImageComponent = ({ value }) => {
-    return (
-      <img
-        className="table-image clickable"
-        src={`/icons/types/${value.name}.png`}
-        alt={`${value} icon`}
-        onClick={() => navigate(`/types/${value.id}`)}
-      />
     );
   };
 
@@ -48,6 +50,7 @@ const PokemonZMoveTable = ({ move }) => {
       />
     );
   };
+
   const ItemComponent = ({ value }) => {
     return (
       <div
@@ -68,26 +71,24 @@ const PokemonZMoveTable = ({ move }) => {
     );
   };
 
-  const { tableData, columns } = modifyPokemonUniqueZMove({
-    move,
+  const { tableData, columns } = modifyMoveUniqueZMove({
+    moves,
+    SpriteComponent,
     NameComponent,
     MoveComponent,
-    TypeImageComponent,
     KindImageComponent,
     ItemComponent,
   });
 
   return (
     <div>
-        <h4 className="text-center">Z-Moves</h4>
+      <h4 className="text-center">Z-Moves</h4>
       <Table
         data={tableData}
         columns={columns}
-        hasFilterValue={false}
-        hasSortBy={false}
       />
     </div>
   );
 };
 
-export default PokemonZMoveTable;
+export default MoveZMoveTable;

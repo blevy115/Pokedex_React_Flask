@@ -13,8 +13,9 @@ import { formatName, formatGameName } from "../../../helpers/format";
 import { handleSpriteError } from "../../../helpers/error";
 import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
+import { doesMoveHaveUniqueZMoves } from "../../../helpers/getZMovePower";
 
-import { Table, Types, Loading } from "../..";
+import { MoveZMoveTable, Table, Types, Loading } from "../..";
 
 import "./MovePokemonsTable.scss";
 
@@ -35,6 +36,10 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
   const tmByGeneration = useMemo(() => {
     return mergeTmEntries(tm);
   }, [id]);
+
+  const uniqueZMoves = useMemo(() => {
+    return generationId === 7 ? doesMoveHaveUniqueZMoves(id) : null;
+  });
 
   useEffect(() => {
     if (tmByGeneration[generationId]) {
@@ -119,6 +124,8 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     hasLevelData: moveType === "level",
   });
 
+  console.log(uniqueZMoves);
+
   return (
     <div className="app__move-pokemon-table">
       {tmByGeneration[generationId] && (
@@ -157,6 +164,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
           })}
         </select>
       </div>
+      {uniqueZMoves && <MoveZMoveTable moves={uniqueZMoves} />}
       {pokemons.length > 0 ? (
         <div className="pokemons-table">
           <Table data={tableData} columns={columns} />

@@ -172,7 +172,7 @@ function modifyMovesForStandardZMoveTable({
   return { columns, tableData };
 }
 
-function modifyPokemonZMove({
+function modifyPokemonUniqueZMove({
   move,
   NameComponent,
   MoveComponent,
@@ -211,13 +211,46 @@ function modifyMovesForUniqueZMoveTable({
 
   const tableData = data.pokemon.map((pokemon) => {
     const modifiedPokemon = {
-      pokemonId: pokemon.id,
+      pokemonId: `#${pokemon.id}`,
       spriteId: pokemon.id,
       name: pokemon.name,
       move: data.move,
       item: data.item,
     };
     return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
+function modifyMoveUniqueZMove({
+  moves,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  KindImageComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Z-Move", accessor: "zMove", Cell: MoveComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      pokemonId: `#${move.pokemon.id}`,
+      spriteId: move.pokemon.id,
+      name: move.pokemon.name,
+      zMove: { id: move.id, name: move.name },
+      kind: move.kind,
+      power: move.power,
+      item: move.item,
+    };
+    return modifiedMove;
   });
   return { columns, tableData };
 }
@@ -247,5 +280,6 @@ export {
   modifyStats,
   modifyMovesForStandardZMoveTable,
   modifyMovesForUniqueZMoveTable,
-  modifyPokemonZMove,
+  modifyPokemonUniqueZMove,
+  modifyMoveUniqueZMove,
 };
