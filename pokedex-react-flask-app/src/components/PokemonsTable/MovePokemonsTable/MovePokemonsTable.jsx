@@ -27,11 +27,16 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
+const tabs = {
+  0: "Pokemon"
+};
+
 const MovePokemonsTable = ({ id, generation, tm }) => {
   let navigate = useNavigate();
 
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
+  const [selectedTab, setSelectedTab] = useState(tabs[0]);
 
   const tmByGeneration = useMemo(() => {
     return mergeTmEntries(tm);
@@ -54,6 +59,15 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     setGenerationId(generation);
     setMoveType(defaultMoveLearnMethod);
   }, [id]);
+
+  useEffect(() => {
+    if (uniqueZMoves) {
+      tabs[1] = "Z-Moves";
+    } else {
+      delete tabs[1]
+      setSelectedTab(tabs[0])
+    }
+  }, [generationId]);
 
   const { data, loading } = useQuery(GET_MOVE_POKEMONS, {
     variables: { id, generationId, moveLearnMethodId: moveTypes[moveType] },
@@ -124,8 +138,6 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     hasLevelData: moveType === "level",
   });
 
-  console.log(uniqueZMoves);
-
   return (
     <div className="app__move-pokemon-table">
       {tmByGeneration[generationId] && (
@@ -164,13 +176,32 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
           })}
         </select>
       </div>
-      {uniqueZMoves && <MoveZMoveTable moves={uniqueZMoves} />}
-      {pokemons.length > 0 ? (
+      {uniqueZMoves && (
+        <>
+          <div className="app__move-pokemons-table-tabs-container">
+            <ul className="app__move-pokemons-table-tabs">
+              {Object.keys(tabs).map((key) => (
+                <li
+                  key={tabs[key]}
+                  className={`app__move-pokemons-table-tabs-item ${
+                    selectedTab === tabs[key] ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedTab(tabs[key])}
+                >
+                  {tabs[key]}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {selectedTab === "Z-Moves" && <MoveZMoveTable moves={uniqueZMoves} />}
+        </>
+      )}
+      {pokemons.length > 0 && selectedTab === "Pokemon" ? (
         <div className="pokemons-table">
           <Table data={tableData} columns={columns} />
         </div>
       ) : (
-        <p>No Pokemons Found</p>
+        selectedTab === "Pokemon" && <p>No Pokemons Found</p>
       )}
     </div>
   );

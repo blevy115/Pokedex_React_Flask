@@ -81,8 +81,7 @@ const MoveZMoveTable = ({ moves }) => {
   });
 
   return (
-    <div>
-      <h4 className="text-center">Z-Moves</h4>
+    <div className="move-z-move-table">
       <Table
         data={tableData}
         columns={columns}
