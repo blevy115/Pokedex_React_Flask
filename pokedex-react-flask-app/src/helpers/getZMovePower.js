@@ -129,3 +129,17 @@ export function getZMoveByType(typeId) {
   }
   return null;
 }
+
+export function doesPokemonHaveUniqueZMove(pokemonId) {
+  for (const moveId in z_moves) {
+    const pokemonList = z_moves[moveId].pokemon;
+    if (pokemonList?.some((pokemon) => pokemon.id === pokemonId)) {
+      const move = z_moves[moveId];
+      return {
+        ...move,
+        id: moveId,
+      };
+    }
+  }
+  return null;
+}

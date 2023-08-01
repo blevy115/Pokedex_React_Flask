@@ -11,8 +11,9 @@ import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 import { modifyMoves } from "../../helpers/modifyForTable";
 import { getTypeId } from "../../helpers/getTypeId";
 import { formatName } from "../../helpers/format";
+import { doesPokemonHaveUniqueZMove } from "../../helpers/getZMovePower";
 
-import { Loading, Table } from "../";
+import { Loading, Table, PokemonZMoveTable } from "../";
 
 import "./MovesTable.scss";
 
@@ -29,6 +30,10 @@ const MovesTable = ({ id, generation }) => {
   const navigate = useNavigate();
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
+
+  const uniqueZMove = useMemo(() => {
+    return generationId === 7 ? doesPokemonHaveUniqueZMove(id) : null;
+  }, [id, generationId]);
 
   useEffect(() => {
     setGenerationId(generation);
@@ -179,6 +184,8 @@ const MovesTable = ({ id, generation }) => {
           transition={{ duration: 0.5 }}
           className="moves-table"
         >
+          {uniqueZMove && <PokemonZMoveTable move={uniqueZMove} />}
+
           {moves.length > 0 ? (
             <>
               <Table data={tableData} columns={columns} />

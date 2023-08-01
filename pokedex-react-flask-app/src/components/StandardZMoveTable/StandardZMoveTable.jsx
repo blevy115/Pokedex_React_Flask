@@ -1,12 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+
 import { pokemonAPIClient } from "../../api/clients";
 import { GET_Z_MOVE_BASE_MOVES } from "../../api/queries/pokeapi";
-import { modifyMovesForZMoveTable } from "../../helpers/modifyForTable";
-import { formatName } from "../../helpers/format";
 
+import { modifyMovesForStandardZMoveTable } from "../../helpers/modifyForTable";
+import { formatName } from "../../helpers/format";
 import { isZMove } from "../../helpers/getZMovePower";
+
 import { Loading, Table } from "../";
 
 const StandardZMoveTable = ({ typeId }) => {
@@ -18,7 +20,7 @@ const StandardZMoveTable = ({ typeId }) => {
 
   if (loading) return <Loading fullscreen={false} />;
   const standardMoves = data.moves.filter((move) => !isZMove(move.id));
-  
+
   const NameComponent = ({ value, row }) => {
     return (
       <p
@@ -40,8 +42,7 @@ const StandardZMoveTable = ({ typeId }) => {
     );
   };
 
-
-  const { tableData, columns } = modifyMovesForZMoveTable({
+  const { tableData, columns } = modifyMovesForStandardZMoveTable({
     moves: standardMoves,
     NameComponent,
     KindImageComponent,

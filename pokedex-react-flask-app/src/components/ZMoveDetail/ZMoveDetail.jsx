@@ -52,12 +52,23 @@ const ZMoveDetail = ({ move }) => {
         )}
         <p>PP: {pp}</p>
         <p>Category: Z-Move</p>
+        {isStandardZMove && (
+          <p>
+            Z-Crystal:{" "}
+            <span
+              className="clickable"
+              onClick={() => navigate(`/items/${zMoveData.item.id}`)}
+            >
+              {formatName(zMoveData.item.name)}
+            </span>
+          </p>
+        )}
       </div>
       <div className="app__z-move-table-container">
         {isStandardZMove ? (
           <StandardZMoveTable typeId={type.id} />
         ) : (
-          <UniqueZMoveTable />
+          <UniqueZMoveTable data={zMoveData} />
         )}
       </div>
     </>

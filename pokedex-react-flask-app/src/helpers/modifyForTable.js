@@ -143,7 +143,7 @@ function modifyPokemon({
   return { columns, tableData };
 }
 
-function modifyMovesForZMoveTable({
+function modifyMovesForStandardZMoveTable({
   moves,
   NameComponent,
   KindImageComponent,
@@ -172,6 +172,56 @@ function modifyMovesForZMoveTable({
   return { columns, tableData };
 }
 
+function modifyPokemonZMove({
+  move,
+  NameComponent,
+  MoveComponent,
+  TypeImageComponent,
+  KindImageComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = [move];
+
+  return { columns, tableData };
+}
+
+function modifyMovesForUniqueZMoveTable({
+  data,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = data.pokemon.map((pokemon) => {
+    const modifiedPokemon = {
+      pokemonId: pokemon.id,
+      spriteId: pokemon.id,
+      name: pokemon.name,
+      move: data.move,
+      item: data.item,
+    };
+    return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
@@ -191,4 +241,11 @@ function modifyStats({ headers, ivs, evs, StatComponent }) {
   return { columns, tableData };
 }
 
-export { modifyMoves, modifyPokemon, modifyStats, modifyMovesForZMoveTable };
+export {
+  modifyMoves,
+  modifyPokemon,
+  modifyStats,
+  modifyMovesForStandardZMoveTable,
+  modifyMovesForUniqueZMoveTable,
+  modifyPokemonZMove,
+};
