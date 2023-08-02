@@ -360,6 +360,7 @@ const GET_ITEM_INFO = gql`
 const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
+      id
       pokemons: pokemon_v2_pokemonabilities(
         order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
       ) {

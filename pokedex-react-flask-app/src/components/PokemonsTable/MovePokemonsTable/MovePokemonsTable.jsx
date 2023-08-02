@@ -1,5 +1,4 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../../api/clients";
@@ -9,13 +8,18 @@ import {
   mergePokemonEntries,
   mergeTmEntries,
 } from "../../../helpers/mergeEntries";
-import { formatName, formatGameName } from "../../../helpers/format";
-import { handleSpriteError } from "../../../helpers/error";
-import { getSprite } from "../../../helpers/pictures";
+import { formatGameName } from "../../../helpers/format";
+
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 import { doesMoveHaveUniqueZMoves } from "../../../helpers/getZMovePower";
 
-import { MoveZMoveTable, Table, Types, Loading } from "../..";
+import { MoveZMoveTable, Table, Loading } from "../..";
+import {
+  SpriteComponent,
+  PokemonNameComponent,
+  TypesImageComponent,
+  LevelComponent,
+} from "../../TableCellComponents/TableCellComponents";
 
 import "./MovePokemonsTable.scss";
 
@@ -28,12 +32,10 @@ const moveTypes = {
 const defaultMoveLearnMethod = "level";
 
 const tabs = {
-  0: "Pokemon"
+  0: "Pokemon",
 };
 
 const MovePokemonsTable = ({ id, generation, tm }) => {
-  let navigate = useNavigate();
-
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
@@ -52,6 +54,12 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     } else {
       delete moveTypes["tm"];
     }
+    if (uniqueZMoves) {
+      tabs[1] = "Z-Moves";
+    } else {
+      delete tabs[1];
+      setSelectedTab(tabs[0]);
+    }
     setMoveType("level");
   }, [generationId]);
 
@@ -59,15 +67,6 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     setGenerationId(generation);
     setMoveType(defaultMoveLearnMethod);
   }, [id]);
-
-  useEffect(() => {
-    if (uniqueZMoves) {
-      tabs[1] = "Z-Moves";
-    } else {
-      delete tabs[1]
-      setSelectedTab(tabs[0])
-    }
-  }, [generationId]);
 
   const { data, loading } = useQuery(GET_MOVE_POKEMONS, {
     variables: { id, generationId, moveLearnMethodId: moveTypes[moveType] },
@@ -90,49 +89,10 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
 
   const { pokemons } = data.move[0];
 
-  const SpriteComponent = ({ value }) => {
-    return (
-      <img
-        className="pokemon-list-item-sprite clickable"
-        onError={handleSpriteError}
-        src={getSprite(value)}
-        onClick={() => navigate(`/pokemon/${value}`)}
-      />
-    );
-  };
-
-  const NameComponent = ({ value, row }) => {
-    return (
-      <p
-        className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
-      >
-        {formatName(value)}
-      </p>
-    );
-  };
-
-  const TypesImageComponent = ({ value }) => {
-    return <Types types={value} />;
-  };
-
-  const LevelComponent = ({ value }) => {
-    return (
-      <div>
-        {value.map((val, i) => (
-          <p key={i}>
-            {formatGameName(val.pokemon_v2_versiongroup.name)} Level:{" "}
-            {val.level}
-          </p>
-        ))}
-      </div>
-    );
-  };
-
   const { tableData, columns } = modifyPokemon({
     pokemons: mergePokemonEntries(pokemons),
     SpriteComponent,
-    NameComponent,
+    NameComponent: PokemonNameComponent,
     TypesImageComponent,
     LevelComponent,
     hasLevelData: moveType === "level",
@@ -176,7 +136,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
           })}
         </select>
       </div>
-      {uniqueZMoves && (
+      {uniqueZMoves?.length >= 1 && (
         <>
           <div className="app__move-pokemons-table-tabs-container">
             <ul className="app__move-pokemons-table-tabs">

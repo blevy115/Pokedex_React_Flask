@@ -5,10 +5,10 @@ function modifyMoves({
   hasLevel = false,
   hasTms = false,
   hasPopUpText = false,
+  hasType = true,
   TypeImageComponent,
   KindImageComponent,
   NameComponent,
-  TmComponent,
 }) {
   if (moves.length < 0) return { columns: [], tableData: [] };
   const columns = [
@@ -17,7 +17,9 @@ function modifyMoves({
       accessor: "name",
       Cell: NameComponent,
     },
-    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    ...(hasType
+      ? [{ Header: "Type", accessor: "type", Cell: TypeImageComponent }]
+      : []),
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
     { Header: "Power", accessor: "power" },
     { Header: "PP", accessor: "pp" },
@@ -27,7 +29,7 @@ function modifyMoves({
     columns.unshift({ Header: "Level", accessor: "level" });
   }
   if (hasTms) {
-    columns.unshift({ Header: "TM", accessor: "tm", Cell: TmComponent });
+    columns.unshift({ Header: "TM", accessor: "tm" });
   }
   const tableData = moves.map((move, i) => {
     const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
@@ -50,7 +52,7 @@ function modifyMoves({
     if (hasTms) {
       // Optional Chaining used as Gen 9 TM data not available yet
       return {
-        tm: move.moveInfo.tm[0]?.pokemon_v2_item.name || "—",
+        tm: move.moveInfo.tm[0]?.pokemon_v2_item.name.toUpperCase() || "—",
         ...modifiedMove,
       };
     }
@@ -64,17 +66,21 @@ function modifyPokemon({
   hasLevelData = false,
   hasItemRarityData = false,
   hasAbilities = false,
+  hasType = true,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
   LevelComponent,
   AbilitiesComponent,
+  pageId,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
     { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
     { Header: "Name", accessor: "name", Cell: NameComponent },
-    { Header: "Types", accessor: "types", Cell: TypesImageComponent },
+    ...(hasType
+      ? [{ Header: "Types", accessor: "types", Cell: TypesImageComponent }]
+      : []),
   ];
   if (hasLevelData) {
     columns.push({
@@ -108,7 +114,6 @@ function modifyPokemon({
       }
     );
   }
-
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
     const modifiedPokemon = {
@@ -117,6 +122,7 @@ function modifyPokemon({
       spriteId: pokemonData.id,
       name: pokemonData.name,
       types: pokemonData.types,
+      pageId: pageId,
     };
 
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
@@ -189,7 +195,7 @@ function modifyPokemonUniqueZMove({
     { Header: "Item", accessor: "item", Cell: ItemComponent },
   ];
 
-  const tableData = [move];
+  const tableData = [{ ...move, moveId: move.id, type: move.type.name }];
 
   return { columns, tableData };
 }
@@ -280,7 +286,7 @@ function modifyItemUniqueZMove({
       pokemonId: `#${pokemon.id}`,
       spriteId: pokemon.id,
       name: pokemon.name,
-      zMove: {id: data.id, name: data.name},
+      zMove: { id: data.id, name: data.name },
       move: data.move,
       type: data.type.name,
       kind: data.kind,

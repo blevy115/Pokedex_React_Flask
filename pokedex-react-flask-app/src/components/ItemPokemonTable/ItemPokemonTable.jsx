@@ -1,19 +1,17 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { getSprite } from "../../helpers/pictures";
 
 import { modifyPokemon } from "../../helpers/modifyForTable";
-import { handleSpriteError } from "../../helpers/error";
 
-import { formatName } from "../../helpers/format";
-
-import { Table, Types } from "../";
+import { Table } from "../";
+import {
+  SpriteComponent,
+  PokemonNameComponent,
+  TypesImageComponent,
+} from "../TableCellComponents/TableCellComponents";
 
 import "./ItemPokemonTable.scss";
 
 const ItemPokemonTable = ({ list }) => {
-  const navigate = useNavigate();
   const generationOptions = useMemo(() => Object.keys(list), [list]);
 
   const [generation, setGeneration] = useState();
@@ -24,36 +22,10 @@ const ItemPokemonTable = ({ list }) => {
 
   if (!generation) return null;
 
-  const SpriteComponent = ({ value }) => {
-    return (
-      <img
-        className="pokemon-list-item-sprite clickable"
-        onError={handleSpriteError}
-        src={getSprite(value)}
-        onClick={() => navigate(`/pokemon/${value}`)}
-      />
-    );
-  };
-
-  const NameComponent = ({ value, row }) => {
-    return (
-      <p
-        className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
-      >
-        {formatName(value)}
-      </p>
-    );
-  };
-
-  const TypesImageComponent = ({ value }) => {
-    return <Types types={value} />;
-  };
-
   const { tableData, columns } = modifyPokemon({
     pokemons: list[generation],
     SpriteComponent,
-    NameComponent,
+    NameComponent: PokemonNameComponent,
     TypesImageComponent,
     hasItemRarityData: true,
   });
