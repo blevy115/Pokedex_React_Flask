@@ -12,7 +12,7 @@ db = SQLAlchemy()
 
 def create_app(config_name):
     app = Flask(__name__, static_folder='./pokedex-react-flask-app/build/static',
-                static_url_path='.//pokedex-react-flask-app/build/')
+                static_url_path='./pokedex-react-flask-app/build/')
     CORS(app, supports_credentials=True)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
