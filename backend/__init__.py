@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -11,7 +11,7 @@ db = SQLAlchemy()
 
 
 def create_app(config_name):
-    app = Flask(__name__, static_folder='build', static_url_path='/')
+    app = Flask(__name__)
     CORS(app, supports_credentials=True)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
@@ -37,11 +37,4 @@ def create_app(config_name):
             graphiql=True
         )
     )
-    
-    @app.route('/', defaults={'path': ''})
-    @app.route('/<path:path>')
-
-    def catch_all(path):
-        return send_from_directory(app.static_folder, 'index.html')
-
     return app
