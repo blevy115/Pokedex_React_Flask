@@ -1,6 +1,5 @@
 from os import environ
 
-
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -11,15 +10,18 @@ class Config:
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://user:password@your-production-database-url/pokedexapp_prod'
+    SQLALCHEMY_DATABASE_URI = (
+        f"postgresql://{environ['DB_USERNAME']}:{environ['DB_PASSWORD']}@"
+        f"{environ['DB_HOST']}/{environ['DB_NAME']}"
+    )
     SECRET_KEY = environ.get("PRODUCTION_SECRET_KEY")
     SESSION_TYPE = 'filesystem'
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = f'postgresql://{ environ.get("USER") }:postgres@localhost:5432/pokedexapp'
-    SECRET_KEY = environ.get("DEVELOPMENT_SECRET_KEY"),
+    SQLALCHEMY_DATABASE_URI = f'postgresql://{environ["USER"]}:postgres@localhost:5432/pokedexapp'
+    SECRET_KEY = environ["DEVELOPMENT_SECRET_KEY"],
     SESSION_TYPE = 'filesystem'
 
 
