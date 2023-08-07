@@ -1,3 +1,4 @@
+import { getMaxMovePower } from "./getMaxMoves";
 import { getZMovePower } from "./getZMovePower";
 
 function modifyMoves({
@@ -336,6 +337,17 @@ function modifyMovesForMaxMoveTable({
   return { columns, tableData };
 }
 
+function modifyPokemonGMAXMove({ move, NameComponent, TypeImageComponent }) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Effect", accessor: "effect" },
+  ];
+
+  const tableData = [{ ...move, moveId: move.id, type: move.type.name }];
+
+  return { columns, tableData };
+}
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
@@ -364,4 +376,6 @@ export {
   modifyPokemonUniqueZMove,
   modifyMoveUniqueZMove,
   modifyItemUniqueZMove,
+  modifyMovesForMaxMoveTable,
+  modifyPokemonGMAXMove,
 };

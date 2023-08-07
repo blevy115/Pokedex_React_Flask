@@ -8,8 +8,9 @@ import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 import { modifyMoves } from "../../helpers/modifyForTable";
 import { formatName } from "../../helpers/format";
 import { doesPokemonHaveUniqueZMove } from "../../helpers/getZMovePower";
+import { getGmaxMove } from "../../helpers/getMaxMoves";
 
-import { Loading, Table, PokemonZMoveTable } from "../";
+import { Loading, Table, PokemonZMoveTable, PokemonGMaxMoveTable } from "../";
 import {
   MoveNameTooltipComponent,
   TypeImageComponent,
@@ -27,12 +28,16 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-const MovesTable = ({ id, generation }) => {
+const MovesTable = ({ id, generation, formName }) => {
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
 
   const uniqueZMove = useMemo(() => {
     return generationId === 7 ? doesPokemonHaveUniqueZMove(id) : null;
+  }, [id, generationId]);
+
+  const gmaxMove = useMemo(() => {
+    return formName === "gmax" && generationId === 8 ? getGmaxMove(id) : null;
   }, [id, generationId]);
 
   useEffect(() => {
@@ -126,6 +131,7 @@ const MovesTable = ({ id, generation }) => {
           className="moves-table"
         >
           {uniqueZMove && <PokemonZMoveTable move={uniqueZMove} />}
+          {gmaxMove && <PokemonGMaxMoveTable move={gmaxMove} />}
 
           {moves.length > 0 ? (
             <>
