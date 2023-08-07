@@ -297,6 +297,45 @@ function modifyItemUniqueZMove({
   return { columns, tableData };
 }
 
+function modifyMovesForMaxMoveTable({
+  moves,
+  NameComponent,
+  KindImageComponent,
+  type,
+  hasMaxPower = true,
+  isGmax = false,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    ...(hasMaxPower
+      ? [{ Header: isGmax ? "G-Max Power" : "Max Power", accessor: "maxPower" }]
+      : []),
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      moveId: move.id,
+      name: move.name,
+      kind: move.kind.name,
+      power: move.power || "—",
+      maxPower: hasMaxPower
+        ? getMaxMovePower(
+            {
+              id: move.id,
+              power: move.power,
+              categoryId: move.meta[0].move_meta_category_id,
+            },
+            type
+          )
+        : null,
+    };
+    return modifiedMove;
+  });
+  return { columns, tableData };
+}
+
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
