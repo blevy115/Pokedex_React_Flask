@@ -58,7 +58,11 @@ const MoveDetail = () => {
 
   return (
     <div className={`app__move ${type.name}-color-3`}>
-      {isMoveZMove ? (
+      {gmaxMove ? (
+        <GMaxMoveDetail move={gmaxMove} />
+      ) : maxMove ? (
+        <MaxMoveDetail move={data.move[0]} isStatus={maxMove.kind === "status"}/>
+      ) : isMoveZMove ? (
         <ZMoveDetail move={data.move[0]} />
       ) : (
         <StandardMoveDetail move={data.move[0]} />
