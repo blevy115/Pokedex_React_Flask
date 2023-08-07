@@ -23,6 +23,7 @@ const GET_POKEMON_INFO = gql`
       }
 
       form: pokemon_v2_pokemonforms {
+        form_name
         pokemon_v2_versiongroup {
           generation_id
         }

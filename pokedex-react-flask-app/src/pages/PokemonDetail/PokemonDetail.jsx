@@ -194,6 +194,7 @@ const PokemonDetail = () => {
         <MovesTable
           id={pokemonIdInt}
           generation={form[0].pokemon_v2_versiongroup.generation_id}
+          formName={form[0].form_name}
         />
       </div>
     </div>
