@@ -31,7 +31,7 @@ export function getZMovePower(move) {
     case move.id === 486: // Electro Ball
     case move.id === 500: // Stored Power
     case move.id === 506: // Hex
-    case move.id === 535: // Heat
+    case move.id === 535: // Heat Crash
     case move.id === 681: // Power Trip
       power = 160;
       break;

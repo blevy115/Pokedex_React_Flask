@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { formatName, formatZMoveName } from "../../helpers/format";
 import { isZMove, getZMoveData } from "../../helpers/getZMovePower";
-import { isGmaxMove } from "../../helpers/getMaxMoves";
+import { isGmaxMove, isMaxMove } from "../../helpers/getMaxMoves";
 
 import "./MovesList.scss";
 
@@ -24,7 +24,9 @@ const MovesList = ({ list }) => {
             alt={`${type.name} icon`}
           />
           <p>{formatName(formatZMoveName(name))}</p>
-          {(isZMove(id) && !getZMoveData(id)["pokemon"]) || isGmaxMove(id) ? (
+          {(isZMove(id) && !getZMoveData(id)["pokemon"]) ||
+          isGmaxMove(id) ||
+          isMaxMove(id) ? (
             <div className="z-move-types-container">
               <img src="/icons/kinds/physical.png" alt="physical icon" />
               <img src="/icons/kinds/special.png" alt="special icon" />
