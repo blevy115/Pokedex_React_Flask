@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName } from "../../helpers/format";
@@ -23,7 +23,27 @@ const StandardMoveDetail = ({ move }) => {
     flavor,
     tm,
     meta,
+    gmax,
   } = move;
+
+  const maxMove = useMemo(() => {
+    if (gmax.length > 0) {
+      return getMaxMoveByType(type);
+    }
+  }, [gmax]);
+
+  const maxMovePower = useMemo(() => {
+    if (gmax.length > 0) {
+      return getMaxMovePower(
+        {
+          id,
+          categoryId: meta[0].move_meta_category_id,
+          power,
+        },
+        type
+      );
+    }
+  }, [id, gmax]);
 
   const zMove =
     id <= finalZMoveId && zMoveKinds.includes(kind.id)
@@ -76,6 +96,17 @@ const StandardMoveDetail = ({ move }) => {
                 Z-{formatName(name)}, {ZMovePower}
               </span>
             )}
+          </p>
+        )}
+        {maxMove && (
+          <p>
+            Max-Move{" "}
+            <span
+              className="clickable"
+              onClick={() => navigate(`/moves/${maxMove.id}`)}
+            >
+              {formatName(maxMove.name)}, Power: {maxMovePower}
+            </span>
           </p>
         )}
         <p>Accuracy: {accuracy}</p>

@@ -265,6 +265,18 @@ const GET_MOVE_INFO = gql`
           name
         }
       }
+      gmax: pokemon_v2_moveflavortexts(
+        where: {
+          flavor_text: { _nsimilar: "%that this move is forgotten%" }
+          pokemon_v2_language: { name: { _eq: "en" } }
+          version_group_id: { _eq: 20 }
+          move_id: {
+            _nin: [158, 165, 166, 448, 449, 464, 465, 547, 593, 600, 617, 621]
+          }
+        }
+      ) {
+        flavor_text
+      }
     }
   }
 `;
@@ -489,7 +501,21 @@ const GET_MAX_MOVES_LIST = gql`
           version_group_id: { _eq: 20 }
         }
         id: {
-          _nin: [158, 165, 166, 448, 449, 464, 465, 547, 593, 600, 617, 621, $id]
+          _nin: [
+            158
+            165
+            166
+            448
+            449
+            464
+            465
+            547
+            593
+            600
+            617
+            621
+            $id
+          ]
         }
       }
       order_by: { name: asc }
