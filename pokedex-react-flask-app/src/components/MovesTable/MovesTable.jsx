@@ -1,18 +1,21 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
 import { useQuery } from "@apollo/client";
 import { motion, AnimatePresence } from "framer-motion";
-import { v4 as uuidv4 } from "uuid";
 
 import { pokemonAPIClient } from "../../api/clients";
 import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
-import { getTypeId } from "../../helpers/getTypeId";
 import { formatName } from "../../helpers/format";
+import { doesPokemonHaveUniqueZMove } from "../../helpers/zMoveHelper";
+import { getGmaxMove } from "../../helpers/maxMoveHelper";
 
-import { Loading, Table } from "../";
+import { Loading, Table, PokemonZMoveTable, PokemonGMaxMoveTable } from "../";
+import {
+  MoveNameTooltipComponent,
+  TypeImageComponent,
+  KindImageComponent,
+} from "../TableCellComponents/TableCellComponents";
 
 import "./MovesTable.scss";
 
@@ -25,10 +28,17 @@ const moveTypes = {
 
 const defaultMoveLearnMethod = "level";
 
-const MovesTable = ({ id, generation }) => {
-  const navigate = useNavigate();
+const MovesTable = ({ id, generation, formName }) => {
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
+
+  const uniqueZMove = useMemo(() => {
+    return generationId === 7 ? doesPokemonHaveUniqueZMove(id) : null;
+  }, [id, generationId]);
+
+  const gmaxMove = useMemo(() => {
+    return formName === "gmax" && generationId === 8 ? getGmaxMove(id) : null;
+  }, [id, generationId]);
 
   useEffect(() => {
     setGenerationId(generation);
@@ -96,73 +106,14 @@ const MovesTable = ({ id, generation }) => {
 
   const { moves } = data.pokemon_move_details[0];
 
-  const NameComponent = ({ value, row }) => {
-    const popupText = row.original.popupText;
-    const tooltipId = uuidv4();
-    return (
-      <div className="clickable" data-tip data-tooltip-id={tooltipId}>
-        <p className="moves-list-name">{formatName(value)}</p>
-        <Tooltip
-          id={tooltipId}
-          effect="solid"
-          arrowColor="#fff"
-          className="skills-tooltip"
-          clickable
-          openOnClick
-          opacity={1}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            cursor: "default",
-          }}
-        >
-          {popupText}
-          <button
-            className="popup-button"
-            onClick={() => navigate(`/moves/${row.original.moveId}`)}
-          >
-            More Info
-          </button>
-        </Tooltip>
-      </div>
-    );
-  };
-
-  const TypeImageComponent = ({ value }) => {
-    return (
-      <img
-        className="table-image clickable"
-        src={`/icons/types/${value}.png`}
-        alt={`${value} icon`}
-        onClick={() => navigate(`/types/${getTypeId(value)}`)}
-      />
-    );
-  };
-
-  const KindImageComponent = ({ value }) => {
-    return (
-      <img
-        className="table-image"
-        src={`/icons/kinds/${value}.png`}
-        alt={`${value} icon`}
-      />
-    );
-  };
-
-  const TmComponent = ({ value }) => {
-    return <p className="moves-list-tm-name">{value}</p>;
-  };
-
   const { tableData, columns } = modifyMoves({
     moves,
     hasLevel: moveType === "level",
     hasTms: moveType === "tm",
     hasPopUpText: true,
-    NameComponent,
+    NameComponent: MoveNameTooltipComponent,
     TypeImageComponent,
     KindImageComponent,
-    TmComponent,
   });
 
   return (
@@ -179,6 +130,9 @@ const MovesTable = ({ id, generation }) => {
           transition={{ duration: 0.5 }}
           className="moves-table"
         >
+          {uniqueZMove && <PokemonZMoveTable move={uniqueZMove} />}
+          {gmaxMove && <PokemonGMaxMoveTable move={gmaxMove} />}
+
           {moves.length > 0 ? (
             <>
               <Table data={tableData} columns={columns} />

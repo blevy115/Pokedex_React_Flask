@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { getImage, getShinyImage } from "../../helpers/pictures";
 
@@ -6,6 +6,9 @@ import "./PokemonImage.scss";
 
 const PokemonImage = ({ id }) => {
   const [artworkIsShiny, setArtworkIsShiny] = useState(false);
+  useEffect(() => {
+    setArtworkIsShiny(false)
+  }, [id])
 
   return (
     <>

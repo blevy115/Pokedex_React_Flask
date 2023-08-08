@@ -1,6 +1,12 @@
 .app__held-item {
   text-align: center;
 
+  .select-input {
+    max-width: none;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
   .held-item-list {
     list-style-type: none;
     padding: 0;

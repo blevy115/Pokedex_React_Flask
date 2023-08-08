@@ -23,6 +23,7 @@ const GET_POKEMON_INFO = gql`
       }
 
       form: pokemon_v2_pokemonforms {
+        form_name
         pokemon_v2_versiongroup {
           generation_id
         }
@@ -194,7 +195,10 @@ const GET_ITEMS_LIST_BY_NAME = gql`
 const GET_MOVES_LIST_BY_NAME = gql`
   query getMovesList($name: String!) {
     moves_list: pokemon_v2_move(
-      where: { name: { _ilike: $name }, type_id: { _neq: 10002 } }
+      where: {
+        name: { _ilike: $name, _nregex: "(--special)" }
+        type_id: { _neq: 10002 }
+      }
       order_by: { name: asc }
     ) {
       id
@@ -224,6 +228,7 @@ const GET_ABILITIES_LIST_BY_NAME = gql`
 const GET_MOVE_INFO = gql`
   query getMoveInfo($id: Int!) {
     move: pokemon_v2_move(where: { id: { _eq: $id } }) {
+      id
       name
       generation_id
       pp
@@ -236,6 +241,7 @@ const GET_MOVE_INFO = gql`
         text: flavor_text
       }
       kind: pokemon_v2_movedamageclass {
+        id
         name
       }
       type: pokemon_v2_type {
@@ -252,6 +258,49 @@ const GET_MOVE_INFO = gql`
         pokemon_v2_item {
           name
         }
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
+        pokemon_v2_movemetacategory {
+          name
+        }
+      }
+      gmax: pokemon_v2_moveflavortexts(
+        where: {
+          flavor_text: { _nsimilar: "%that this move is forgotten%" }
+          pokemon_v2_language: { name: { _eq: "en" } }
+          version_group_id: { _eq: 20 }
+          move_id: {
+            _nin: [158, 165, 166, 448, 449, 464, 465, 547, 593, 600, 617, 621]
+          }
+        }
+      ) {
+        flavor_text
+      }
+    }
+  }
+`;
+
+// 728 is the last moveID for Ultra Sun / Moon
+const GET_Z_MOVE_BASE_MOVES = gql`
+  query getZMoveBaseMoves($typeId: Int!) {
+    moves: pokemon_v2_move(
+      where: {
+        type_id: { _eq: $typeId }
+        move_damage_class_id: { _in: [2, 3] }
+        id: { _lte: 728 }
+        name: { _nregex: "(--physical|--special)" }
+      }
+      order_by: { name: asc }
+    ) {
+      name
+      id
+      power
+      kind: pokemon_v2_movedamageclass {
+        name
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
       }
     }
   }
@@ -324,6 +373,7 @@ const GET_ITEM_INFO = gql`
 const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
+      id
       pokemons: pokemon_v2_pokemonabilities(
         order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
       ) {
@@ -405,7 +455,7 @@ const GET_TYPE_INFO = gql`
     pokemon_v2_type(where: { id: { _eq: $id } }) {
       name
       id
-      moves: pokemon_v2_moves {
+      moves: pokemon_v2_moves(where: { name: { _nregex: "(--special)" } }) {
         id
         name
         generation_id
@@ -439,6 +489,83 @@ const GET_TYPE_INFO = gql`
   }
 `;
 
+const GET_MAX_MOVES_LIST = gql`
+  query getGen8Moves($id: Int!, $typeId: Int!) {
+    pokemon_v2_move(
+      where: {
+        type_id: { _eq: $typeId }
+        move_damage_class_id: { _in: [2, 3] }
+        pokemon_v2_moveflavortexts: {
+          flavor_text: { _nsimilar: "%that this move is forgotten%" }
+          pokemon_v2_language: { name: { _eq: "en" } }
+          version_group_id: { _eq: 20 }
+        }
+        id: {
+          _nin: [
+            158
+            165
+            166
+            448
+            449
+            464
+            465
+            547
+            593
+            600
+            617
+            621
+            $id
+          ]
+        }
+      }
+      order_by: { name: asc }
+    ) {
+      name
+      id
+      power
+      kind: pokemon_v2_movedamageclass {
+        name
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
+      }
+    }
+  }
+`;
+
+const GET_G_MAX_MOVES_LIST = gql`
+  query getGen8Moves($typeId: Int!, $speciesId: Int!) {
+    pokemon_v2_move(
+      where: {
+        type_id: { _eq: $typeId }
+        move_damage_class_id: { _in: [2, 3] }
+        pokemon_v2_moveflavortexts: {
+          flavor_text: { _nsimilar: "%that this move is forgotten%" }
+          pokemon_v2_language: { name: { _eq: "en" } }
+          version_group_id: { _eq: 20 }
+        }
+        id: {
+          _nin: [158, 165, 166, 448, 449, 464, 465, 547, 593, 600, 617, 621]
+        }
+        pokemon_v2_pokemonmoves: {
+          pokemon_v2_pokemon: { pokemon_species_id: { _eq: $speciesId } }
+        }
+      }
+      order_by: { name: asc }
+    ) {
+      name
+      id
+      power
+      kind: pokemon_v2_movedamageclass {
+        name
+      }
+      meta: pokemon_v2_movemeta {
+        move_meta_category_id
+      }
+    }
+  }
+`;
+
 export {
   GET_POKEMON_INFO,
   GET_POKEMON_MOVES,
@@ -446,6 +573,7 @@ export {
   GET_POKEMON_LIST_BY_ID,
   GET_MOVES_LIST_BY_NAME,
   GET_MOVE_INFO,
+  GET_Z_MOVE_BASE_MOVES,
   GET_ABILITIES_LIST_BY_NAME,
   GET_ABILITY_INFO,
   GET_ITEMS_LIST_BY_NAME,
@@ -453,6 +581,8 @@ export {
   GET_MOVE_POKEMONS,
   GET_ABILITY_POKEMONS,
   GET_TYPE_INFO,
+  GET_MAX_MOVES_LIST,
+  GET_G_MAX_MOVES_LIST,
 };
 
 // const GET_DEFAULT_POKEMON_LIST_BY_ID = gql`

@@ -21,6 +21,18 @@ export { default as Types } from "./Types/Types";
 export { default as TypePokemon } from "./TypePokemon/TypePokemon";
 export { default as TypeMoves } from "./TypeMoves/TypeMoves";
 export { default as TypeRelations } from "./TypeRelations/TypeRelations";
+export { default as StandardMoveDetail } from "./StandardMoveDetail/StandardMoveDetail";
+export { default as ZMoveDetail } from "./ZMoveDetail/ZMoveDetail";
+export { default as StandardZMoveTable } from "./StandardZMoveTable/StandardZMoveTable";
+export { default as UniqueZMoveTable } from "./UniqueZMoveTable/UniqueZMoveTable";
+export { default as PokemonZMoveTable } from "./PokemonZMoveTable/PokemonZMoveTable";
+export { default as PokemonGMaxMoveTable } from "./PokemonGMaxMoveTable/PokemonGMaxMoveTable";
+export { default as MoveZMoveTable } from "./MoveZMoveTable/MoveZMoveTable";
+export { default as ItemZMoveTable } from "./ItemZMoveTable/ItemZMoveTable";
+export { default as GMaxMoveDetail } from "./GMaxMoveDetail/GMaxMoveDetail";
+export { default as GMaxMoveTable } from "./GMaxMoveTable/GMaxMoveTable";
+export { default as MaxMoveDetail } from "./MaxMoveDetail/MaxMoveDetail";
+export { default as MaxMoveTable } from "./MaxMoveTable/MaxMoveTable";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

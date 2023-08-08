@@ -1,19 +1,20 @@
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 
 import { sortPokemonByTypes } from "../../helpers/sortPokemonByTypes";
-import { handleSpriteError } from "../../helpers/error";
-import { getSprite } from "../../helpers/pictures";
 import { modifyPokemon } from "../../helpers/modifyForTable";
 import { formatName } from "../../helpers/format";
 
-import { Types, Table } from "../";
+import { Table } from "../";
+import {
+  SpriteComponent,
+  PokemonNameComponent,
+  TypesImageComponent,
+} from "../TableCellComponents/TableCellComponents";
 
 import "./TypePokemon.scss";
 
 const TypePokemon = ({ name, list, typeId }) => {
-  const navigate = useNavigate();
   const [byType, setbyType] = useState();
 
   const typeBarRefs = useRef(null);
@@ -44,37 +45,11 @@ const TypePokemon = ({ name, list, typeId }) => {
     });
   };
 
-  const SpriteComponent = ({ value }) => {
-    return (
-      <img
-        className="pokemon-list-item-sprite clickable"
-        onError={handleSpriteError}
-        src={getSprite(value)}
-        onClick={() => navigate(`/pokemon/${value}`)}
-      />
-    );
-  };
-
-  const NameComponent = ({ value, row }) => {
-    return (
-      <p
-        className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
-      >
-        {formatName(value)}
-      </p>
-    );
-  };
-
-  const TypesImageComponent = ({ value }) => {
-    return <Types types={value} pageTypeId={typeId} />;
-  };
-
   const { tableData: pureTableData, columns: pureColumns } = modifyPokemon({
     pokemons: pure.pokemons,
     SpriteComponent,
-    NameComponent,
-    TypesImageComponent,
+    NameComponent: PokemonNameComponent,
+    hasType: false,
   });
 
   const modifiedSemiData = Object.values(semi).map((group) => {
@@ -82,8 +57,9 @@ const TypePokemon = ({ name, list, typeId }) => {
       data: modifyPokemon({
         pokemons: group.pokemons,
         SpriteComponent,
-        NameComponent,
+        NameComponent: PokemonNameComponent,
         TypesImageComponent,
+        pageId: typeId,
       }),
       name: group.type_name,
     };

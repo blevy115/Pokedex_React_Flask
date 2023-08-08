@@ -6,7 +6,17 @@ import { GET_MOVES_LIST_BY_NAME } from "../../api/queries/pokeapi";
 
 import { MovesList, DebouncedInput, Loading } from "../../components";
 
+import gmax_moves from "../../data/gmax_moves.json";
+
 import "./MoveSearch.scss";
+
+function gmaxMovesFromText(input) {
+  return Object.entries(gmax_moves)
+    .filter(([, move]) =>
+      move.name.toLowerCase().includes(input.replaceAll(" ", "-").toLowerCase())
+    )
+    .map(([id, move]) => ({ id, ...move }));
+}
 
 const MoveSearch = () => {
   const [user] = useState(JSON.parse(localStorage.getItem("user")));
@@ -42,7 +52,11 @@ const MoveSearch = () => {
         />
       </div>
       {loadingList && <Loading fullscreen={false} />}
-      {!loadingList && list ? <MovesList list={list.moves_list} /> : undefined}
+      {!loadingList && list ? (
+        <MovesList
+          list={[...list.moves_list, ...gmaxMovesFromText(textInput)]}
+        />
+      ) : undefined}
     </div>
   );
 };

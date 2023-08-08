@@ -1,12 +1,15 @@
+import { getMaxMovePower } from "./maxMoveHelper";
+import { getZMovePower } from "./zMoveHelper";
+
 function modifyMoves({
   moves,
   hasLevel = false,
   hasTms = false,
   hasPopUpText = false,
+  hasType = true,
   TypeImageComponent,
   KindImageComponent,
   NameComponent,
-  TmComponent,
 }) {
   if (moves.length < 0) return { columns: [], tableData: [] };
   const columns = [
@@ -15,7 +18,9 @@ function modifyMoves({
       accessor: "name",
       Cell: NameComponent,
     },
-    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    ...(hasType
+      ? [{ Header: "Type", accessor: "type", Cell: TypeImageComponent }]
+      : []),
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
     { Header: "Power", accessor: "power" },
     { Header: "PP", accessor: "pp" },
@@ -25,7 +30,7 @@ function modifyMoves({
     columns.unshift({ Header: "Level", accessor: "level" });
   }
   if (hasTms) {
-    columns.unshift({ Header: "TM", accessor: "tm", Cell: TmComponent });
+    columns.unshift({ Header: "TM", accessor: "tm" });
   }
   const tableData = moves.map((move, i) => {
     const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
@@ -48,7 +53,7 @@ function modifyMoves({
     if (hasTms) {
       // Optional Chaining used as Gen 9 TM data not available yet
       return {
-        tm: move.moveInfo.tm[0]?.pokemon_v2_item.name || "—",
+        tm: move.moveInfo.tm[0]?.pokemon_v2_item.name.toUpperCase() || "—",
         ...modifiedMove,
       };
     }
@@ -62,17 +67,21 @@ function modifyPokemon({
   hasLevelData = false,
   hasItemRarityData = false,
   hasAbilities = false,
+  hasType = true,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
   LevelComponent,
   AbilitiesComponent,
+  pageId,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
     { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
     { Header: "Name", accessor: "name", Cell: NameComponent },
-    { Header: "Types", accessor: "types", Cell: TypesImageComponent },
+    ...(hasType
+      ? [{ Header: "Types", accessor: "types", Cell: TypesImageComponent }]
+      : []),
   ];
   if (hasLevelData) {
     columns.push({
@@ -106,7 +115,6 @@ function modifyPokemon({
       }
     );
   }
-
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
     const modifiedPokemon = {
@@ -115,6 +123,7 @@ function modifyPokemon({
       spriteId: pokemonData.id,
       name: pokemonData.name,
       types: pokemonData.types,
+      pageId: pageId,
     };
 
     if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
@@ -141,6 +150,204 @@ function modifyPokemon({
   return { columns, tableData };
 }
 
+function modifyMovesForStandardZMoveTable({
+  moves,
+  NameComponent,
+  KindImageComponent,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Z Power", accessor: "zPower" },
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      moveId: move.id,
+      name: move.name,
+      kind: move.kind.name,
+      power: move.power || "—",
+      zPower: getZMovePower({
+        id: move.id,
+        power: move.power,
+        categoryId: move.meta[0].move_meta_category_id,
+      }),
+    };
+    return modifiedMove;
+  });
+  return { columns, tableData };
+}
+
+function modifyPokemonUniqueZMove({
+  move,
+  NameComponent,
+  MoveComponent,
+  TypeImageComponent,
+  KindImageComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = [{ ...move, moveId: move.id, type: move.type.name }];
+
+  return { columns, tableData };
+}
+
+function modifyMovesForUniqueZMoveTable({
+  data,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = data.pokemon.map((pokemon) => {
+    const modifiedPokemon = {
+      pokemonId: `#${pokemon.id}`,
+      spriteId: pokemon.id,
+      name: pokemon.name,
+      move: data.move,
+      item: data.item,
+    };
+    return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
+function modifyMoveUniqueZMove({
+  moves,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  KindImageComponent,
+  ItemComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Z-Move", accessor: "zMove", Cell: MoveComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    { Header: "Item", accessor: "item", Cell: ItemComponent },
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      pokemonId: `#${move.pokemon.id}`,
+      spriteId: move.pokemon.id,
+      name: move.pokemon.name,
+      zMove: { id: move.id, name: move.name },
+      kind: move.kind,
+      power: move.power,
+      item: move.item,
+    };
+    return modifiedMove;
+  });
+  return { columns, tableData };
+}
+
+function modifyItemUniqueZMove({
+  data,
+  SpriteComponent,
+  NameComponent,
+  MoveComponent,
+  ZMoveComponent,
+  TypeImageComponent,
+  KindImageComponent,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Z-Move", accessor: "zMove", Cell: ZMoveComponent },
+    { Header: "Move", accessor: "move", Cell: MoveComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+  ];
+
+  const tableData = data.pokemon.map((pokemon) => {
+    const modifiedPokemon = {
+      pokemonId: `#${pokemon.id}`,
+      spriteId: pokemon.id,
+      name: pokemon.name,
+      zMove: { id: data.id, name: data.name },
+      move: data.move,
+      type: data.type.name,
+      kind: data.kind,
+      power: data.power,
+    };
+    return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
+
+function modifyMovesForMaxMoveTable({
+  moves,
+  NameComponent,
+  KindImageComponent,
+  type,
+  hasMaxPower = false,
+  isGmax = false,
+}) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
+    { Header: "Power", accessor: "power" },
+    ...(!hasMaxPower
+      ? [{ Header: isGmax ? "G-Max Power" : "Max Power", accessor: "maxPower" }]
+      : []),
+  ];
+
+  const tableData = moves.map((move) => {
+    const modifiedMove = {
+      moveId: move.id,
+      name: move.name,
+      kind: move.kind.name,
+      power: move.power || "—",
+      maxPower: !hasMaxPower
+        ? getMaxMovePower(
+            {
+              id: move.id,
+              power: move.power,
+              categoryId: move.meta[0].move_meta_category_id,
+            },
+            type
+          )
+        : null,
+    };
+    return modifiedMove;
+  });
+  return { columns, tableData };
+}
+
+function modifyPokemonGMAXMove({ move, NameComponent, TypeImageComponent }) {
+  const columns = [
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Type", accessor: "type", Cell: TypeImageComponent },
+    { Header: "Effect", accessor: "effect" },
+  ];
+
+  const tableData = [{ ...move, moveId: move.id, type: move.type.name }];
+
+  return { columns, tableData };
+}
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
     Header: stat,
@@ -160,4 +367,15 @@ function modifyStats({ headers, ivs, evs, StatComponent }) {
   return { columns, tableData };
 }
 
-export { modifyMoves, modifyPokemon, modifyStats };
+export {
+  modifyMoves,
+  modifyPokemon,
+  modifyStats,
+  modifyMovesForStandardZMoveTable,
+  modifyMovesForUniqueZMoveTable,
+  modifyPokemonUniqueZMove,
+  modifyMoveUniqueZMove,
+  modifyItemUniqueZMove,
+  modifyMovesForMaxMoveTable,
+  modifyPokemonGMAXMove,
+};

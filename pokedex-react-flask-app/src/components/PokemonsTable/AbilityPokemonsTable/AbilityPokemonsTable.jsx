@@ -1,23 +1,22 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../../api/clients";
 import { GET_ABILITY_POKEMONS } from "../../../api/queries/pokeapi";
 
-import { handleSpriteError } from "../../../helpers/error";
-import { getSprite } from "../../../helpers/pictures";
 import { modifyPokemon } from "../../../helpers/modifyForTable";
 
-import { formatName } from "../../../helpers/format";
-
-import { Loading, Table, Types } from "../..";
+import { Loading, Table } from "../..";
+import {
+  SpriteComponent,
+  PokemonNameComponent,
+  TypesImageComponent,
+  AbilitiesComponent,
+} from "../../TableCellComponents/TableCellComponents";
 
 import "./AbilityPokemonsTable.scss";
 
 const AbilityPokemonsTable = ({ id }) => {
-  let navigate = useNavigate();
-
   const { data, loading } = useQuery(GET_ABILITY_POKEMONS, {
     variables: { id },
     client: pokemonAPIClient,
@@ -25,56 +24,16 @@ const AbilityPokemonsTable = ({ id }) => {
 
   if (loading) return <Loading fullscreen={false} />;
 
-  const { pokemons } = data.ability[0];
-
-  const SpriteComponent = ({ value }) => {
-    return (
-      <img
-        className="pokemon-list-item-sprite clickable"
-        onError={handleSpriteError}
-        src={getSprite(value)}
-        onClick={() => navigate(`/pokemon/${value}`)}
-      />
-    );
-  };
-
-  const NameComponent = ({ value, row }) => {
-    return (
-      <p
-        className="pokemon-list-item-name clickable"
-        onClick={() => navigate(`/pokemon/${row.original.spriteId}`)}
-      >
-        {formatName(value)}
-      </p>
-    );
-  };
-
-  const TypesImageComponent = ({ value }) => {
-    return <Types types={value} />;
-  };
-
-  const AbilitiesComponent = ({ value }) => {
-    return (
-      <p
-        className={value.id === id ? "text-bold" : value.id ? "clickable" : ""}
-        onClick={() => {
-          if (value.id) {
-            navigate(`/abilities/${value.id}`);
-          }
-        }}
-      >
-        {formatName(value.name)}
-      </p>
-    );
-  };
+  const { pokemons, id: pageId } = data.ability[0];
 
   const { tableData, columns } = modifyPokemon({
-    pokemons: pokemons,
+    pokemons,
     SpriteComponent,
-    NameComponent,
+    NameComponent: PokemonNameComponent,
     TypesImageComponent,
     AbilitiesComponent,
     hasAbilities: true,
+    pageId,
   });
 
   return (

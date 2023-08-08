@@ -1,0 +1,359 @@
+{
+  "658": {
+    "name": "catastropika",
+    "pokemon": [{ "id": 25, "name": "pikachu" }],
+    "move": { "id": 344, "name": "volt-tackle" },
+    "item": { "id": 835, "name": "pikanium-z" },
+    "kind": "physical",
+    "type": { "id": 13, "name": "electric" },
+    "power": 210
+  },
+  "719": {
+    "name": "10-000-000-volt-thunderbolt",
+    "pokemon": [
+      { "id": 10094, "name": "pikachu-original-cap" },
+      { "id": 10095, "name": "pikachu-hoenn-cap" },
+      { "id": 10096, "name": "pikachu-sinnoh-cap" },
+      { "id": 10097, "name": "pikachu-unova-cap" },
+      { "id": 10098, "name": "pikachu-kalos-cap" },
+      { "id": 10099, "name": "pikachu-alola-cap" },
+      { "id": 10148, "name": "pikachu-partner-cap" },
+      { "id": 10160, "name": "pikachu-world-cap" }
+    ],
+    "move": { "id": 85, "name": "thunderbolt" },
+    "item": { "id": 877, "name": "pikashunium-z" },
+    "kind": "special",
+    "type": { "id": 13, "name": "electric" },
+    "power": 195
+  },
+  "700": {
+    "name": "stoked-sparksurfer",
+    "pokemon": [{ "id": 10100, "name": "alolan-raichu" }],
+    "move": { "id": 85, "name": "thunderbolt" },
+    "item": { "id": 844, "name": "aloraichium-z" },
+    "kind": "special",
+    "type": { "id": 13, "name": "electric" },
+    "power": 175
+  },
+  "702": {
+    "name": "extreme-evoboost",
+    "pokemon": [{ "id": 133, "name": "eevee" }],
+    "move": { "id": 387, "name": "last-resort" },
+    "item": { "id": 846, "name": "eevium-z" },
+    "kind": "status",
+    "type": { "id": 1, "name": "normal" },
+    "power": "Raises Attack, Defense, Sp. Atk, Sp. Def, and Speed by 2 stages"
+  },
+  "701": {
+    "name": "pulverizing-pancake",
+    "pokemon": [{ "id": 143, "name": "snorlax" }],
+    "move": { "id": 416, "name": "giga-impact" },
+    "item": { "id": 845, "name": "snorlium-z" },
+    "kind": "physical",
+    "type": { "id": 1, "name": "normal" },
+    "power": 210
+  },
+  "703": {
+    "name": "genesis-supernova",
+    "pokemon": [{ "id": 151, "name": "mew" }],
+    "move": { "id": 94, "name": "psychic" },
+    "item": { "id": 847, "name": "mewnium-z" },
+    "kind": "special",
+    "type": { "id": 14, "name": "psychic" },
+    "power": 185
+  },
+  "695": {
+    "name": "sinister-arrow-raid",
+    "pokemon": [{ "id": 724, "name": "decidueye" }],
+    "move": { "id": 662, "name": "spirit-shackle" },
+    "item": { "id": 839, "name": "decidium-z" },
+    "kind": "physical",
+    "type": { "id": 8, "name": "ghost" },
+    "power": 180
+  },
+  "696": {
+    "name": "malicious-moonsault",
+    "pokemon": [{ "id": 727, "name": "incineroar" }],
+    "move": { "id": 663, "name": "darkest-lariat" },
+    "item": { "id": 840, "name": "incinium-z" },
+    "kind": "physical",
+    "type": { "id": 17, "name": "dark" },
+    "power": 180
+  },
+  "697": {
+    "name": "oceanic-operetta",
+    "pokemon": [{ "id": 730, "name": "primarina" }],
+    "move": { "id": 664, "name": "sparkling-aria" },
+    "item": { "id": 841, "name": "primarium-z" },
+    "kind": "special",
+    "type": { "id": 11, "name": "water" },
+    "power": 195
+  },
+  "727": {
+    "name": "splintered-stormshards",
+    "pokemon": [
+      { "id": 745, "name": "lycanroc-midday" },
+      { "id": 10126, "name": "lycanroc-midnight" },
+      { "id": 10152, "name": "lycanroc-dusk" }
+    ],
+    "move": { "id": 444, "name": "stone-edge" },
+    "item": { "id": 971, "name": "lycanium-z" },
+    "kind": "physical",
+    "type": { "id": 6, "name": "rock" },
+    "power": 190
+  },
+  "726": {
+    "name": "lets-snuggle-forever",
+    "pokemon": [{ "id": 778, "name": "mimikyu" }],
+    "move": { "id": 583, "name": "play-rough" },
+    "item": { "id": 970, "name": "mimikium-z" },
+    "kind": "physical",
+    "type": { "id": 18, "name": "fairy" },
+    "power": 190
+  },
+  "728": {
+    "name": "clangorous-soulblaze",
+    "pokemon": [{ "id": 784, "name": "kommo-o" }],
+    "move": { "id": 691, "name": "clanging-scales" },
+    "item": { "id": 972, "name": "kommonium-z" },
+    "kind": "special",
+    "type": { "id": 16, "name": "dragon" },
+    "power": 185
+  },
+  "698": {
+    "name": "guardian-of-alola",
+    "pokemon": [
+      { "id": 785, "name": "tapu-koko" },
+      { "id": 786, "name": "tapu-lele" },
+      { "id": 787, "name": "tapu-bulu" },
+      { "id": 788, "name": "tapu-fini" }
+    ],
+    "move": { "id": 717, "name": "natures-madness" },
+    "item": { "id": 842, "name": "tapunium-z" },
+    "kind": "special",
+    "type": { "id": 18, "name": "fairy" },
+    "power": "Deals damage equal to 75% of the target's remaining HP"
+  },
+  "724": {
+    "name": "searing-sunraze-smash",
+    "pokemon": [
+      { "id": 791, "name": "solgaleo" },
+      { "id": 10155, "name": "necrozma-dusk" }
+    ],
+    "move": { "id": 713, "name": "sunsteel-strike" },
+    "item": { "id": 967, "name": "solganium-z" },
+    "kind": "physical",
+    "type": { "id": 9, "name": "steel" },
+    "power": 200
+  },
+  "725": {
+    "name": "menacing-moonraze-maelstrom",
+    "pokemon": [
+      { "id": 792, "name": "lunala" },
+      { "id": 10156, "name": "necrozma-dawn" }
+    ],
+    "move": { "id": 714, "name": "moongeist-beam" },
+    "item": { "id": 968, "name": "lunalium-z" },
+    "kind": "special",
+    "type": { "id": 8, "name": "ghost" },
+    "power": 200
+  },
+  "723": {
+    "name": "light-that-burns-the-sky",
+    "pokemon": [{ "id": 10157, "name": "necrozma-ultra" }],
+    "move": { "id": 722, "name": "photon-geyzer" },
+    "item": { "id": 972, "name": "ultranecrozium-z" },
+    "type": { "id": 14, "name": "psychic" },
+    "power": 200
+  },
+  "699": {
+    "name": "soul-stealing-7-star-strike",
+    "pokemon": [{ "id": 802, "name": "marshadow" }],
+    "move": { "id": 712, "name": "spectral-thief" },
+    "item": { "id": 843, "name": "marshadium-z" },
+    "kind": "physical",
+    "type": { "id": 8, "name": "ghost" },
+    "power": 195
+  },
+
+  "622": {
+    "name": "breakneck-blitz",
+    "type": { "id": 1, "name": "normal" },
+    "item": { "id": 817, "name": "normalium-z" }
+  },
+  "623": {
+    "name": "breakneck-blitz",
+    "type": { "id": 1, "name": "normal" },
+    "item": { "id": 817, "name": "normalium-z" }
+  },
+  "624": {
+    "name": "all-out-pummeling",
+    "type": { "id": 2, "name": "fighting" },
+    "item": { "id": 823, "name": "fightinium-z" }
+  },
+  "625": {
+    "name": "all-out-pummeling",
+    "type": { "id": 2, "name": "fighting" },
+    "item": { "id": 823, "name": "fightinium-z" }
+  },
+  "626": {
+    "name": "supersonic-skystrike",
+    "type": { "id": 3, "name": "flying" },
+    "item": { "id": 826, "name": "flyinium-z" }
+  },
+  "627": {
+    "name": "supersonic-skystrike",
+    "type": { "id": 3, "name": "flying" },
+    "item": { "id": 826, "name": "flyinium-z" }
+  },
+  "628": {
+    "name": "acid-downpour",
+    "type": { "id": 4, "name": "poison" },
+    "item": { "id": 824, "name": "poisonium-z" }
+  },
+  "629": {
+    "name": "acid-downpour",
+    "type": { "id": 4, "name": "poison" },
+    "item": { "id": 824, "name": "poisonium-z" }
+  },
+  "630": {
+    "name": "tectonic-rage",
+    "type": { "id": 5, "name": "ground" },
+    "item": { "id": 825, "name": "groundium-z" }
+  },
+  "631": {
+    "name": "tectonic-rage",
+    "type": { "id": 5, "name": "ground" },
+    "item": { "id": 825, "name": "groundium-z" }
+  },
+  "632": {
+    "name": "continental-crush",
+    "type": { "id": 6, "name": "rock" },
+    "item": { "id": 829, "name": "rockium-z" }
+  },
+  "633": {
+    "name": "continental-crush",
+    "type": { "id": 6, "name": "rock" },
+    "item": { "id": 829, "name": "rockium-z" }
+  },
+  "634": {
+    "name": "savage-spin-out",
+    "type": { "id": 7, "name": "bug" },
+    "item": { "id": 828, "name": "buginium-z" }
+  },
+  "635": {
+    "name": "savage-spin-out",
+    "type": { "id": 7, "name": "bug" },
+    "item": { "id": 828, "name": "buginium-z" }
+  },
+  "636": {
+    "name": "never-ending-nightmare",
+    "type": { "id": 8, "name": "ghost" },
+    "item": { "id": 830, "name": "ghostium-z" }
+  },
+  "637": {
+    "name": "never-ending-nightmare",
+    "type": { "id": 8, "name": "ghost" },
+    "item": { "id": 830, "name": "ghostium-z" }
+  },
+  "638": {
+    "name": "corkscrew-crash",
+    "type": { "id": 9, "name": "steel" },
+    "item": { "id": 833, "name": "steelium-z" }
+  },
+  "639": {
+    "name": "corkscrew-crash",
+    "type": { "id": 9, "name": "steel" },
+    "item": { "id": 833, "name": "steelium-z" }
+  },
+  "640": {
+    "name": "inferno-overdrive",
+    "type": { "id": 10, "name": "fire" },
+    "item": { "id": 818, "name": "firium-z" }
+  },
+  "641": {
+    "name": "inferno-overdrive",
+    "type": { "id": 10, "name": "fire" },
+    "item": { "id": 818, "name": "firium-z" }
+  },
+  "642": {
+    "name": "hydro-vortex",
+    "type": { "id": 11, "name": "water" },
+    "item": { "id": 819, "name": "waterium-z" }
+  },
+  "643": {
+    "name": "hydro-vortex",
+    "type": { "id": 11, "name": "water" },
+    "item": { "id": 819, "name": "waterium-z" }
+  },
+  "644": {
+    "name": "bloom-doom",
+    "type": { "id": 12, "name": "grass" },
+    "item": { "id": 821, "name": "grassium-z" }
+  },
+  "645": {
+    "name": "bloom-doom",
+    "type": { "id": 12, "name": "grass" },
+    "item": { "id": 821, "name": "grassium-z" }
+  },
+  "646": {
+    "name": "gigavolt-havoc",
+    "type": { "id": 13, "name": "electric" },
+    "item": { "id": 820, "name": "electrium-z" }
+  },
+  "647": {
+    "name": "gigavolt-havoc",
+    "type": { "id": 13, "name": "electric" },
+    "item": { "id": 820, "name": "electrium-z" }
+  },
+  "648": {
+    "name": "shattered-psyche",
+    "type": { "id": 14, "name": "psychic" },
+    "item": { "id": 827, "name": "psychium-z" }
+  },
+  "649": {
+    "name": "shattered-psyche",
+    "type": { "id": 14, "name": "psychic" },
+    "item": { "id": 827, "name": "psychium-z" }
+  },
+  "650": {
+    "name": "subzero-slammer",
+    "type": { "id": 15, "name": "ice" },
+    "item": { "id": 822, "name": "icium-z" }
+  },
+  "651": {
+    "name": "subzero-slammer",
+    "type": { "id": 15, "name": "ice" },
+    "item": { "id": 822, "name": "icium-z" }
+  },
+  "652": {
+    "name": "devastating-drake",
+    "type": { "id": 16, "name": "dragon" },
+    "item": { "id": 831, "name": "dragonium-z" }
+  },
+  "653": {
+    "name": "devastating-drake",
+    "type": { "id": 16, "name": "dragon" },
+    "item": { "id": 831, "name": "dragonium-z" }
+  },
+  "654": {
+    "name": "black-hole-eclipse",
+    "type": { "id": 17, "name": "dark" },
+    "item": { "id": 832, "name": "darkinium-z" }
+  },
+  "655": {
+    "name": "black-hole-eclipse",
+    "type": { "id": 17, "name": "dark" },
+    "item": { "id": 832, "name": "darkinium-z" }
+  },
+  "656": {
+    "name": "twinkle-tackle",
+    "type": { "id": 18, "name": "fairy" },
+    "item": { "id": 834, "name": "fairium-z" }
+  },
+  "657": {
+    "name": "twinkle-tackle",
+    "type": { "id": 18, "name": "fairy" },
+    "item": { "id": 834, "name": "fairium-z" }
+  }
+}

@@ -34,3 +34,30 @@
     margin: 1rem 0;
   }
 }
+
+.app__move-pokemons-table-tabs-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #ffffff;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.app__move-pokemons-table-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.app__move-pokemons-table-tabs-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.app__move-pokemons-table-tabs-item.active {
+  border-bottom-color: #007bff;
+  font-weight: bold;
+}

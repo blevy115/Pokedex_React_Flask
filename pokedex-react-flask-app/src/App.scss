@@ -20,6 +20,11 @@
 
 .clickable {
   cursor: pointer;
+  transition: text-shadow 0.3s ease;
+
+  &:hover {
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .text-center {
@@ -48,4 +53,20 @@
 
 .text-bold {
   font-weight: bold;
+}
+
+.z-move-types-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.z-move-table-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    margin-right: 0.5rem;
+  }
 }

@@ -1,0 +1,239 @@
+{
+  "10019": {
+    "name": "g-max-vine-lash",
+    "pokemon": [{ "id": 10195, "name": "venusaur-gmax" }],
+    "species_id": 3,
+    "type": { "id": 12, "name": "grass" },
+    "effect": "Inflicts damage for four turns on non-Grass-type opponents"
+  },
+  "10020": {
+    "name": "g-max-wildfire",
+    "pokemon": [{ "id": 10196, "name": "charizard-gmax" }],
+    "species_id": 6,
+    "type": { "id": 10, "name": "fire" },
+    "effect": "Inflicts damage for four turns on non-Fire-type opponents"
+  },
+  "10021": {
+    "name": "g-max-cannonade",
+    "pokemon": [{ "id": 10197, "name": "blastoise-gmax" }],
+    "species_id": 9,
+    "type": { "id": 11, "name": "water" },
+    "effect": "Inflicts damage for four turns on non-Water-type opponents"
+  },
+  "10022": {
+    "name": "g-max-befuddle",
+    "pokemon": [{ "id": 10198, "name": "butterfree-gmax" }],
+    "species_id": 12,
+    "type": { "id": 7, "name": "bug" },
+    "effect": "Inflicts poison, paralysis, or sleep on all opponents"
+  },
+  "10023": {
+    "name": "g-max-volt-crash",
+    "pokemon": [{ "id": 10199, "name": "pikachu-gmax" }],
+    "species_id": 25,
+    "type": { "id": 13, "name": "electric" },
+    "effect": "Paralyzes all opponents"
+  },
+  "10024": {
+    "name": "g-max-gold-rush",
+    "pokemon": [{ "id": 10200, "name": "meowth-gmax" }],
+    "species_id": 52,
+    "type": { "id": 1, "name": "normal" },
+    "effect": "Scatters coins on the ground that are picked up afterwards and confuses all opponents"
+  },
+  "10025": {
+    "name": "g-max-chi-strike",
+    "pokemon": [{ "id": 10201, "name": "machamp-gmax" }],
+    "species_id": 68,
+    "type": { "id": 2, "name": "fighting" },
+    "effect": "Pumps up the user and its allies, raising the chance of critical hits by one stage."
+  },
+  "10026": {
+    "name": "g-max-terror",
+    "pokemon": [{ "id": 10202, "name": "gengar-gmax" }],
+    "species_id": 94,
+    "type": { "id": 8, "name": "ghost" },
+    "effect": "Prevents the opponent from being recalled"
+  },
+  "10027": {
+    "name": "g-max-foam-burst",
+    "pokemon": [{ "id": 10203, "name": "kingler-gmax" }],
+    "species_id": 99,
+    "type": { "id": 11, "name": "water" },
+    "effect": "Lowers the Speed of all opponents by two stages"
+  },
+  "10028": {
+    "name": "g-max-resonance",
+    "pokemon": [{ "id": 10204, "name": "lapras-gmax" }],
+    "species_id": 131,
+    "type": { "id": 15, "name": "ice" },
+    "effect": "Lowers damage from both Physical and Special moves for five turns"
+  },
+  "10029": {
+    "name": "g-max-cuddle",
+    "pokemon": [{ "id": 10205, "name": "eevee-gmax" }],
+    "species_id": 133,
+    "type": { "id": 1, "name": "normal" },
+    "effect": "Opponents of the opposite gender of the user become infatuated"
+  },
+  "10030": {
+    "name": "g-max-replenish",
+    "pokemon": [{ "id": 10206, "name": "snorlax-gmax" }],
+    "species_id": 143,
+    "type": { "id": 1, "name": "normal" },
+    "effect": "50% chance of restoring user or ally's used Berries"
+  },
+  "10031": {
+    "name": "g-max-malodor",
+    "pokemon": [{ "id": 10207, "name": "garbodor-gmax" }],
+    "species_id": 569,
+    "type": { "id": 4, "name": "poison" },
+    "effect": "Poisons all opponents"
+  },
+  "10032": {
+    "name": "g-max-meltdown",
+    "pokemon": [{ "id": 10208, "name": "melmetal-gmax" }],
+    "species_id": 809,
+    "type": { "id": 9, "name": "steel" },
+    "effect": "Makes opponents incapable of using the same move twice in a row"
+  },
+  "10033": {
+    "name": "g-max-drum-solo",
+    "pokemon": [{ "id": 10209, "name": "rillaboom-gmax" }],
+    "species_id": 812,
+    "type": { "id": 12, "name": "grass" },
+    "effect": "Moves can be used regardless of abilities",
+    "power": 160
+  },
+  "10034": {
+    "name": "g-max-fireball",
+    "pokemon": [{ "id": 10210, "name": "cinderace-gmax" }],
+    "species_id": 815,
+    "type": { "id": 10, "name": "fire" },
+    "effect": "Moves can be used regardless of abilities",
+    "power": 160
+  },
+  "10035": {
+    "name": "g-max-hydrosnipe",
+    "pokemon": [{ "id": 10211, "name": "inteleon-gmax" }],
+    "species_id": 818,
+    "type": { "id": 11, "name": "water" },
+    "effect": "Moves can be used regardless of abilities",
+    "power": 160
+  },
+  "10036": {
+    "name": "g-max-wind-rage",
+    "pokemon": [{ "id": 10212, "name": "corviknight-gmax" }],
+    "species_id": 823,
+    "type": { "id": 3, "name": "flying" },
+    "effect": "Removes the effects of moves like Reflect, Light Screen, Spikes, and terrain from the opponents' side of the field"
+  },
+  "10037": {
+    "name": "g-max-gravitas",
+    "pokemon": [{ "id": 10213, "name": "orbeetle-gmax" }],
+    "species_id": 826,
+    "type": { "id": 14, "name": "psychic" },
+    "effect": "Intensifies gravity for five turns"
+  },
+  "10038": {
+    "name": "g-max-stonesurge",
+    "pokemon": [{ "id": 10214, "name": "drednaw-gmax" }],
+    "species_id": 834,
+    "type": { "id": 11, "name": "water" },
+    "effect": "Creates Stealth Rock on the opponents' side of the field"
+  },
+  "10039": {
+    "name": "g-max-volcalith",
+    "pokemon": [{ "id": 10215, "name": "coalossal-gmax" }],
+    "species_id": 839,
+    "type": { "id": 6, "name": "rock" },
+    "effect": "Inflicts damage for four turns on non-Rock-type opponents"
+  },
+  "10040": {
+    "name": "g-max-tartness",
+    "pokemon": [{ "id": 10216, "name": "flapple-gmax" }],
+    "species_id": 841,
+    "type": { "id": 12, "name": "grass" },
+    "effect": "Lowers the evasiveness of all opponents by one stage"
+  },
+  "10041": {
+    "name": "g-max-sweetness",
+    "pokemon": [{ "id": 10217, "name": "appletun-gmax" }],
+    "species_id": 842,
+    "type": { "id": 12, "name": "grass" },
+    "effect": "Cures the user and its allies of their status conditions"
+  },
+  "10042": {
+    "name": "g-max-sandblast",
+    "pokemon": [{ "id": 10218, "name": "sandaconda-gmax" }],
+    "species_id": 844,
+    "type": { "id": 5, "name": "ground" },
+    "effect": "Traps the target in Sand Tomb for four to five turns"
+  },
+  "10043": {
+    "name": "g-max-stun-shock",
+    "pokemon": [
+      { "id": 10219, "name": "toxtricity-amped-gmax" },
+      { "id": 10228, "name": "toxtricity-low-key-gmax" }
+    ],
+    "species_id": 849,
+    "type": { "id": 13, "name": "electric" },
+    "effect": "Inflicts poison or paralysis on all opponents"
+  },
+  "10044": {
+    "name": "g-max-centiferno",
+    "pokemon": [{ "id": 10220, "name": "centiskorch-gmax" }],
+    "species_id": 851,
+    "type": { "id": 10, "name": "fire" },
+    "effect": "Traps the target in Fire Spin for four to five turns"
+  },
+  "10045": {
+    "name": "g-max-smite",
+    "pokemon": [{ "id": 10221, "name": "hatterene-gmax" }],
+    "species_id": 858,
+    "type": { "id": 18, "name": "fairy" },
+    "effect": "Inflicts confusion on all opponents"
+  },
+  "10046": {
+    "name": "g-max-snooze",
+    "pokemon": [{ "id": 10222, "name": "grimmsnarl-gmax" }],
+    "species_id": 861,
+    "type": { "id": 17, "name": "dark" },
+    "effect": "50% chance of making the target drowsy, causing it to fall asleep at the end of the next turn"
+  },
+  "10047": {
+    "name": "g-max-finale",
+    "pokemon": [{ "id": 10223, "name": "alcremie-gmax" }],
+    "species_id": 869,
+    "type": { "id": 18, "name": "fairy" },
+    "effect": "Heals the user and its allies by 1/6 their maximum HP"
+  },
+  "10048": {
+    "name": "g-max-steelsurge",
+    "pokemon": [{ "id": 10224, "name": "copperajah-gmax" }],
+    "species_id": 879,
+    "type": { "id": 9, "name": "steel" },
+    "effect": "Scatters sharp spikes around the field, checks the effectiveness of Steel against the target"
+  },
+  "10049": {
+    "name": "g-max-depletion",
+    "pokemon": [{ "id": 10225, "name": "duraludon-gmax" }],
+    "species_id": 884,
+    "type": { "id": 16, "name": "dragon" },
+    "effect": "Takes away 2 PP from the last move the target used"
+  },
+  "10051": {
+    "name": "g-max-one-blow",
+    "pokemon": [{ "id": 10226, "name": "urshifu-single-strike-gmax" }],
+    "species_id": 892,
+    "type": { "id": 17, "name": "dark" },
+    "effect": "Hits the target even if it is protected by a protection move"
+  },
+  "10052": {
+    "name": "g-max-rapid-flow",
+    "pokemon": [{ "id": 10227, "name": "urshifu-rapid-strike-gmax" }],
+    "species_id": 892,
+    "type": { "id": 11, "name": "water" },
+    "effect": "Hits the target even if it is protected by a protection move"
+  }
+}
