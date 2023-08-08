@@ -2,7 +2,8 @@ import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName } from "../../helpers/format";
-import { getZMovePower, getZMoveByType } from "../../helpers/getZMovePower";
+import { getZMovePower, getZMoveByType } from "../../helpers/zMoveHelper";
+import { getMaxMoveByType, getMaxMovePower } from "../../helpers/maxMoveHelper";
 
 import { MovePokemonsTable } from "../";
 
@@ -28,12 +29,12 @@ const StandardMoveDetail = ({ move }) => {
 
   const maxMove = useMemo(() => {
     if (gmax.length > 0) {
-      return getMaxMoveByType(type);
+      return getMaxMoveByType(type, kind);
     }
   }, [gmax]);
 
   const maxMovePower = useMemo(() => {
-    if (gmax.length > 0) {
+    if (gmax.length > 0 && kind.name !== "status") {
       return getMaxMovePower(
         {
           id,
@@ -59,6 +60,7 @@ const StandardMoveDetail = ({ move }) => {
         })
       : null;
 
+  console.log(maxMove);
   return (
     <>
       <div className="app__move-info">
@@ -85,12 +87,15 @@ const StandardMoveDetail = ({ move }) => {
           <p style={{ whiteSpace: "pre-line" }}>
             Z-Move:{" "}
             {zMove ? (
-              <span
-                className="clickable"
-                onClick={() => navigate(`/moves/${zMove.id}`)}
-              >
-                {formatName(zMove.name)}, Power: {ZMovePower}
-              </span>
+              <>
+                <span
+                  className="clickable"
+                  onClick={() => navigate(`/moves/${zMove.id}`)}
+                >
+                  {formatName(zMove.name)}
+                </span>
+                , Power: {ZMovePower}
+              </>
             ) : (
               <span>
                 Z-{formatName(name)}, {ZMovePower}
@@ -100,13 +105,14 @@ const StandardMoveDetail = ({ move }) => {
         )}
         {maxMove && (
           <p>
-            Max-Move{" "}
+            Max-Move:{" "}
             <span
               className="clickable"
               onClick={() => navigate(`/moves/${maxMove.id}`)}
             >
-              {formatName(maxMove.name)}, Power: {maxMovePower}
+              {formatName(maxMove.name)}
             </span>
+            {maxMovePower && `, Power: ${maxMovePower}`}
           </p>
         )}
         <p>Accuracy: {accuracy}</p>

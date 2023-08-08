@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName, formatZMoveName } from "../../helpers/format";
-import { isZMove, getZMoveData } from "../../helpers/getZMovePower";
-import { isGmaxMove, isMaxMove } from "../../helpers/getMaxMoves";
+import { isZMove, getZMoveData } from "../../helpers/zMoveHelper";
+import { isGmaxMove, isMaxMove } from "../../helpers/maxMoveHelper";
 
 import "./MovesList.scss";
 

@@ -15,8 +15,8 @@ import {
 } from "../../components";
 
 import "./MoveDetail.scss";
-import { isZMove } from "../../helpers/getZMovePower";
-import { isGmaxMove, isMaxMove } from "../../helpers/getMaxMoves";
+import { isZMove } from "../../helpers/zMoveHelper";
+import { isGmaxMove, isMaxMove } from "../../helpers/maxMoveHelper";
 
 const MoveDetail = () => {
   const params = useParams();

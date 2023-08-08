@@ -7,8 +7,8 @@ import { GET_POKEMON_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
 import { formatName } from "../../helpers/format";
-import { doesPokemonHaveUniqueZMove } from "../../helpers/getZMovePower";
-import { getGmaxMove } from "../../helpers/getMaxMoves";
+import { doesPokemonHaveUniqueZMove } from "../../helpers/zMoveHelper";
+import { getGmaxMove } from "../../helpers/maxMoveHelper";
 
 import { Loading, Table, PokemonZMoveTable, PokemonGMaxMoveTable } from "../";
 import {

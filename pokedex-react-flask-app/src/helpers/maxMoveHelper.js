@@ -8,6 +8,22 @@ export function isGmaxMove(id) {
 export function isMaxMove(id) {
   return max_moves[id];
 }
+
+export function getMaxMoveByType(type, kind) {
+  if (kind.name === "status") {
+    return Object.entries(max_moves)
+      .filter(([, value]) => value.kind === "status")
+      .map(([id, move]) => ({ id, ...move }))[0];
+  } else {
+    for (const moveId in max_moves) {
+      if (!max_moves[moveId].kind && max_moves[moveId].type.id === type.id) {
+        return { id: moveId, ...max_moves[moveId] };
+      }
+    }
+  }
+  return null;
+}
+
 export function getGmaxMove(pokemonId) {
   for (const moveId in gmax_moves) {
     const pokemonList = gmax_moves[moveId].pokemon;

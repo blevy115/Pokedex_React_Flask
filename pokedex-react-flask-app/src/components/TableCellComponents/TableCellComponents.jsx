@@ -10,7 +10,7 @@ import {
 import { getTypeId } from "../../helpers/getTypeId";
 import { getSprite, getItemSprite } from "../../helpers/pictures";
 import { handleSpriteError, handleItemError } from "../../helpers/error";
-import { isZMove, getZMoveData } from "../../helpers/getZMovePower";
+import { isZMove, getZMoveData } from "../../helpers/zMoveHelper";
 
 import { Types } from "../";
 

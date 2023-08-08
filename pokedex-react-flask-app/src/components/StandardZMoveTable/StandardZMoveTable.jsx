@@ -5,7 +5,7 @@ import { pokemonAPIClient } from "../../api/clients";
 import { GET_Z_MOVE_BASE_MOVES } from "../../api/queries/pokeapi";
 
 import { modifyMovesForStandardZMoveTable } from "../../helpers/modifyForTable";
-import { isZMove } from "../../helpers/getZMovePower";
+import { isZMove } from "../../helpers/zMoveHelper";
 
 import { Loading, Table } from "../";
 import {

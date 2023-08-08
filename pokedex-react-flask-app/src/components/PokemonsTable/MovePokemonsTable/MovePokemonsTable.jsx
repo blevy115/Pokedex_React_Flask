@@ -11,7 +11,7 @@ import {
 import { formatGameName } from "../../../helpers/format";
 
 import { modifyPokemon } from "../../../helpers/modifyForTable";
-import { doesMoveHaveUniqueZMoves } from "../../../helpers/getZMovePower";
+import { doesMoveHaveUniqueZMoves } from "../../../helpers/zMoveHelper";
 
 import { MoveZMoveTable, Table, Loading } from "../..";
 import {

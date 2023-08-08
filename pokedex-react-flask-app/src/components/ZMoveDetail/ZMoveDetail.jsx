@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { formatName, formatZMoveName } from "../../helpers/format";
-import { getZMoveData } from "../../helpers/getZMovePower";
+import { getZMoveData } from "../../helpers/zMoveHelper";
 
 import { StandardZMoveTable, UniqueZMoveTable } from "../";
 

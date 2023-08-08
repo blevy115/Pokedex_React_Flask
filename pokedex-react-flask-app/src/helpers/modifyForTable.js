@@ -1,5 +1,5 @@
-import { getMaxMovePower } from "./getMaxMoves";
-import { getZMovePower } from "./getZMovePower";
+import { getMaxMovePower } from "./maxMoveHelper";
+import { getZMovePower } from "./zMoveHelper";
 
 function modifyMoves({
   moves,

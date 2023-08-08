@@ -10,7 +10,7 @@ import { formatName } from "../../helpers/format";
 import { getItemSprite } from "../../helpers/pictures";
 import { handleItemError } from "../../helpers/error";
 import { mergePokemonEntriesHeldItems } from "../../helpers/mergeEntries";
-import { doesItemHaveZMove } from "../../helpers/getZMovePower";
+import { doesItemHaveZMove } from "../../helpers/zMoveHelper";
 
 import { ItemPokemonTable, ItemZMoveTable, Loading } from "../../components";
 
