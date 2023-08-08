@@ -303,14 +303,14 @@ function modifyMovesForMaxMoveTable({
   NameComponent,
   KindImageComponent,
   type,
-  hasMaxPower = true,
+  hasMaxPower = false,
   isGmax = false,
 }) {
   const columns = [
     { Header: "Name", accessor: "name", Cell: NameComponent },
     { Header: "Kind", accessor: "kind", Cell: KindImageComponent },
     { Header: "Power", accessor: "power" },
-    ...(hasMaxPower
+    ...(!hasMaxPower
       ? [{ Header: isGmax ? "G-Max Power" : "Max Power", accessor: "maxPower" }]
       : []),
   ];
@@ -321,7 +321,7 @@ function modifyMovesForMaxMoveTable({
       name: move.name,
       kind: move.kind.name,
       power: move.power || "—",
-      maxPower: hasMaxPower
+      maxPower: !hasMaxPower
         ? getMaxMovePower(
             {
               id: move.id,

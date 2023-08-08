@@ -13,7 +13,7 @@ import "./MoveSearch.scss";
 function gmaxMovesFromText(input) {
   return Object.entries(gmax_moves)
     .filter(([, move]) =>
-      move.name.toLowerCase().includes(input.replace(" ", "-").toLowerCase())
+      move.name.toLowerCase().includes(input.replaceAll(" ", "-").toLowerCase())
     )
     .map(([id, move]) => ({ id, ...move }));
 }

@@ -57,11 +57,11 @@ const GMaxMoveDetail = ({ move }) => {
           </div>
         </div>
         <p>Category: G-Max Move</p>
-        {power && <p>Power: {power}</p>}
+        {power && <p>G-Max Power: {power}</p>}
       </div>
       <div className="gmax-moves-table-container">
         {!loading ? (
-          <GMaxMoveTable data={data} type={type} />
+          <GMaxMoveTable data={data} type={type} hasMaxPower={power}/>
         ) : (
           <Loading fullscreen={false} />
         )}
