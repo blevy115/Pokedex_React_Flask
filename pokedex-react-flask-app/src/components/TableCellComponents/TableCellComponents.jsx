@@ -95,15 +95,10 @@ const ItemComponent = ({ value }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="clickable"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      className="z-move-table-item-container clickable"
       onClick={() => navigate(`/items/${value.id}`)}
     >
-      <p style={{ marginRight: "0.5rem" }}>{formatName(value.name)}</p>
+      <p>{formatName(value.name)}</p>
       <img
         src={getItemSprite(`${value.name}--bag`)}
         onError={handleItemError}

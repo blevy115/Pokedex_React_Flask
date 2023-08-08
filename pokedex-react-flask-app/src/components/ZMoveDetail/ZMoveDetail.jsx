@@ -21,7 +21,7 @@ const ZMoveDetail = ({ move }) => {
       <div className="app__move-info">
         <h1>{formatName(formatZMoveName(name))}</h1>
         <p>Description: {flavor[0] && flavor[0].text}</p>
-        <p className="move-kind">
+        <p className="move-type">
           <span>Type:</span>
           <img
             className="clickable"
@@ -31,7 +31,7 @@ const ZMoveDetail = ({ move }) => {
           />
         </p>
         {isStandardZMove ? (
-          <div style={{ marginBottom: "1em" }} className="move-kind">
+          <div className="move-kind double">
             <span> Kind:</span>
             <div className="z-move-types-container">
               <img src="/icons/kinds/physical.png" alt="physical icon" />
@@ -47,11 +47,11 @@ const ZMoveDetail = ({ move }) => {
                 alt={`${kind.name} icon`}
               />
             </p>
-            <p>Power: {power}</p>
+            {power && <p>Power: {power}</p>}
           </>
         )}
         <p>PP: {pp}</p>
-        <p>Category: Z-Move</p>
+        <p> Category: Z-Move</p>
         {isStandardZMove && (
           <p>
             Z-Crystal:{" "}

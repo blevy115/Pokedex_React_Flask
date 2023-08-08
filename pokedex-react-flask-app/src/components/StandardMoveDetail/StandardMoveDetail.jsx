@@ -84,7 +84,7 @@ const StandardMoveDetail = ({ move }) => {
         </p>
         <p>Power: {power}</p>
         {id <= finalZMoveId && (
-          <p style={{ whiteSpace: "pre-line" }}>
+          <p>
             Z-Move:{" "}
             {zMove ? (
               <>

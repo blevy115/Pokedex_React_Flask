@@ -27,18 +27,20 @@ const GMaxMoveDetail = ({ move }) => {
       <div className="app__move-info">
         <h1>{formatName(name)}</h1>
         <p>Description: {effect}</p>
-        {pokemon.map(({ id, name }) => (
-          <div key={id} style={{ display: "flex", flexDirection: "column" }}>
-            <img
-              className="pokemon-list-item-sprite clickable"
-              onError={handleSpriteError}
-              src={getSprite(id)}
-              onClick={() => navigate(`/pokemon/${id}`)}
-            />
-            <p>{formatName(name)}</p>
-          </div>
-        ))}
-        <p className="move-kind">
+        <div className="gmax-move-pokemon-container">
+          {pokemon.map(({ id, name }) => (
+            <div className="gmax-move-pokemon-sprite-container" key={id}>
+              <img
+                className="pokemon-list-item-sprite clickable"
+                onError={handleSpriteError}
+                src={getSprite(id)}
+                onClick={() => navigate(`/pokemon/${id}`)}
+              />
+              <p>{formatName(name)}</p>
+            </div>
+          ))}
+        </div>
+        <p className="move-type">
           <span>Type:</span>
           <img
             className="clickable"
@@ -47,15 +49,15 @@ const GMaxMoveDetail = ({ move }) => {
             onClick={() => navigate(`/types/${type.id}`)}
           />
         </p>
-        <div style={{ marginBottom: "1em" }} className="move-kind">
+        <div className="move-kind double">
           <span> Kind:</span>
           <div className="z-move-types-container">
             <img src="/icons/kinds/physical.png" alt="physical icon" />
             <img src="/icons/kinds/special.png" alt="special icon" />
           </div>
         </div>
-        {power && <p>{power}</p>}
         <p>Category: G-Max Move</p>
+        {power && <p>Power: {power}</p>}
       </div>
       <div className="gmax-moves-table-container">
         {!loading ? (

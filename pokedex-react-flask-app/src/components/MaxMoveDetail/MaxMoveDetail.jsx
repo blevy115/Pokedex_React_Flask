@@ -26,7 +26,7 @@ const MaxMoveDetail = ({ move, isStatus = false }) => {
       <div className="app__move-info">
         <h1>{formatName(name)}</h1>
         <p>Description: {flavor[0] && flavor[0].text}</p>
-        <p className="move-kind">
+        <p className="move-type">
           <span>Type:</span>
           <img
             className="clickable"
@@ -35,7 +35,7 @@ const MaxMoveDetail = ({ move, isStatus = false }) => {
             onClick={() => navigate(`/types/${type.id}`)}
           />
         </p>
-        <div style={{ marginBottom: "1em" }} className="move-kind">
+        <div className="move-kind double">
           <span> Kind:</span>
           {isStatus ? (
             <img src="/icons/kinds/status.png" alt="status icon" />
@@ -62,28 +62,3 @@ const MaxMoveDetail = ({ move, isStatus = false }) => {
 };
 
 export default MaxMoveDetail;
-
-// effect
-// :
-// "Inflicts damage for four turns on non-Grass-type opponents"
-// name
-// :
-// "g-max-vine-lash"
-// pokemon
-// :
-// Array(1)
-// 0
-// :
-// {id: 10195, name: 'venusaur-gmax'}
-// length
-// :
-// 1
-// [[Prototype]]
-// :
-// Array(0)
-// type
-// :
-// {id: 12, name: 'grass'}
-// [[Prototype]]
-// :
-// Object
