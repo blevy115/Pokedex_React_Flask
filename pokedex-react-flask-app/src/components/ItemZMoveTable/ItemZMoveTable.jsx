@@ -5,7 +5,6 @@ import { formatName } from "../../helpers/format";
 import { modifyItemUniqueZMove } from "../../helpers/modifyForTable";
 
 import { Table } from "../";
-
 import {
   SpriteComponent,
   PokemonNameComponent,

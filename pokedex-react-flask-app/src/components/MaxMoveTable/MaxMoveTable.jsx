@@ -1,11 +1,12 @@
 import React from "react";
 
 import { modifyMovesForMaxMoveTable } from "../../helpers/modifyForTable";
+
+import { Table } from "../";
 import {
   MoveNameComponent,
   KindImageComponent,
 } from "../TableCellComponents/TableCellComponents";
-import { Table } from "../";
 
 const MaxMoveTable = ({ data, type }) => {
   const { tableData, columns } = modifyMovesForMaxMoveTable({

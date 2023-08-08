@@ -1,6 +1,63 @@
 import z_power_effect_status_moves from "../data/z_power_effect_status_moves.json";
 import z_moves from "../data/z_moves.json";
 
+export function isZMove(id) {
+  return !!z_moves[id];
+}
+
+export function getZMoveData(id) {
+  return z_moves[id];
+}
+
+export function getZMoveByType(typeId) {
+  for (const moveId in z_moves) {
+    if (z_moves[moveId]?.type.id === typeId) {
+      return { id: moveId, name: z_moves[moveId].name };
+    }
+  }
+  return null;
+}
+
+export function doesPokemonHaveUniqueZMove(pokemonId) {
+  for (const moveId in z_moves) {
+    const pokemonList = z_moves[moveId].pokemon;
+    if (pokemonList?.some((pokemon) => pokemon.id === pokemonId)) {
+      const move = z_moves[moveId];
+      return {
+        ...move,
+        id: moveId,
+      };
+    }
+  }
+  return null;
+}
+
+export function doesMoveHaveUniqueZMoves(moveId) {
+  const moveZMoves = [];
+  for (const ZMoveId in z_moves) {
+    const { move, pokemon } = z_moves[ZMoveId];
+    if (move?.id === moveId) {
+      for (const pokemonEntry in pokemon) {
+        moveZMoves.push({
+          ...z_moves[ZMoveId],
+          id: ZMoveId,
+          pokemon: pokemon[pokemonEntry],
+        });
+      }
+    }
+  }
+  return moveZMoves;
+}
+
+export function doesItemHaveZMove(itemId) {
+  for (const moveId in z_moves) {
+    if (z_moves[moveId].item.id === itemId) {
+      return { id: moveId, ...z_moves[moveId] };
+    }
+  }
+  return null;
+}
+
 export function getZMovePower(move) {
   let power;
   switch (true) {
@@ -111,61 +168,4 @@ export function getZMovePower(move) {
       break;
   }
   return power;
-}
-
-export function isZMove(id) {
-  return !!z_moves[id];
-}
-
-export function getZMoveData(id) {
-  return z_moves[id];
-}
-
-export function getZMoveByType(typeId) {
-  for (const moveId in z_moves) {
-    if (z_moves[moveId]?.type.id === typeId) {
-      return { id: moveId, name: z_moves[moveId].name };
-    }
-  }
-  return null;
-}
-
-export function doesPokemonHaveUniqueZMove(pokemonId) {
-  for (const moveId in z_moves) {
-    const pokemonList = z_moves[moveId].pokemon;
-    if (pokemonList?.some((pokemon) => pokemon.id === pokemonId)) {
-      const move = z_moves[moveId];
-      return {
-        ...move,
-        id: moveId,
-      };
-    }
-  }
-  return null;
-}
-
-export function doesMoveHaveUniqueZMoves(moveId) {
-  const moveZMoves = [];
-  for (const ZMoveId in z_moves) {
-    const { move, pokemon } = z_moves[ZMoveId];
-    if (move?.id === moveId) {
-      for (const pokemonEntry in pokemon) {
-        moveZMoves.push({
-          ...z_moves[ZMoveId],
-          id: ZMoveId,
-          pokemon: pokemon[pokemonEntry],
-        });
-      }
-    }
-  }
-  return moveZMoves;
-}
-
-export function doesItemHaveZMove(itemId) {
-  for (const moveId in z_moves) {
-    if (z_moves[moveId].item.id === itemId) {
-      return { id: moveId, ...z_moves[moveId] };
-    }
-  }
-  return null;
 }

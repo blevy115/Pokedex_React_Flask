@@ -29,7 +29,7 @@ const MoveDetail = () => {
   const [createOrGetMove] = useMutation(MOVE_MUTATION, {
     client: backEndClient,
   });
-  // const isMaxMove = isMaxMove(params)
+
   const maxMove = useMemo(() => {
     return isMaxMove(params.moveId);
   }, [params.moveId]);

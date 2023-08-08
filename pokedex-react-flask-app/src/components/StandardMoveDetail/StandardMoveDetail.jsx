@@ -60,7 +60,6 @@ const StandardMoveDetail = ({ move }) => {
         })
       : null;
 
-  console.log(maxMove);
   return (
     <>
       <div className="app__move-info">
