@@ -1,3 +1,5 @@
+@import "../../helpers/breakpoints";
+
 .app__pokemon-detail {
   padding: 0 1rem;
   display: grid;
@@ -8,13 +10,16 @@
   .pokemon-details-info-traits {
     display: flex;
     justify-content: space-evenly;
+    @media screen and (max-width: $breakpoint-small){
+      flex-direction: column;
+    }
   }
 
   .pokemon-detail-characteristics {
     text-align: center;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: $breakpoint-large) {
     grid-template-columns: 1fr;
   }
 }
