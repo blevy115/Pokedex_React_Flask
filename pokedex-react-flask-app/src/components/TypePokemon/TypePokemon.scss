@@ -1,17 +1,21 @@
-.sort-types-bar-container {
+@import "../../helpers/breakpoints";
+
+.sort-types-bar-button {
+  font-size: 18px;
+  scroll-margin-top: 50px;
+  display: block;
+  margin: 0 auto;
+}
+
+.sort-types-bar-list {
+  margin-top: 1rem;
   display: flex;
-  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
 
-  .sort-types-bar-list {
-    display: flex;
-    justify-content: space-around;
-    flex-grow: 1;
-    flex-wrap: wrap;
-
-    img:hover {
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      border-radius: 100%;
-    }
+  img:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 100%;
   }
 }
 
@@ -24,15 +28,25 @@
 .scroll-to-top-button {
   position: fixed;
   left: 10px;
-  top: 150px;
+  top: 40px;
   padding: 10px;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
+  @media screen and (max-width: $breakpoint-medium) {
+    top: 0;
+    z-index: 1001;
+    margin-top: 0.25rem;
+  }
 }
 
 .scroll-to-top-button:hover {
   background-color: #0056b3;
+}
+
+.pure-pokemon-table-header {
+  margin-top: 0;
 }
