@@ -1,3 +1,5 @@
+@import "../../helpers/breakpoints";
+
 .app__type-list-container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -17,14 +19,14 @@
     img {
       width: 100px;
       height: 100px;
-      @media screen and (max-width: 900px) {
+      @media screen and (max-width: $breakpoint-large) {
         width: 80px;
         height: 80px;
       }
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: $breakpoint-large) {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(6, 150px);
   }
