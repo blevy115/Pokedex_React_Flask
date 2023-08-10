@@ -91,7 +91,6 @@ const TypePokemon = ({ name, list, typeId }) => {
               className="type-icon clickable"
             />
           ))}
-        {/* </div> */}
       </div>
       <AnimatePresence>
         {isInView && (
