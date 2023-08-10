@@ -67,29 +67,30 @@ const TypePokemon = ({ name, list, typeId }) => {
 
   return (
     <div>
-      <h4>Pure {formatName(name)} Pokemon</h4>
+      <h4 className="pure-pokemon-table-header">
+        Pure {formatName(name)} Pokemon
+      </h4>
       <Table data={pureTableData} columns={pureColumns} />
-      <div ref={typeBarRefs} className="sort-types-bar-container">
-        <button
-          className="clickable"
-          onClick={() => {
-            setbyType(!byType);
-          }}
-        >
-          Sort by {byType ? "ID" : "Type"}
-        </button>
-        <div className="sort-types-bar-list">
-          {byType &&
-            modifiedSemiData.map(({ name }, i) => (
-              <img
-                key={name}
-                src={`/icons/symbols/${name}.png`}
-                alt={`${name} symbol`}
-                onClick={() => scrollToTypeTable(i)}
-                className="type-icon clickable"
-              />
-            ))}
-        </div>
+      <button
+        ref={typeBarRefs}
+        className="sort-types-bar-button clickable"
+        onClick={() => {
+          setbyType(!byType);
+        }}
+      >
+        Sort by {byType ? "ID" : "Type"}
+      </button>
+      <div className="sort-types-bar-list">
+        {byType &&
+          modifiedSemiData.map(({ name }, i) => (
+            <img
+              key={name}
+              src={`/icons/symbols/${name}.png`}
+              alt={`${name} symbol`}
+              onClick={() => scrollToTypeTable(i)}
+              className="type-icon clickable"
+            />
+          ))}
       </div>
       <AnimatePresence>
         {isInView && (

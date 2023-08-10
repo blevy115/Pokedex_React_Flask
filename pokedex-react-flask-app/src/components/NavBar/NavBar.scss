@@ -1,12 +1,18 @@
+@import "../../helpers/breakpoints";
+
 .app__navbar {
   background-color: #f2f2f2;
-  width: 100%;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: $breakpoint-medium) {
     justify-content: flex-end;
   }
 }
@@ -37,7 +43,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: $breakpoint-medium) {
     display: none;
   }
 }
@@ -126,7 +132,7 @@
     }
   }
 
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: calc($breakpoint-medium + 1px)) {
     display: none;
   }
 }
