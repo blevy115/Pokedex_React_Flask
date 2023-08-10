@@ -1,5 +1,8 @@
+@import "../../helpers//breakpoints";
+
 .table-container {
   border-radius: 0.5rem;
+  overflow-x: auto;
 }
 
 .table {
@@ -8,6 +11,11 @@
   margin: 1em auto;
   border-collapse: separate;
   border-spacing: 0;
+
+  @media screen and (max-width: $breakpoint-small) {
+    border-collapse: collapse;
+    word-break: break-word;
+  }
 }
 
 .empty-cell {
@@ -33,7 +41,7 @@
     box-shadow: 0 2px 8px rgba(102, 175, 233, 0.6);
   }
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: $breakpoint-medium) {
     max-width: 100%;
     margin: 0 auto;
     display: block;
@@ -46,8 +54,17 @@
   justify-content: center;
   user-select: none;
 
+  @media screen and (max-width: $breakpoint-small) {
+    flex-direction: column;
+  }
+
   .table-header-name {
     margin: 0.5rem 0.3rem 0.5rem 0;
+    white-space: nowrap;
+
+    @media screen and (max-width: $breakpoint-small) {
+      margin: 0.5rem 0;
+    }
   }
 
   .table-sort-icon {
