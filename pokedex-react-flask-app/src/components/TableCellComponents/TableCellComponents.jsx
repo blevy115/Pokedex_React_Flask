@@ -49,16 +49,10 @@ const MoveNameTooltipComponent = ({ value, row }) => {
         id={tooltipId}
         effect="solid"
         arrowColor="#fff"
-        className="skills-tooltip"
+        className="tooltip-box"
         clickable
         openOnClick
         opacity={1}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-          cursor: "default",
-        }}
       >
         {popupText}
         <button
