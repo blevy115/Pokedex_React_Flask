@@ -87,16 +87,16 @@ const ShinyCounter = ({ pokemonId }) => {
           </button>
         </div>
       </div>
-      <form onSubmit={handleCustomShinyCount}>
-        <label>
-          Custom Count:
-          <input
-            className="shiny-count-input"
-            type="text"
-            value={shinyCounterInput}
-            onChange={(event) => setShinyCounterInput(event.target.value)}
-          />
-        </label>
+      <form className="shiny-counter-form" onSubmit={handleCustomShinyCount}>
+        <label htmlFor="shiny-count">Custom Count:</label>
+
+        <input
+          id="shiny-count"
+          className="shiny-count-input"
+          type="text"
+          value={shinyCounterInput}
+          onChange={(event) => setShinyCounterInput(event.target.value)}
+        />
         <button
           disabled={
             isNaN(shinyCounterInput) ||

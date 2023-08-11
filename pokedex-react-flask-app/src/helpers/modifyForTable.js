@@ -348,9 +348,19 @@ function modifyPokemonGMAXMove({ move, NameComponent, TypeImageComponent }) {
 
   return { columns, tableData };
 }
+
+const statHeaderModifier = {
+  hp: "HP",
+  attack: "Atk",
+  defense: "Def",
+  "special-attack": "Sp.Atk",
+  "special-defense": "Sp.Def",
+  speed: 'Spe',
+}
+
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
-    Header: stat,
+    Header: statHeaderModifier[stat],
     accessor: stat,
     Cell: StatComponent,
   }));
