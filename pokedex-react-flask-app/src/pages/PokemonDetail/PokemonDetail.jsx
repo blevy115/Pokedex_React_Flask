@@ -30,6 +30,7 @@ import { formatName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
 import { handleSpriteError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
+import { calculateCatchPercent } from "../../helpers/calculateCatchPercent";
 
 import "./PokemonDetail.scss";
 
@@ -109,6 +110,7 @@ const PokemonDetail = () => {
   const pokemonIdInt = parseInt(params.pokemonId);
 
   const evYield = getEvYield(stats);
+  // console.log(calculateCatchPercent(info.capture_rate))
 
   return (
     <div
@@ -161,6 +163,12 @@ const PokemonDetail = () => {
           <div>
             <div className="pokemon-detail-characteristics">
               <p>Generation: {generation}</p>
+              <p className="no-wrap">
+                Capture Rate: {info.capture_rate}{" "}
+                <span className="small">
+                  ({calculateCatchPercent(info.capture_rate)})
+                </span>
+              </p>
               <p className="no-wrap">Height: {(height / 10).toFixed(1)} m</p>
               <p className="no-wrap">Weight: {(weight / 10).toFixed(1)} kg</p>
             </div>

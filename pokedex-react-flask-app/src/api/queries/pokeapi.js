@@ -14,6 +14,7 @@ const GET_POKEMON_INFO = gql`
         is_legendary
         is_mythical
         is_baby
+        capture_rate
         pokedexes: pokemon_v2_pokemondexnumbers {
           pokedex_number
           pokemon_v2_pokedex {
