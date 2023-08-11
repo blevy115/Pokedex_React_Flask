@@ -23,7 +23,7 @@ const Abilities = ({ abilities }) => {
           return (
             <li
               key={i}
-              className="clickable no-wrap"
+              className="clickable"
               data-tip
               data-tooltip-id={tooltipId}
             >
@@ -33,16 +33,10 @@ const Abilities = ({ abilities }) => {
                 id={tooltipId}
                 effect="solid"
                 arrowColor="#fff"
-                className="skills-tooltip"
+                className="tooltip-box"
                 clickable
                 openOnClick
                 opacity={1}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  cursor: "default",
-                }}
               >
                 {popupText || "No Flavor Text Found"}
                 <button
