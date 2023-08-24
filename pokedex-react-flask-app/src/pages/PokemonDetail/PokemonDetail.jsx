@@ -166,7 +166,7 @@ const PokemonDetail = () => {
               <p className="no-wrap">
                 Capture Rate: {info.capture_rate}{" "}
                 <span className="small">
-                  ({calculateCatchPercent(info.capture_rate)})
+                  ({calculateCatchPercent({ catchRate: info.capture_rate })})
                 </span>
               </p>
               <p className="no-wrap">Height: {(height / 10).toFixed(1)} m</p>
