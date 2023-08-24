@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { HiMenuAlt4, HiX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,6 +13,10 @@ const NavBar = () => {
   const [, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setToggle(false);
+  }, [navigate]);
 
   const [logoutMutation] = useMutation(LOGOUT_MUTATION, {
     client: backEndClient,
