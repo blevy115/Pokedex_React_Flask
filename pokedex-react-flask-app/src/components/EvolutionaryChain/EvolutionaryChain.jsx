@@ -12,8 +12,14 @@ const generateTextPaths = (node) => {
 
   if (node.evolutionInfo && node.evolutionInfo.pokemon_v2_evolutiontrigger) {
     textPaths.push(
-      <textPath key={node.pathProps.id} xlinkHref={`#${node.pathProps.id}`} startOffset="40%">
-        {node.evolutionInfo.pokemon_v2_evolutiontrigger.name}
+      <textPath
+        key={node.pathProps.id}
+        xlinkHref={`#${node.pathProps.id}`}
+        startOffset="50%"
+      >
+        <tspan dy="-10">
+          {node.evolutionInfo.pokemon_v2_evolutiontrigger.name}
+        </tspan>
       </textPath>
     );
   }
@@ -29,9 +35,8 @@ const generateTextPaths = (node) => {
 
 const MyTreeTextPaths = ({ treeData }) => {
   const textPaths = generateTextPaths(treeData);
-
   return (
-    <svg style={{ position: "absolute", left: 85, top: 25, width: "100%", pointerEvents: "none" }}>
+    <svg>
       <text fontFamily="Verdana" fontSize="12" fill="blue">
         {textPaths}
       </text>
@@ -43,11 +48,11 @@ const EvolutionaryChain = ({ chain }) => {
   const navigate = useNavigate();
 
   const rootNodes = buildEvolutionTree(chain, navigate);
-  console.log(rootNodes[0]);
 
   const { width, height, ref } = useResizeDetector();
+
   return (
-    <div className="tree" ref={ref} style={{position:"relative"}}>
+    <div className="tree" ref={ref}>
       <Tree
         animated
         data={rootNodes[0]}
@@ -55,8 +60,40 @@ const EvolutionaryChain = ({ chain }) => {
         width={width ? width * 0.99 : 400}
         nodeShape="image"
         svgProps={{ transform: "translate(50,10)" }}
-      />
-      <MyTreeTextPaths treeData={rootNodes[0]} />
+        pathProps={{
+          markerMid: "url(#arrow)",
+        }}
+        pathFunc={(x1, y1, x2, y2) => {
+          let bool = false;
+          if (bool)
+            return `M${x1},${y1}C${(x1 + x2) / 2},${y1} ${
+              (x1 + x2) / 2
+            },${y2} ${x2},${y2}`;
+
+          const ctrlX1 = x1 + (x2 - x1) / 2;
+          const ctrlY1 = y1 + (y2 - y1) / 1.3;
+          const ctrlX2 = x1 + ((x2 - x1) * 2) / 3;
+          const ctrlY2 = y2;
+
+          return `M${x1},${y1}C${x1},${y1} ${ctrlX1},${ctrlY1} ${ctrlX1},${ctrlY1} C${ctrlX2},${ctrlY2} ${ctrlX2},${ctrlY2} ${x2},${y2}`;
+        }}
+      >
+        <defs>
+          <marker
+            id="arrow"
+            viewBox="0 0 10 10"
+            refX="5"
+            refY="5"
+            markerWidth="10"
+            markerHeight="10"
+            orient="auto-start-reverse"
+            markerUnits="strokeWidth"
+          >
+            <path d="M0,0 L0,10 L10,5 z" fill="red" />
+          </marker>
+        </defs>
+        <MyTreeTextPaths treeData={rootNodes[0]} />
+      </Tree>
     </div>
   );
 };
