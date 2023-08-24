@@ -21,6 +21,37 @@ const GET_POKEMON_INFO = gql`
             name
           }
         }
+        evolutionChain: pokemon_v2_evolutionchain {
+          pokemon_v2_pokemonspecies(order_by: { order: asc }) {
+            name
+            id
+            pokemon_v2_pokemonevolutions {
+              pokemon_v2_evolutiontrigger {
+                name
+                id
+              }
+              pokemon_v2_location {
+                name
+                pokemon_v2_region {
+                  name
+                }
+              }
+              min_happiness
+              time_of_day
+              pokemon_v2_item {
+                name
+                id
+              }
+              min_level
+              pokemon_v2_move {
+                name
+                id
+              }
+            }
+            evolves_from_species_id
+          }
+          baby_trigger_item_id
+        }
       }
 
       form: pokemon_v2_pokemonforms {

@@ -24,6 +24,7 @@ import {
   Types,
   HeldItems,
   Loading,
+  EvolutionaryChain,
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
@@ -93,7 +94,6 @@ const PokemonDetail = () => {
       },
     });
   }
-
   if (loading) return <Loading />;
   const {
     height,
@@ -110,8 +110,6 @@ const PokemonDetail = () => {
   const pokemonIdInt = parseInt(params.pokemonId);
 
   const evYield = getEvYield(stats);
-  // console.log(calculateCatchPercent(info.capture_rate))
-
   return (
     <div
       className={`app__pokemon-detail ${
@@ -159,6 +157,7 @@ const PokemonDetail = () => {
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
+        <EvolutionaryChain chain={info.evolutionChain} />
         <div className="pokemon-details-info-traits">
           <div>
             <div className="pokemon-detail-characteristics">

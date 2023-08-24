@@ -33,6 +33,7 @@ export { default as GMaxMoveDetail } from "./GMaxMoveDetail/GMaxMoveDetail";
 export { default as GMaxMoveTable } from "./GMaxMoveTable/GMaxMoveTable";
 export { default as MaxMoveDetail } from "./MaxMoveDetail/MaxMoveDetail";
 export { default as MaxMoveTable } from "./MaxMoveTable/MaxMoveTable";
+export { default as EvolutionaryChain } from "./EvolutionaryChain/EvolutionaryChain";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";
