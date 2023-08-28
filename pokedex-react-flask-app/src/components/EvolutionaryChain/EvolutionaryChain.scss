@@ -1,9 +1,14 @@
 path.link {
-    fill: none;
-    stroke: #2593b8;
-    stroke-width: 1.5px
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
 }
 
 .tree {
-    height: 200px;
+  height: 250px;
+  margin-bottom: 1.5rem;
+
+  &.extend {
+    height: 600px;
+  }
 }

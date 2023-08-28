@@ -91,6 +91,41 @@ export function buildEvolutionTree(evolutionData, navigate) {
   return rootNodes;
 }
 
+export function buildSpecialChain(evolutionData, navigate) {
+  const speciesData = evolutionData.pokemon_v2_pokemonspecies;
+  const rootNodes = [];
+  for (const species of speciesData) {
+    const speciesId = species.id;
+
+    const evolutionInfo =
+      speciesId === 490
+        ? {
+            pokemon_v2_evolutiontrigger: {
+              name: "breed",
+            },
+          }
+        : null;
+
+    const node = new PokemonNode(
+      species.name,
+      speciesId,
+      evolutionInfo,
+      navigate
+    );
+
+    if (!rootNodes.length) {
+      rootNodes.push(node);
+    } else {
+      const parentNode = rootNodes[0];
+      if (parentNode) {
+        parentNode.children.push(node);
+      }
+    }
+  }
+
+  return rootNodes;
+}
+
 // Example usage
 // const evolutionData = /* Your evolution data object */;
 // const rootNodes = buildEvolutionTree(evolutionData);

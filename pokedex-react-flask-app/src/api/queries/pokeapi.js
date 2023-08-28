@@ -22,6 +22,7 @@ const GET_POKEMON_INFO = gql`
           }
         }
         evolutionChain: pokemon_v2_evolutionchain {
+          id
           pokemon_v2_pokemonspecies(order_by: { order: asc }) {
             name
             id
