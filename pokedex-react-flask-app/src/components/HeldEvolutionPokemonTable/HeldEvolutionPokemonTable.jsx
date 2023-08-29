@@ -1,9 +1,24 @@
 import React from "react";
 
+import { modifyItemPokemonEvolution } from "../../helpers/modifyForTable";
+
+import { Table } from "../";
+import {
+  SpriteComponent,
+  PreEvolvedPokemonNameComponent,
+  EvolvedPokemonNameComponent,
+  TypesImageComponent,
+} from "../TableCellComponents/TableCellComponents";
+
 const HeldEvolutionPokemonTable = ({ list }) => {
-  console.log(list);
-  // Sprite Nmae Type *2 + trigger (time of day if necessary)
-  return <div>HeldEvolutionPokemonTable</div>;
+  const { tableData, columns } = modifyItemPokemonEvolution({
+    pokemonsList: list,
+    SpriteComponent,
+    PreEvolvedNameComponent: PreEvolvedPokemonNameComponent,
+    EvolvedNameComponent: EvolvedPokemonNameComponent,
+    TypesImageComponent,
+  });
+  return <Table data={tableData} columns={columns} />;
 };
 
 export default HeldEvolutionPokemonTable;

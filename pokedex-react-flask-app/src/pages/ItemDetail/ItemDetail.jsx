@@ -85,32 +85,32 @@ const ItemDetail = () => {
   const { flavor, category } = data.item[0];
 
   return (
-    <div className="app__item">
-      <div className="app__item-info">
-        <div className="app__item-info-header">
+    <div className="app__item-details">
+      <div className="app__item-details-info">
+        <div className="app__item-details-info-header">
           <img src={getItemSprite(name)} onError={handleItemError} />
           <h3>{formatName(name)}</h3>
         </div>
         <p>{flavor[0] && flavor[0].text}</p>
         {category && <p>Category: {formatName(category.name)}</p>}
-      </div>
-      <div className="app__type-details-tabs-container">
-        <ul className="app__type-details-tabs">
-          {tabs.map((tab, i) => (
-            <li
-              key={i}
-              className={`app__type-details-tabs-item ${
-                selectedTab === tab ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab(tab)}
-            >
-              {tab.name}
-            </li>
-          ))}
-        </ul>
+        <div className="app__item-details-tabs-container">
+          <ul className="app__item-details-tabs">
+            {tabs.map((tab, i) => (
+              <li
+                key={i}
+                className={`app__item-details-tabs-item ${
+                  selectedTab === tab ? "active" : ""
+                }`}
+                onClick={() => setSelectedTab(tab)}
+              >
+                {tab.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      <div className="app__type-table-container">
+      <div className="app__item-table-container">
         {Object.entries(tabsList).map(
           ([key, value]) =>
             selectedTab === tabsList[key] && (

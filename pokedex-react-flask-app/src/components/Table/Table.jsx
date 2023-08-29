@@ -26,14 +26,25 @@ const Table = ({
     setFilterValue(event.target.value);
   };
 
-  const filteredRows =
-    hasFilterValue && filterValue
-      ? rows.filter((row) =>
-          formatName(row.values.name)
-            .toLowerCase()
-            .includes(filterValue.toLowerCase())
-        )
-      : rows;
+  const filteredRows = rows.filter((row) => {
+    const hasName =
+      row.values.name &&
+      formatName(row.values.name)
+        .toLowerCase()
+        .includes(filterValue.toLowerCase());
+    const hasPreEvolvedName =
+      row.values.preEvolvedName &&
+      row.values.preEvolvedName
+        .toLowerCase()
+        .includes(filterValue.toLowerCase());
+    const hasEvolvedName =
+      row.values.evolvedName &&
+      row.values.evolvedName.toLowerCase().includes(filterValue.toLowerCase());
+
+    return hasFilterValue && filterValue
+      ? hasName || hasPreEvolvedName || hasEvolvedName
+      : true;
+  });
 
   return (
     <>

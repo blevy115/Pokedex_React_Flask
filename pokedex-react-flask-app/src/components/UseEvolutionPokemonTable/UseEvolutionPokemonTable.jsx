@@ -1,10 +1,24 @@
 import React from "react";
 
-const UseEvolutionPokemonTable = ({ list }) => {
+import { modifyItemPokemonEvolution } from "../../helpers/modifyForTable";
 
-    //Table with Sprite Name Type *2
-  console.log(list);
-  return <div>UseEvolutionPokemonTable</div>;
+import { Table } from "../";
+import {
+  SpriteComponent,
+  PreEvolvedPokemonNameComponent,
+  EvolvedPokemonNameComponent,
+  TypesImageComponent,
+} from "../TableCellComponents/TableCellComponents";
+
+const UseEvolutionPokemonTable = ({ list }) => {
+  const { tableData, columns } = modifyItemPokemonEvolution({
+    pokemonsList: list,
+    SpriteComponent,
+    PreEvolvedNameComponent: PreEvolvedPokemonNameComponent,
+    EvolvedNameComponent: EvolvedPokemonNameComponent,
+    TypesImageComponent,
+  });
+  return <Table data={tableData} columns={columns} />;
 };
 
 export default UseEvolutionPokemonTable;

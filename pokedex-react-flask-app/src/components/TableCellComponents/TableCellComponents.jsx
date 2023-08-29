@@ -38,6 +38,30 @@ const PokemonNameComponent = ({ value, row }) => {
   );
 };
 
+const PreEvolvedPokemonNameComponent = ({ value, row }) => {
+  const navigate = useNavigate();
+  return (
+    <p
+      className="move-list-item-name clickable"
+      onClick={() => navigate(`/pokemon/${row.original.preEvolvedSpriteId}`)}
+    >
+      {formatName(value)}
+    </p>
+  );
+};
+
+const EvolvedPokemonNameComponent = ({ value, row }) => {
+  const navigate = useNavigate();
+  return (
+    <p
+      className="move-list-item-name clickable"
+      onClick={() => navigate(`/pokemon/${row.original.evolvedSpriteId}`)}
+    >
+      {formatName(value)}
+    </p>
+  );
+};
+
 const MoveNameTooltipComponent = ({ value, row }) => {
   const navigate = useNavigate();
   const popupText = row.original.popupText;
@@ -191,4 +215,6 @@ export {
   KindsImageComponent,
   AbilitiesComponent,
   LevelComponent,
+  PreEvolvedPokemonNameComponent,
+  EvolvedPokemonNameComponent,
 };

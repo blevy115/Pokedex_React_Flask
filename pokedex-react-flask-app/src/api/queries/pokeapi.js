@@ -411,6 +411,23 @@ const GET_ITEM_INFO = gql`
         }
         pokemon_v2_pokemonspecy {
           evolves_from_species_id
+          id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              id
+              name
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+          name
         }
       }
       held_evolution_pokemon: pokemonV2PokemonevolutionsByHeldItemId {
@@ -421,6 +438,23 @@ const GET_ITEM_INFO = gql`
         }
         pokemon_v2_pokemonspecy {
           evolves_from_species_id
+          id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              id
+              name
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+          name
         }
         time_of_day
       }
