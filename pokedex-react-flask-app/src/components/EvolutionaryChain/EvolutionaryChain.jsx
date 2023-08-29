@@ -17,68 +17,95 @@ const eeveeId = 67;
 const specialId = 250; // Phione and Manaphy
 
 const pathText = (info) => {
-  let text = "";
+  const textParts = [];
+  let navigateObject = { index: null, type: null, id: null };
   switch (info.pokemon_v2_evolutiontrigger.id) {
     case 1:
-      text += `Level up`;
+      textParts.push(`Level up`);
       break;
     case 3:
-      text += `Use ${formatName(info.pokemon_v2_item.name)}`;
+      navigateObject = {
+        index: textParts.length,
+        type: "items",
+        id: info.pokemon_v2_item.id,
+      };
+      textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
       break;
     default:
-      text += formatName(info.pokemon_v2_evolutiontrigger.name);
+      textParts.push(formatName(info.pokemon_v2_evolutiontrigger.name));
   }
   if (info.min_level) {
-    text += ` at ${info.min_level}`;
+    textParts.push(` at ${info.min_level}`);
   }
   if (info.min_happiness) {
-    text += ` with happiness`;
+    textParts.push(` with happiness`);
   }
   if (info.pokemonV2ItemByHeldItemId) {
-    text += ` with ${formatName(info.pokemonV2ItemByHeldItemId.name)}`;
+    navigateObject = {
+      index: textParts.length,
+      type: "items",
+      id: info.pokemonV2ItemByHeldItemId.id,
+    };
+    textParts.push(` with ${formatName(info.pokemonV2ItemByHeldItemId.name)}`);
   }
   if (info.time_of_day) {
-    text += ` at ${info.time_of_day}`;
+    textParts.push(` at ${info.time_of_day}`);
   }
   if (info.pokemon_v2_location) {
-    text += ` at ${formatName(info.pokemon_v2_location.name)}`;
+    textParts.push(` at ${formatName(info.pokemon_v2_location.name)}`);
   }
   if (info.pokemon_v2_move) {
-    text += ` + ${formatName(info.pokemon_v2_move.name)}`;
+    navigateObject = {
+      index: textParts.length,
+      type: "moves",
+      id: info.pokemon_v2_move.id,
+    };
+    textParts.push(` + ${formatName(info.pokemon_v2_move.name)}`);
   }
-  return text;
+  return { textParts, navigateObject };
 };
 
-const generateTextPaths = (node, treeDepth) => {
+const generateTextPaths = (node, treeDepth, navigate) => {
   const textPaths = [];
 
   if (node.evolutionInfo) {
-    console.log(treeDepth, "jhsdgbjsfgjsd");
-    const text = pathText(node.evolutionInfo);
+    const {
+      textParts,
+      navigateObject: { id, type, index },
+    } = pathText(node.evolutionInfo);
 
     textPaths.push(
       <textPath
         key={node.pathProps.id}
         xlinkHref={`#${node.pathProps.id}`}
-        startOffset={textOffsetByLength(text, treeDepth) + "%"}
+        startOffset={textOffsetByLength(textParts.join(""), treeDepth) + "%"}
       >
-        <tspan dy="-10">{text}</tspan>
+        <tspan dy="-10">
+          {textParts.map((text, i) => (
+            <tspan
+              key={i}
+              className={i === index ? "clickable" : ""}
+              onClick={i === index ? () => navigate(`/${type}/${id}`) : null}
+            >
+              {text}
+            </tspan>
+          ))}
+        </tspan>
       </textPath>
     );
   }
 
   if (node.children && node.children.length > 0) {
     node.children.forEach((child) => {
-      textPaths.push(...generateTextPaths(child, treeDepth));
+      textPaths.push(...generateTextPaths(child, treeDepth, navigate));
     });
   }
 
   return textPaths;
 };
 
-const MyTreeTextPaths = ({ treeData, treeDepth }) => {
-  console.log(treeDepth, "hsdgjdfhsgfjdsg");
-  const textPaths = generateTextPaths(treeData, treeDepth);
+const MyTreeTextPaths = ({ treeData, treeDepth, navigate }) => {
+  const textPaths = generateTextPaths(treeData, treeDepth, navigate);
   return (
     <svg>
       <text fontFamily="Verdana" fontSize="12" fill="black">
@@ -100,8 +127,6 @@ const EvolutionaryChain = ({ chain }) => {
   const { rootNodes, treeDepth } = !isSpecial
     ? buildEvolutionTree(chain, navigate)
     : buildSpecialChain(chain, navigate);
-
-  console.log(treeDepth, "depth");
 
   return (
     <div className={`tree ${isEevee ? " extend" : ""}`} ref={ref}>
@@ -145,7 +170,11 @@ const EvolutionaryChain = ({ chain }) => {
             <path d="M0,0 L0,10 L10,5 z" fill="black" />
           </marker>
         </defs>
-        <MyTreeTextPaths treeData={rootNodes[0]} treeDepth={treeDepth} />
+        <MyTreeTextPaths
+          treeData={rootNodes[0]}
+          treeDepth={treeDepth}
+          navigate={navigate}
+        />
       </Tree>
     </div>
   );
