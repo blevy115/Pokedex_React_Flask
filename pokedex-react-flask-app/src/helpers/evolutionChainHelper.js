@@ -88,7 +88,29 @@ export function buildEvolutionTree(evolutionData, navigate) {
     }
   }
 
-  return rootNodes;
+  const calculateDepth = (node) => {
+    if (!node) {
+      return 0;
+    }
+
+    let maxChildDepth = 0;
+
+    for (const child of node.children) {
+      const childDepth = calculateDepth(child);
+      if (childDepth > maxChildDepth) {
+        maxChildDepth = childDepth;
+      }
+    }
+
+    return maxChildDepth + 1;
+  };
+
+  const treeDepth = rootNodes.reduce((maxDepth, rootNode) => {
+    const depth = calculateDepth(rootNode);
+    return Math.max(maxDepth, depth);
+  }, 0);
+
+  return { rootNodes, treeDepth };
 }
 
 export function buildSpecialChain(evolutionData, navigate) {
@@ -123,7 +145,7 @@ export function buildSpecialChain(evolutionData, navigate) {
     }
   }
 
-  return rootNodes;
+  return { rootNodes, treeDepth: 2 };
 }
 
 // Example usage

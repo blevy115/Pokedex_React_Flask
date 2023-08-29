@@ -48,6 +48,10 @@ const GET_POKEMON_INFO = gql`
                 name
                 id
               }
+              pokemonV2ItemByHeldItemId {
+                name
+                id
+              }
             }
             evolves_from_species_id
           }

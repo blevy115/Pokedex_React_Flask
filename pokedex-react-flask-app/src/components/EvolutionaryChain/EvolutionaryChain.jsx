@@ -7,40 +7,78 @@ import {
   buildEvolutionTree,
   buildSpecialChain,
 } from "../../helpers/evolutionChainHelper";
+import { textOffsetByLength } from "../../helpers/textOffsetbyLengthHelper";
+
+import { formatName } from "../../helpers/format";
 
 import "./EvolutionaryChain.scss";
 
 const eeveeId = 67;
 const specialId = 250; // Phione and Manaphy
 
-const generateTextPaths = (node) => {
+const pathText = (info) => {
+  let text = "";
+  switch (info.pokemon_v2_evolutiontrigger.id) {
+    case 1:
+      text += `Level up`;
+      break;
+    case 3:
+      text += `Use ${formatName(info.pokemon_v2_item.name)}`;
+      break;
+    default:
+      text += formatName(info.pokemon_v2_evolutiontrigger.name);
+  }
+  if (info.min_level) {
+    text += ` at ${info.min_level}`;
+  }
+  if (info.min_happiness) {
+    text += ` with happiness`;
+  }
+  if (info.pokemonV2ItemByHeldItemId) {
+    text += ` with ${formatName(info.pokemonV2ItemByHeldItemId.name)}`;
+  }
+  if (info.time_of_day) {
+    text += ` at ${info.time_of_day}`;
+  }
+  if (info.pokemon_v2_location) {
+    text += ` at ${formatName(info.pokemon_v2_location.name)}`;
+  }
+  if (info.pokemon_v2_move) {
+    text += ` + ${formatName(info.pokemon_v2_move.name)}`;
+  }
+  return text;
+};
+
+const generateTextPaths = (node, treeDepth) => {
   const textPaths = [];
 
-  if (node.evolutionInfo && node.evolutionInfo.pokemon_v2_evolutiontrigger) {
+  if (node.evolutionInfo) {
+    console.log(treeDepth, "jhsdgbjsfgjsd");
+    const text = pathText(node.evolutionInfo);
+
     textPaths.push(
       <textPath
         key={node.pathProps.id}
         xlinkHref={`#${node.pathProps.id}`}
-        startOffset="50%"
+        startOffset={textOffsetByLength(text, treeDepth) + "%"}
       >
-        <tspan dy="-10">
-          {node.evolutionInfo.pokemon_v2_evolutiontrigger.name}
-        </tspan>
+        <tspan dy="-10">{text}</tspan>
       </textPath>
     );
   }
 
   if (node.children && node.children.length > 0) {
     node.children.forEach((child) => {
-      textPaths.push(...generateTextPaths(child));
+      textPaths.push(...generateTextPaths(child, treeDepth));
     });
   }
 
   return textPaths;
 };
 
-const MyTreeTextPaths = ({ treeData }) => {
-  const textPaths = generateTextPaths(treeData);
+const MyTreeTextPaths = ({ treeData, treeDepth }) => {
+  console.log(treeDepth, "hsdgjdfhsgfjdsg");
+  const textPaths = generateTextPaths(treeData, treeDepth);
   return (
     <svg>
       <text fontFamily="Verdana" fontSize="12" fill="black">
@@ -59,9 +97,11 @@ const EvolutionaryChain = ({ chain }) => {
   const isEevee = chain.id === eeveeId;
   const isSpecial = chain.id === specialId;
 
-  const rootNodes = !isSpecial
+  const { rootNodes, treeDepth } = !isSpecial
     ? buildEvolutionTree(chain, navigate)
     : buildSpecialChain(chain, navigate);
+
+  console.log(treeDepth, "depth");
 
   return (
     <div className={`tree ${isEevee ? " extend" : ""}`} ref={ref}>
@@ -105,7 +145,7 @@ const EvolutionaryChain = ({ chain }) => {
             <path d="M0,0 L0,10 L10,5 z" fill="black" />
           </marker>
         </defs>
-        <MyTreeTextPaths treeData={rootNodes[0]} />
+        <MyTreeTextPaths treeData={rootNodes[0]} treeDepth={treeDepth} />
       </Tree>
     </div>
   );
