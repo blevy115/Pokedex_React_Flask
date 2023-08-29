@@ -1,5 +1,6 @@
 import { getMaxMovePower } from "./maxMoveHelper";
 import { getZMovePower } from "./zMoveHelper";
+import { formatName } from "./format";
 
 function modifyMoves({
   moves,
@@ -378,6 +379,7 @@ function modifyItemPokemonEvolution({
     { Header: "Trigger", accessor: "trigger" },
   ];
   const tableData = pokemonsList.map((pokemons, i) => {
+    console.log(pokemons);
     const preEvolvedPokemon =
       pokemons.pokemon_v2_pokemonspecy.pokemon_v2_evolutionchain.pokemon_v2_pokemonspecies.find(
         (pokemon) =>
@@ -398,7 +400,11 @@ function modifyItemPokemonEvolution({
       evolvedSpriteId: evolvedPokemon.id,
       evolvedName: evolvedPokemon.name,
       evolvedTypes: evolvedPokemon.pokemon_v2_pokemons[0].types,
-      trigger: pokemons.pokemon_v2_evolutiontrigger.name,
+      trigger: `${formatName(pokemons.pokemon_v2_evolutiontrigger.name)}${
+        pokemons.time_of_day
+          ? ` at ${formatName(pokemons.time_of_day)}time`
+          : ""
+      }`,
     };
     return evolution;
   });
