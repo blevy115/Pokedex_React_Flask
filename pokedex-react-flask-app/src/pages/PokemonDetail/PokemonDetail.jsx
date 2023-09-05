@@ -25,6 +25,7 @@ import {
   HeldItems,
   Loading,
   EvolutionaryChain,
+  PokemonForms,
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
@@ -157,6 +158,7 @@ const PokemonDetail = () => {
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
+        <PokemonForms forms={info.forms} pokemonId={pokemonIdInt} />
         <EvolutionaryChain chain={info.evolutionChain} />
         <div className="pokemon-details-info-traits">
           <div>

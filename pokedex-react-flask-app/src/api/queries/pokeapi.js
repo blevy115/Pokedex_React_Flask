@@ -15,6 +15,18 @@ const GET_POKEMON_INFO = gql`
         is_mythical
         is_baby
         capture_rate
+        forms: pokemon_v2_pokemons{
+          id
+          pokemon_v2_pokemonforms{
+            id
+            name
+            form_name
+            pokemon_id
+            pokemon_v2_pokemonformsprites {
+              sprites
+            }
+          }
+        }
         pokedexes: pokemon_v2_pokemondexnumbers {
           pokedex_number
           pokemon_v2_pokedex {
@@ -47,6 +59,10 @@ const GET_POKEMON_INFO = gql`
               pokemon_v2_move {
                 name
                 id
+              }
+              pokemon_v2_gender {
+                id
+                name
               }
               pokemonV2ItemByHeldItemId {
                 name

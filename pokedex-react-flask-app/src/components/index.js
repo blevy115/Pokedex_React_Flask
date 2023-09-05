@@ -36,6 +36,7 @@ export { default as MaxMoveTable } from "./MaxMoveTable/MaxMoveTable";
 export { default as EvolutionaryChain } from "./EvolutionaryChain/EvolutionaryChain";
 export { default as UseEvolutionPokemonTable } from "./UseEvolutionPokemonTable/UseEvolutionPokemonTable";
 export { default as HeldEvolutionPokemonTable } from "./HeldEvolutionPokemonTable/HeldEvolutionPokemonTable";
+export { default as PokemonForms } from "./PokemonForms/PokemonForms";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

@@ -62,6 +62,9 @@ const pathText = (info) => {
     };
     textParts.push(` + ${formatName(info.pokemon_v2_move.name)}`);
   }
+  if (info.pokemon_v2_gender) {
+    textParts.push(` (${info.pokemon_v2_gender.name})`);
+  }
   return { textParts, navigateObject };
 };
 
