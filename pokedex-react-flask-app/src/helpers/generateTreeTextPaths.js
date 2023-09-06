@@ -68,11 +68,24 @@ const pathText = (info) => {
       ` with ${formatName(info.pokemonV2PokemonspecyByTradeSpeciesId.name)}`
     );
   }
+  if (info.min_beauty) {
+    textParts.push(" with High Beauty");
+  }
   if (info.game) {
     textParts.push(` in ${info.game}`);
   }
   if (info.natures) {
     textParts.push(` with ${info.natures}`);
+  }
+  if (info.special) {
+    if (info.special.hasNavigate) {
+      navigateObject = {
+        index: textParts.length,
+        type: info.special.navigate.type,
+        id: info.special.navigate.id,
+      };
+    }
+    textParts.push(info.special.text);
   }
   if (info.relative_physical_stats || info.relative_physical_stats === 0) {
     switch (info.relative_physical_stats) {

@@ -379,7 +379,6 @@ function modifyItemPokemonEvolution({
     { Header: "Trigger", accessor: "trigger" },
   ];
   const tableData = pokemonsList.map((pokemons, i) => {
-    console.log(pokemons);
     const preEvolvedPokemon =
       pokemons.pokemon_v2_pokemonspecy.pokemon_v2_evolutionchain.pokemon_v2_pokemonspecies.find(
         (pokemon) =>

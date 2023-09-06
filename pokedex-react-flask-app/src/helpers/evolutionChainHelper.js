@@ -10,7 +10,7 @@ const pikachuFormIds = [
   10080, 10081, 10082, 10083, 10084, 10085, 10094, 10095, 10096, 10097, 10098,
   10099, 10148, 10158, 10160, 10159,
 ];
-const changedFormIds = [10017, 10178, 10116, 10117, 10026];
+const changedFormIds = [10017, 10061, 10178, 10116, 10117, 10026];
 
 export const evolutionTriggerHash = {
   1: "level-up",
@@ -63,7 +63,13 @@ class PokemonNode {
   }
 }
 
-export function buildEvolutionTree(evolutionData, navigate, pokemonId) {
+export function buildEvolutionTree(
+  evolutionData,
+  navigate,
+  pokemonId,
+  generation,
+  chainForm
+) {
   const speciesData = evolutionData.pokemon_v2_pokemonspecies;
   const evolutionDict = {};
 
@@ -92,7 +98,11 @@ export function buildEvolutionTree(evolutionData, navigate, pokemonId) {
 
     let evolutionInfo =
       species.pokemon_v2_pokemonevolutions[
-        showDifferentChain ? newInfo["evolutionIndex"] : 0
+        showDifferentChain
+          ? newInfo["hasGenerationSelector"] && generation
+            ? newInfo["generations"].indexOf(generation)
+            : newInfo["evolutionIndex"]
+          : 0
       ];
 
     if (
@@ -112,10 +122,16 @@ export function buildEvolutionTree(evolutionData, navigate, pokemonId) {
     }
     const node = new PokemonNode(
       showDifferentChain
-        ? newInfo["change"][speciesId].name
+        ? newInfo["change"][speciesId].name +
+          (newInfo["hasChainFormSelector"] && chainForm ? `-${chainForm}` : "")
         : evolutionDict[speciesId].name,
       showDifferentChain
-        ? newInfo["change"][speciesId].id
+        ? newInfo["customChainIds"] && newInfo["customChainIds"][speciesId]
+          ? newInfo["customChainIds"][speciesId][chainForm]
+          : newInfo["change"][speciesId].id +
+            (newInfo["hasChainFormSelector"] && chainForm
+              ? `-${chainForm}`
+              : "")
         : evolutionDict[speciesId].id,
       evolutionInfo,
       navigate
@@ -159,8 +175,11 @@ export function buildEvolutionTree(evolutionData, navigate, pokemonId) {
     const depth = calculateDepth(rootNode);
     return Math.max(maxDepth, depth);
   }, 0);
-
-  return { rootNodes, treeDepth };
+  const generations =
+    newInfo && newInfo["hasGenerationSelector"] ? newInfo["generations"] : [];
+  const chainForms =
+    newInfo && newInfo["hasChainFormSelector"] ? newInfo["chainForms"] : [];
+  return { rootNodes, treeDepth, generations, chainForms };
 }
 
 export function buildSpecialChain(evolutionData, navigate) {
@@ -195,7 +214,7 @@ export function buildSpecialChain(evolutionData, navigate) {
     }
   }
 
-  return { rootNodes, treeDepth: 2 };
+  return { rootNodes, treeDepth: 2, generations: [], chainForms: [] };
 }
 
 // Example usage

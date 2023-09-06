@@ -124,6 +124,31 @@
       "removeEvolutionIds": []
     }
   ],
+  "34": [
+    {
+      "ids": [81, 82, 462],
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7", "8+"],
+      "change": {
+        "462": { "id": 462, "name": "magnezone" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 366,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "35": [
     {
       "ids": [83],
@@ -219,6 +244,55 @@
       "removeEvolutionIds": []
     }
   ],
+  "67": [
+    {
+      "ids": [133, 134, 135, 136, 196, 197, 470, 471, 700, 10205],
+      "change": {
+        "470": { "id": 470, "name": "leafeon" },
+        "471": { "id": 471, "name": "glaceon" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7", "8+"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 361,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "min_happiness": 160,
+          "special": {
+            "text": " and a Fairy Move",
+            "hasNavigate": true,
+            "navigate": { "type": "types", "id": 18 }
+          }
+        },
+        {
+          "id": 368,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "lush-jungle"
+          }
+        },
+        {
+          "id": 369,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "mount-lanakila"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "80": [
     {
       "ids": [10233],
@@ -310,7 +384,62 @@
       "removeEvolutionIds": []
     }
   ],
+  "147": [
+    {
+      "ids": [299, 476],
+      "change": {
+        "476": { "id": 476, "name": "probopass" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 370,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "178": [
+    {
+      "ids": [349, 350],
+      "hasGenerationSelector": true,
+      "generations": ["3-4", "5+"],
+      "change": {
+        "350": { "id": 350, "name": "milotic" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "213": [
+    {
+      "ids": [412],
+      "change": {
+        "412": { "id": 412, "name": "burmy" },
+        "413": { "id": 413, "name": "wormadam" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["plant", "sandy", "trash"],
+      "customChainIds": {
+        "413": {
+          "plant": 412,
+          "sandy": 10004,
+          "trash": 10005
+        }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
     {
       "ids": [10004],
       "change": {
@@ -326,6 +455,19 @@
         "412": { "id": "412-trash", "name": "burmy-trash" },
         "413": { "id": 10005, "name": "wormadam-trash" }
       },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "218": [
+    {
+      "ids": [422, 423],
+      "change": {
+        "422": { "id": 422, "name": "shellos" },
+        "423": { "id": 423, "name": "gastrodon" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["west", "east"],
       "evolutionIndex": 0,
       "removeEvolutionIds": []
     }
@@ -437,6 +579,19 @@
       }
     }
   ],
+  "297": [
+    {
+      "ids": [585, 586],
+      "change": {
+        "585": { "id": 585, "name": "deerling" },
+        "586": { "id": 586, "name": "sawsbuck" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["spring", "summer", "autumn", "winter"],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "317": [
     {
       "ids": [624, 625, 983],
@@ -460,6 +615,53 @@
       "change": {
         "628": { "id": 10240, "name": "braviary-hisui" }
       },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "342": [
+    {
+      "ids": [664, 665, 666],
+      "change": {
+        "666": { "id": 666, "name": "vivillon" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": [
+        "meadow",
+        "icy-snow",
+        "polar",
+        "tundra",
+        "continental",
+        "garden",
+        "elegant",
+        "modern",
+        "marine",
+        "archipelago",
+        "high-plains",
+        "sandstorm",
+        "river",
+        "monsoon",
+        "savanna",
+        "sun",
+        "ocean",
+        "jungle",
+        "fancy",
+        "poke-ball"
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "344": [
+    {
+      "ids": [669, 670, 671],
+      "change": {
+        "669": { "id": 669, "name": "flabebe" },
+        "670": { "id": 670, "name": "floette" },
+        "671": { "id": 671, "name": "florges" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["red", "yellow", "orange", "blue", "white"],
       "evolutionIndex": 0,
       "removeEvolutionIds": []
     }
@@ -574,6 +776,31 @@
             "id": 1
           },
           "min_level": 36
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "379": [
+    {
+      "ids": [736, 737, 738],
+      "change": {
+        "738": { "id": 738, "name": "vikavolt" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["7", "8+"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 383,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
         }
       ],
       "evolutionIndex": 0,
