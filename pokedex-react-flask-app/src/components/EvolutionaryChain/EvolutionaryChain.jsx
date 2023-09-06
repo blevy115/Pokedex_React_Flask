@@ -6,106 +6,14 @@ import { useResizeDetector } from "react-resize-detector";
 import {
   buildEvolutionTree,
   buildSpecialChain,
+  hideEvolutionIds,
 } from "../../helpers/evolutionChainHelper";
-import { textOffsetByLength } from "../../helpers/textOffsetbyLengthHelper";
-
-import { formatName } from "../../helpers/format";
+import { generateTextPaths } from "../../helpers/generateTreeTextPaths";
 
 import "./EvolutionaryChain.scss";
 
 const eeveeId = 67;
 const specialId = 250; // Phione and Manaphy
-
-const pathText = (info) => {
-  const textParts = [];
-  let navigateObject = { index: null, type: null, id: null };
-  switch (info.pokemon_v2_evolutiontrigger.id) {
-    case 1:
-      textParts.push(`Level up`);
-      break;
-    case 3:
-      navigateObject = {
-        index: textParts.length,
-        type: "items",
-        id: info.pokemon_v2_item.id,
-      };
-      textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
-      break;
-    default:
-      textParts.push(formatName(info.pokemon_v2_evolutiontrigger.name));
-  }
-  if (info.min_level) {
-    textParts.push(` at ${info.min_level}`);
-  }
-  if (info.min_happiness) {
-    textParts.push(` with happiness`);
-  }
-  if (info.pokemonV2ItemByHeldItemId) {
-    navigateObject = {
-      index: textParts.length,
-      type: "items",
-      id: info.pokemonV2ItemByHeldItemId.id,
-    };
-    textParts.push(` with ${formatName(info.pokemonV2ItemByHeldItemId.name)}`);
-  }
-  if (info.time_of_day) {
-    textParts.push(` at ${info.time_of_day}`);
-  }
-  if (info.pokemon_v2_location) {
-    textParts.push(` at ${formatName(info.pokemon_v2_location.name)}`);
-  }
-  if (info.pokemon_v2_move) {
-    navigateObject = {
-      index: textParts.length,
-      type: "moves",
-      id: info.pokemon_v2_move.id,
-    };
-    textParts.push(` + ${formatName(info.pokemon_v2_move.name)}`);
-  }
-  if (info.pokemon_v2_gender) {
-    textParts.push(` (${info.pokemon_v2_gender.name})`);
-  }
-  return { textParts, navigateObject };
-};
-
-const generateTextPaths = (node, treeDepth, navigate) => {
-  const textPaths = [];
-
-  if (node.evolutionInfo) {
-    const {
-      textParts,
-      navigateObject: { id, type, index },
-    } = pathText(node.evolutionInfo);
-
-    textPaths.push(
-      <textPath
-        key={node.pathProps.id}
-        xlinkHref={`#${node.pathProps.id}`}
-        startOffset={textOffsetByLength(textParts.join(""), treeDepth) + "%"}
-      >
-        <tspan dy="-10">
-          {textParts.map((text, i) => (
-            <tspan
-              key={i}
-              className={i === index ? "clickable" : ""}
-              onClick={i === index ? () => navigate(`/${type}/${id}`) : null}
-            >
-              {text}
-            </tspan>
-          ))}
-        </tspan>
-      </textPath>
-    );
-  }
-
-  if (node.children && node.children.length > 0) {
-    node.children.forEach((child) => {
-      textPaths.push(...generateTextPaths(child, treeDepth, navigate));
-    });
-  }
-
-  return textPaths;
-};
 
 const MyTreeTextPaths = ({ treeData, treeDepth, navigate }) => {
   const textPaths = generateTextPaths(treeData, treeDepth, navigate);
@@ -118,19 +26,25 @@ const MyTreeTextPaths = ({ treeData, treeDepth, navigate }) => {
   );
 };
 
-const EvolutionaryChain = ({ chain }) => {
+const EvolutionaryChain = ({ chain, pokemonId }) => {
+  console.log(chain);
   const navigate = useNavigate();
   const { width, height, ref } = useResizeDetector();
 
-  if (chain.pokemon_v2_pokemonspecies.length <= 1) return;
+  if (
+    hideEvolutionIds.includes(pokemonId) ||
+    chain.pokemon_v2_pokemonspecies.length <= 1
+  )
+    return;
 
   const isEevee = chain.id === eeveeId;
   const isSpecial = chain.id === specialId;
 
   const { rootNodes, treeDepth } = !isSpecial
-    ? buildEvolutionTree(chain, navigate)
+    ? buildEvolutionTree(chain, navigate, pokemonId)
     : buildSpecialChain(chain, navigate);
 
+  if (rootNodes[0].children.length < 1) return;
   return (
     <div className={`tree ${isEevee ? " extend" : ""}`} ref={ref}>
       <h4 className="text-center">Evolution Chain</h4>

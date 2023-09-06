@@ -1,5 +1,16 @@
 import { getSprite } from "./pictures";
 import { formatName } from "./format";
+import special_evolution from "../data/special_evolution_chains.json";
+
+const totemIds = [
+  10093, 10121, 10122, 10128, 10129, 10144, 10145, 10146, 10149, 10150, 10153,
+  10154,
+];
+const pikachuFormIds = [
+  10080, 10081, 10082, 10083, 10084, 10085, 10094, 10095, 10096, 10097, 10098,
+  10099, 10148, 10158, 10160, 10159,
+];
+const changedFormIds = [10017, 10178, 10116, 10117, 10026];
 
 export const evolutionTriggerHash = {
   1: "level-up",
@@ -16,6 +27,12 @@ export const evolutionTriggerHash = {
   12: "strong-style-move",
   13: "recoil-damage",
 };
+
+export const hideEvolutionIds = [
+  ...totemIds,
+  ...pikachuFormIds,
+  ...changedFormIds,
+];
 
 class PokemonNode {
   constructor(speciesName, speciesId, evolutionInfo, navigate) {
@@ -34,7 +51,7 @@ class PokemonNode {
     }),
       (this.gProps = {
         className: "clickable evolution-tree-node",
-        onClick: () => navigate(`/pokemon/${speciesId}`),
+        onClick: () => navigate(`/pokemon/${parseInt(speciesId)}`),
       });
     this.textProps = {
       dx: -20,
@@ -46,11 +63,19 @@ class PokemonNode {
   }
 }
 
-export function buildEvolutionTree(evolutionData, navigate) {
+export function buildEvolutionTree(evolutionData, navigate, pokemonId) {
   const speciesData = evolutionData.pokemon_v2_pokemonspecies;
   const evolutionDict = {};
 
-  for (const species of speciesData) {
+  const rootNodes = [];
+  const isFormChain = special_evolution[evolutionData.id];
+  const newInfo = isFormChain
+    ? isFormChain.find((formChain) => formChain.ids.includes(pokemonId))
+    : null;
+
+  for (const species of newInfo?.hasAddedEvolution
+    ? [...speciesData, ...newInfo.addedEvolution]
+    : speciesData) {
     evolutionDict[species.id] = {
       name: species.name,
       id: species.id,
@@ -58,31 +83,56 @@ export function buildEvolutionTree(evolutionData, navigate) {
     };
   }
 
-  const rootNodes = [];
-
-  for (const species of speciesData) {
+  for (const species of newInfo?.hasAddedEvolution
+    ? [...speciesData, ...newInfo.addedEvolution]
+    : speciesData) {
     const speciesId = species.id;
+    const showDifferentChain = newInfo && newInfo["change"][speciesId];
     const evolvesFromId = species.evolves_from_species_id;
 
-    const evolutionInfo = species.pokemon_v2_pokemonevolutions[0];
+    let evolutionInfo =
+      species.pokemon_v2_pokemonevolutions[
+        showDifferentChain ? newInfo["evolutionIndex"] : 0
+      ];
 
+    if (
+      evolutionInfo &&
+      newInfo &&
+      newInfo["hasCustomEvolution"] &&
+      newInfo["customEvolution"].find(
+        (custumEvolution) => custumEvolution.id === evolutionInfo.id
+      )
+    ) {
+      evolutionInfo = newInfo["customEvolution"].find(
+        (custumEvolution) => custumEvolution.id === evolutionInfo.id
+      );
+    }
     if (evolutionInfo) {
       evolutionDict[speciesId].evolutionInfo = evolutionInfo;
     }
-
     const node = new PokemonNode(
-      evolutionDict[speciesId].name,
-      evolutionDict[speciesId].id,
+      showDifferentChain
+        ? newInfo["change"][speciesId].name
+        : evolutionDict[speciesId].name,
+      showDifferentChain
+        ? newInfo["change"][speciesId].id
+        : evolutionDict[speciesId].id,
       evolutionInfo,
       navigate
     );
     evolutionDict[speciesId].node = node;
-
     if (evolvesFromId === null) {
       rootNodes.push(node);
     } else {
       const parentNode = evolutionDict[evolvesFromId].node;
-      if (parentNode) {
+      if (
+        parentNode &&
+        !(
+          newInfo &&
+          evolutionInfo &&
+          newInfo["removeEvolutionIds"].includes(evolutionInfo.id)
+        )
+      ) {
         parentNode.children.push(node);
       }
     }

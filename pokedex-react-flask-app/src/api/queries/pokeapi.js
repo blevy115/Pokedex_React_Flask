@@ -39,6 +39,7 @@ const GET_POKEMON_INFO = gql`
             name
             id
             pokemon_v2_pokemonevolutions {
+              id
               pokemon_v2_evolutiontrigger {
                 name
                 id
@@ -49,8 +50,12 @@ const GET_POKEMON_INFO = gql`
                   name
                 }
               }
+              relative_physical_stats
               min_happiness
               time_of_day
+              turn_upside_down
+              needs_overworld_rain
+              min_beauty
               pokemon_v2_item {
                 name
                 id
@@ -65,6 +70,10 @@ const GET_POKEMON_INFO = gql`
                 name
               }
               pokemonV2ItemByHeldItemId {
+                name
+                id
+              }
+              pokemonV2PokemonspecyByTradeSpeciesId {
                 name
                 id
               }

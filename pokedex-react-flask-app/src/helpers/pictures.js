@@ -7,7 +7,6 @@ function getSprite(id) {
 }
 
 function getFormSprite(path) {
-  console.log(path)
   return `https://raw.githubusercontent.com/PokeAPI/sprites/${path?.replace('media', 'master')}`
 }
 

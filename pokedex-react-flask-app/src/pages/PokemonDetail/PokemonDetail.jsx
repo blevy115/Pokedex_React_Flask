@@ -159,7 +159,10 @@ const PokemonDetail = () => {
         </button>
         {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
         <PokemonForms forms={info.forms} pokemonId={pokemonIdInt} />
-        <EvolutionaryChain chain={info.evolutionChain} />
+        <EvolutionaryChain
+          chain={info.evolutionChain}
+          pokemonId={pokemonIdInt}
+        />
         <div className="pokemon-details-info-traits">
           <div>
             <div className="pokemon-detail-characteristics">
