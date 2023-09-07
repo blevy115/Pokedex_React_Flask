@@ -216,39 +216,3 @@ export function buildSpecialChain(evolutionData, navigate) {
 
   return { rootNodes, treeDepth: 2, generations: [], chainForms: [] };
 }
-
-// Example usage
-// const evolutionData = /* Your evolution data object */;
-// const rootNodes = buildEvolutionTree(evolutionData);
-
-// // Print the evolution tree with additional info
-// function printEvolutionTree(node, level = 0) {
-//     const indent = "  ".repeat(level);
-//     const info = node.evolutionInfo;
-//     let infoString = "";
-
-//     if (info) {
-//         if (info.min_level !== null) {
-//             infoString += `Min Level: ${info.min_level}`;
-//         }
-//         if (info.min_happiness !== null) {
-//             infoString += `Min Happiness: ${info.min_happiness}`;
-//         }
-//         if (info.pokemon_v2_item) {
-//             infoString += `Evolution Item: ${info.pokemon_v2_item.name}`;
-//         }
-//         if (info.pokemon_v2_move) {
-//             infoString += `Evolution Move: ${info.pokemon_v2_move.name}`;
-//         }
-//     }
-
-//     console.log(indent + node.speciesName + (infoString ? ` (${infoString})` : ""));
-
-//     for (const child of node.children) {
-//         printEvolutionTree(child, level + 1);
-//     }
-// }
-
-// for (const rootNode of rootNodes) {
-//     printEvolutionTree(rootNode);
-// }

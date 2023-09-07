@@ -9,12 +9,31 @@ import {
   hideEvolutionIds,
 } from "../../helpers/evolutionChainHelper";
 import { generateTextPaths } from "../../helpers/generateTreeTextPaths";
+import { calculateTreePath } from "../../helpers/calculateTreePaths";
+
 import { formatName } from "../../helpers/format";
 
 import "./EvolutionaryChain.scss";
 
 const eeveeId = 67;
 const specialId = 250; // Phione and Manaphy
+
+const TreePathArrow = ({ isSpecial }) => (
+  <defs>
+    <marker
+      id="arrow"
+      viewBox="0 0 10 10"
+      refX="5"
+      refY="5"
+      markerWidth="10"
+      markerHeight="10"
+      orient={!isSpecial ? "auto" : 180}
+      markerUnits="strokeWidth"
+    >
+      <path d="M0,0 L0,10 L10,5 z" fill="black" />
+    </marker>
+  </defs>
+);
 
 const MyTreeTextPaths = ({ treeData, treeDepth, navigate }) => {
   const textPaths = generateTextPaths(treeData, treeDepth, navigate);
@@ -67,9 +86,9 @@ const EvolutionaryChain = ({ chain, pokemonId }) => {
             value={generation}
             onChange={(e) => setGeneration(e.target.value)}
           >
-            {generations.map((g, i) => (
-              <option key={i} value={g}>
-                {g}
+            {generations.map((gen, i) => (
+              <option key={i} value={gen}>
+                {gen}
               </option>
             ))}
           </select>
@@ -83,9 +102,9 @@ const EvolutionaryChain = ({ chain, pokemonId }) => {
             value={chainForm}
             onChange={(e) => setChainForm(e.target.value)}
           >
-            {chainForms.map((cf, i) => (
-              <option key={i} value={cf}>
-                {formatName(cf)}
+            {chainForms.map((form, i) => (
+              <option key={i} value={form}>
+                {formatName(form)}
               </option>
             ))}
           </select>
@@ -101,35 +120,9 @@ const EvolutionaryChain = ({ chain, pokemonId }) => {
         pathProps={{
           markerMid: "url(#arrow)",
         }}
-        pathFunc={(x1, y1, x2, y2) => {
-          let bool = false;
-          if (bool)
-            return `M${x1},${y1}C${(x1 + x2) / 2},${y1} ${
-              (x1 + x2) / 2
-            },${y2} ${x2},${y2}`;
-
-          const ctrlX1 = x1 + (x2 - x1) / 2;
-          const ctrlY1 = y1 + (y2 - y1) / 1.3;
-          const ctrlX2 = x1 + ((x2 - x1) * 2) / 3;
-          const ctrlY2 = y2;
-
-          return `M${x1},${y1}C${x1},${y1} ${ctrlX1},${ctrlY1} ${ctrlX1},${ctrlY1} C${ctrlX2},${ctrlY2} ${ctrlX2},${ctrlY2} ${x2},${y2}`;
-        }}
+        pathFunc={(x1, y1, x2, y2) => calculateTreePath(x1, y1, x2, y2)}
       >
-        <defs>
-          <marker
-            id="arrow"
-            viewBox="0 0 10 10"
-            refX="5"
-            refY="5"
-            markerWidth="10"
-            markerHeight="10"
-            orient={!isSpecial ? "auto" : 180}
-            markerUnits="strokeWidth"
-          >
-            <path d="M0,0 L0,10 L10,5 z" fill="black" />
-          </marker>
-        </defs>
+        <TreePathArrow isSpecial={isSpecial} />
         <MyTreeTextPaths
           treeData={rootNodes[0]}
           treeDepth={treeDepth}
