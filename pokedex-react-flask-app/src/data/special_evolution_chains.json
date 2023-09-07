@@ -78,6 +78,31 @@
       "removeEvolutionIds": [34, 160]
     }
   ],
+  "24": [
+    {
+      "ids": [56, 57, 979],
+      "change": {
+        "979": { "id": 979, "name": "annihilape" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 504,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Rage Fist 20 times",
+            "hasNavigate": true,
+            "navigate": { "type": "moves", "id": 889 }
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "25": [
     {
       "ids": [10229, 10230],
@@ -432,7 +457,7 @@
       "chainForms": ["plant", "sandy", "trash"],
       "customChainIds": {
         "413": {
-          "plant": 412,
+          "plant": 413,
           "sandy": 10004,
           "trash": 10005
         }
@@ -601,7 +626,11 @@
         {
           "id": 508,
           "pokemon_v2_evolutiontrigger": {
-            "name": "level-up-after-defeating-3-bisharp"
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Kill 3 Bisharp w/ Leader's Crest"
           }
         }
       ],
@@ -969,6 +998,158 @@
               }
             }
           ]
+        }
+      ]
+    }
+  ],
+  "484": [
+    {
+      "ids": [921, 922, 923],
+      "change": {},
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 478,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Walk 1000 steps"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "485": [
+    {
+      "ids": [924, 925, 10257],
+      "change": {
+        "924": { "id": 924, "name": "tandemaus" },
+        "925": { "id": 925, "name": "maushold-family-of-four" },
+        "10257": { "id": 10257, "name": "maushold-family-of-three" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 479,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " in Battle (99%)"
+          },
+          "min_level": 25
+        }
+      ],
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 924,
+          "name": "maushold-family-of-three",
+          "id": 10257,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "special": {
+                "text": " in Battle (1%)"
+              },
+              "min_level": 25
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "495": [
+    {
+      "ids": [946, 947],
+      "change": {},
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 491,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Walk 1000 steps"
+          }
+        }
+      ]
+    }
+  ],
+  "499": [
+    {
+      "ids": [953, 954],
+      "change": {},
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 494,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Walk 1000 steps"
+          }
+        }
+      ]
+    }
+  ],
+  "504": [
+    {
+      "ids": [963, 964, 10256],
+      "change": {},
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 499,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + Union Circle"
+          },
+          "min_level": 38
+        }
+      ]
+    }
+  ],
+  "528": [
+    {
+      "ids": [999, 1000, 10263],
+      "change": {},
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 511,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "special": {
+            "text": " + 999 Gimmighoul Coins"
+          }
         }
       ]
     }

@@ -18,6 +18,8 @@ const pathText = (info) => {
       };
       textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
       break;
+     case 10:
+      break
     default:
       textParts.push(formatName(info.pokemon_v2_evolutiontrigger.name));
   }
@@ -66,6 +68,30 @@ const pathText = (info) => {
     };
     textParts.push(
       ` with ${formatName(info.pokemonV2PokemonspecyByTradeSpeciesId.name)}`
+    );
+  }
+  if (info.pokemonV2TypeByPartyTypeId) {
+    navigateObject = {
+      index: textParts.length,
+      type: "types",
+      id: info.pokemonV2TypeByPartyTypeId.id,
+    };
+    textParts.push(
+      ` with a ${formatName(
+        info.pokemonV2TypeByPartyTypeId.name
+      )} type in party`
+    );
+  }
+  if (info.pokemonV2PokemonspecyByPartySpeciesId) {
+    navigateObject = {
+      index: textParts.length,
+      type: "pokemon",
+      id: info.pokemonV2PokemonspecyByPartySpeciesId.id,
+    };
+    textParts.push(
+      ` with a ${formatName(
+        info.pokemonV2PokemonspecyByPartySpeciesId.name
+      )} in party`
     );
   }
   if (info.min_beauty) {

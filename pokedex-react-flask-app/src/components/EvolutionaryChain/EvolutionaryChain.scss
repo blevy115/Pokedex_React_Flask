@@ -8,6 +8,10 @@ path.link {
   height: 250px;
   margin-bottom: 1.5rem;
 
+  .tree-svg {
+    transform:translate(40px, 10px)
+  }
+
   .select-input {
     margin: 0 auto;
   }

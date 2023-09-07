@@ -15,9 +15,9 @@ const GET_POKEMON_INFO = gql`
         is_mythical
         is_baby
         capture_rate
-        forms: pokemon_v2_pokemons{
+        forms: pokemon_v2_pokemons {
           id
-          pokemon_v2_pokemonforms{
+          pokemon_v2_pokemonforms {
             id
             name
             form_name
@@ -70,6 +70,14 @@ const GET_POKEMON_INFO = gql`
                 name
               }
               pokemonV2ItemByHeldItemId {
+                name
+                id
+              }
+              pokemonV2TypeByPartyTypeId {
+                name
+                id
+              }
+              pokemonV2PokemonspecyByPartySpeciesId {
                 name
                 id
               }
