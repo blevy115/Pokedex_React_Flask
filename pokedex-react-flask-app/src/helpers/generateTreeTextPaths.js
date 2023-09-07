@@ -18,6 +18,8 @@ const pathText = (info) => {
       };
       textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
       break;
+     case 10:
+      break
     default:
       textParts.push(formatName(info.pokemon_v2_evolutiontrigger.name));
   }
