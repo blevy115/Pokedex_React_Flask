@@ -122,7 +122,7 @@ const EvolutionaryChain = ({ chain, pokemonId }) => {
         }}
         pathFunc={(x1, y1, x2, y2) => calculateTreePath(x1, y1, x2, y2)}
         margins={{
-          bottom : 10, left : 35, right : 150, top : 10
+          bottom : 10, left : 45, right : 150, top : 10
         }}
       >
         <TreePathArrow isSpecial={isSpecial} />
