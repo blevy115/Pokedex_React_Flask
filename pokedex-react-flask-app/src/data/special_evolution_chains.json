@@ -432,7 +432,7 @@
       "chainForms": ["plant", "sandy", "trash"],
       "customChainIds": {
         "413": {
-          "plant": 412,
+          "plant": 413,
           "sandy": 10004,
           "trash": 10005
         }

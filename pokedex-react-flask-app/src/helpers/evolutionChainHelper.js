@@ -54,8 +54,8 @@ class PokemonNode {
         onClick: () => navigate(`/pokemon/${parseInt(speciesId)}`),
       });
     this.textProps = {
-      dx: -20,
-      dy: 20,
+      dx: formatName(speciesName).length * -3,
+      dy: 25,
     };
     this.pathProps = {
       id: "path-" + speciesId,

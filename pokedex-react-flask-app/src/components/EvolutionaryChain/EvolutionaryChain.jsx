@@ -116,11 +116,14 @@ const EvolutionaryChain = ({ chain, pokemonId }) => {
         height={height ? height : 250}
         width={width ? width * 0.99 : 400}
         nodeShape="image"
-        svgProps={{ transform: "translate(50,10)" }}
+        svgProps={{className: "tree-svg"}}
         pathProps={{
           markerMid: "url(#arrow)",
         }}
         pathFunc={(x1, y1, x2, y2) => calculateTreePath(x1, y1, x2, y2)}
+        margins={{
+          bottom : 10, left : 35, right : 150, top : 10
+        }}
       >
         <TreePathArrow isSpecial={isSpecial} />
         <MyTreeTextPaths
