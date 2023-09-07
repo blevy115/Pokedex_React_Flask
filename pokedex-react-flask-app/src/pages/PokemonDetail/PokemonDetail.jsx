@@ -24,12 +24,15 @@ import {
   Types,
   HeldItems,
   Loading,
+  EvolutionaryChain,
+  PokemonForms,
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
 import { getSprite } from "../../helpers/pictures";
 import { handleSpriteError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
+import { calculateCatchPercent } from "../../helpers/calculateCatchPercent";
 
 import "./PokemonDetail.scss";
 
@@ -92,7 +95,6 @@ const PokemonDetail = () => {
       },
     });
   }
-
   if (loading) return <Loading />;
   const {
     height,
@@ -109,7 +111,6 @@ const PokemonDetail = () => {
   const pokemonIdInt = parseInt(params.pokemonId);
 
   const evYield = getEvYield(stats);
-
   return (
     <div
       className={`app__pokemon-detail ${
@@ -157,10 +158,21 @@ const PokemonDetail = () => {
           {isAFavourite ? "Unfavourite" : "Favourite"}
         </button>
         {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
+        <PokemonForms forms={info.forms} pokemonId={pokemonIdInt} />
+        <EvolutionaryChain
+          chain={info.evolutionChain}
+          pokemonId={pokemonIdInt}
+        />
         <div className="pokemon-details-info-traits">
           <div>
             <div className="pokemon-detail-characteristics">
               <p>Generation: {generation}</p>
+              <p className="no-wrap">
+                Capture Rate: {info.capture_rate}{" "}
+                <span className="small">
+                  ({calculateCatchPercent({ catchRate: info.capture_rate })})
+                </span>
+              </p>
               <p className="no-wrap">Height: {(height / 10).toFixed(1)} m</p>
               <p className="no-wrap">Weight: {(weight / 10).toFixed(1)} kg</p>
             </div>

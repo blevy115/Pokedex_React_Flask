@@ -14,7 +14,7 @@ const AbilitySearch = () => {
   const { data: list, loading: loadingList } = useQuery(
     GET_ABILITIES_LIST_BY_NAME,
     {
-      variables: { name: `%${textInput.replace(" ", "-")}%` },
+      variables: { name: `%${textInput.replaceAll(" ", "-")}%` },
 
       skip: !textInput,
       client: pokemonAPIClient,

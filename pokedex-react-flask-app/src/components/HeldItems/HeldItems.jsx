@@ -21,7 +21,7 @@ const HeldItems = ({ items }) => {
     if (generationOptions.length > 0) setGeneration(generationOptions[0]);
   }, [generationOptions]);
 
-  if (!itemsByGeneration || !generation) return null;
+  if (!itemsByGeneration || !generation || !itemsByGeneration[generation]) return null;
 
   const generationItems = itemsByGeneration[generation].sort(
     (a, b) => a.rarity - b.rarity

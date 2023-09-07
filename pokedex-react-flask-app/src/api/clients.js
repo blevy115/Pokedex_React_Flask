@@ -4,6 +4,9 @@ function getKeyFields(existing, { generationId }) {
   if (generationId) {
     return ["id", "generationId"];
   }
+  if (existing.pokemon_v2_pokemonforms) {
+    return ["id", "pokemon_v2_pokemonforms"]
+  }
   return ["id"];
 }
 

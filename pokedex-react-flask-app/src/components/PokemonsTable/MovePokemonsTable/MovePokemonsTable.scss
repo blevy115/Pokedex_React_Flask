@@ -1,3 +1,5 @@
+@import "../../../helpers/breakpoints";
+
 .pokemon-list-item-name {
   width: fit-content;
   margin: 0 auto;
@@ -32,6 +34,9 @@
 
   .pokemons-table {
     margin: 1rem 0;
+  }
+  @media screen and (max-width: $breakpoint-small){
+    width: 100%;
   }
 }
 

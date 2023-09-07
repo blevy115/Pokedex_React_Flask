@@ -1,0 +1,976 @@
+{
+  "7": [
+    {
+      "ids": [10091, 10092],
+      "change": {
+        "19": { "id": 10091, "name": "rattata-alola" },
+        "20": { "id": 10092, "name": "raticate-alola" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": []
+    }
+  ],
+  "10": [
+    {
+      "ids": [10100],
+      "change": {
+        "26": { "id": 10100, "name": "raichu-alola" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "11": [
+    {
+      "ids": [10101, 10102],
+      "change": {
+        "27": { "id": 10101, "name": "sandshrew-alola" },
+        "28": { "id": 10102, "name": "sandslash-alola" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": []
+    }
+  ],
+  "15": [
+    {
+      "ids": [10103, 10104],
+      "change": {
+        "37": { "id": 10103, "name": "vulpix-alola" },
+        "38": { "id": 10104, "name": "ninetails-alola" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": []
+    }
+  ],
+  "21": [
+    {
+      "ids": [10105, 10106],
+      "change": {
+        "50": { "id": 10105, "name": "diglett-alola" },
+        "51": { "id": 10106, "name": "dugtrio-alola" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "22": [
+    {
+      "ids": [52, 53, 10200],
+      "change": [],
+      "removeEvolutionIds": [451]
+    },
+
+    {
+      "ids": [10107, 10108],
+      "change": {
+        "52": { "id": 10107, "name": "meowth-alola" },
+        "53": { "id": 10108, "name": "persian-alola" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": [451]
+    },
+    {
+      "ids": [863, 10161],
+      "change": {
+        "52": { "id": 10161, "name": "meowth-galar" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [34, 160]
+    }
+  ],
+  "25": [
+    {
+      "ids": [10229, 10230],
+      "change": {
+        "58": { "id": 10229, "name": "growlithe-hisui" },
+        "59": { "id": 10230, "name": "arcanine-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "31": [
+    {
+      "ids": [10109, 10110, 10111],
+      "change": {
+        "74": { "id": 10109, "name": "geodude-alola" },
+        "75": { "id": 10110, "name": "graveler-alola" },
+        "76": { "id": 10111, "name": "golem-alola" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "32": [
+    {
+      "ids": [10162, 10163],
+      "change": {
+        "77": { "id": 10162, "name": "ponyta-galar" },
+        "78": { "id": 10163, "name": "rapidash-galar" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "33": [
+    {
+      "ids": [10164, 10165, 10172],
+      "change": {
+        "79": { "id": 10164, "name": "slowpoke-galar" },
+        "80": { "id": 10165, "name": "slowbro-galar" },
+        "199": { "id": 10172, "name": "slowking-galar" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": []
+    }
+  ],
+  "34": [
+    {
+      "ids": [81, 82, 462],
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7", "8+"],
+      "change": {
+        "462": { "id": 462, "name": "magnezone" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 366,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "35": [
+    {
+      "ids": [83],
+      "change": [],
+      "removeEvolutionIds": [454]
+    },
+    {
+      "ids": [10166, 865],
+      "change": {
+        "83": { "id": 10166, "name": "farfetchd-galar" }
+      },
+      "removeEvolutionIds": []
+    }
+  ],
+  "38": [
+    {
+      "ids": [10112, 10113],
+      "change": {
+        "88": { "id": 10112, "name": "grimer-alola" },
+        "89": { "id": 10113, "name": "muk-alola" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "44": [
+    {
+      "ids": [10231, 10232],
+      "change": {
+        "100": { "id": 10231, "name": "voltorb-hisui" },
+        "101": { "id": 10232, "name": "electrode-hisui" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 60,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_item": {
+            "name": "leaf-stone",
+            "id": 85
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "45": [
+    {
+      "ids": [10114],
+      "change": {
+        "103": { "id": 10114, "name": "exeggutor-alola" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "46": [
+    {
+      "ids": [10115],
+      "change": {
+        "105": { "id": 10115, "name": "marowak-alola" }
+      },
+      "evolutionIndex": 1,
+      "removeEvolutionIds": []
+    }
+  ],
+  "49": [
+    {
+      "ids": [10167],
+      "change": {
+        "110": { "id": 10167, "name": "weezing-galar" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "57": [
+    {
+      "ids": [439, 122],
+      "removeEvolutionIds": [455],
+      "change": []
+    },
+    {
+      "ids": [10168, 866],
+      "change": {
+        "122": { "id": 10168, "name": "mr-mime-galar" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "67": [
+    {
+      "ids": [133, 134, 135, 136, 196, 197, 470, 471, 700, 10205],
+      "change": {
+        "470": { "id": 470, "name": "leafeon" },
+        "471": { "id": 471, "name": "glaceon" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7", "8+"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 361,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "min_happiness": 160,
+          "special": {
+            "text": " and a Fairy Move",
+            "hasNavigate": true,
+            "navigate": { "type": "types", "id": 18 }
+          }
+        },
+        {
+          "id": 368,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "lush-jungle"
+          }
+        },
+        {
+          "id": 369,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "mount-lanakila"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "80": [
+    {
+      "ids": [10233],
+      "change": {
+        "157": { "id": 10233, "name": "typhlosion-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "96": [
+    {
+      "ids": [194, 195],
+      "change": [],
+      "removeEvolutionIds": [505]
+    },
+    {
+      "ids": [10253, 980],
+      "change": {
+        "194": { "id": 10253, "name": "wooper-paldea" }
+      },
+      "removeEvolutionIds": [108]
+    }
+  ],
+  "103": [
+    {
+      "ids": [10255],
+      "change": {
+        "982": { "id": 10255, "name": "dudunsparce-(3)" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "106": [
+    {
+      "ids": [211],
+      "change": {},
+      "removeEvolutionIds": [467]
+    },
+    {
+      "ids": [10234, 904],
+      "change": {
+        "211": { "id": 10234, "name": "qwilfish-hisui" }
+      },
+      "removeEvolutionIds": []
+    }
+  ],
+  "109": [
+    {
+      "ids": [215, 461],
+      "removeEvolutionIds": [466],
+      "change": {}
+    },
+    {
+      "ids": [10235, 903],
+      "removeEvolutionIds": [229],
+      "change": { "215": { "id": 10235, "name": "sneasel-hisui" } }
+    }
+  ],
+  "113": [
+    {
+      "ids": [222],
+      "change": {},
+      "removeEvolutionIds": [456]
+    },
+    {
+      "ids": [10173, 864],
+      "change": {
+        "222": { "id": 10173, "name": "corsola-galar" }
+      },
+      "removeEvolutionIds": []
+    }
+  ],
+  "134": [
+    {
+      "ids": [263, 264],
+      "change": {},
+      "removeEvolutionIds": [457]
+    },
+    {
+      "ids": [10174, 10175, 862],
+      "change": {
+        "263": { "id": 10174, "name": "zigzagoon-galar" },
+        "264": { "id": 10175, "name": "linoone-galar" }
+      },
+      "evolutionIndex": 0,
+
+      "removeEvolutionIds": []
+    }
+  ],
+  "147": [
+    {
+      "ids": [299, 476],
+      "change": {
+        "476": { "id": 476, "name": "probopass" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["4", "5", "6", "7"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 370,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "178": [
+    {
+      "ids": [349, 350],
+      "hasGenerationSelector": true,
+      "generations": ["3-4", "5+"],
+      "change": {
+        "350": { "id": 350, "name": "milotic" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "213": [
+    {
+      "ids": [412],
+      "change": {
+        "412": { "id": 412, "name": "burmy" },
+        "413": { "id": 413, "name": "wormadam" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["plant", "sandy", "trash"],
+      "customChainIds": {
+        "413": {
+          "plant": 412,
+          "sandy": 10004,
+          "trash": 10005
+        }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
+    {
+      "ids": [10004],
+      "change": {
+        "412": { "id": "412-sandy", "name": "burmy-sandy" },
+        "413": { "id": 10004, "name": "wormadam-sandy" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
+    {
+      "ids": [10005],
+      "change": {
+        "412": { "id": "412-trash", "name": "burmy-trash" },
+        "413": { "id": 10005, "name": "wormadam-trash" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "218": [
+    {
+      "ids": [422, 423],
+      "change": {
+        "422": { "id": 422, "name": "shellos" },
+        "423": { "id": 423, "name": "gastrodon" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["west", "east"],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "258": [
+    {
+      "ids": [10236],
+      "change": {
+        "503": { "id": 10236, "name": "samurott-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "279": [
+    {
+      "ids": [10237],
+      "change": {
+        "549": { "id": 10237, "name": "lilligant-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "280": [
+    {
+      "ids": [550, 10016],
+      "change": {},
+      "removeEvolutionIds": [465]
+    },
+    {
+      "ids": [10247, 902, 10248],
+      "change": {
+        "550": { "id": 10247, "name": "basculin-white-striped" },
+        "902": { "id": 902, "name": "basculegion-male" },
+        "10248": { "id": 10248, "name": "basculegion-female" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 465,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "recoil-damage",
+            "id": 14
+          },
+          "pokemon_v2_gender": {
+            "name": "male"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 550,
+          "name": "basculegion-female",
+          "id": 10248,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "recoil-damage",
+                "id": 13
+              },
+              "pokemon_v2_gender": {
+                "name": "female"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "282": [
+    {
+      "ids": [10176, 10177],
+      "evolutionIndex": 1,
+      "removeEvolutionIds": [],
+      "change": {
+        "554": { "id": 10176, "name": "darumaka-galar" },
+        "555": { "id": 10177, "name": "darmanitan-galar" }
+      }
+    }
+  ],
+  "287": [
+    {
+      "ids": [562, 563],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [459],
+      "change": {}
+    },
+    {
+      "ids": [10179, 867],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [283],
+      "change": {
+        "562": { "id": 10179, "name": "yamask-galar" }
+      }
+    }
+  ],
+  "291": [
+    {
+      "ids": [10238, 10239],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "change": {
+        "570": { "id": 10238, "name": "zorua-galar" },
+        "571": { "id": 10239, "name": "zoroark-galar" }
+      }
+    }
+  ],
+  "297": [
+    {
+      "ids": [585, 586],
+      "change": {
+        "585": { "id": 585, "name": "deerling" },
+        "586": { "id": 586, "name": "sawsbuck" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["spring", "summer", "autumn", "winter"],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "317": [
+    {
+      "ids": [624, 625, 983],
+      "change": {},
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 508,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up-after-defeating-3-bisharp"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "319": [
+    {
+      "ids": [10240],
+      "change": {
+        "628": { "id": 10240, "name": "braviary-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "342": [
+    {
+      "ids": [664, 665, 666],
+      "change": {
+        "666": { "id": 666, "name": "vivillon" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": [
+        "meadow",
+        "icy-snow",
+        "polar",
+        "tundra",
+        "continental",
+        "garden",
+        "elegant",
+        "modern",
+        "marine",
+        "archipelago",
+        "high-plains",
+        "sandstorm",
+        "river",
+        "monsoon",
+        "savanna",
+        "sun",
+        "ocean",
+        "jungle",
+        "fancy",
+        "poke-ball"
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "344": [
+    {
+      "ids": [669, 670, 671],
+      "change": {
+        "669": { "id": 669, "name": "flabebe" },
+        "670": { "id": 670, "name": "floette" },
+        "671": { "id": 671, "name": "florges" }
+      },
+      "hasChainFormSelector": true,
+      "chainForms": ["red", "yellow", "orange", "blue", "white"],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "348": [
+    {
+      "ids": [677, 678, 10025],
+      "change": {
+        "678": { "id": 678, "name": "meowstic-male" },
+        "10025": { "id": 10025, "name": "meowstic-female" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 360,
+          "min_level": 25,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_gender": {
+            "name": "male"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 677,
+          "name": "meowstic-female",
+          "id": 10025,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "min_level": 25,
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 14
+              },
+              "pokemon_v2_gender": {
+                "name": "female"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "362": [
+    {
+      "ids": [10241, 10242],
+      "change": {
+        "705": { "id": 10241, "name": "sliggoo-hisui" },
+        "706": { "id": 10242, "name": "goodra-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "365": [
+    {
+      "ids": [10027, 10030],
+      "change": {
+        "710": { "id": 10027, "name": "pumpkaboo-small" },
+        "711": { "id": 10030, "name": "gourgeist-small" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
+    {
+      "ids": [10028, 10031],
+      "change": {
+        "710": { "id": 10028, "name": "pumpkaboo-large" },
+        "711": { "id": 10031, "name": "gourgeist-large" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
+    {
+      "ids": [10029, 10032],
+      "change": {
+        "710": { "id": 10029, "name": "pumpkaboo-super" },
+        "711": { "id": 10032, "name": "gourgeist-super" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "366": [
+    {
+      "ids": [10243],
+      "change": {
+        "713": { "id": 10243, "name": "avalugg-hisui" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "374": [
+    {
+      "ids": [10244],
+      "change": {
+        "724": { "id": 10244, "name": "decidueye-hisui" }
+      },
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 374,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "min_level": 36
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "379": [
+    {
+      "ids": [736, 737, 738],
+      "change": {
+        "738": { "id": 738, "name": "vikavolt" }
+      },
+      "hasGenerationSelector": true,
+      "generations": ["7", "8+"],
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 383,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_location": {
+            "name": "vast-poni-canyon"
+          }
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "383": [
+    {
+      "ids": [744, 745, 10126],
+      "change": {
+        "745": { "id": 745, "name": "lycanroc-midday" }
+      },
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 744,
+          "name": "lycanroc-midnight",
+          "id": 10126,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "min_level": 25,
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "time_of_day": "night"
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    },
+    {
+      "ids": [10151, 10152],
+      "change": {
+        "744": { "id": 10151, "name": "rockruff-own-tempo" },
+        "745": { "id": 745, "name": "lycanroc-midday" }
+      },
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 744,
+          "name": "lycanroc-dusk",
+          "id": 10152,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "min_level": 25,
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "time_of_day": "dusk"
+            }
+          ]
+        },
+        {
+          "evolves_from_species_id": 744,
+          "name": "lycanroc-midnight",
+          "id": 10126,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "min_level": 25,
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "time_of_day": "night"
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "413": [
+    {
+      "ids": [789, 790, 791, 792],
+      "change": {},
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 403,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "min_level": 53,
+          "game": "S/US/SW"
+        },
+        {
+          "id": 404,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "min_level": 53,
+          "game": "M/UM/SH"
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "446": [
+    {
+      "ids": [848, 849, 10184, 10219, 10228],
+      "change": {
+        "849": { "id": 849, "name": "toxtricity-amped" }
+      },
+
+      "hasCustomEvolution": true,
+      "customEvolution": [
+        {
+          "id": 433,
+          "min_level": 30,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "natures": "Amped Natures"
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 848,
+          "name": "toxtricity-low-key",
+          "id": 10184,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "min_level": 30,
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "natures": "Low Key Natures"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "470": [
+    {
+      "ids": [891, 892, 10191, 10226, 10227],
+      "change": {
+        "892": { "id": 892, "name": "urshifu-single-strike" }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": [],
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolves_from_species_id": 891,
+          "name": "urshifu-rapid-strike",
+          "id": 10191,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "id": 7,
+                "name": "tower-of-waters"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

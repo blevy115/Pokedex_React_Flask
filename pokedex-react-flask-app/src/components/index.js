@@ -33,6 +33,10 @@ export { default as GMaxMoveDetail } from "./GMaxMoveDetail/GMaxMoveDetail";
 export { default as GMaxMoveTable } from "./GMaxMoveTable/GMaxMoveTable";
 export { default as MaxMoveDetail } from "./MaxMoveDetail/MaxMoveDetail";
 export { default as MaxMoveTable } from "./MaxMoveTable/MaxMoveTable";
+export { default as EvolutionaryChain } from "./EvolutionaryChain/EvolutionaryChain";
+export { default as UseEvolutionPokemonTable } from "./UseEvolutionPokemonTable/UseEvolutionPokemonTable";
+export { default as HeldEvolutionPokemonTable } from "./HeldEvolutionPokemonTable/HeldEvolutionPokemonTable";
+export { default as PokemonForms } from "./PokemonForms/PokemonForms";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

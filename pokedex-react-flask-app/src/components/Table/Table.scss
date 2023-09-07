@@ -1,4 +1,4 @@
-@import "../../helpers//breakpoints";
+@import "../../helpers/breakpoints";
 
 .table-container {
   border-radius: 0.5rem;
@@ -15,6 +15,10 @@
   @media screen and (max-width: $breakpoint-small) {
     border-collapse: collapse;
     word-break: break-word;
+
+    .type-list {
+      flex-direction: column;
+    }
   }
 }
 
@@ -70,4 +74,8 @@
   .table-sort-icon {
     display: contents;
   }
+}
+
+.move-list-item-name {
+  white-space: nowrap;
 }

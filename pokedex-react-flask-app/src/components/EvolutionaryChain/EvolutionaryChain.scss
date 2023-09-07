@@ -1,0 +1,18 @@
+path.link {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+
+.tree {
+  height: 250px;
+  margin-bottom: 1.5rem;
+
+  .select-input {
+    margin: 0 auto;
+  }
+
+  &.extend {
+    height: 600px;
+  }
+}

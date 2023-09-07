@@ -1,5 +1,6 @@
 import { getMaxMovePower } from "./maxMoveHelper";
 import { getZMovePower } from "./zMoveHelper";
+import { formatName } from "./format";
 
 function modifyMoves({
   moves,
@@ -337,6 +338,78 @@ function modifyMovesForMaxMoveTable({
   return { columns, tableData };
 }
 
+function modifyItemPokemonEvolution({
+  pokemonsList,
+  SpriteComponent,
+  PreEvolvedNameComponent,
+  EvolvedNameComponent,
+  TypesImageComponent,
+}) {
+  const columns = [
+    {
+      Header: "Pre-Evolved Sprite",
+      accessor: "preEvolvedSpriteId",
+      Cell: SpriteComponent,
+    },
+    {
+      Header: "Pre-Evolved Name",
+      accessor: "preEvolvedName",
+      Cell: PreEvolvedNameComponent,
+    },
+    {
+      Header: "Pre-Evolved Types",
+      accessor: "preEvolvedTypes",
+      Cell: TypesImageComponent,
+    },
+    {
+      Header: "Evolved Sprite",
+      accessor: "evolvedSpriteId",
+      Cell: SpriteComponent,
+    },
+    {
+      Header: "Evolved Name",
+      accessor: "evolvedName",
+      Cell: EvolvedNameComponent,
+    },
+    {
+      Header: "Evolved Types",
+      accessor: "evolvedTypes",
+      Cell: TypesImageComponent,
+    },
+    { Header: "Trigger", accessor: "trigger" },
+  ];
+  const tableData = pokemonsList.map((pokemons, i) => {
+    const preEvolvedPokemon =
+      pokemons.pokemon_v2_pokemonspecy.pokemon_v2_evolutionchain.pokemon_v2_pokemonspecies.find(
+        (pokemon) =>
+          pokemon.id ===
+          pokemons.pokemon_v2_pokemonspecy.evolves_from_species_id
+      );
+
+    const evolvedPokemon =
+      pokemons.pokemon_v2_pokemonspecy.pokemon_v2_evolutionchain.pokemon_v2_pokemonspecies.find(
+        (pokemon) => pokemon.id === pokemons.pokemon_v2_pokemonspecy.id
+      );
+
+    const evolution = {
+      id: i,
+      preEvolvedSpriteId: preEvolvedPokemon.id,
+      preEvolvedName: preEvolvedPokemon.name,
+      preEvolvedTypes: preEvolvedPokemon.pokemon_v2_pokemons[0].types,
+      evolvedSpriteId: evolvedPokemon.id,
+      evolvedName: evolvedPokemon.name,
+      evolvedTypes: evolvedPokemon.pokemon_v2_pokemons[0].types,
+      trigger: `${formatName(pokemons.pokemon_v2_evolutiontrigger.name)}${
+        pokemons.time_of_day
+          ? ` at ${formatName(pokemons.time_of_day)}time`
+          : ""
+      }`,
+    };
+    return evolution;
+  });
+  return { columns, tableData };
+}
+
 function modifyPokemonGMAXMove({ move, NameComponent, TypeImageComponent }) {
   const columns = [
     { Header: "Name", accessor: "name", Cell: NameComponent },
@@ -355,8 +428,8 @@ const statHeaderModifier = {
   defense: "Def",
   "special-attack": "Sp.Atk",
   "special-defense": "Sp.Def",
-  speed: 'Spe',
-}
+  speed: "Spe",
+};
 
 function modifyStats({ headers, ivs, evs, StatComponent }) {
   const columns = headers.map((stat) => ({
@@ -388,4 +461,5 @@ export {
   modifyItemUniqueZMove,
   modifyMovesForMaxMoveTable,
   modifyPokemonGMAXMove,
+  modifyItemPokemonEvolution,
 };

@@ -1,6 +1,13 @@
+@import "../../helpers/breakpoints";
+
 .app__move {
   min-height: calc(100vh - 46px);
   overflow: auto;
+  padding: 0 1rem;
+
+  @media screen and (max-width: $breakpoint-small){
+    padding: 0 0.25rem;
+  }
 }
 
 .app__move-info {

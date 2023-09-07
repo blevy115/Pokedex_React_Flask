@@ -14,7 +14,7 @@ const ItemSearch = () => {
   const { data: list, loading: loadingList } = useQuery(
     GET_ITEMS_LIST_BY_NAME,
     {
-      variables: { name: `%${textInput.replace(" ", "-")}%` },
+      variables: { name: `%${textInput.replaceAll(" ", "-")}%` },
 
       skip: !textInput,
       client: pokemonAPIClient,

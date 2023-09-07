@@ -14,11 +14,73 @@ const GET_POKEMON_INFO = gql`
         is_legendary
         is_mythical
         is_baby
+        capture_rate
+        forms: pokemon_v2_pokemons{
+          id
+          pokemon_v2_pokemonforms{
+            id
+            name
+            form_name
+            pokemon_id
+            pokemon_v2_pokemonformsprites {
+              sprites
+            }
+          }
+        }
         pokedexes: pokemon_v2_pokemondexnumbers {
           pokedex_number
           pokemon_v2_pokedex {
             name
           }
+        }
+        evolutionChain: pokemon_v2_evolutionchain {
+          id
+          pokemon_v2_pokemonspecies(order_by: { order: asc }) {
+            name
+            id
+            pokemon_v2_pokemonevolutions {
+              id
+              pokemon_v2_evolutiontrigger {
+                name
+                id
+              }
+              pokemon_v2_location {
+                name
+                pokemon_v2_region {
+                  name
+                }
+              }
+              relative_physical_stats
+              min_happiness
+              time_of_day
+              turn_upside_down
+              needs_overworld_rain
+              min_beauty
+              pokemon_v2_item {
+                name
+                id
+              }
+              min_level
+              pokemon_v2_move {
+                name
+                id
+              }
+              pokemon_v2_gender {
+                id
+                name
+              }
+              pokemonV2ItemByHeldItemId {
+                name
+                id
+              }
+              pokemonV2PokemonspecyByTradeSpeciesId {
+                name
+                id
+              }
+            }
+            evolves_from_species_id
+          }
+          baby_trigger_item_id
         }
       }
 
@@ -365,6 +427,61 @@ const GET_ITEM_INFO = gql`
             name
           }
         }
+      }
+      evolution_pokemon: pokemon_v2_pokemonevolutions {
+        evolved_species_id
+        pokemon_v2_evolutiontrigger {
+          name
+          id
+        }
+        pokemon_v2_pokemonspecy {
+          evolves_from_species_id
+          id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              id
+              name
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+          name
+        }
+      }
+      held_evolution_pokemon: pokemonV2PokemonevolutionsByHeldItemId {
+        evolved_species_id
+        pokemon_v2_evolutiontrigger {
+          name
+          id
+        }
+        pokemon_v2_pokemonspecy {
+          evolves_from_species_id
+          id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              id
+              name
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+          name
+        }
+        time_of_day
       }
     }
   }
