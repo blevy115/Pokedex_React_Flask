@@ -1,6 +1,6 @@
 export function textOffsetByLength(text, depth) {
   const maxLength = 35;
-  let minValue = 30;
+  let minValue = 25;
   let maxValue = 60;
   const range = maxValue - minValue;
 
