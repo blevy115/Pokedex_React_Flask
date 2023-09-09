@@ -17,7 +17,7 @@ function mergeLocationEncounters(encounters) {
       if (!groupedEncounters[key]) {
         groupedEncounters[key] = {
           locationArea: locationName,
-          generation: `gen-${generationId}`,
+          generation: generationId,
           version: versionId,
           gameName:
             encounter.pokemon_v2_encounterslot.pokemon_v2_versiongroup.name,
@@ -110,19 +110,17 @@ function mergePokemonEncounters(encounters) {
     }
 
     if (!sortedEncounters[generation][game]) {
-      sortedEncounters[generation][game] = {
-        locations: [],
-      };
+      sortedEncounters[generation][game] = [];
     }
 
-    sortedEncounters[generation][game].locations.push({
+    sortedEncounters[generation][game].push({
       name: encounter.location,
       id: encounter.locationId,
     });
   }
   for (const gen in sortedEncounters) {
     for (const game in sortedEncounters[gen]) {
-      sortedEncounters[gen][game].locations.sort((a, b) => a.id - b.id);
+      sortedEncounters[gen][game].sort((a, b) => a.id - b.id);
     }
   }
 

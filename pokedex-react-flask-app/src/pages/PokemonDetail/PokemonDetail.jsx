@@ -205,7 +205,7 @@ const PokemonDetail = () => {
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />
-        <EncounterLocations encounters={encounters} />
+        {encounters.length > 0 && <EncounterLocations encounters={encounters} />}
         <MovesTable
           id={pokemonIdInt}
           generation={form[0].pokemon_v2_versiongroup.generation_id}
