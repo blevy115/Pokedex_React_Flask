@@ -5,6 +5,8 @@ export { default as ItemSearch } from "./ItemSearch/ItemSearch";
 export { default as Favourites } from "./Favourites/Favourites";
 export { default as MoveDetail } from "./MoveDetail/MoveDetail";
 export { default as MoveSearch } from "./MoveSearch/MoveSearch";
+export { default as LocationDetail } from "./LocationDetail/LocationDetail";
+export { default as LocationSearch } from "./LocationSearch/LocationSearch";
 export { default as PokemonDetail } from "./PokemonDetail/PokemonDetail";
 export { default as PokemonSearch } from "./PokemonSearch/PokemonSearch";
 export { default as TypeList } from "./TypeList/TypeList";

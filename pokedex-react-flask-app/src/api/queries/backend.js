@@ -87,6 +87,17 @@ const ABILITY_MUTATION = gql`
   }
 `;
 
+const LOCATION_MUTATION = gql`
+  mutation locationMutation($name: String!, $location_id: Int!) {
+    mutateLocation(name: $name, locationId: $location_id) {
+      location {
+        name
+        locationId
+      }
+    }
+  }
+`;
+
 const ITEM_MUTATION = gql`
   mutation itemMutation($name: String!, $item_id: Int!) {
     mutateItem(name: $name, itemId: $item_id) {
@@ -163,6 +174,7 @@ export {
   MOVE_MUTATION,
   ABILITY_MUTATION,
   ITEM_MUTATION,
+  LOCATION_MUTATION,
   USER_POKEMON_MUTATION,
   GET_USER_POKEMONS,
   GET_USER_POKEMON_SHINY_COUNT,

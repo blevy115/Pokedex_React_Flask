@@ -14,6 +14,8 @@ import {
   Favourites,
   ItemDetail,
   ItemSearch,
+  LocationSearch,
+  LocationDetail,
   PokemonDetail,
   PokemonSearch,
   MoveDetail,
@@ -63,6 +65,15 @@ function ItemDetailErrorElement() {
   );
 }
 
+function LocationDetailErrorElement() {
+  return (
+    <>
+      <Link to="/items">Back to List</Link>
+      <h2>Not valid Location ID</h2>
+    </>
+  );
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -72,6 +83,7 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/pokemon" element={<PokemonSearch />} />
+        <Route path="/locations" element={<LocationSearch />} />
         <Route path="/items" element={<ItemSearch />} />
         <Route path="/moves" element={<MoveSearch />} />
         <Route path="/abilities" element={<AbilitySearch />} />
@@ -87,6 +99,11 @@ const router = createBrowserRouter(
           errorElement={<ItemDetailErrorElement />}
         />
         <Route
+          path="/locations/:locationId"
+          element={<LocationDetail />}
+          errorElement={<LocationDetailErrorElement />}
+        />
+        <Route
           path="/pokemon/:pokemonId"
           element={<PokemonDetail />}
           errorElement={<PokemonDetailErrorElement />}
@@ -96,10 +113,7 @@ const router = createBrowserRouter(
           element={<MoveDetail />}
           errorElement={<MoveDetailErrorElement />}
         />
-         <Route
-          path="/types/:typeId"
-          element={<TypeDetail />}
-        />
+        <Route path="/types/:typeId" element={<TypeDetail />} />
         <Route path="/favourites" element={<Favourites />} />
       </Route>
       <Route path="*" element={<Navigate to="/pokemon" />}></Route>
