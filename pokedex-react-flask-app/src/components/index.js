@@ -39,6 +39,7 @@ export { default as UseEvolutionPokemonTable } from "./UseEvolutionPokemonTable/
 export { default as HeldEvolutionPokemonTable } from "./HeldEvolutionPokemonTable/HeldEvolutionPokemonTable";
 export { default as PokemonForms } from "./PokemonForms/PokemonForms";
 export { default as EncounterLocations } from "./EncounterLocations/EncounterLocations";
+export { default as LocationEncounters } from "./LocationEncounters/LocationEncounters";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

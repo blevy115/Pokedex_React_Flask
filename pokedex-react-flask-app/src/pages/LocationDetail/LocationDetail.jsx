@@ -9,7 +9,7 @@ import { LOCATION_MUTATION } from "../../api/queries/backend";
 import { formatName } from "../../helpers/format";
 import { mergeLocationEncounters } from "../../helpers/mergeEncounters";
 
-import { Loading } from "../../components";
+import { Loading, LocationEncounters } from "../../components";
 
 import "./LocationDetail.scss";
 
@@ -39,9 +39,6 @@ const LocationDetail = () => {
 
   const { pokemon_v2_region: region, pokemon_v2_locationareas:locationAreas } = data.location[0];
 
-  // console.log(locationAreas)
-  console.log(mergeLocationEncounters(locationAreas))
-
   return (
     <div className="app__location-details">
       <div className="app__location-details-info">
@@ -50,6 +47,7 @@ const LocationDetail = () => {
         </div>
         {region && <p>{`Region: ${formatName(region.name)}`}</p>}
       </div>
+      < LocationEncounters encounters={mergeLocationEncounters(locationAreas)} />
     </div>
   );
 };

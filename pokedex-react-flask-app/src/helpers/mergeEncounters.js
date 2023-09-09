@@ -8,19 +8,18 @@ function mergeLocationEncounters(encounters) {
       const generationId =
         encounter.pokemon_v2_encounterslot.pokemon_v2_versiongroup
           .generation_id;
-      const versionId = encounter.pokemon_v2_encounterslot.version_group_id;
+      const gameId = encounter.pokemon_v2_version.id;
       const encounterMethodId =
         encounter.pokemon_v2_encounterslot.pokemon_v2_encountermethod.id;
       const pokemonId = encounter.pokemon_v2_pokemon.id;
-      const key = `${locationName}-${generationId}-${versionId}-${encounterMethodId}-${pokemonId}`;
+      const key = `${locationName}-${generationId}-${gameId}-${encounterMethodId}-${pokemonId}`;
 
       if (!groupedEncounters[key]) {
         groupedEncounters[key] = {
           locationArea: locationName,
           generation: generationId,
-          version: versionId,
-          gameName:
-            encounter.pokemon_v2_encounterslot.pokemon_v2_versiongroup.name,
+          version: gameId,
+          game: encounter.pokemon_v2_version.name,
           pokemon: encounter.pokemon_v2_pokemon,
           minLevel: encounter.min_level,
           maxLevel: encounter.max_level,
@@ -64,7 +63,7 @@ function mergeLocationEncounters(encounters) {
       encounter.method
     ].push({
       pokemon: encounter.pokemon,
-      gameName: encounter.gameName,
+      game: encounter.game,
       minLevel: encounter.minLevel,
       maxLevel: encounter.maxLevel,
       rarity: encounter.rarity,

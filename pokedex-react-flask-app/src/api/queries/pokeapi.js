@@ -343,6 +343,10 @@ const GET_LOCATION_INFO = gql`
             name
             id
           }
+          pokemon_v2_version {
+            name
+            id
+          }
           min_level
           max_level
           pokemon_v2_encounterslot {
@@ -352,10 +356,8 @@ const GET_LOCATION_INFO = gql`
             }
             rarity
             slot
-            version_group_id
             pokemon_v2_versiongroup {
               generation_id
-              name
             }
           }
         }
