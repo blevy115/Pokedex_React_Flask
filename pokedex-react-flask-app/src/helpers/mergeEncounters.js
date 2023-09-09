@@ -33,6 +33,14 @@ function mergeLocationEncounters(encounters) {
           groupedEncounters[key].slot !==
           encounter.pokemon_v2_encounterslot.slot
         ) {
+          groupedEncounters[key].minLevel = Math.min(
+            groupedEncounters[key].minLevel,
+            encounter.min_level
+          );
+          groupedEncounters[key].maxLevel = Math.max(
+            groupedEncounters[key].maxLevel,
+            encounter.max_level
+          );
           groupedEncounters[key].rarity +=
             encounter.pokemon_v2_encounterslot.rarity;
         }
@@ -48,26 +56,16 @@ function mergeLocationEncounters(encounters) {
       finalGroupedEncounters[encounter.generation] = {};
     }
     if (!finalGroupedEncounters[encounter.generation][encounter.locationArea]) {
-      finalGroupedEncounters[encounter.generation][encounter.locationArea] = {};
+      finalGroupedEncounters[encounter.generation][encounter.locationArea] = [];
     }
-    if (
-      !finalGroupedEncounters[encounter.generation][encounter.locationArea][
-        encounter.method
-      ]
-    ) {
-      finalGroupedEncounters[encounter.generation][encounter.locationArea][
-        encounter.method
-      ] = [];
-    }
-    finalGroupedEncounters[encounter.generation][encounter.locationArea][
-      encounter.method
-    ].push({
+    finalGroupedEncounters[encounter.generation][encounter.locationArea].push({
       pokemon: encounter.pokemon,
       game: encounter.game,
       minLevel: encounter.minLevel,
       maxLevel: encounter.maxLevel,
       rarity: encounter.rarity,
       slot: encounter.slot,
+      method: encounter.method,
     });
   }
 

@@ -438,6 +438,31 @@ function modifyPokemonEncounters({
   return { columns, tableData };
 }
 
+function modifyLocationEncounters({
+  encounters,
+  NameComponent,
+  GameComponent,
+  SpriteComponent,
+}) {
+  const columns = [
+    { Header: "Game", accessor: "game", Cell: GameComponent },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Levels", accessor: "levels" },
+    { Header: "Rarity", accessor: "rarity" },
+    { Header: "Method", accessor: "method" },
+  ];
+  const tableData = encounters.map((encounter) => ({
+    game: encounter.game,
+    spriteId: encounter.pokemon.id,
+    name: encounter.pokemon.name,
+    levels: `${encounter.minLevel}-${encounter.maxLevel}`,
+    rarity: `${encounter.rarity}%`,
+    method: formatName(encounter.method),
+  }));
+  return { columns, tableData };
+}
+
 const statHeaderModifier = {
   hp: "HP",
   attack: "Atk",
@@ -479,4 +504,5 @@ export {
   modifyPokemonGMAXMove,
   modifyItemPokemonEvolution,
   modifyPokemonEncounters,
+  modifyLocationEncounters,
 };

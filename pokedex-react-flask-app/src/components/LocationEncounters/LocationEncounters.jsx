@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import "./LocationEncounters";
+import { formatName } from "../../helpers/format";
+
+import { LocationPokemonsTable } from "../";
 
 const LocationEncounters = ({ encounters }) => {
   const generationOptions = Object.keys(encounters);
@@ -13,7 +15,6 @@ const LocationEncounters = ({ encounters }) => {
 
   if (!generation) return null;
 
-  console.log(encounters[generation])
   return (
     <div style={{ width: "80%", margin: " 0 auto" }}>
       <select
@@ -29,7 +30,20 @@ const LocationEncounters = ({ encounters }) => {
           );
         })}
       </select>
-      {/* {encounters[generation] && <LocationPokemonsTable/>} */}
+      {encounters[generation]
+        ? Object.entries(encounters[generation]).map(
+            ([location, pokemonEncounters]) => (
+              <div key={location}>
+                <h3>{formatName(location)}</h3>
+                <LocationPokemonsTable
+                  pokemonEncounters={pokemonEncounters.sort((a, b) =>
+                    a.game.localeCompare(b.game)
+                  )}
+                />
+              </div>
+            )
+          )
+        : null}
       {/* {Table component} */}
     </div>
   );
