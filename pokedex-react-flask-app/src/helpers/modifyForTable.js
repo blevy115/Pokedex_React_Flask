@@ -422,6 +422,22 @@ function modifyPokemonGMAXMove({ move, NameComponent, TypeImageComponent }) {
   return { columns, tableData };
 }
 
+function modifyPokemonEncounters({
+  encounters,
+  GameComponent,
+  LocationsComponent,
+}) {
+  const columns = [
+    { Header: "Game", accessor: "game", Cell: GameComponent },
+    { Header: "Locations", accessor: "locations", Cell: LocationsComponent },
+  ];
+  const tableData = Object.entries(encounters).map(([game, locations]) => ({
+    game,
+    locations,
+  }));
+  return { columns, tableData };
+}
+
 const statHeaderModifier = {
   hp: "HP",
   attack: "Atk",
@@ -462,4 +478,5 @@ export {
   modifyMovesForMaxMoveTable,
   modifyPokemonGMAXMove,
   modifyItemPokemonEvolution,
+  modifyPokemonEncounters,
 };

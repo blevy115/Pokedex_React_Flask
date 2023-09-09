@@ -202,6 +202,23 @@ const LevelComponent = ({ value }) => {
   );
 };
 
+const GameComponent = ({ value }) => {
+  return <div>{formatGameName(value)}</div>;
+};
+
+const LocationsComponent = ({ value }) => {
+  const navigate = useNavigate();
+  return (
+    <div>
+      {value.map((location, id) => (
+        <span key={id} onClick={() => navigate(`/locations/${location.id}`)}>
+          {formatName(location.name)}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 export {
   SpriteComponent,
   PokemonNameComponent,
@@ -217,4 +234,6 @@ export {
   LevelComponent,
   PreEvolvedPokemonNameComponent,
   EvolvedPokemonNameComponent,
+  GameComponent,
+  LocationsComponent,
 };

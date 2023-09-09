@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { mergePokemonEncounters } from "../../helpers/mergeEncounters";
-import { formatGameName, formatName } from "../../helpers/format";
+
+import { modifyPokemonEncounters } from "../../helpers/modifyForTable";
+import { Table } from "../";
+import {
+  GameComponent,
+  LocationsComponent,
+} from "../TableCellComponents/TableCellComponents";
 
 const EncounterLocations = ({ encounters }) => {
-  const navigate = useNavigate();
-  console.log(navigate);
   const encountersByGeneration = useMemo(
     () => mergePokemonEncounters(encounters),
     [encounters]
@@ -28,11 +32,15 @@ const EncounterLocations = ({ encounters }) => {
   )
     return null;
 
-  console.log(Object.entries(encountersByGeneration[generation]));
+  const { tableData, columns } = modifyPokemonEncounters({
+    encounters: encountersByGeneration[generation],
+    GameComponent,
+    LocationsComponent,
+  });
 
   return (
     <div className="app__pokemon-encounters">
-      <h4>Locations</h4>
+      <h3 className="text-center">Locations</h3>
       <div className="select-input">
         <label htmlFor="EncounterGenerationSelector">Generation:</label>
         <select
@@ -49,24 +57,25 @@ const EncounterLocations = ({ encounters }) => {
           })}
         </select>
       </div>
-      {Object.entries(encountersByGeneration[generation]).map(
-        ([game, locations]) => (
-          <div key={game}>
-            <p>{formatGameName(game)}</p>
-            <ul className="pokemon-encounters-list">
-              {locations.map((location, id) => (
-                <li
-                  className="pokemon-encounters-list-item"
-                  key={`${game}-${id}`}
-                  onClick={() => navigate(`/locations/${location.id}`)}
-                >
-                  {formatName(location.name)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )
-      )}
+      <AnimatePresence>
+        <motion.div
+          key={JSON.stringify(tableData)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          // animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
+          exit={{ display: "none" }}
+          transition={{ duration: 0.5 }}
+          className="moves-table"
+        >
+          <Table
+            data={tableData}
+            columns={columns}
+            hasFilterValue={false}
+            hasSortBy={false}
+            hasHeaders={false}
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 };
