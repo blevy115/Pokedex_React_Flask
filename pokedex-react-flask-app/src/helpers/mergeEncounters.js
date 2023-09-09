@@ -79,16 +79,15 @@ function mergePokemonEncounters(encounters) {
   const mergedEncounters = {};
 
   encounters.forEach((encounter) => {
-    const versionGroupName =
-      encounter.pokemon_v2_version.pokemon_v2_versiongroup.name;
-    const versionGroupId = encounter.pokemon_v2_version.version_group_id;
+    const gameName = encounter.pokemon_v2_version.name;
+    const versionGroupId = encounter.pokemon_v2_version.id;
     const locationId = encounter.pokemon_v2_locationarea.pokemon_v2_location.id;
 
     const key = `${versionGroupId}-${locationId}`;
 
     if (!mergedEncounters[key]) {
       mergedEncounters[key] = {
-        game: versionGroupName,
+        game: gameName,
         generation:
           encounter.pokemon_v2_version.pokemon_v2_versiongroup.generation_id,
         location: encounter.pokemon_v2_locationarea.pokemon_v2_location.name,

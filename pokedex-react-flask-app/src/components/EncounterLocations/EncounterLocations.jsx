@@ -10,6 +10,8 @@ import {
   LocationsComponent,
 } from "../TableCellComponents/TableCellComponents";
 
+import "./EncounterLocations.scss"
+
 const EncounterLocations = ({ encounters }) => {
   const encountersByGeneration = useMemo(
     () => mergePokemonEncounters(encounters),

@@ -158,10 +158,10 @@ const GET_POKEMON_INFO = gql`
         distinct_on: [location_area_id, version_id]
       ) {
         pokemon_v2_version {
-          version_group_id
+          id
+          name
           pokemon_v2_versiongroup {
             generation_id
-            name
           }
         }
         pokemon_v2_locationarea {

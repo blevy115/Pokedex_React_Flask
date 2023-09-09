@@ -203,17 +203,17 @@ const LevelComponent = ({ value }) => {
 };
 
 const GameComponent = ({ value }) => {
-  return <div>{formatGameName(value)}</div>;
+  return <div className="locations-table-game-name">{formatGameName(value)}</div>;
 };
 
 const LocationsComponent = ({ value }) => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="locations-table-item-conatiner">
       {value.map((location, id) => (
-        <span key={id} onClick={() => navigate(`/locations/${location.id}`)}>
+        <div className="clickable" key={id} onClick={() => navigate(`/locations/${location.id}`)}>
           {formatName(location.name)}
-        </span>
+        </div>
       ))}
     </div>
   );
