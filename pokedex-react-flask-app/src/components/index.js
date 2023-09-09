@@ -37,6 +37,7 @@ export { default as EvolutionaryChain } from "./EvolutionaryChain/EvolutionaryCh
 export { default as UseEvolutionPokemonTable } from "./UseEvolutionPokemonTable/UseEvolutionPokemonTable";
 export { default as HeldEvolutionPokemonTable } from "./HeldEvolutionPokemonTable/HeldEvolutionPokemonTable";
 export { default as PokemonForms } from "./PokemonForms/PokemonForms";
+export { default as EncounterLocations } from "./EncounterLocations/EncounterLocations";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

@@ -153,6 +153,21 @@ const GET_POKEMON_INFO = gql`
           }
         }
       }
+      encounters: pokemon_v2_encounters(order_by: {location_area_id: asc, version_id: asc}, distinct_on: [location_area_id, version_id]) {
+        pokemon_v2_version {
+          version_group_id
+          pokemon_v2_versiongroup {
+            generation_id
+            name
+          }
+        }
+        pokemon_v2_locationarea {
+          pokemon_v2_location{
+            id
+            name
+          }
+        }
+      }
     }
   }
 `;

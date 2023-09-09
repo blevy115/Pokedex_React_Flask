@@ -26,6 +26,7 @@ import {
   Loading,
   EvolutionaryChain,
   PokemonForms,
+  EncounterLocations,
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
@@ -104,6 +105,7 @@ const PokemonDetail = () => {
     stats,
     abilities,
     form,
+    encounters,
     held_items: heldItems,
   } = data.pokemon_details[0];
 
@@ -203,6 +205,7 @@ const PokemonDetail = () => {
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />
+        <EncounterLocations encounters={encounters} />
         <MovesTable
           id={pokemonIdInt}
           generation={form[0].pokemon_v2_versiongroup.generation_id}
