@@ -7,6 +7,7 @@ import { GET_LOCATION_INFO } from "../../api/queries/pokeapi";
 import { LOCATION_MUTATION } from "../../api/queries/backend";
 
 import { formatName } from "../../helpers/format";
+import { mergeLocationEncounters } from "../../helpers/mergeEncounters";
 
 import { Loading } from "../../components";
 
@@ -36,7 +37,10 @@ const LocationDetail = () => {
 
   if (loading) return <Loading />;
 
-  const { pokemon_v2_region: region } = data.location[0];
+  const { pokemon_v2_region: region, pokemon_v2_locationareas:locationAreas } = data.location[0];
+
+  // console.log(locationAreas)
+  console.log(mergeLocationEncounters(locationAreas))
 
   return (
     <div className="app__location-details">

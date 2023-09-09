@@ -328,10 +328,37 @@ const GET_LOCATIONS_LIST_BY_NAME = gql`
 const GET_LOCATION_INFO = gql`
   query getLocationnfo($id: Int!) {
     location: pokemon_v2_location(where: { id: { _eq: $id } }) {
+      id
       name
       pokemon_v2_region {
         name
         id
+      }
+      pokemon_v2_locationareas {
+        name
+        id
+        pokemon_v2_encounters {
+          id
+          pokemon_v2_pokemon {
+            name
+            id
+          }
+          min_level
+          max_level
+          pokemon_v2_encounterslot {
+            pokemon_v2_encountermethod {
+              name
+              id
+            }
+            rarity
+            slot
+            version_group_id
+            pokemon_v2_versiongroup {
+              generation_id
+              name
+            }
+          }
+        }
       }
     }
   }
