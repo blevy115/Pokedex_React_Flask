@@ -10,7 +10,7 @@ import {
   LocationsComponent,
 } from "../TableCellComponents/TableCellComponents";
 
-import "./EncounterLocations.scss"
+import "./EncounterLocations.scss";
 
 const EncounterLocations = ({ encounters }) => {
   const encountersByGeneration = useMemo(
@@ -67,7 +67,7 @@ const EncounterLocations = ({ encounters }) => {
           // animate={{ y: [100, 50, 0], opacity: [0, 0, 1] }}
           exit={{ display: "none" }}
           transition={{ duration: 0.5 }}
-          className="moves-table"
+          className="locations-table"
         >
           <Table
             data={tableData}

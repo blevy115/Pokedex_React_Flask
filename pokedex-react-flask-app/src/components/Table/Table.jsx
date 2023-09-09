@@ -127,7 +127,13 @@ const Table = ({
                   <tr key={i} {...row.getRowProps()}>
                     {row.cells.map((cell, j) => {
                       return (
-                        <td key={j} {...cell.getCellProps()}>
+                        <td
+                          style={
+                            cell.column.id === "game" ? { width: "8%" } : {}
+                          }
+                          key={j}
+                          {...cell.getCellProps()}
+                        >
                           {cell.render("Cell")}
                         </td>
                       );

@@ -3,6 +3,11 @@
 .table-container {
   border-radius: 0.5rem;
   overflow-x: auto;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 
 .table {
