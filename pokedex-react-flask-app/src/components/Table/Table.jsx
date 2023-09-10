@@ -40,9 +40,18 @@ const Table = ({
     const hasEvolvedName =
       row.values.evolvedName &&
       row.values.evolvedName.toLowerCase().includes(filterValue.toLowerCase());
-
+    const hasGameName =
+      row.values.game &&
+      row.values.game.toLowerCase().includes(filterValue.toLowerCase());
+    const hasMethod =
+      row.values.method &&
+      row.values.method.toLowerCase().includes(filterValue.toLowerCase());
     return hasFilterValue && filterValue
-      ? hasName || hasPreEvolvedName || hasEvolvedName
+      ? hasName ||
+          hasPreEvolvedName ||
+          hasEvolvedName ||
+          hasGameName ||
+          hasMethod
       : true;
   });
 
@@ -118,7 +127,13 @@ const Table = ({
                   <tr key={i} {...row.getRowProps()}>
                     {row.cells.map((cell, j) => {
                       return (
-                        <td key={j} {...cell.getCellProps()}>
+                        <td
+                          style={
+                            cell.column.id === "game" ? { width: "8%" } : {}
+                          }
+                          key={j}
+                          {...cell.getCellProps()}
+                        >
                           {cell.render("Cell")}
                         </td>
                       );

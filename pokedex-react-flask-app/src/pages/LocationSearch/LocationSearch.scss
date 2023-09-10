@@ -1,0 +1,29 @@
+@import "../../helpers/breakpoints";
+
+.app__location-search {
+  text-align: center;
+  margin-top: 1em;
+
+  div {
+    width: 460px;
+    margin: 0 auto;
+
+    @media screen and (max-width: $breakpoint-medium) {
+      width: 100%;
+    }
+  }
+}
+
+.app__location-search-field label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.app__location-search-field input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

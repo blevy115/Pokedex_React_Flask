@@ -153,6 +153,24 @@ const GET_POKEMON_INFO = gql`
           }
         }
       }
+      encounters: pokemon_v2_encounters(
+        order_by: { location_area_id: asc, version_id: asc }
+        distinct_on: [location_area_id, version_id]
+      ) {
+        pokemon_v2_version {
+          id
+          name
+          pokemon_v2_versiongroup {
+            generation_id
+          }
+        }
+        pokemon_v2_locationarea {
+          pokemon_v2_location {
+            id
+            name
+          }
+        }
+      }
     }
   }
 `;
@@ -291,6 +309,59 @@ const GET_ABILITIES_LIST_BY_NAME = gql`
     ) {
       id
       name
+    }
+  }
+`;
+
+const GET_LOCATIONS_LIST_BY_NAME = gql`
+  query getLocationsList($name: String!) {
+    locations_list: pokemon_v2_location(
+      where: { name: { _ilike: $name } }
+      order_by: { name: asc }
+    ) {
+      id
+      name
+    }
+  }
+`;
+
+const GET_LOCATION_INFO = gql`
+  query getLocationnfo($id: Int!) {
+    location: pokemon_v2_location(where: { id: { _eq: $id } }) {
+      id
+      name
+      pokemon_v2_region {
+        name
+        id
+      }
+      pokemon_v2_locationareas {
+        name
+        id
+        pokemon_v2_encounters {
+          id
+          pokemon_v2_pokemon {
+            name
+            id
+          }
+          pokemon_v2_version {
+            name
+            id
+          }
+          min_level
+          max_level
+          pokemon_v2_encounterslot {
+            pokemon_v2_encountermethod {
+              name
+              id
+            }
+            rarity
+            slot
+            pokemon_v2_versiongroup {
+              generation_id
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -703,6 +774,8 @@ export {
   GET_ABILITY_INFO,
   GET_ITEMS_LIST_BY_NAME,
   GET_ITEM_INFO,
+  GET_LOCATIONS_LIST_BY_NAME,
+  GET_LOCATION_INFO,
   GET_MOVE_POKEMONS,
   GET_ABILITY_POKEMONS,
   GET_TYPE_INFO,

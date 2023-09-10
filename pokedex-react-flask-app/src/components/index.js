@@ -2,6 +2,7 @@ export { default as Abilities } from "./Abilities/Abilities";
 export { default as AbilitiesList } from "./AbilitiesList/AbilitiesList";
 export { default as GenderRatio } from "./GenderRatio/GenderRatio";
 export { default as GenerationSelector } from "./GenerationSelector/GenerationSelector";
+export { default as LocationsList } from "./LocationsList/LocationsList";
 export { default as ItemsList } from "./ItemsList/ItemsList";
 export { default as ItemPokemonTable } from "./ItemPokemonTable/ItemPokemonTable";
 export { default as HeldItems } from "./HeldItems/HeldItems";
@@ -37,6 +38,9 @@ export { default as EvolutionaryChain } from "./EvolutionaryChain/EvolutionaryCh
 export { default as UseEvolutionPokemonTable } from "./UseEvolutionPokemonTable/UseEvolutionPokemonTable";
 export { default as HeldEvolutionPokemonTable } from "./HeldEvolutionPokemonTable/HeldEvolutionPokemonTable";
 export { default as PokemonForms } from "./PokemonForms/PokemonForms";
+export { default as EncounterLocations } from "./EncounterLocations/EncounterLocations";
+export { default as LocationEncounters } from "./LocationEncounters/LocationEncounters";
+export { default as LocationPokemonsTable } from "./LocationPokemonsTable/LocationPokemonsTable"
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";

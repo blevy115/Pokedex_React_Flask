@@ -7,6 +7,7 @@ from ..models import User as UserModel, \
     Move as MoveModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
+    Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel
@@ -39,6 +40,11 @@ class AbilityObject(SQLAlchemyObjectType):
 class ItemObject(SQLAlchemyObjectType):
     class Meta:
         model = ItemModel
+        interfaces = (relay.Node,)
+
+class LocationObject(SQLAlchemyObjectType):
+    class Meta:
+        model = LocationModel
         interfaces = (relay.Node,)
 
 

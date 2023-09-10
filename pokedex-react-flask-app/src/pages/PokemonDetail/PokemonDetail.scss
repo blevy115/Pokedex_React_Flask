@@ -7,6 +7,10 @@
   min-height: calc(100vh - 46px);
   overflow: auto;
 
+  .app-pokemon-detail-stats-and-moves {
+    max-width: calc(97vw - 800px);;
+  }
+
   .pokemon-details-info-traits {
     display: flex;
     justify-content: space-evenly;
@@ -21,6 +25,10 @@
 
   @media screen and (max-width: $breakpoint-xlarge) {
     grid-template-columns: 1fr;
+
+    .app-pokemon-detail-stats-and-moves {
+      max-width: 96vw;
+    }
   }
 
   @media screen and (max-width: $breakpoint-small){

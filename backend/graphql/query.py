@@ -8,6 +8,7 @@ from ..models import User as UserModel, \
     Move as MoveModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
+    Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel
@@ -17,6 +18,7 @@ from ..graphql.objects import UserObject as User, \
     MoveObject as Move, \
     AbilityObject as Ability, \
     ItemObject as Item, \
+    LocationObject as Location, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature, \
     TypeObject as Type
@@ -89,6 +91,15 @@ class Query(graphene.ObjectType):
             query = query.filter(ItemModel.name == name)
         if item_id:
             query = query.filter(ItemModel.item_id == item_id)
+        return query.all()
+
+    def resolve_locations(self, info, name=None, location_id=None):
+        query = Location.get_query(info)
+
+        if name:
+            query = query.filter(LocationModel.name == name)
+        if location_id:
+            query = query.filter(LocationModel.location_id == location_id)
         return query.all()
 
     user_pokemons = graphene.List(lambda: UserPokemon, user_id=graphene.String(

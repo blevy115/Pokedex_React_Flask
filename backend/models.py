@@ -54,6 +54,12 @@ class Item(db.Model):
     item_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
 
+class Location(db.Model):
+    __tablename__ = 'location'
+    id = db.Column(db.Integer, primary_key=True)
+    location_id = db.Column(db.Integer)
+    name = db.Column(db.String(50))
+
 
 class Nature(db.Model):
     __tablename__ = 'nature'

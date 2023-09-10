@@ -6,6 +6,7 @@ from ..models import User as UserModel, \
     Move as MoveModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
+    Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel
@@ -15,6 +16,7 @@ from ..graphql.objects import UserObject as User, \
     MoveObject as Move, \
     AbilityObject as Ability, \
     ItemObject as Item, \
+    LocationObject as Location, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature, \
     TypeObject as Type
@@ -157,6 +159,28 @@ class ItemMutation(graphene.Mutation):
         db.session.commit()
 
         return ItemMutation(item=item)
+    
+    
+class LocationMutation(graphene.Mutation):
+    class Arguments:
+        location_id = graphene.Int()
+        name = graphene.String(required=True)
+
+    location = graphene.Field(lambda: Location)
+
+    def mutate(self, info, location_id, name):
+        location = LocationModel(location_id=location_id, name=name)
+
+        existing_location = LocationModel.query.filter(
+            LocationModel.name == name and LocationModel.location_id == location_id).first()
+
+        if existing_location:
+            return LocationMutation(location=existing_location)
+
+        db.session.add(location)
+        db.session.commit()
+
+        return LocationMutation(location=location)
 
 
 class UserPokemonMutation(graphene.Mutation):
@@ -228,6 +252,7 @@ class Mutation(graphene.ObjectType):
     mutate_pokemon = PokemonMutation.Field()
     mutate_move = MoveMutation.Field()
     mutate_ability = AbilityMutation.Field()
+    mutate_location = LocationMutation.Field()
     mutate_user_pokemon = UserPokemonMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()

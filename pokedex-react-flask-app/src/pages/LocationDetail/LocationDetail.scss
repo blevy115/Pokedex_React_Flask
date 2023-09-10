@@ -1,0 +1,29 @@
+.app__location-details-info {
+  text-align: center;
+
+  .app__location-details-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em 0;
+
+    h3 {
+      margin: 0;
+    }
+  }
+}
+
+.app__location-details {
+  min-height: calc(100vh - 46px);
+  overflow: auto;
+}
+
+.app__location-details-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
