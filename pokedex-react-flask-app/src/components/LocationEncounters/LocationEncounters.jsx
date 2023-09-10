@@ -4,10 +4,11 @@ import { formatName } from "../../helpers/format";
 
 import { LocationPokemonsTable } from "../";
 
-const LocationEncounters = ({ encounters }) => {
-  const generationOptions = Object.keys(encounters);
+import "./LocationEncounters.scss";
 
+const LocationEncounters = ({ encounters }) => {
   const [generation, setGeneration] = useState();
+  const generationOptions = Object.keys(encounters);
 
   useEffect(() => {
     if (generationOptions.length > 0) setGeneration(generationOptions[0]);
@@ -16,20 +17,23 @@ const LocationEncounters = ({ encounters }) => {
   if (!generation) return null;
 
   return (
-    <div style={{ width: "80%", margin: " 0 auto" }}>
-      <select
-        id="LocationEncounterGenerationSelector"
-        value={generation}
-        onChange={(e) => setGeneration(parseInt(e.target.value))}
-      >
-        {generationOptions.map((gen, i) => {
-          return (
-            <option key={i} value={gen}>
-              {gen}
-            </option>
-          );
-        })}
-      </select>
+    <div className="app__location-pokemons">
+      <div className="select-input">
+        <label htmlFor="LocationEncounterGenerationSelector">Generation:</label>
+        <select
+          id="LocationEncounterGenerationSelector"
+          value={generation}
+          onChange={(e) => setGeneration(parseInt(e.target.value))}
+        >
+          {generationOptions.map((gen, i) => {
+            return (
+              <option key={i} value={gen}>
+                {gen}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       {encounters[generation]
         ? Object.entries(encounters[generation]).map(
             ([location, pokemonEncounters]) => (
@@ -44,7 +48,6 @@ const LocationEncounters = ({ encounters }) => {
             )
           )
         : null}
-      {/* {Table component} */}
     </div>
   );
 };

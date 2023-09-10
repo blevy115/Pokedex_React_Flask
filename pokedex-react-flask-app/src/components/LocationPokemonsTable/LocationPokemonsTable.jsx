@@ -1,4 +1,5 @@
 import React from "react";
+
 import { modifyLocationEncounters } from "../../helpers/modifyForTable";
 
 import { Table } from "../";
