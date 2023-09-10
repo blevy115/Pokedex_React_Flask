@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { mergePokemonEncounters } from "../../helpers/mergeEncounters";
-
 import { modifyPokemonEncounters } from "../../helpers/modifyForTable";
+
 import { Table } from "../";
 import {
   GameComponent,
