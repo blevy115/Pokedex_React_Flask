@@ -456,7 +456,10 @@ function modifyLocationEncounters({
     game: encounter.game,
     spriteId: encounter.pokemon.id,
     name: encounter.pokemon.name,
-    levels: `${encounter.minLevel}-${encounter.maxLevel}`,
+    levels:
+      encounter.minLevel === encounter.maxLevel
+        ? encounter.maxLevel
+        : `${encounter.minLevel}-${encounter.maxLevel}`,
     rarity: `${encounter.rarity}%`,
     method: formatName(encounter.method),
   }));
