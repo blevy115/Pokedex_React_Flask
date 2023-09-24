@@ -18,8 +18,8 @@ const pathText = (info) => {
       };
       textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
       break;
-     case 10:
-      break
+    case 10:
+      break;
     default:
       textParts.push(formatName(info.pokemon_v2_evolutiontrigger.name));
   }
@@ -41,6 +41,11 @@ const pathText = (info) => {
     textParts.push(` at ${info.time_of_day}`);
   }
   if (info.pokemon_v2_location) {
+    navigateObject = {
+      index: textParts.length,
+      type: "locations",
+      id: info.pokemon_v2_location.id,
+    };
     textParts.push(` at ${formatName(info.pokemon_v2_location.name)}`);
   }
   if (info.pokemon_v2_move) {

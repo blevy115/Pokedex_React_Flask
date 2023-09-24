@@ -45,6 +45,7 @@ const GET_POKEMON_INFO = gql`
                 id
               }
               pokemon_v2_location {
+                id
                 name
                 pokemon_v2_region {
                   name
@@ -358,6 +359,33 @@ const GET_LOCATION_INFO = gql`
             slot
             pokemon_v2_versiongroup {
               generation_id
+            }
+          }
+        }
+      }
+      evolutions: pokemon_v2_pokemonevolutions {
+        evolved_species_id
+        pokemon_v2_evolutiontrigger {
+          name
+          id
+        }
+        pokemon_v2_pokemonspecy {
+          name
+          id
+          evolves_from_species_id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              name
+              id
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
             }
           }
         }
