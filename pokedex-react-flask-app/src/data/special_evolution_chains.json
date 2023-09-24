@@ -166,6 +166,7 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }
@@ -292,28 +293,33 @@
             "hasNavigate": true,
             "navigate": { "type": "types", "id": 18 }
           }
-        },
-        {
+        }
+      ],
+      "hasAddedGenerationEvolutions": true,
+      "addedGenerationEvolutions": {
+        "470": {
           "id": 368,
           "pokemon_v2_evolutiontrigger": {
             "name": "level-up",
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 750,
             "name": "lush-jungle"
           }
         },
-        {
+        "471": {
           "id": 369,
           "pokemon_v2_evolutiontrigger": {
             "name": "level-up",
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 775,
             "name": "mount-lanakila"
           }
         }
-      ],
+      },
       "evolutionIndex": 0,
       "removeEvolutionIds": []
     }
@@ -426,6 +432,7 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }
@@ -828,6 +835,7 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }

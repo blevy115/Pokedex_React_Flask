@@ -163,6 +163,7 @@
     "pokemon": [{ "id": 10157, "name": "necrozma-ultra" }],
     "move": { "id": 722, "name": "photon-geyzer" },
     "item": { "id": 972, "name": "ultranecrozium-z" },
+    "kind": "special",
     "type": { "id": 14, "name": "psychic" },
     "power": 200
   },
