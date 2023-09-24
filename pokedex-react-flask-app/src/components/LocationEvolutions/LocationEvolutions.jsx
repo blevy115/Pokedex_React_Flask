@@ -11,14 +11,19 @@ import {
 } from "../TableCellComponents/TableCellComponents";
 
 const LocationEvolutions = ({ evolutions }) => {
-    const { tableData, columns } = modifyItemPokemonEvolution({
-        pokemonsList: evolutions,
-        SpriteComponent,
-        PreEvolvedNameComponent: PreEvolvedPokemonNameComponent,
-        EvolvedNameComponent: EvolvedPokemonNameComponent,
-        TypesImageComponent,
-      });
-      return <Table data={tableData} columns={columns} />;
+  const { tableData, columns } = modifyItemPokemonEvolution({
+    pokemonsList: evolutions,
+    SpriteComponent,
+    PreEvolvedNameComponent: PreEvolvedPokemonNameComponent,
+    EvolvedNameComponent: EvolvedPokemonNameComponent,
+    TypesImageComponent,
+  });
+  return (
+    <div className="app__location-pokemons">
+      <h2 className="text-center">Evolutions</h2>
+      <Table data={tableData} columns={columns} />
+    </div>
+  );
 };
 
 export default LocationEvolutions;

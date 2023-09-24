@@ -61,7 +61,7 @@ const LocationDetail = () => {
         </div>
         {region && <p>{`Region: ${formatName(region.name)}`}</p>}
       </div>
-      {locationEvolutions && (
+      {locationEvolutions.length > 0 && (
         <LocationEvolutions evolutions={locationEvolutions} />
       )}
       <LocationEncounters encounters={mergeLocationEncounters(locationAreas)} />
