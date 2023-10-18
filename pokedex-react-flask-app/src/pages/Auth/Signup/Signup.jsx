@@ -56,7 +56,10 @@ const Signup = () => {
       {loading && <LoginLoading />}
       <div className="auth-container">
         <div className="auth-form-container">
-          <form className="auth-form" onSubmit={handleSubmit}>
+          <form
+            className={`auth-form ${loading ? "form-loadding" : ""}`}
+            onSubmit={handleSubmit}
+          >
             <div className="auth-redirect">
               <Link to="/login">Already have an account, Log In</Link>
             </div>

@@ -9,7 +9,7 @@ const Loading = ({ fullscreen = true }) => {
       className={`app__loading-spinner ${fullscreen ? "fullscreen" : null}
       }`}
     >
-      <FaSpinner size={40} className="spin" />
+      <FaSpinner size={50} className="spin" />
     </div>
   );
 };

@@ -34,7 +34,8 @@ const LoginLoading = () => {
         className="spin"
         src="/icons/loading/pokeball.png"
         alt="pokeball icon"
-        width="50" height="50"
+        width="150"
+        height="150"
       />
       <div className="loading-message">{currentMessage}</div>
     </div>
