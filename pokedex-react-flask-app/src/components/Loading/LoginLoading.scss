@@ -7,6 +7,20 @@
   &.fullscreen {
     height: 100vh;
   }
+
+  &.overlay {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading-message {
+    font-weight: 500;
+    font-size: x-large
+  }
 }
 
 .spin {

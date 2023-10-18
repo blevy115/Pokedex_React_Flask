@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { backEndClient } from "../../../api/clients";
 import { LOGIN_MUTATION } from "../../../api/queries/backend";
 
-import { Loading } from "../../../components";
+import { LoginLoading } from "../../../components";
 
 import "../Auth.scss";
 
@@ -47,7 +47,7 @@ const Login = () => {
 
   return (
     <>
-      {loading && <Loading overlay={true} />}
+      {loading && <LoginLoading />}
       <div className="auth-container">
         <div className="auth-form-container">
           <form className="auth-form" onSubmit={handleSubmit}>
