@@ -23,6 +23,7 @@ from ..graphql.objects import UserObject as User, \
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
+from graphql import GraphQLError
 from graphql_relay import from_global_id
 
 
@@ -40,7 +41,12 @@ class LoginMutation(graphene.Mutation):
             login_user(user)
             return LoginMutation(token="success", user=user)
         else:
-            return LoginMutation(token=None, user=None)
+            if not user:
+                raise GraphQLError("No user found with this email")
+            elif not check_password_hash(user.password, password):
+                raise GraphQLError("Incorrect password")
+            else:
+                raise GraphQLError("Login failed for an unknown reason")
 
 
 class LogoutMutation(graphene.Mutation):
@@ -64,13 +70,18 @@ class SignupMutation(graphene.Mutation):
     token = graphene.String()
 
     def mutate(self, info, email, name, password):
-        new_user = UserModel(email=email, name=name, password=generate_password_hash(
-            password, method='sha256'))
+        try:
+            new_user = UserModel(email=email, name=name, password=generate_password_hash(
+                password, method='sha256'))
 
-        db.session.add(new_user)
-        db.session.commit()
+            db.session.add(new_user)
+            db.session.commit()
 
-        return SignupMutation(user=new_user, token="success")
+            return SignupMutation(user=new_user, token="success")
+
+        except Exception as e:
+            db.session.rollback()
+            raise GraphQLError(str(e.orig.diag.message_detail))
 
 
 class PokemonMutation(graphene.Mutation):
@@ -138,7 +149,8 @@ class AbilityMutation(graphene.Mutation):
         db.session.commit()
 
         return AbilityMutation(ability=ability)
-    
+
+
 class ItemMutation(graphene.Mutation):
     class Arguments:
         item_id = graphene.Int()
@@ -159,8 +171,8 @@ class ItemMutation(graphene.Mutation):
         db.session.commit()
 
         return ItemMutation(item=item)
-    
-    
+
+
 class LocationMutation(graphene.Mutation):
     class Arguments:
         location_id = graphene.Int()
