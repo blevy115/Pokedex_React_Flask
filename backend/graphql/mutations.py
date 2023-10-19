@@ -81,7 +81,7 @@ class SignupMutation(graphene.Mutation):
 
         except Exception as e:
             db.session.rollback()
-            raise GraphQLError(str(e))
+            raise GraphQLError(str(e.orig.diag.message_detail))
 
 
 class PokemonMutation(graphene.Mutation):

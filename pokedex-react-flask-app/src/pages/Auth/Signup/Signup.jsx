@@ -33,23 +33,24 @@ const Signup = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    signupMutation({ variables: { name, email, password } })
-      .then((response) => {
-        if (!response.data.signup.token || !response.data.signup.user) {
-          throw new Error("Sign Up Failed");
-        }
-        localStorage.setItem("token", response.data.signup.token);
-        localStorage.setItem("user", JSON.stringify(response.data.signup.user));
-        navigate("/pokemon", { replace: true });
-      })
-      .catch((e) => {
-        setLoading(false);
-        setError(e.message);
+    try {
+      const response = await signupMutation({
+        variables: { name, email, password },
       });
-  };
+      if (!response.data.signup.token || !response.data.signup.user) {
+        throw new Error("Sign Up Failed");
+      }
+      localStorage.setItem("token", response.data.signup.token);
+      localStorage.setItem("user", JSON.stringify(response.data.signup.user));
+      navigate("/pokemon", { replace: true });
+    } catch (e) {
+      setLoading(false);
+      setError(e.message);
+    }
+  }
 
   return (
     <>

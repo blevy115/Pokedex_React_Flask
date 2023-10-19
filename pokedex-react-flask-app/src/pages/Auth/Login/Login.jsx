@@ -30,19 +30,18 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    await loginMutation({ variables: { email, password } })
-      .then((response) => {
-        if (!response.data.login.token || !response.data.login.user) {
-          throw new Error("Login Failed");
-        }
-        localStorage.setItem("token", response.data.login.token);
-        localStorage.setItem("user", JSON.stringify(response.data.login.user));
-        navigate("/pokemon", { replace: true });
-      })
-      .catch((e) => {
-        setLoading(false);
-        setError(e.message);
-      });
+    try {
+      const response = await loginMutation({ variables: { email, password } });
+      if (!response.data.login.token || !response.data.login.user) {
+        throw new Error("Login Failed");
+      }
+      localStorage.setItem("token", response.data.login.token);
+      localStorage.setItem("user", JSON.stringify(response.data.login.user));
+      navigate("/pokemon", { replace: true });
+    } catch (e) {
+      setLoading(false);
+      setError(e.message);
+    }
   }
 
   return (
