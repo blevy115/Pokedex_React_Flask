@@ -41,6 +41,7 @@ export { default as PokemonForms } from "./PokemonForms/PokemonForms";
 export { default as EncounterLocations } from "./EncounterLocations/EncounterLocations";
 export { default as LocationEncounters } from "./LocationEncounters/LocationEncounters";
 export { default as LocationPokemonsTable } from "./LocationPokemonsTable/LocationPokemonsTable";
+export { default as LocationEvolutions } from "./LocationEvolutions/LocationEvolutions";
 export { default as LoginLoading } from "./Loading/LoginLoading";
 
 // Exotic Components

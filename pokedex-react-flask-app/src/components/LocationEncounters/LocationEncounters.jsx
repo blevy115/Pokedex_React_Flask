@@ -18,6 +18,7 @@ const LocationEncounters = ({ encounters }) => {
 
   return (
     <div className="app__location-pokemons">
+      <h2 className="text-center">Encounters</h2>
       <div className="select-input">
         <label htmlFor="LocationEncounterGenerationSelector">Generation:</label>
         <select

@@ -45,6 +45,7 @@ const GET_POKEMON_INFO = gql`
                 id
               }
               pokemon_v2_location {
+                id
                 name
                 pokemon_v2_region {
                   name
@@ -362,6 +363,33 @@ const GET_LOCATION_INFO = gql`
           }
         }
       }
+      evolutions: pokemon_v2_pokemonevolutions {
+        evolved_species_id
+        pokemon_v2_evolutiontrigger {
+          name
+          id
+        }
+        pokemon_v2_pokemonspecy {
+          name
+          id
+          evolves_from_species_id
+          pokemon_v2_evolutionchain {
+            pokemon_v2_pokemonspecies {
+              name
+              id
+              pokemon_v2_pokemons {
+                id
+                types: pokemon_v2_pokemontypes {
+                  pokemon_v2_type {
+                    name
+                    id
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -508,7 +536,9 @@ const GET_ITEM_INFO = gql`
         }
       }
       evolution_pokemon: pokemon_v2_pokemonevolutions {
+        id
         evolved_species_id
+        evolution_item_id
         pokemon_v2_evolutiontrigger {
           name
           id
@@ -522,6 +552,7 @@ const GET_ITEM_INFO = gql`
               name
               pokemon_v2_pokemons {
                 id
+                name
                 types: pokemon_v2_pokemontypes {
                   pokemon_v2_type {
                     name
@@ -531,10 +562,14 @@ const GET_ITEM_INFO = gql`
               }
             }
           }
+          pokemon_v2_pokemonevolutions {
+            evolution_item_id
+          }
           name
         }
       }
       held_evolution_pokemon: pokemonV2PokemonevolutionsByHeldItemId {
+        id
         evolved_species_id
         pokemon_v2_evolutiontrigger {
           name
@@ -549,6 +584,7 @@ const GET_ITEM_INFO = gql`
               name
               pokemon_v2_pokemons {
                 id
+                name
                 types: pokemon_v2_pokemontypes {
                   pokemon_v2_type {
                     name
@@ -557,6 +593,9 @@ const GET_ITEM_INFO = gql`
                 }
               }
             }
+          }
+          pokemon_v2_pokemonevolutions {
+            held_item_id
           }
           name
         }

@@ -166,6 +166,7 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }
@@ -292,28 +293,33 @@
             "hasNavigate": true,
             "navigate": { "type": "types", "id": 18 }
           }
-        },
-        {
+        }
+      ],
+      "hasAddedGenerationEvolutions": true,
+      "addedGenerationEvolutions": {
+        "470": {
           "id": 368,
           "pokemon_v2_evolutiontrigger": {
             "name": "level-up",
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 750,
             "name": "lush-jungle"
           }
         },
-        {
+        "471": {
           "id": 369,
           "pokemon_v2_evolutiontrigger": {
             "name": "level-up",
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 775,
             "name": "mount-lanakila"
           }
         }
-      ],
+      },
       "evolutionIndex": 0,
       "removeEvolutionIds": []
     }
@@ -426,6 +432,7 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }
@@ -828,10 +835,38 @@
             "id": 1
           },
           "pokemon_v2_location": {
+            "id": 789,
             "name": "vast-poni-canyon"
           }
         }
       ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
+  "380": [
+    {
+      "ids": [739, 740],
+      "hasGenerationSelector": true,
+      "generations": ["7", "8+"],
+      "change": {
+        "739": { "id": 739, "name": "crabrawler" },
+        "740": { "id": 740, "name": "crabominable" }
+      },
+      "hasAddedGenerationEvolutions": true,
+      "addedGenerationEvolutions": {
+        "740": {
+          "id": 385,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_item": {
+            "name": "ice-stone",
+            "id": 885
+          }
+        }
+      },
       "evolutionIndex": 0,
       "removeEvolutionIds": []
     }

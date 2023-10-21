@@ -1,0 +1,11 @@
+@import "../../helpers/breakpoints";
+
+
+.app__location-evolutions {
+  width: 80%;
+  margin: 0 auto;
+
+  @media screen and (max-width: $breakpoint-small) {
+    width: 100%;
+  }
+}

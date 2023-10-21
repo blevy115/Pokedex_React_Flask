@@ -1,0 +1,278 @@
+{
+  "789": [
+    {
+      "evolved_species_id": 462,
+      "pokemon_v2_evolutiontrigger": {
+        "name": "level-up",
+        "id": 1
+      },
+      "pokemon_v2_pokemonspecy": {
+        "name": "magnezone",
+        "id": 462,
+        "evolves_from_species_id": 82,
+        "pokemon_v2_evolutionchain": {
+          "pokemon_v2_pokemonspecies": [
+            {
+              "name": "magneton",
+              "id": 82,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "electric",
+                        "id": 13
+                      }
+                    },
+                    {
+                      "pokemon_v2_type": {
+                        "name": "steel",
+                        "id": 9
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "magnezone",
+              "id": 462,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "electric",
+                        "id": 13
+                      }
+                    },
+                    {
+                      "pokemon_v2_type": {
+                        "name": "steel",
+                        "id": 9
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "evolved_species_id": 476,
+      "pokemon_v2_evolutiontrigger": {
+        "name": "level-up",
+        "id": 1
+      },
+      "pokemon_v2_pokemonspecy": {
+        "name": "probopass",
+        "id": 476,
+        "evolves_from_species_id": 299,
+        "pokemon_v2_evolutionchain": {
+          "pokemon_v2_pokemonspecies": [
+            {
+              "name": "nosepass",
+              "id": 299,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "rock",
+                        "id": 6
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "probopass",
+              "id": 476,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "rock",
+                        "id": 6
+                      }
+                    },
+                    {
+                      "pokemon_v2_type": {
+                        "name": "steel",
+                        "id": 9
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "evolved_species_id": 738,
+      "pokemon_v2_evolutiontrigger": {
+        "name": "level-up",
+        "id": 1
+      },
+      "pokemon_v2_pokemonspecy": {
+        "id": 738,
+        "name": "vikavolt",
+        "evolves_from_species_id": 737,
+        "pokemon_v2_evolutionchain": {
+          "pokemon_v2_pokemonspecies": [
+            {
+              "name": "charjabug",
+              "id": 737,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "bug",
+                        "id": 7
+                      }
+                    },
+                    {
+                      "pokemon_v2_type": {
+                        "name": "electric",
+                        "id": 13
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "vikavolt",
+              "id": 738,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "bug",
+                        "id": 7
+                      }
+                    },
+                    {
+                      "pokemon_v2_type": {
+                        "name": "electric",
+                        "id": 13
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "750": [
+    {
+      "evolved_species_id": 470,
+      "pokemon_v2_evolutiontrigger": {
+        "name": "level-up",
+        "id": 1
+      },
+      "pokemon_v2_pokemonspecy": {
+        "name": "leafeon",
+        "id": 470,
+        "evolves_from_species_id": 133,
+        "pokemon_v2_evolutionchain": {
+          "pokemon_v2_pokemonspecies": [
+            {
+              "name": "eevee",
+              "id": 133,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "normal",
+                        "id": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "leafeon",
+              "id": 470,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "grass",
+                        "id": 12
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "775": [
+    {
+      "evolved_species_id": 471,
+      "pokemon_v2_evolutiontrigger": {
+        "name": "level-up",
+        "id": 1
+      },
+      "pokemon_v2_pokemonspecy": {
+        "name": "glaceon",
+        "evolves_from_species_id": 133,
+        "id": 471,
+        "pokemon_v2_evolutionchain": {
+          "pokemon_v2_pokemonspecies": [
+            {
+              "name": "eevee",
+              "id": 133,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "normal",
+                        "id": 1
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "glaceon",
+              "id": 471,
+              "pokemon_v2_pokemons": [
+                {
+                  "types": [
+                    {
+                      "pokemon_v2_type": {
+                        "name": "ice",
+                        "id": 15
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 
+import locations_evolutions from "../../data/locations_evolutions.json";
+
 import { pokemonAPIClient, backEndClient } from "../../api/clients";
 import { GET_LOCATION_INFO } from "../../api/queries/pokeapi";
 import { LOCATION_MUTATION } from "../../api/queries/backend";
@@ -9,7 +11,11 @@ import { LOCATION_MUTATION } from "../../api/queries/backend";
 import { formatName } from "../../helpers/format";
 import { mergeLocationEncounters } from "../../helpers/mergeEncounters";
 
-import { Loading, LocationEncounters } from "../../components";
+import {
+  Loading,
+  LocationEncounters,
+  LocationEvolutions,
+} from "../../components";
 
 import "./LocationDetail.scss";
 
@@ -37,7 +43,15 @@ const LocationDetail = () => {
 
   if (loading) return <Loading />;
 
-  const { pokemon_v2_region: region, pokemon_v2_locationareas:locationAreas } = data.location[0];
+  const {
+    pokemon_v2_region: region,
+    pokemon_v2_locationareas: locationAreas,
+    evolutions,
+  } = data.location[0];
+
+  const locationEvolutions = locations_evolutions[params.locationId]
+    ? [...evolutions, ...locations_evolutions[params.locationId]]
+    : evolutions;
 
   return (
     <div className="app__location-details">
@@ -47,7 +61,10 @@ const LocationDetail = () => {
         </div>
         {region && <p>{`Region: ${formatName(region.name)}`}</p>}
       </div>
-      < LocationEncounters encounters={mergeLocationEncounters(locationAreas)} />
+      {locationEvolutions.length > 0 && (
+        <LocationEvolutions evolutions={locationEvolutions} />
+      )}
+      <LocationEncounters encounters={mergeLocationEncounters(locationAreas)} />
     </div>
   );
 };

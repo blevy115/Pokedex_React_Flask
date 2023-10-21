@@ -1,0 +1,952 @@
+{
+  "use": {
+    "82": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 10230,
+          "evolution_item_id": 82,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10229,
+            "id": 10230,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10229,
+                  "name": "growlithe-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10229,
+                      "name": "growlithe-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fire",
+                            "id": 10
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "rock",
+                            "id": 6
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10230,
+                  "name": "arcanine-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10230,
+                      "name": "arcanine-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fire",
+                            "id": 10
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "rock",
+                            "id": 6
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "83": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 10100,
+          "evolution_item_id": 83,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 25,
+            "id": 10100,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 25,
+                  "name": "pikachu",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 25,
+                      "name": "pikachu",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "electric",
+                            "id": 13
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10100,
+                  "name": "raichu-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10100,
+                      "name": "raichu-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "electric",
+                            "id": 13
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fairy",
+                            "id": 18
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "85": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 10114,
+          "evolution_item_id": 85,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 102,
+            "id": 10114,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 102,
+                  "name": "exeggcute",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 102,
+                      "name": "exeggcute",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "psychic",
+                            "id": 14
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10114,
+                  "name": "exeggutor-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10114,
+                      "name": "exeggutor-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "dragon",
+                            "id": 16
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "evolved_species_id": 10100,
+          "evolution_item_id": 83,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10231,
+            "id": 10232,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10231,
+                  "name": "voltorb-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10231,
+                      "name": "voltorb-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "electric",
+                            "id": 13
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10232,
+                  "name": "electrode-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10232,
+                      "name": "electrode-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "electric",
+                            "id": 13
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "80": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 10237,
+          "evolution_item_id": 80,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 548,
+            "id": 10237,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 548,
+                  "name": "petilil",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 548,
+                      "name": "petilil",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10237,
+                  "name": "lilligant-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10237,
+                      "name": "lilligant-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "885": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 740,
+          "evolution_item_id": 885,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 739,
+            "id": 740,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 739,
+                  "name": "crabrawler",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 739,
+                      "name": "crabrawler",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 740,
+                  "name": "crabominable",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 740,
+                      "name": "crabominable",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "hasCustomEvolution": true,
+      "customEvolution": {
+        "448": {
+          "evolved_species_id": 10102,
+          "evolution_item_id": 885,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10101,
+            "id": 10102,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10101,
+                  "name": "sandshrew-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10101,
+                      "name": "sandshrew-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "steel",
+                            "id": 9
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10102,
+                  "name": "sandslash-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10102,
+                      "name": "sandslash-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "steel",
+                            "id": 9
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "449": {
+          "evolved_species_id": 10104,
+          "evolution_item_id": 885,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10103,
+            "id": 10104,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10103,
+                  "name": "vulpix-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10103,
+                      "name": "vulpix-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10104,
+                  "name": "ninetales-alola",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10104,
+                      "name": "ninetales-alola",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fairy",
+                            "id": 18
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "458": {
+          "evolved_species_id": 10177,
+          "evolution_item_id": 885,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10176,
+            "id": 10177,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10176,
+                  "name": "darumaka-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10176,
+                      "name": "darumaka-galar",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10177,
+                  "name": "darmanitan-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10104,
+                      "name": "darmanitan-galar-standard",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ice",
+                            "id": 15
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "1312": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 855,
+          "evolution_item_id": 1312,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 854,
+            "id": 855,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 854,
+                  "name": "sinistea",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 854,
+                      "name": "sinistea",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 855,
+                  "name": "polteageist",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 855,
+                      "name": "polteageist",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "1633": {
+      "hasCustomEvolution": true,
+      "customEvolution": {
+        "452": {
+          "evolved_species_id": 10165,
+          "evolution_item_id": 1633,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10164,
+            "id": 10165,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10164,
+                  "name": "slowpoke-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10164,
+                      "name": "slowpoke-galar",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "psychic",
+                            "id": 14
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10165,
+                  "name": "slowbro-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10165,
+                      "name": "slowbro-galar",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "poison",
+                            "id": 4
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "psychic",
+                            "id": 14
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "1643": {
+      "hasCustomEvolution": true,
+      "customEvolution": {
+        "453": {
+          "evolved_species_id": 10172,
+          "evolution_item_id": 1633,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10164,
+            "id": 10172,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10164,
+                  "name": "slowpoke-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10164,
+                      "name": "slowpoke-galar",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "psychic",
+                            "id": 14
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10172,
+                  "name": "slowking-galar",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10172,
+                      "name": "slowking-galar",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "poison",
+                            "id": 4
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "psychic",
+                            "id": 14
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "1675": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 892,
+          "evolution_item_id": 1675,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 891,
+            "id": 892,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 891,
+                  "name": "kubfu",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 891,
+                      "name": "kubfu",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 892,
+                  "name": "urshifu-single-strike",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 892,
+                      "name": "urshifu-single-strike",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "dark",
+                            "id": 17
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "1676": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 10191,
+          "evolution_item_id": 1676,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 891,
+            "id": 10191,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 891,
+                  "name": "kubfu",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 891,
+                      "name": "kubfu",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 10191,
+                  "name": "urshifu-rapid-strike",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10191,
+                      "name": "urshifu-rapid-strike",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "water",
+                            "id": 11
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "held": {
+    "303": {
+      "hasCustomEvolution": true,
+      "customEvolution": {
+        "466": {
+          "evolved_species_id": 903,
+          "time_of_day": "day",
+          "pokemon_v2_evolutiontrigger": {
+            "name": "level-up",
+            "id": 1
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 10235,
+            "id": 903,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 10235,
+                  "name": "sneasel-hisui",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 10235,
+                      "name": "sneasel-hisui",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "poison",
+                            "id": 4
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 903,
+                  "name": "sneasler",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 903,
+                      "name": "sneasler",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "fighting",
+                            "id": 2
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "poison",
+                            "id": 4
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -54,7 +54,7 @@ class PokemonNode {
         onClick: () => navigate(`/pokemon/${parseInt(speciesId)}`),
       });
     this.textProps = {
-      dx: formatName(speciesName).length * -3,
+      dx: formatName(speciesName).length * -2,
       dy: 25,
     };
     this.pathProps = {
@@ -95,9 +95,20 @@ export function buildEvolutionTree(
     const speciesId = species.id;
     const showDifferentChain = newInfo && newInfo["change"][speciesId];
     const evolvesFromId = species.evolves_from_species_id;
-
+    let evolutions = species.pokemon_v2_pokemonevolutions;
+    if (
+      showDifferentChain &&
+      newInfo["hasAddedGenerationEvolutions"] &&
+      newInfo["addedGenerationEvolutions"] &&
+      newInfo["addedGenerationEvolutions"][speciesId]
+    ) {
+      evolutions = [
+        ...evolutions,
+        newInfo["addedGenerationEvolutions"][speciesId],
+      ].sort((a, b) => a.id - b.id);
+    }
     let evolutionInfo =
-      species.pokemon_v2_pokemonevolutions[
+      evolutions[
         showDifferentChain
           ? newInfo["hasGenerationSelector"] && generation
             ? newInfo["generations"].indexOf(generation)

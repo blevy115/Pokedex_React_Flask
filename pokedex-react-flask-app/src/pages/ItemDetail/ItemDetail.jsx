@@ -22,22 +22,51 @@ import {
 
 import "./ItemDetail.scss";
 
-const tabsList = {
-  evolution_pokemon: {
-    name: "Use Item Evolutions",
-    component: UseEvolutionPokemonTable,
-    modify: (list) => list,
-  },
-  held_evolution_pokemon: {
-    name: "Held Item Evolution",
-    component: HeldEvolutionPokemonTable,
-    modify: (list) => list,
-  },
-  held_by_pokemon: {
-    name: "Held By Pokemon",
-    component: ItemPokemonTable,
-    modify: (list) => mergePokemonEntriesHeldItems(list),
-  },
+import special_item_evolutions from "../../data/special_item_evolutions.json";
+
+function modifyList(list, modification) {
+  const newList = [...list];
+  if (modification.hasCustomEvolution) {
+    for (let i = 0; i < newList.length; i++) {
+      const evolution = newList[i];
+      if (
+        modification["customEvolution"] &&
+        modification["customEvolution"][evolution.id]
+      ) {
+        newList[i] = modification["customEvolution"][evolution.id];
+      }
+    }
+  }
+
+  return modification.hasAddedEvolution
+    ? [...newList, ...modification["addedEvolution"]]
+    : newList;
+}
+
+const tabsList = (id) => {
+  return {
+    evolution_pokemon: {
+      name: "Use Item Evolutions",
+      component: UseEvolutionPokemonTable,
+      modify: (list) =>
+        special_item_evolutions["use"][id]
+          ? modifyList(list, special_item_evolutions["use"][id])
+          : list,
+    },
+    held_evolution_pokemon: {
+      name: "Held Item Evolution",
+      component: HeldEvolutionPokemonTable,
+      modify: (list) =>
+        special_item_evolutions["held"][id]
+          ? modifyList(list, special_item_evolutions["held"][id])
+          : list,
+    },
+    held_by_pokemon: {
+      name: "Held By Pokemon",
+      component: ItemPokemonTable,
+      modify: (list) => mergePokemonEntriesHeldItems(list),
+    },
+  };
 };
 
 const ItemDetail = () => {
@@ -72,10 +101,12 @@ const ItemDetail = () => {
     if (loading || !data) return;
     const item = data.item[0];
     const tabs = [];
-    if (item.evolution_pokemon.length) tabs.push(tabsList["evolution_pokemon"]);
-    if (item.held_evolution_pokemon.length)
-      tabs.push(tabsList["held_evolution_pokemon"]);
-    if (item.held_by_pokemon.length) tabs.push(tabsList["held_by_pokemon"]);
+    if (item.evolution_pokemon.length || special_item_evolutions["use"][params.itemId])
+      tabs.push(tabsList(params.itemId)["evolution_pokemon"]);
+    if (item.held_evolution_pokemon.length || special_item_evolutions["held"][params.itemId])
+      tabs.push(tabsList(params.itemId)["held_evolution_pokemon"]);
+    if (item.held_by_pokemon.length)
+      tabs.push(tabsList(params.itemId)["held_by_pokemon"]);
     setTabs(tabs);
     setSelectedTab(tabs[0]);
   }, [loading, data]);
@@ -109,18 +140,20 @@ const ItemDetail = () => {
           </ul>
         </div>
       </div>
+      {selectedTab && (
+        <div className="app__item-table-container">
+          {Object.entries(tabsList(params.itemId)).map(
+            ([key, value]) =>
+              selectedTab.name === tabsList(params.itemId)[key].name && (
+                <value.component
+                  key={key}
+                  list={value.modify(data.item[0][key])}
+                />
+              )
+          )}
+        </div>
+      )}
 
-      <div className="app__item-table-container">
-        {Object.entries(tabsList).map(
-          ([key, value]) =>
-            selectedTab === tabsList[key] && (
-              <value.component
-                key={key}
-                list={value.modify(data.item[0][key])}
-              />
-            )
-        )}
-      </div>
       {zMove && <ItemZMoveTable data={zMove} />}
     </div>
   );
