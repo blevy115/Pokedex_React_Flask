@@ -10,9 +10,19 @@ import {
   TypesImageComponent,
 } from "../TableCellComponents/TableCellComponents";
 
-const UseEvolutionPokemonTable = ({ list }) => {
+import special_item_evolutions from "../../data/special_item_evolutions.json";
+
+const UseEvolutionPokemonTable = ({ list, id }) => {
+  const editedList = special_item_evolutions[id]?.hasAddedEvolution
+    ? [...list, ...special_item_evolutions[id]["addedEvolution"]].map((item) =>
+        special_item_evolutions[id].hasCustomEvolution &&
+        special_item_evolutions[id]["customEvolution"][item.id]
+          ? special_item_evolutions[id]["customEvolution"][item.id]
+          : item
+      )
+    : list;
   const { tableData, columns } = modifyItemPokemonEvolution({
-    pokemonsList: list,
+    pokemonsList: editedList,
     SpriteComponent,
     PreEvolvedNameComponent: PreEvolvedPokemonNameComponent,
     EvolvedNameComponent: EvolvedPokemonNameComponent,

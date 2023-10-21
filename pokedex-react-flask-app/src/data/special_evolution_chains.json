@@ -844,6 +844,33 @@
       "removeEvolutionIds": []
     }
   ],
+  "380": [
+    {
+      "ids": [739, 740],
+      "hasGenerationSelector": true,
+      "generations": ["7", "8+"],
+      "change": {
+        "739": { "id": 739, "name": "crabrawler" },
+        "740": { "id": 740, "name": "crabominable" }
+      },
+      "hasAddedGenerationEvolutions": true,
+      "addedGenerationEvolutions": {
+        "740": {
+          "id": 385,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_item": {
+            "name": "ice-stone",
+            "id": 885
+          }
+        }
+      },
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "383": [
     {
       "ids": [744, 745, 10126],

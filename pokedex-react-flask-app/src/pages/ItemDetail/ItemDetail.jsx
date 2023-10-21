@@ -117,6 +117,7 @@ const ItemDetail = () => {
               <value.component
                 key={key}
                 list={value.modify(data.item[0][key])}
+                id={params.itemId}
               />
             )
         )}

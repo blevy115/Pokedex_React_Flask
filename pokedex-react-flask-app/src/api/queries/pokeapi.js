@@ -536,7 +536,9 @@ const GET_ITEM_INFO = gql`
         }
       }
       evolution_pokemon: pokemon_v2_pokemonevolutions {
+        id
         evolved_species_id
+        evolution_item_id
         pokemon_v2_evolutiontrigger {
           name
           id
@@ -550,6 +552,7 @@ const GET_ITEM_INFO = gql`
               name
               pokemon_v2_pokemons {
                 id
+                name
                 types: pokemon_v2_pokemontypes {
                   pokemon_v2_type {
                     name
@@ -558,6 +561,9 @@ const GET_ITEM_INFO = gql`
                 }
               }
             }
+          }
+          pokemon_v2_pokemonevolutions {
+            evolution_item_id
           }
           name
         }
@@ -577,6 +583,7 @@ const GET_ITEM_INFO = gql`
               name
               pokemon_v2_pokemons {
                 id
+                name
                 types: pokemon_v2_pokemontypes {
                   pokemon_v2_type {
                     name
@@ -585,6 +592,9 @@ const GET_ITEM_INFO = gql`
                 }
               }
             }
+          }
+          pokemon_v2_pokemonevolutions {
+            held_item_id
           }
           name
         }
