@@ -18,6 +18,11 @@ const pathText = (info) => {
       };
       textParts.push(`Use ${formatName(info.pokemon_v2_item.name)}`);
       break;
+    case 5:
+      textParts.push(
+        `${formatName(info.pokemon_v2_evolutiontrigger.name)} with Sweets`
+      );
+      break;
     case 10:
       break;
     default:

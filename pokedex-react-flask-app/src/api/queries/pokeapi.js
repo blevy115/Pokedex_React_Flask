@@ -569,6 +569,7 @@ const GET_ITEM_INFO = gql`
         }
       }
       held_evolution_pokemon: pokemonV2PokemonevolutionsByHeldItemId {
+        id
         evolved_species_id
         pokemon_v2_evolutiontrigger {
           name
