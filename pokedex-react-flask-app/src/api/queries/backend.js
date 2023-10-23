@@ -166,6 +166,15 @@ const GET_TYPES = gql`
   }
 `;
 
+const GET_EGG_GROUPS = gql`
+  query getEggGroups {
+    eggGroups(orderBy: "eggGroupId") {
+      name
+      eggGroupId
+    }
+  }
+`;
+
 export {
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
@@ -181,4 +190,5 @@ export {
   SHINY_COUNTER_MUTATION,
   GET_NATURES,
   GET_TYPES,
+  GET_EGG_GROUPS,
 };
