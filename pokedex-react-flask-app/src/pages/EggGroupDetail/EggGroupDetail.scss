@@ -1,0 +1,50 @@
+.app__egg-group-details {
+  min-height: calc(100vh - 46px);
+  overflow: auto;
+}
+
+.app__egg-group-details-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+.app__egg-group-details-tabs-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #ffffff;
+  margin: 1em 0;
+}
+
+.app__egg-group-details-tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.app__egg-group-details-tabs-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.app__egg-group-details-tabs-item.active {
+  border-bottom-color: #007bff;
+  font-weight: bold;
+}
+
+.app__egg-group-table-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.egg-groups-list {
+  display: flex;
+  justify-content: space-around;
+}

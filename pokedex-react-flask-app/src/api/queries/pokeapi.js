@@ -724,6 +724,38 @@ const GET_TYPE_INFO = gql`
   }
 `;
 
+const GET_EGG_GROUP_INFO = gql`
+  query getEggMoveInfo($id: Int!) {
+    pokemon_v2_egggroup(where: { id: { _eq: $id } }) {
+      id
+      name
+      pokemons: pokemon_v2_pokemonegggroups {
+        id
+        pokemon_v2_pokemonspecy {
+          name
+          id
+          egg_groups: pokemon_v2_pokemonegggroups {
+            pokemon_v2_egggroup {
+              name
+              egg_group_id: id
+            }
+          }
+          pokemon: pokemon_v2_pokemons {
+            id
+            types: pokemon_v2_pokemontypes {
+              type_id
+              pokemon_v2_type {
+                name
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const GET_MAX_MOVES_LIST = gql`
   query getGen8Moves($id: Int!, $typeId: Int!) {
     pokemon_v2_move(
@@ -813,6 +845,7 @@ export {
   GET_ABILITY_INFO,
   GET_ITEMS_LIST_BY_NAME,
   GET_ITEM_INFO,
+  GET_EGG_GROUP_INFO,
   GET_LOCATIONS_LIST_BY_NAME,
   GET_LOCATION_INFO,
   GET_MOVE_POKEMONS,
