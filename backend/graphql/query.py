@@ -11,7 +11,8 @@ from ..models import User as UserModel, \
     Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
-    Type as TypeModel
+    Type as TypeModel, \
+    EggGroup as EggGroupModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -21,7 +22,8 @@ from ..graphql.objects import UserObject as User, \
     LocationObject as Location, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature, \
-    TypeObject as Type
+    TypeObject as Type, \
+    EggGroupObject as EggGroup
 
 
 class Query(graphene.ObjectType):
@@ -154,3 +156,15 @@ class Query(graphene.ObjectType):
             types = sorted(
                 types, key=lambda n: n.type_id)
         return types
+
+    egg_groups = graphene.List(
+        lambda: EggGroup, name=graphene.String(), egg_group_id=graphene.Int(), order_by=graphene.String()
+    )
+
+    def resolve_egg_groups(self, info, order_by=None):
+        egg_groups = EggGroupModel.query.all()
+
+        if order_by is not None:
+            egg_groups = sorted(
+                egg_groups, key=lambda n: n.egg_group_id)
+        return egg_groups

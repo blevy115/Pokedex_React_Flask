@@ -10,7 +10,8 @@ from ..models import User as UserModel, \
     Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
-    Type as TypeModel
+    Type as TypeModel, \
+    EggGroup as EggGroupModel
 
 
 class UserObject(SQLAlchemyObjectType):
@@ -42,6 +43,7 @@ class ItemObject(SQLAlchemyObjectType):
         model = ItemModel
         interfaces = (relay.Node,)
 
+
 class LocationObject(SQLAlchemyObjectType):
     class Meta:
         model = LocationModel
@@ -59,7 +61,14 @@ class NatureObject(SQLAlchemyObjectType):
         model = NatureModel
         interfaces = (relay.Node, )
 
+
 class TypeObject(SQLAlchemyObjectType):
     class Meta:
         model = TypeModel
+        interfaces = (relay.Node, )
+
+
+class EggGroupObject(SQLAlchemyObjectType):
+    class Meta:
+        model = EggGroupModel
         interfaces = (relay.Node, )
