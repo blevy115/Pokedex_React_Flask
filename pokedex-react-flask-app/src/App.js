@@ -18,6 +18,8 @@ import {
   LocationDetail,
   PokemonDetail,
   PokemonSearch,
+  EggGroupList,
+  EggGroupDetail,
   MoveDetail,
   MoveSearch,
   Login,
@@ -74,6 +76,15 @@ function LocationDetailErrorElement() {
   );
 }
 
+function EggGroupDetailErrorElement() {
+  return (
+    <>
+      <Link to="/egg-groups">Back to List</Link>
+      <h2>Not valid Location ID</h2>
+    </>
+  );
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -87,6 +98,7 @@ const router = createBrowserRouter(
         <Route path="/items" element={<ItemSearch />} />
         <Route path="/moves" element={<MoveSearch />} />
         <Route path="/abilities" element={<AbilitySearch />} />
+        <Route path="/egg-groups" element={<EggGroupList />} />
         <Route path="/types" element={<TypeList />} />
         <Route
           path="/abilities/:abilityId"
@@ -112,6 +124,11 @@ const router = createBrowserRouter(
           path="/moves/:moveId"
           element={<MoveDetail />}
           errorElement={<MoveDetailErrorElement />}
+        />
+        <Route
+          path="/egg-groups/:eggGroupId"
+          element={<EggGroupDetail />}
+          errorElement={<EggGroupDetailErrorElement />}
         />
         <Route path="/types/:typeId" element={<TypeDetail />} />
         <Route path="/favourites" element={<Favourites />} />

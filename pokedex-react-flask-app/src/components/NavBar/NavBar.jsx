@@ -64,6 +64,11 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/egg-groups" activeclassname="active">
+            Egg Groups
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/favourites" activeclassname="active">
             Favourites
           </NavLink>
@@ -146,6 +151,15 @@ const NavBar = () => {
                     onClick={() => setToggle(false)}
                   >
                     Locations
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/egg-groups"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Egg Groups
                   </NavLink>
                 </li>
                 <li>
