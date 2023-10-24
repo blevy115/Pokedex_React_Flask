@@ -11,7 +11,7 @@ const converter = {
   mineral: "mineral",
   indeterminate: "amorphous",
   water2: "water-2",
-  ditto: "ditton",
+  ditto: "ditto",
   dragon: "dragon",
   "no-eggs": "no-eggs",
 };

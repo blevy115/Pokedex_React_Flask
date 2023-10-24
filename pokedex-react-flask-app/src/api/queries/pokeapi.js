@@ -91,6 +91,12 @@ const GET_POKEMON_INFO = gql`
           }
           baby_trigger_item_id
         }
+        egg_groups: pokemon_v2_pokemonegggroups {
+          pokemon_v2_egggroup {
+            id
+            name
+          }
+        }
       }
 
       form: pokemon_v2_pokemonforms {

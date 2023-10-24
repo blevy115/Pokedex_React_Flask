@@ -70,71 +70,78 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
     };
   });
 
+  const hasMultiGroupPokemon =
+    (!byEggGroup && semi[1].pokemons.length > 0) ||
+    (byEggGroup && Object.keys(semi).length > 0);
   return (
     <div>
       <h4 className="pure-pokemon-table-header">
         Pure {formatName(name)} Pokemon
       </h4>
       <Table data={pureTableData} columns={pureColumns} />
-      <button
-        ref={eggGroupBarRefs}
-        className="sort-egg-groups-bar-button clickable"
-        onClick={() => {
-          setbyEggGroup(!byEggGroup);
-        }}
-      >
-        Sort by {byEggGroup ? "ID" : "Egg Group"}
-      </button>
-      <div className="sort-egg-groups-bar-list">
-        {byEggGroup &&
-          modifiedSemiData.map(({ name }, i) => (
-            <div className="egg-group-icon-container" key={name}>
-              <img
-                src={`/icons/egg-groups/${eggGroupNameHelper(name)}.png`}
-                alt={`${eggGroupNameHelper(name)} egg group`}
-                onClick={() => scrollToEggGroupTable(i)}
-                className="egg-group-icon clickable"
-              />
-              <p>{`${formatName(eggGroupNameHelper(name))}`}</p>
-            </div>
-          ))}
-      </div>
-      <AnimatePresence>
-        {isInView && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+      {hasMultiGroupPokemon ? (
+        <>
+          <button
+            ref={eggGroupBarRefs}
+            className="sort-egg-groups-bar-button clickable"
+            onClick={() => {
+              setbyEggGroup(!byEggGroup);
+            }}
           >
-            <p
-              className="scroll-to-top-button"
-              onClick={() => scrollToEggGroups()}
-            >
-              Egg Groups
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <div ref={secondaryEggGroupTables}>
-        {modifiedSemiData.map(
-          ({ data: { columns, tableData }, name: eggGroupName }, i) => (
-            <div
-              key={eggGroupName}
-              ref={(el) => (secondaryEggGroupTableRefsList.current[i] = el)}
-            >
-              <h4>
-                {eggGroupName === "half"
-                  ? `Half ${formatName(name)}`
-                  : `${formatName(
-                      eggGroupNameHelper(eggGroupName)
-                    )}-${formatName(name)}`}{" "}
-                Pokemon
-              </h4>
-              <Table data={tableData} columns={columns} />
-            </div>
-          )
-        )}
-      </div>
+            Sort by {byEggGroup ? "ID" : "Egg Group"}
+          </button>
+          <div className="sort-egg-groups-bar-list">
+            {byEggGroup &&
+              modifiedSemiData.map(({ name }, i) => (
+                <div className="egg-group-icon-container" key={name}>
+                  <img
+                    src={`/icons/egg-groups/${eggGroupNameHelper(name)}.png`}
+                    alt={`${eggGroupNameHelper(name)} egg group`}
+                    onClick={() => scrollToEggGroupTable(i)}
+                    className="egg-group-icon clickable"
+                  />
+                  <p>{`${formatName(eggGroupNameHelper(name))}`}</p>
+                </div>
+              ))}
+          </div>
+          <AnimatePresence>
+            {isInView && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <p
+                  className="scroll-to-top-button"
+                  onClick={() => scrollToEggGroups()}
+                >
+                  Egg Groups
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div ref={secondaryEggGroupTables}>
+            {modifiedSemiData.map(
+              ({ data: { columns, tableData }, name: eggGroupName }, i) => (
+                <div
+                  key={eggGroupName}
+                  ref={(el) => (secondaryEggGroupTableRefsList.current[i] = el)}
+                >
+                  <h4>
+                    {eggGroupName === "half"
+                      ? `Half ${formatName(name)}`
+                      : `${formatName(
+                          eggGroupNameHelper(eggGroupName)
+                        )}-${formatName(name)}`}{" "}
+                    Pokemon
+                  </h4>
+                  <Table data={tableData} columns={columns} />
+                </div>
+              )
+            )}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };

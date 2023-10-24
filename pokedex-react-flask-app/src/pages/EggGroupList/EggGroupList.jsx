@@ -27,7 +27,7 @@ const EggGroupList = () => {
             key={eggGroup.eggGroupId}
             onClick={() => navigate(`/egg-groups/${eggGroup.eggGroupId}`)}
           >
-            <p className="text-bold">{formatName(eggGroup.name)}</p>
+            <p className="text-bold no-wrap">{formatName(eggGroup.name)}</p>
             <img
               src={`/icons/egg-groups/${eggGroup.name}.png`}
               alt={`${eggGroup.name} symbol`}

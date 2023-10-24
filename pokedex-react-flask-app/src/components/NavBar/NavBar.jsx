@@ -54,13 +54,13 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/types" activeclassname="active">
-            Types
+          <NavLink to="/locations" activeclassname="active">
+            Locations
           </NavLink>
         </li>
         <li>
-          <NavLink to="/locations" activeclassname="active">
-            Locations
+          <NavLink to="/types" activeclassname="active">
+            Types
           </NavLink>
         </li>
         <li>
@@ -137,20 +137,20 @@ const NavBar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/types"
-                    activeclassname="active"
-                    onClick={() => setToggle(false)}
-                  >
-                    Types
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
                     to="/locations"
                     activeclassname="active"
                     onClick={() => setToggle(false)}
                   >
                     Locations
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/types"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Types
                   </NavLink>
                 </li>
                 <li>
