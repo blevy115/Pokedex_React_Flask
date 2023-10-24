@@ -110,6 +110,7 @@ const TypePokemon = ({ name, list, typeId }) => {
           ({ data: { columns, tableData }, name: typeName }, i) => (
             <div
               key={typeName}
+              className="secondary-type-table"
               ref={(el) => (secondaryTypeTableRefsList.current[i] = el)}
             >
               <h4>

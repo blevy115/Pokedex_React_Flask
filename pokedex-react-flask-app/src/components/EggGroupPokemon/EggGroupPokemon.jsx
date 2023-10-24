@@ -125,6 +125,7 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
               ({ data: { columns, tableData }, name: eggGroupName }, i) => (
                 <div
                   key={eggGroupName}
+                  className="secondary-egg-group-table"
                   ref={(el) => (secondaryEggGroupTableRefsList.current[i] = el)}
                 >
                   <h4>
