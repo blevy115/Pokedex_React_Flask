@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 
@@ -30,6 +31,7 @@ import {
 } from "../../components";
 
 import { formatName } from "../../helpers/format";
+import { eggGroupNameHelper } from "../../helpers/eggGroupNamehelper";
 import { getSprite } from "../../helpers/pictures";
 import { handleSpriteError } from "../../helpers/error";
 import { getEvYield } from "../../helpers/statModifier";
@@ -39,6 +41,7 @@ import "./PokemonDetail.scss";
 
 const PokemonDetail = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
@@ -113,6 +116,7 @@ const PokemonDetail = () => {
   const pokemonIdInt = parseInt(params.pokemonId);
 
   const evYield = getEvYield(stats);
+
   return (
     <div
       className={`app__pokemon-detail ${
@@ -177,6 +181,22 @@ const PokemonDetail = () => {
               </p>
               <p className="no-wrap">Height: {(height / 10).toFixed(1)} m</p>
               <p className="no-wrap">Weight: {(weight / 10).toFixed(1)} kg</p>
+              <p>
+                Egg Groups:{" "}
+                {info.egg_groups.map((eggGroup, i) => (
+                  <span
+                    key={i}
+                    className="clickable pokemon-egg-group"
+                    onClick={() =>
+                      navigate(`/egg-groups/${eggGroup.pokemon_v2_egggroup.id}`)
+                    }
+                  >
+                    {formatName(
+                      eggGroupNameHelper(eggGroup.pokemon_v2_egggroup.name)
+                    )}
+                  </span>
+                ))}
+              </p>
             </div>
             <Abilities abilities={abilities} />
             <div className="text-center">
@@ -205,7 +225,9 @@ const PokemonDetail = () => {
       </div>
       <div className="app-pokemon-detail-stats-and-moves">
         <StatChart baseStats={stats} isAFavourite={isAFavourite} />
-        {encounters.length > 0 && <EncounterLocations encounters={encounters} />}
+        {encounters.length > 0 && (
+          <EncounterLocations encounters={encounters} />
+        )}
         <MovesTable
           id={pokemonIdInt}
           generation={form[0].pokemon_v2_versiongroup.generation_id}

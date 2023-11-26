@@ -9,6 +9,8 @@ export { default as LocationDetail } from "./LocationDetail/LocationDetail";
 export { default as LocationSearch } from "./LocationSearch/LocationSearch";
 export { default as PokemonDetail } from "./PokemonDetail/PokemonDetail";
 export { default as PokemonSearch } from "./PokemonSearch/PokemonSearch";
+export { default as EggGroupDetail } from "./EggGroupDetail/EggGroupDetail";
+export { default as EggGroupList } from "./EggGroupList/EggGroupList";
 export { default as TypeList } from "./TypeList/TypeList";
 export { default as TypeDetail } from "./TypeDetail/TypeDetail";
 

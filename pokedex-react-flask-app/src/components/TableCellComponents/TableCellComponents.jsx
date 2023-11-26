@@ -8,6 +8,7 @@ import {
   formatZMoveName,
   formatGameName,
 } from "../../helpers/format";
+import { eggGroupNameHelper } from "../../helpers/eggGroupNamehelper";
 import { getTypeId } from "../../helpers/getTypeId";
 import { getSprite, getItemSprite } from "../../helpers/pictures";
 import { handleSpriteError, handleItemError } from "../../helpers/error";
@@ -130,6 +131,36 @@ const TypesImageComponent = ({ value, row }) => {
   return <Types types={value} pageId={row.original.pageId} />;
 };
 
+const EggGroupsComponent = ({ value, row }) => {
+  const navigate = useNavigate();
+  return (
+    <div className="egg-groups-list">
+      {value.map((eggGroup, i) => {
+        const eggGroupId = eggGroup.pokemon_v2_egggroup.egg_group_id;
+        return (
+          <p
+            key={i}
+            className={
+              eggGroupId === row.original.pageId
+                ? "text-bold"
+                : eggGroupId
+                ? "clickable"
+                : ""
+            }
+            onClick={() => {
+              if (eggGroupId !== row.original.pageId) {
+                navigate(`/egg-groups/${eggGroupId}`);
+              }
+            }}
+          >
+            {formatName(eggGroupNameHelper(eggGroup.pokemon_v2_egggroup.name))}
+          </p>
+        );
+      })}
+    </div>
+  );
+};
+
 const TypeImageComponent = ({ value }) => {
   const navigate = useNavigate();
   return (
@@ -203,7 +234,9 @@ const LevelComponent = ({ value }) => {
 };
 
 const GameComponent = ({ value }) => {
-  return <div className="locations-table-game-name">{formatGameName(value)}</div>;
+  return (
+    <div className="locations-table-game-name">{formatGameName(value)}</div>
+  );
 };
 
 const LocationsComponent = ({ value }) => {
@@ -211,7 +244,11 @@ const LocationsComponent = ({ value }) => {
   return (
     <div className="locations-table-item-conatiner">
       {value.map((location, id) => (
-        <div className="clickable" key={id} onClick={() => navigate(`/locations/${location.id}`)}>
+        <div
+          className="clickable"
+          key={id}
+          onClick={() => navigate(`/locations/${location.id}`)}
+        >
           {formatName(location.name)}
         </div>
       ))}
@@ -228,6 +265,7 @@ export {
   ItemComponent,
   TypeImageComponent,
   TypesImageComponent,
+  EggGroupsComponent,
   KindImageComponent,
   KindsImageComponent,
   AbilitiesComponent,

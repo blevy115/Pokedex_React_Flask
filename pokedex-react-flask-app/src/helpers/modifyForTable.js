@@ -466,6 +466,47 @@ function modifyLocationEncounters({
   return { columns, tableData };
 }
 
+function modifyEggGroupPokemon({
+  pokemons,
+  SpriteComponent,
+  NameComponent,
+  TypesImageComponent,
+  EggGroupsComponent,
+  pageId,
+  hasEggGroup = false,
+}) {
+  const columns = [
+    { Header: "ID", accessor: "pokemonId" },
+    { Header: "Sprite", accessor: "spriteId", Cell: SpriteComponent },
+    { Header: "Name", accessor: "name", Cell: NameComponent },
+    { Header: "Types", accessor: "types", Cell: TypesImageComponent },
+    ...(hasEggGroup
+      ? [
+          {
+            Header: "Egg Groups",
+            accessor: "eggGroups",
+            Cell: EggGroupsComponent,
+          },
+        ]
+      : []),
+  ];
+
+  const tableData = pokemons.map((pokemon, i) => {
+    const pokemonData = pokemon.pokemon_v2_pokemonspecy;
+    const modifiedPokemon = {
+      id: i,
+      pokemonId: `#${pokemonData.id}`,
+      spriteId: pokemonData.id,
+      name: pokemonData.name,
+      types: pokemonData.pokemon[0].types,
+      eggGroups: pokemonData.egg_groups,
+      pageId: pageId,
+    };
+
+    return modifiedPokemon;
+  });
+  return { columns, tableData };
+}
 const statHeaderModifier = {
   hp: "HP",
   attack: "Atk",
@@ -508,4 +549,5 @@ export {
   modifyItemPokemonEvolution,
   modifyPokemonEncounters,
   modifyLocationEncounters,
+  modifyEggGroupPokemon,
 };

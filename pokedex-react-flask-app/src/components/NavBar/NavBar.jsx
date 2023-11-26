@@ -54,13 +54,18 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/locations" activeclassname="active">
+            Locations
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/types" activeclassname="active">
             Types
           </NavLink>
         </li>
         <li>
-          <NavLink to="/locations" activeclassname="active">
-            Locations
+          <NavLink to="/egg-groups" activeclassname="active">
+            Egg Groups
           </NavLink>
         </li>
         <li>
@@ -132,6 +137,15 @@ const NavBar = () => {
                 </li>
                 <li>
                   <NavLink
+                    to="/locations"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Locations
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="/types"
                     activeclassname="active"
                     onClick={() => setToggle(false)}
@@ -141,11 +155,11 @@ const NavBar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/locations"
+                    to="/egg-groups"
                     activeclassname="active"
                     onClick={() => setToggle(false)}
                   >
-                    Locations
+                    Egg Groups
                   </NavLink>
                 </li>
                 <li>

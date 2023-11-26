@@ -42,17 +42,20 @@ class Move(db.Model):
     move_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
 
+
 class Ability(db.Model):
     __tablename__ = 'ability'
     id = db.Column(db.Integer, primary_key=True)
     ability_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
 
+
 class Item(db.Model):
     __tablename__ = 'item'
     id = db.Column(db.Integer, primary_key=True)
     item_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+
 
 class Location(db.Model):
     __tablename__ = 'location'
@@ -68,8 +71,16 @@ class Nature(db.Model):
     increased_stat = db.Column(db.String(20), nullable=False)
     decreased_stat = db.Column(db.String(20), nullable=False)
 
+
 class Type(db.Model):
     __tablename__ = 'type'
     id = db.Column(db.Integer, primary_key=True)
     type_id = db.Column(db.Integer)
+    name = db.Column(db.String(50))
+
+
+class EggGroup(db.Model):
+    __tablename__ = 'egg_group'
+    id = db.Column(db.Integer, primary_key=True)
+    egg_group_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
