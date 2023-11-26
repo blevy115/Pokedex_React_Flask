@@ -8,13 +8,13 @@
   overflow: auto;
 
   .app-pokemon-detail-stats-and-moves {
-    max-width: calc(97vw - 800px);;
+    max-width: calc(97vw - 800px);
   }
 
   .pokemon-details-info-traits {
     display: flex;
     justify-content: space-evenly;
-    @media screen and (max-width: $breakpoint-small){
+    @media screen and (max-width: $breakpoint-small) {
       flex-direction: column;
     }
   }
@@ -31,7 +31,7 @@
     }
   }
 
-  @media screen and (max-width: $breakpoint-small){
+  @media screen and (max-width: $breakpoint-small) {
     padding: 0 0.25rem;
   }
 }

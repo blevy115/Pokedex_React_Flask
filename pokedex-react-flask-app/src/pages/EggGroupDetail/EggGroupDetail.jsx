@@ -8,15 +8,7 @@ import { pokemonAPIClient } from "../../api/clients";
 import { formatName } from "../../helpers/format";
 import { eggGroupNameHelper } from "../../helpers/eggGroupNamehelper";
 
-import {
-  Loading,
-  EggGroupPokemon,
-  //   TypeMoves,
-  //   TypePokemon,
-  //   TypeRelations,
-} from "../../components";
-
-// const tabs = ["Pokemon", "Moves"];
+import { Loading, EggGroupPokemon } from "../../components";
 
 import "./EggGroupDetail.scss";
 
