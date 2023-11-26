@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { mergeForms } from "../../helpers/mergeForms";
-import { getFormSprite } from "../../helpers/pictures";
 import { formatName } from "../../helpers/format";
 import { handleSpriteError } from "../../helpers/error";
 
@@ -19,10 +18,9 @@ const PokemonForms = ({ forms, pokemonId }) => {
       <h4 className="text-center">Pokemon Forms</h4>
       <div className="pokemon-forms-container">
         {mergedForms.map((form) => {
-          const spritePath = getFormSprite(
-            JSON.parse(form.pokemon_v2_pokemonformsprites[0].sprites)
-              .front_default
-          );
+          const spritePath = JSON.parse(
+            form.pokemon_v2_pokemonformsprites[0].sprites
+          ).front_default;
           return (
             <div
               className={`pokemon-form-item-container ${
@@ -38,7 +36,7 @@ const PokemonForms = ({ forms, pokemonId }) => {
               <div className="circle"></div>
               <img
                 className="sprite"
-                src={spritePath}
+                src={spritePath || "/icons/error/missingno.png"}
                 onError={handleSpriteError}
               />
               <p className="name">{formatName(form.name)}</p>
