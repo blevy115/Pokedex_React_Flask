@@ -12,7 +12,8 @@ from ..models import User as UserModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel, \
-    EggGroup as EggGroupModel
+    EggGroup as EggGroupModel, \
+    Team as TeamModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -23,7 +24,8 @@ from ..graphql.objects import UserObject as User, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature, \
     TypeObject as Type, \
-    EggGroupObject as EggGroup
+    EggGroupObject as EggGroup, \
+    TeamObject as Team
 
 
 class Query(graphene.ObjectType):
@@ -122,6 +124,17 @@ class Query(graphene.ObjectType):
 
     user_pokemon_shiny_count = graphene.Field(lambda: UserPokemon, user_id=graphene.String(
         required=True), pokemon_id=graphene.Int(required=True))
+    
+    def resolve_user_teams(self, info, user_id, order_by=None):
+        type_name, original_id = from_global_id(user_id)
+        user = UserModel.query.filter_by(id=original_id).first()
+
+        if user:
+            return user.teams
+        return []
+
+    user_teams = graphene.List(lambda: Team, user_id=graphene.String(required=True))
+
 
     def resolve_user_pokemon_shiny_count(self, info, user_id, pokemon_id):
         type_name, original_id = from_global_id(user_id)

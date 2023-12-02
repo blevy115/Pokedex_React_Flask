@@ -73,6 +73,11 @@ const NavBar = () => {
             Favourites
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/teams" activeclassname="active">
+            Teams
+          </NavLink>
+        </li>
       </ul>
       <ul className="app__navbar-links">
         <li className="logout">
@@ -169,6 +174,15 @@ const NavBar = () => {
                     onClick={() => setToggle(false)}
                   >
                     Favourites
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/teams"
+                    activeclassname="active"
+                    onClick={() => setToggle(false)}
+                  >
+                    Teams
                   </NavLink>
                 </li>
                 <li className="logout">

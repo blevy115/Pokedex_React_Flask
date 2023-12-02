@@ -14,6 +14,18 @@ class UserPokemonAssociation(db.Model):
         'user_pokemon', cascade='all, delete-orphan'))
     is_active = db.Column(db.Boolean, default=True)
 
+class TeamPokemonDetails(db.Model):
+    __tablename__ = 'team_pokemon'
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'))
+    move_ids = db.Column(db.ARRAY(db.Integer)) 
+    ability_id = db.Column(db.Integer, db.ForeignKey('ability.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    position = db.Column(db.Integer)
+    
+    __table_args__ = (db.UniqueConstraint('team_id', 'position', name='_team_position_uc'),)
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -21,9 +33,17 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
+    teams = db.relationship('Team', backref='user', lazy=True)
 
     def __repr__(self):
         return f"<User {self.email} >"
+    
+class Team(db.Model):
+    __tablename__ = 'team'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    pokemons = db.relationship('TeamPokemonDetails', backref='team', lazy=True)
 
 
 class Pokemon(db.Model):
@@ -31,6 +51,8 @@ class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    type1_id = db.Column(db.Integer, db.ForeignKey('type.id'))
+    type2_id = db.Column(db.Integer, db.ForeignKey('type.id'))
 
     def __repr__(self):
         return f"Pokemon {self.name}"

@@ -8,7 +8,9 @@ from ..models import User as UserModel, \
     Ability as AbilityModel, \
     Item as ItemModel, \
     Location as LocationModel, \
+    Team as TeamModel, \
     UserPokemonAssociation as UserPokemonModel, \
+    TeamPokemonDetails as TeamPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel, \
     EggGroup as EggGroupModel
@@ -72,3 +74,40 @@ class EggGroupObject(SQLAlchemyObjectType):
     class Meta:
         model = EggGroupModel
         interfaces = (relay.Node, )
+
+class TeamObject(SQLAlchemyObjectType):
+    class Meta:
+        model = TeamModel
+        interfaces = (relay.Node, )        
+    pokemons = graphene.List(lambda: TeamPokemonObject)
+
+    def resolve_pokemons(self, info):
+        return self.pokemons
+
+
+class TeamPokemonObject(SQLAlchemyObjectType):
+    class Meta:
+        model = TeamPokemonModel
+        interfaces = (relay.Node, )
+    
+    pokemon = graphene.Field(lambda: PokemonObject)
+
+    def resolve_pokemon(self, info):
+        return PokemonModel.query.get(self.pokemon_id)
+    
+    moves = graphene.List(lambda: MoveObject)
+
+    def resolve_moves(self, info):
+        move_ids = self.move_ids  # Assuming self.move_ids contains a list of move IDs
+        moves = MoveModel.query.filter(MoveModel.id.in_(move_ids)).all()
+        return moves
+    
+    ability = graphene.Field(lambda: AbilityObject)
+
+    def resolve_ability(self, info):
+        return AbilityModel.query.get(self.ability_id)
+    
+    item = graphene.Field(lambda: ItemObject)
+
+    def resolve_item(self, info):
+        return ItemModel.query.get(self.item_id)

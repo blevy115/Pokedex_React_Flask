@@ -54,6 +54,29 @@ const GET_USER_POKEMON_SHINY_COUNT = gql`
   }
 `;
 
+const GET_USER_TEAMS = gql`
+  query getUserTeams($user_id: String!) {
+    userTeams(userId: $user_id) {
+     name
+     pokemons {
+      position
+      moves {
+        name
+      }
+      pokemon {
+        name
+      }
+      ability {
+        name
+      }
+      item {
+        name
+      }
+     }
+    }
+  }
+`;
+
 const POKEMON_MUTATION = gql`
   mutation pokemonMutation($name: String!, $pokemon_id: Int!) {
     mutatePokemon(name: $name, pokemonId: $pokemon_id) {
@@ -191,4 +214,5 @@ export {
   GET_NATURES,
   GET_TYPES,
   GET_EGG_GROUPS,
+  GET_USER_TEAMS,
 };
