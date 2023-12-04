@@ -9,7 +9,9 @@ from ..models import User as UserModel, \
     Location as LocationModel, \
     UserPokemonAssociation as UserPokemonModel, \
     Nature as NatureModel, \
-    Type as TypeModel
+    Type as TypeModel, \
+    Team as TeamModel, \
+    TeamPokemonDetails as TeamPokemonModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -19,7 +21,9 @@ from ..graphql.objects import UserObject as User, \
     LocationObject as Location, \
     UserPokemonObject as UserPokemon, \
     NatureObject as Nature, \
-    TypeObject as Type
+    TypeObject as Type, \
+    TeamObject as Team, \
+    TeamPokemonObject as TeamPokemon
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
@@ -193,6 +197,43 @@ class LocationMutation(graphene.Mutation):
         db.session.commit()
 
         return LocationMutation(location=location)
+    
+class TeamPokemonInput(graphene.InputObjectType):
+    pokemon_id = graphene.Int(required=True)
+    move_ids = graphene.List(graphene.Int)
+    ability_id = graphene.Int()
+    item_id = graphene.Int()
+    position = graphene.Int(required=True)
+    
+class TeamMutation(graphene.Mutation):
+    class Arguments:
+        user_id = graphene.Int(required=True)
+        name = graphene.String(required=True)
+        pokemons = graphene.List(TeamPokemonInput, required=True)
+
+    team = graphene.Field(lambda: Team)
+
+    @staticmethod
+    def mutate(root, info, user_id, name, pokemons):
+        # Create a new team
+        new_team = TeamModel(user_id=user_id, name=name)
+        db.session.add(new_team)
+        db.session.flush()
+
+        # Create team's Pokemon details
+        for pokemon_details in pokemons:
+            new_pokemon = TeamPokemonModel(
+                team_id=new_team.id,
+                pokemon_id=pokemon_details.get('pokemon_id'),
+                move_ids=pokemon_details.get('move_ids'),
+                ability_id=pokemon_details.get('ability_id'),
+                item_id=pokemon_details.get('item_id'),
+                position=pokemon_details.get('position')
+            )
+            db.session.add(new_pokemon)
+
+        db.session.commit()
+        return TeamMutation(team=new_team)
 
 
 class UserPokemonMutation(graphene.Mutation):
@@ -266,6 +307,7 @@ class Mutation(graphene.ObjectType):
     mutate_ability = AbilityMutation.Field()
     mutate_location = LocationMutation.Field()
     mutate_user_pokemon = UserPokemonMutation.Field()
+    mutate_team = TeamMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()
     mutate_shiny_counter = ShinyCounterMutation.Field()

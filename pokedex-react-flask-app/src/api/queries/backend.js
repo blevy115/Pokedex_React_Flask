@@ -62,15 +62,19 @@ const GET_USER_TEAMS = gql`
       position
       moves {
         name
+        moveId
       }
       pokemon {
         name
+        pokemonId
       }
       ability {
         name
+        abilityId
       }
       item {
         name
+        itemId
       }
      }
     }
@@ -127,6 +131,25 @@ const ITEM_MUTATION = gql`
       item {
         name
         itemId
+      }
+    }
+  }
+`;
+
+const USER_TEAM_MUTATION = gql`
+  mutation createUserTeam($user_id: Int!, $name: String!, $pokemons: [TeamPokemonInput!]!) {
+    mutateTeam(userId: $user_id, name: $name, pokemons: $pokemons) {
+      team {
+        id
+        name
+        userId
+        pokemons {
+          pokemonId
+          moveIds
+          abilityId
+          itemId
+          position
+        }
       }
     }
   }
@@ -210,6 +233,7 @@ export {
   USER_POKEMON_MUTATION,
   GET_USER_POKEMONS,
   GET_USER_POKEMON_SHINY_COUNT,
+  USER_TEAM_MUTATION,
   SHINY_COUNTER_MUTATION,
   GET_NATURES,
   GET_TYPES,

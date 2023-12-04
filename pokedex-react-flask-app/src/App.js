@@ -26,7 +26,8 @@ import {
   Signup,
   TypeList,
   TypeDetail,
-  Teams
+  Teams,
+  TeamCreate
 } from "./pages";
 import { ProtectedRoute, AuthRoute } from "./wrapper/routes";
 
@@ -134,6 +135,7 @@ const router = createBrowserRouter(
         <Route path="/types/:typeId" element={<TypeDetail />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/teams" element={<Teams />} />
+        <Route path="/team/create" element={<TeamCreate />} />
       </Route>
       <Route path="*" element={<Navigate to="/pokemon" />}></Route>
     </>
