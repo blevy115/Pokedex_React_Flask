@@ -44,6 +44,7 @@ export { default as LocationEncounters } from "./LocationEncounters/LocationEnco
 export { default as LocationPokemonsTable } from "./LocationPokemonsTable/LocationPokemonsTable";
 export { default as LocationEvolutions } from "./LocationEvolutions/LocationEvolutions";
 export { default as LoginLoading } from "./Loading/LoginLoading";
+export { default as TeamListItem } from "./TeamListItem/TeamListItem";
 
 // Exotic Components
 export { default as DebouncedInput } from "./DebouncedInput/DebouncedInput";
