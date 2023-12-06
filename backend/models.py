@@ -41,6 +41,7 @@ class User(db.Model, UserMixin):
 class Team(db.Model):
     __tablename__ = 'team'
     id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     pokemons = db.relationship('TeamPokemonDetails', backref='team', lazy=True)

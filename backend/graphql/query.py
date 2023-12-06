@@ -135,6 +135,23 @@ class Query(graphene.ObjectType):
 
     user_teams = graphene.List(lambda: Team, user_id=graphene.String(required=True))
 
+    def resolve_user_team(self, info, user_id, team_id):
+        type_name, original_id = from_global_id(user_id)
+        user = UserModel(id=original_id)  # Simulating UserModel
+
+        try:
+            if user:
+                team = TeamModel.query.filter_by(id=team_id, user_id=user.id).first()  # Simulating TeamModel
+                if team:
+                    return team
+                else:
+                    raise Exception("You don't have permission to access this team.")
+            else:
+                raise Exception("User not found.")
+        except Exception as e:
+            return e
+
+    user_team = graphene.Field(lambda: Team, user_id=graphene.String(required=True), team_id=graphene.Int())
 
     def resolve_user_pokemon_shiny_count(self, info, user_id, pokemon_id):
         type_name, original_id = from_global_id(user_id)
