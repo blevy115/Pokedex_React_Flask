@@ -15,6 +15,7 @@ export { default as TypeList } from "./TypeList/TypeList";
 export { default as TypeDetail } from "./TypeDetail/TypeDetail";
 export { default as Teams } from "./Teams/Teams";
 export { default as TeamCreate} from "./TeamCreate/TeamCreate";
+export { default as TeamEdit} from "./TeamEdit/TeamEdit";
 
 export { default as Login } from "./Auth/Login/Login";
 export { default as Signup } from "./Auth/Signup/Signup";

@@ -1,0 +1,37 @@
+.pokemon-tabs-container {
+    padding: 2em 3em;
+}
+
+.pokemon-tab-list {
+    margin: 0;
+    padding: 0;
+}
+
+.pokemon-tab {
+	display: inline-block;
+    position: relative;
+    list-style: none;
+    padding: 6px 12px 0;
+	cursor: pointer;
+	border-radius: 5px 5px 0 0;
+	margin-right: 2px;
+    background-color: lightgray;
+
+	&--selected {
+		box-shadow: 2px -1px 2px 0px rgba(0,0,0,0.5);
+        background-color: lightgray;
+		color: black;
+		z-index: 3;
+	  }
+}
+
+.pokemon-tab-panel {
+	padding: 10px;
+	display: none;
+	z-index: 2;
+	position: relative;
+
+	&--selected {
+		display: block;
+	}
+}

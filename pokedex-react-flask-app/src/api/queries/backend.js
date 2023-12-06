@@ -58,6 +58,34 @@ const GET_USER_TEAMS = gql`
   query getUserTeams($user_id: String!) {
     userTeams(userId: $user_id) {
      name
+     teamId
+     pokemons {
+      position
+      moves {
+        name
+        moveId
+      }
+      pokemon {
+        name
+        pokemonId
+      }
+      ability {
+        name
+        abilityId
+      }
+      item {
+        name
+        itemId
+      }
+     }
+    }
+  }
+`;
+
+const GET_USER_TEAM = gql`
+  query getUserTeam($user_id: String!, $team_id: Int!) {
+    team: userTeam(userId: $user_id, teamId: $team_id) {
+     name
      pokemons {
       position
       moves {
@@ -239,4 +267,5 @@ export {
   GET_TYPES,
   GET_EGG_GROUPS,
   GET_USER_TEAMS,
+  GET_USER_TEAM,
 };

@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./TeamListItem.scss";
 
 const TeamListItem = ({ team }) => {
-//   console.log(team);
+  console.log(team);
   const navigate = useNavigate()
   return (
     <div className="team-list-item">
@@ -71,7 +71,7 @@ const TeamListItem = ({ team }) => {
         </div>
       
       )})}
-      <button className="clickable edit-button">Edit</button>
+      <button className="clickable edit-button" onClick={() => navigate(`/teams/${team.teamId}`)}>Edit</button>
       </div>
     </div>
   );
