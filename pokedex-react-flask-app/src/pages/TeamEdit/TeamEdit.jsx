@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useQuery, useMutation } from "@apollo/client";
+
 import { backEndClient } from "../../api/clients";
-import { GET_USER_TEAM } from "../../api/queries/backend";
-import { useQuery } from "@apollo/client";
+import { GET_USER_TEAM, USER_TEAM_MUTATION } from "../../api/queries/backend";
+
+import { TeamPokemonEdit } from "../../components";
+
 import { getSprite } from "../../helpers/pictures";
 
 import "./TeamEdit.scss";
@@ -13,8 +17,7 @@ const TeamEdit = () => {
   const params = useParams();
   const [tabs, setTabs] = useState([]);
   const [selectedTab, setselectedTab] = useState(0);
-
-//   console.log(params.teamId);
+  const [team, setTeam] = useState({});
 
   const {
     data: teamData,
@@ -24,15 +27,32 @@ const TeamEdit = () => {
     variables: { user_id: user.id, team_id: params.teamId },
     client: backEndClient,
   });
-//   console.log(teamData);
+
+  const [updateUserTeam] = useMutation(USER_TEAM_MUTATION, {
+    client: backEndClient,
+  });
+
   useEffect(() => {
     if (teamData) {
       const { team } = teamData;
-    //   console.log(team.pokemons);
+      setTeam(team);
       setTabs(team.pokemons);
-      // setselectedTab(team.pokemons[0])
     }
   }, [teamData]);
+
+  const changeSelectedPokemon = useCallback(
+    (pokemon) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? { ...p, pokemon: { name: pokemon.name, pokemonId: pokemon.id } }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
 
   const pokemonTabs = useMemo(() =>
     tabs.map(
@@ -50,37 +70,57 @@ const TeamEdit = () => {
     )
   );
 
-  const pokemonTabPanels = useMemo(() => 
+  const pokemonTabPanels = useMemo(() =>
     tabs.map(
-        (tab, index) => (
-          <TabPanel className="pokemon-tab-panel" key={index}>
-            {/* Put Component Here to start displaying and editing Pokmeon*/ }
-            <p>{tab.pokemon.name}</p>
-          </TabPanel>
-        ),
-        [tabs]
-      )
-  )
+      (tab, index) => (
+        <TabPanel className="pokemon-tab-panel" key={index}>
+          <TeamPokemonEdit
+            changeSelectedPokemon={changeSelectedPokemon}
+            teamPokemon={tab}
+          />
+        </TabPanel>
+      ),
+      [tabs, team]
+    )
+  );
+
+  const saveTeam = useCallback(
+    (team) => {
+      const data = {
+        user_id: user.id,
+        team_id: params.teamId,
+        name: team.name,
+        pokemons: team.pokemons.map((p) => ({
+          abilityId: p.ability?.abilityId,
+          itemId: p.item?.itemId,
+          pokemonId: p.pokemon.pokemonId,
+          moveIds: p.moves.map((m) => m.moveId),
+          position: p.position,
+        })),
+      };
+      updateUserTeam({ variables: data });
+    },
+    [user, params]
+  );
 
   if (teamsLoading) return;
-  if (teamError)  return (<span className="error">{teamError.message}</span>);
+  if (teamError) return <span className="error">{teamError.message}</span>;
 
-//   console.log(selectedTab);
-  console.log(tabs);
   return (
-    <div className="pokemon-tabs-container">
-      <Tabs
-        selectedIndex={selectedTab}
-        onSelect={(index) => setselectedTab(index)}
-        selectedTabClassName="pokemon-tab--selected"
-        selectedTabPanelClassName="pokemon-tab-panel--selected"
-      >
-        <TabList className="pokemon-tab-list">{pokemonTabs}</TabList>
-        {pokemonTabPanels}
-      </Tabs>
-      {}
-      {/* {tabs[selectedTab] ?  : ""} */}
-    </div>
+    <>
+      <button onClick={() => saveTeam(team)}>Save</button>
+      <div className="pokemon-tabs-container">
+        <Tabs
+          selectedIndex={selectedTab}
+          onSelect={(index) => setselectedTab(index)}
+          selectedTabClassName="pokemon-tab--selected"
+          selectedTabPanelClassName="pokemon-tab-panel--selected"
+        >
+          <TabList className="pokemon-tab-list">{pokemonTabs}</TabList>
+          {pokemonTabPanels}
+        </Tabs>
+      </div>
+    </>
   );
 };
 

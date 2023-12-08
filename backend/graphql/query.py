@@ -143,6 +143,8 @@ class Query(graphene.ObjectType):
             if user:
                 team = TeamModel.query.filter_by(id=team_id, user_id=user.id).first()  # Simulating TeamModel
                 if team:
+                    sorted_pokemons = sorted(team.pokemons, key=lambda x: x.position)
+                    team.pokemons = sorted_pokemons
                     return team
                 else:
                     raise Exception("You don't have permission to access this team.")
@@ -151,7 +153,7 @@ class Query(graphene.ObjectType):
         except Exception as e:
             return e
 
-    user_team = graphene.Field(lambda: Team, user_id=graphene.String(required=True), team_id=graphene.Int())
+    user_team = graphene.Field(lambda: Team, user_id=graphene.String(required=True), team_id=graphene.Int(), order_by=graphene.String())
 
     def resolve_user_pokemon_shiny_count(self, info, user_id, pokemon_id):
         type_name, original_id = from_global_id(user_id)
