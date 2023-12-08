@@ -198,11 +198,27 @@ class LocationMutation(graphene.Mutation):
 
         return LocationMutation(location=location)
     
+class PokemonInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
+class MoveInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
+class AbilityInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
+class ItemInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
 class TeamPokemonInput(graphene.InputObjectType):
-    pokemon_id = graphene.Int(required=True)
-    move_ids = graphene.List(graphene.Int)
-    ability_id = graphene.Int()
-    item_id = graphene.Int()
+    pokemon = graphene.Field(PokemonInput, required=True)
+    moves = graphene.List(MoveInput)
+    ability = graphene.Field(AbilityInput)
+    item = graphene.Field(ItemInput)
     position = graphene.Int(required=True)
     
 class TeamMutation(graphene.Mutation):
@@ -217,15 +233,11 @@ class TeamMutation(graphene.Mutation):
     @staticmethod
     def mutate(self, info, user_id, name, pokemons, team_id=None):
         type_name, original_id = from_global_id(user_id)
-        print(original_id)
         user = UserModel.query.filter_by(id=original_id).first()  # Simulating UserModel
-        print (user.name)
         if user:
             if team_id:
-                print(user)
                 team = TeamModel.query.filter_by(id=team_id, user_id=user.id).first()
-                print(team)  # Simulating TeamModel
-                print(team.user_id)
+
                 if team:
                  # Check if the user_id matches the original_id before making changes
                     if team.user_id == user.id:
@@ -236,23 +248,69 @@ class TeamMutation(graphene.Mutation):
                         # Add new team pokemons
                         for pokemon_details in pokemons:
 
-                            ability_id = pokemon_details.get('ability_id')
-                            pokemon_id = pokemon_details.get('pokemon_id')
-                            move_ids = pokemon_details.get('move_ids')
-                            item_id = pokemon_details.get('item_id')
+                            pokemon_data = pokemon_details.get('pokemon')
+                            pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_data.id).first()
+                            
+                            if not pokemon:
+                                new_pokemon = PokemonModel(
+                                    pokemon_id=pokemon_data.id,
+                                    name=pokemon_data.name 
+                                )
+                                db.session.add(new_pokemon)
+                                db.session.commit()
+                                pokemon = new_pokemon
 
-                            ability = AbilityModel.query.filter_by(ability_id=ability_id).first()
-                            pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
-                            item =  ItemModel.query.filter_by(item_id=item_id).first()
-                            moves = MoveModel.query.filter(MoveModel.move_id.in_(move_ids)).all()
+                            ability_data = pokemon_details.get('ability')
+                            ability = AbilityModel.query.filter_by(ability_id=ability_data.id).first()
 
-                            # Retrieve Moves using the provided move IDs
+                            if not ability:
+                                new_ability = AbilityModel(
+                                    ability_id=ability_data.id,
+                                    name=ability_data.name
+                                )
+                                db.session.add(new_ability)
+                                db.session.commit()
+                                ability = new_ability
+
+                            item_data = pokemon_details.get('item')
+                            item =  ItemModel.query.filter_by(item_id=item_data.id).first()
+
+                            if not item:
+                                new_item = ItemModel(
+                                    item_id=item_data.id,
+                                    name=item_data.name
+                                )
+                                db.session.add(new_item)
+                                db.session.commit()
+                                item = new_item
+
+                            moves_data = pokemon_details.get('moves')
+
+                            moves = []
+                            for move_data in moves_data:
+                                move_id = move_data.get('id')
+                                move_name = move_data.get('name')
+
+                                move = MoveModel.query.filter_by(move_id=move_id).first()
+                                
+                                if not move:
+                                    new_move = MoveModel(
+                                        move_id=move_id,
+                                        name=move_name
+                                    )
+                                    db.session.add(new_move)
+                                    db.session.commit()
+                                    move = new_move
+
+                                moves.append(move)
+
+
                             new_pokemon = TeamPokemonModel(
                                 team_id=team.id,
                                 pokemon_id=pokemon.id,
                                 move_ids=[move.id for move in moves],
                                 ability_id=ability.id,
-                                item_id=item.id,  # Replace with your logic for item_id
+                                item_id=item.id,
                                 position=pokemon_details.get('position')
                             )
                             db.session.add(new_pokemon)

@@ -91,10 +91,22 @@ const TeamEdit = () => {
         team_id: params.teamId,
         name: team.name,
         pokemons: team.pokemons.map((p) => ({
-          abilityId: p.ability?.abilityId,
-          itemId: p.item?.itemId,
-          pokemonId: p.pokemon.pokemonId,
-          moveIds: p.moves.map((m) => m.moveId),
+          ability: {
+            id: p.ability?.abilityId,
+            name: p.ability?.name,
+          },
+          item: {
+            id: p.item?.itemId,
+            name: p.item?.name,
+          },
+          pokemon: {
+            id: p.pokemon.pokemonId,
+            name: p.pokemon.name,
+          },
+          moves: p.moves.map((m) => ({
+            id: m.moveId,
+            name: m.name,
+          })),
           position: p.position,
         })),
       };
