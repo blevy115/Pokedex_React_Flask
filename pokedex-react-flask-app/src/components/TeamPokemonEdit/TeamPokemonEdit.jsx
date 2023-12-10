@@ -1,20 +1,46 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../api/clients";
 import {
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
+  GET_TEAM_POKEMON_INFO,
 } from "../../api/queries/pokeapi";
 
-import {Loading, DebouncedInput} from "../../components";
+import { Loading, DebouncedInput } from "../../components";
 
-import "./TeamPokemonEdit.scss"
+import { formatName } from "../../helpers/format";
 
-const TeamPokemonEdit = ({teamPokemon, changeSelectedPokemon}) => {
-    console.log(teamPokemon)
-    const [textInput, setTextInput] = useState("");
-    
+import "./TeamPokemonEdit.scss";
+
+function getSelectedMove(movesList, selectedMoves, i) {
+  const selectedMove = selectedMoves.find(
+    (move) => move.position === i && move.move !== null
+  );
+  if (selectedMove) {
+    const moveIsLearnable = movesList.find(
+      (move) => move.pokemon_v2_move.id === selectedMove.move.moveId
+    );
+    if (moveIsLearnable) {
+      return moveIsLearnable.pokemon_v2_move.id;
+    }
+  } else {
+    return null;
+  }
+}
+
+const TeamPokemonEdit = ({
+  teamPokemon,
+  changeSelectedPokemon,
+  changeSelectedMove,
+}) => {
+  const [textInput, setTextInput] = useState("");
+  const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
+
+  useEffect(() => {
+    setSelectedMoves(teamPokemon.moves);
+  }, [teamPokemon]);
 
   const { data: list, loading: loadingList } = useQuery(
     !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
@@ -27,37 +53,149 @@ const TeamPokemonEdit = ({teamPokemon, changeSelectedPokemon}) => {
     }
   );
 
+  const { data: pokemonData } = useQuery(GET_TEAM_POKEMON_INFO, {
+    variables: { id: parseInt(teamPokemon.pokemon.pokemonId) },
+    client: pokemonAPIClient,
+  });
+
   const handlePokemonSelection = (selectedPokemon) => {
     changeSelectedPokemon(selectedPokemon);
   };
-  
 
-  return (<>
-  <p>{teamPokemon.pokemon.name}</p>
-  {loadingList && <Loading fullscreen={false} />}
-  <div className="app__pokemon-search-field">
+  const movesList = pokemonData ? pokemonData.pokemon_details[0].moves : null;
+  return (
+    <div className="app__team-pokemon">
+      <div className="pokemon-search">
         <DebouncedInput
           id="app__pokemon-search-field"
           onValueChange={setTextInput}
           placeholder="Pokemon"
           debouceTime={400}
+          label="Pokemon"
+          initialValue={formatName(teamPokemon.pokemon.name)}
         />
+        {loadingList && <Loading fullscreen={false} />}
         <div>
           {list &&
             list.pokemon_list.map((pokemon) => (
               <div
                 key={pokemon.id}
                 onClick={() => handlePokemonSelection(pokemon)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
                 {pokemon.name}
               </div>
             ))}
         </div>
       </div>
-  </>
+      {pokemonData ? (
+        <>
+          <div className="moves-search">
+            <div>
+              <label htmlFor="move-1">Move 1</label>
+              <select
+                name="move-1"
+                onChange={(e) =>
+                  changeSelectedMove(
+                    movesList.find(
+                      (move) => move.pokemon_v2_move.id == e.target.value
+                    ),
+                    1
+                  )
+                }
+                defaultValue={getSelectedMove(movesList, selectedMoves, 1)}
+              >
+                <option value={null}>Select Move</option>
+                {movesList.map((move) => (
+                  <option
+                    key={move.pokemon_v2_move.id}
+                    value={move.pokemon_v2_move.id}
+                  >
+                    {formatName(move.pokemon_v2_move.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="move-2">Move 2</label>
+              <select
+                name="move-2"
+                onChange={(e) =>
+                  changeSelectedMove(
+                    movesList.find(
+                      (move) => move.pokemon_v2_move.id == e.target.value
+                    ),
+                    2
+                  )
+                }
+                defaultValue={getSelectedMove(movesList, selectedMoves, 2)}
+              >
+                <option value={null}>Select Move</option>
+                {movesList.map((move) => (
+                  <option
+                    key={move.pokemon_v2_move.id}
+                    value={move.pokemon_v2_move.id}
+                  >
+                    {formatName(move.pokemon_v2_move.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="move-3">Move 3</label>
+              <select
+                name="move-3"
+                onChange={(e) =>
+                  changeSelectedMove(
+                    movesList.find(
+                      (move) => move.pokemon_v2_move.id == e.target.value
+                    ),
+                    3
+                  )
+                }
+                defaultValue={getSelectedMove(movesList, selectedMoves, 3)}
+              >
+                <option value={null}>Select Move</option>
+                {movesList.map((move) => (
+                  <option
+                    key={move.pokemon_v2_move.id}
+                    value={move.pokemon_v2_move.id}
+                  >
+                    {formatName(move.pokemon_v2_move.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="move-4">Move 4</label>
+              <select
+                name="move-4"
+                onChange={(e) =>
+                  changeSelectedMove(
+                    movesList.find(
+                      (move) => move.pokemon_v2_move.id == e.target.value
+                    ),
+                    4
+                  )
+                }
+                defaultValue={getSelectedMove(movesList, selectedMoves, 4)}
+              >
+                <option value={null}>Select Move</option>
+                {movesList.map((move) => (
+                  <option
+                    key={move.pokemon_v2_move.id}
+                    value={move.pokemon_v2_move.id}
+                  >
+                    {formatName(move.pokemon_v2_move.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+};
 
-  )
-}
-
-export default TeamPokemonEdit
+export default TeamPokemonEdit;

@@ -62,8 +62,11 @@ const GET_USER_TEAMS = gql`
      pokemons {
       position
       moves {
-        name
-        moveId
+        position
+        move {
+          name
+          moveId
+        }
       }
       pokemon {
         name
@@ -89,8 +92,11 @@ const GET_USER_TEAM = gql`
      pokemons {
       position
       moves {
-        name
-        moveId
+        position
+        move {
+          name
+          moveId
+        }
       }
       pokemon {
         name
@@ -174,7 +180,12 @@ const USER_TEAM_MUTATION = gql`
         teamId
         pokemons {
           pokemonId
-          moveIds
+          moves {
+            position
+            move {
+              moveId
+            }
+          }
           abilityId
           itemId
           position

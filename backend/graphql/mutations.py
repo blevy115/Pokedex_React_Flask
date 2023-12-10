@@ -203,6 +203,7 @@ class PokemonInput(graphene.InputObjectType):
     name = graphene.String(required=True)
 
 class MoveInput(graphene.InputObjectType):
+    position = graphene.Int(required=True)
     id = graphene.Int(required=True)
     name = graphene.String(required=True)
 
@@ -283,32 +284,47 @@ class TeamMutation(graphene.Mutation):
                                 db.session.add(new_item)
                                 db.session.commit()
                                 item = new_item
-
+ 
                             moves_data = pokemon_details.get('moves')
+                            move1_id = None
+                            move2_id = None
+                            move3_id = None
+                            move4_id = None
 
-                            moves = []
                             for move_data in moves_data:
-                                move_id = move_data.get('id')
-                                move_name = move_data.get('name')
+                                if move_data:
+                                    move_id = move_data.get('id')
+                                    move_name = move_data.get('name')
+                                    move_position = move_data.get('position')
 
-                                move = MoveModel.query.filter_by(move_id=move_id).first()
-                                
-                                if not move:
-                                    new_move = MoveModel(
-                                        move_id=move_id,
-                                        name=move_name
-                                    )
-                                    db.session.add(new_move)
-                                    db.session.commit()
-                                    move = new_move
+                                    # Assuming your MoveModel has move_id as the field representing the move's ID
+                                    move = MoveModel.query.filter_by(move_id=move_id).first()
+                                    
+                                    if not move:
+                                        new_move = MoveModel(
+                                            move_id=move_id,
+                                            name=move_name
+                                        )
+                                        db.session.add(new_move)
+                                        db.session.commit()
+                                        move = new_move
 
-                                moves.append(move)
-
+                                    if move_position == 1:
+                                        move1_id = move.id
+                                    elif move_position == 2:
+                                        move2_id = move.id
+                                    elif move_position == 3:
+                                        move3_id = move.id
+                                    elif move_position == 4:
+                                        move4_id = move.id
 
                             new_pokemon = TeamPokemonModel(
                                 team_id=team.id,
                                 pokemon_id=pokemon.id,
-                                move_ids=[move.id for move in moves],
+                                move1_id=move1_id,
+                                move2_id=move2_id,
+                                move3_id=move3_id,
+                                move4_id=move4_id,
                                 ability_id=ability.id,
                                 item_id=item.id,
                                 position=pokemon_details.get('position')

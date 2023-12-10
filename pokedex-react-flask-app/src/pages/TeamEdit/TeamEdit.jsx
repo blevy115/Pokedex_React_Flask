@@ -12,6 +12,26 @@ import { getSprite } from "../../helpers/pictures";
 
 import "./TeamEdit.scss";
 
+function updateMoves(moves, move, index) {
+  const updatedMoves = [];
+  for (let i = 0; i < 4; i++) {
+    if (moves[i] && moves[i].position === index) {
+      updatedMoves.push({
+        ...moves[i],
+        move: move ? {
+          name: move.pokemon_v2_move.name,
+          moveId: move.pokemon_v2_move.id,
+        } : null,
+      });
+    } else if (moves[i]) {
+      updatedMoves.push(moves[i]);
+    } else {
+      updatedMoves.push(null);
+    }
+  }
+  return updatedMoves;
+}
+
 const TeamEdit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const params = useParams();
@@ -35,6 +55,7 @@ const TeamEdit = () => {
   useEffect(() => {
     if (teamData) {
       const { team } = teamData;
+      // TODO maybe fix 2 setState function REPEAT through file
       setTeam(team);
       setTabs(team.pokemons);
     }
@@ -46,6 +67,21 @@ const TeamEdit = () => {
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
         p.position === tabs[selectedTab].position
           ? { ...p, pokemon: { name: pokemon.name, pokemonId: pokemon.id } }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
+  const changeSelectedMove = useCallback(
+    (move, index) => {
+      // TODO Improve this code
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? { ...p, moves: updateMoves(p.moves, move, index) }
           : p
       );
       setTeam(updatedTeam);
@@ -76,6 +112,7 @@ const TeamEdit = () => {
         <TabPanel className="pokemon-tab-panel" key={index}>
           <TeamPokemonEdit
             changeSelectedPokemon={changeSelectedPokemon}
+            changeSelectedMove={changeSelectedMove}
             teamPokemon={tab}
           />
         </TabPanel>
@@ -103,10 +140,15 @@ const TeamEdit = () => {
             id: p.pokemon.pokemonId,
             name: p.pokemon.name,
           },
-          moves: p.moves.map((m) => ({
-            id: m.moveId,
-            name: m.name,
-          })),
+          moves: p.moves.map((m) =>
+            m.move
+              ? {
+                  id: m.move.moveId,
+                  name: m.move.name,
+                  position: m.position,
+                }
+              : null
+          ),
           position: p.position,
         })),
       };

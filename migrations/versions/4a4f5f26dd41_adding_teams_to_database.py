@@ -30,12 +30,19 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('team_id', sa.Integer(), nullable=True),
     sa.Column('pokemon_id', sa.Integer(), nullable=True),
-    sa.Column('move_ids', sa.ARRAY(sa.Integer()), nullable=True),
+    sa.Column('move1_id', sa.Integer(), nullable=True),
+    sa.Column('move2_id', sa.Integer(), nullable=True),
+    sa.Column('move3_id', sa.Integer(), nullable=True),
+    sa.Column('move4_id', sa.Integer(), nullable=True),
     sa.Column('ability_id', sa.Integer(), nullable=True),
     sa.Column('item_id', sa.Integer(), nullable=True),
     sa.Column('position', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['ability_id'], ['ability.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
+    sa.ForeignKeyConstraint(['move1_id'], ['move.id'], ),
+    sa.ForeignKeyConstraint(['move2_id'], ['move.id'], ),
+    sa.ForeignKeyConstraint(['move3_id'], ['move.id'], ),
+    sa.ForeignKeyConstraint(['move4_id'], ['move.id'], ),
     sa.ForeignKeyConstraint(['pokemon_id'], ['pokemon.id'], ),
     sa.ForeignKeyConstraint(['team_id'], ['team.id'], ),
     sa.PrimaryKeyConstraint('id'),
@@ -53,12 +60,12 @@ def upgrade():
             ('position >= 1 AND position <= 6')
         )
     
-    op.create_check_constraint(
-        '_move_ids_length_check', 
+
+    op.create_unique_constraint(
+        'unique_moves_for_team_pokemon',
         'team_pokemon',
-        sa.func.cardinality(sa.column('move_ids')) <= 4 
+        ['move1_id', 'move2_id', 'move3_id', 'move4_id']
     )
-    
 
     # ### end Alembic commands ###
 

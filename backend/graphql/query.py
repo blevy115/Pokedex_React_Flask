@@ -153,7 +153,7 @@ class Query(graphene.ObjectType):
         except Exception as e:
             return e
 
-    user_team = graphene.Field(lambda: Team, user_id=graphene.String(required=True), team_id=graphene.Int(), order_by=graphene.String())
+    user_team = graphene.Field(lambda: Team, user_id=graphene.String(required=True), team_id=graphene.Int())
 
     def resolve_user_pokemon_shiny_count(self, info, user_id, pokemon_id):
         type_name, original_id = from_global_id(user_id)
