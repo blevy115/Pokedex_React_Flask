@@ -166,7 +166,7 @@ const TeamPokemonEdit = ({
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                    selectedMove.move && selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -198,7 +198,7 @@ const TeamPokemonEdit = ({
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -230,7 +230,7 @@ const TeamPokemonEdit = ({
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -262,7 +262,7 @@ const TeamPokemonEdit = ({
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option

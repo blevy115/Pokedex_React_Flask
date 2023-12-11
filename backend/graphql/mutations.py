@@ -262,28 +262,36 @@ class TeamMutation(graphene.Mutation):
                                 pokemon = new_pokemon
 
                             ability_data = pokemon_details.get('ability')
-                            ability = AbilityModel.query.filter_by(ability_id=ability_data.id).first()
+                            if ability_data:
+                                ability = AbilityModel.query.filter_by(ability_id=ability_data.id).first()
 
-                            if not ability:
-                                new_ability = AbilityModel(
-                                    ability_id=ability_data.id,
-                                    name=ability_data.name
-                                )
-                                db.session.add(new_ability)
-                                db.session.commit()
-                                ability = new_ability
+                                if not ability:
+                                    new_ability = AbilityModel(
+                                        ability_id=ability_data.id,
+                                        name=ability_data.name
+                                    )
+                                    db.session.add(new_ability)
+                                    db.session.commit()
+                                    ability = new_ability
+                                ability_id = ability.id
+                            else:
+                                ability_id = None
 
                             item_data = pokemon_details.get('item')
-                            item =  ItemModel.query.filter_by(item_id=item_data.id).first()
+                            if item_data:
+                                item =  ItemModel.query.filter_by(item_id=item_data.id).first()
 
-                            if not item:
-                                new_item = ItemModel(
-                                    item_id=item_data.id,
-                                    name=item_data.name
-                                )
-                                db.session.add(new_item)
-                                db.session.commit()
-                                item = new_item
+                                if not item:
+                                    new_item = ItemModel(
+                                        item_id=item_data.id,
+                                        name=item_data.name
+                                    )
+                                    db.session.add(new_item)
+                                    db.session.commit()
+                                    item = new_item
+                                item_id = item.id
+                            else:
+                                item_id = None
  
                             moves_data = pokemon_details.get('moves')
                             move1_id = None
@@ -325,8 +333,8 @@ class TeamMutation(graphene.Mutation):
                                 move2_id=move2_id,
                                 move3_id=move3_id,
                                 move4_id=move4_id,
-                                ability_id=ability.id,
-                                item_id=item.id,
+                                ability_id=ability_id,
+                                item_id=item_id,
                                 position=pokemon_details.get('position')
                             )
                             db.session.add(new_pokemon)

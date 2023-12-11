@@ -18,10 +18,12 @@ function updateMoves(moves, move, index) {
     if (moves[i] && moves[i].position === index) {
       updatedMoves.push({
         ...moves[i],
-        move: move ? {
-          name: move.pokemon_v2_move.name,
-          moveId: move.pokemon_v2_move.id,
-        } : null,
+        move: move
+          ? {
+              name: move.pokemon_v2_move.name,
+              moveId: move.pokemon_v2_move.id,
+            }
+          : null,
       });
     } else if (moves[i]) {
       updatedMoves.push(moves[i]);
@@ -80,7 +82,15 @@ const TeamEdit = () => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
         p.position === tabs[selectedTab].position
-          ? { ...p, ability: { name: ability.pokemon_v2_ability.name, abilityId: ability.pokemon_v2_ability.id } }
+          ? {
+              ...p,
+              ability: ability
+                ? {
+                    name: ability.pokemon_v2_ability.name,
+                    abilityId: ability.pokemon_v2_ability.id,
+                  }
+                : null,
+            }
           : p
       );
       setTeam(updatedTeam);
@@ -94,7 +104,7 @@ const TeamEdit = () => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
         p.position === tabs[selectedTab].position
-          ? { ...p, item: { name: item.name, itemId: item.id } }
+          ? { ...p, item: item ? { name: item.name, itemId: item.id } : null }
           : p
       );
       setTeam(updatedTeam);
@@ -158,14 +168,18 @@ const TeamEdit = () => {
         team_id: params.teamId,
         name: team.name,
         pokemons: team.pokemons.map((p) => ({
-          ability: {
-            id: p.ability?.abilityId,
-            name: p.ability?.name,
-          },
-          item: {
-            id: p.item?.itemId,
-            name: p.item?.name,
-          },
+          ability: p.ability
+            ? {
+                id: p.ability.abilityId,
+                name: p.ability.name,
+              }
+            : null,
+          item: p.item
+            ? {
+                id: p.item.itemId,
+                name: p.item.name,
+              }
+            : null,
           pokemon: {
             id: p.pokemon.pokemonId,
             name: p.pokemon.name,
