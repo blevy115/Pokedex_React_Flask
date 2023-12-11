@@ -30,16 +30,33 @@ function getSelectedMove(movesList, selectedMoves, i) {
   }
 }
 
+function getSelectedAbility(abilitiesList, selectedAbility) {
+  if (selectedAbility) {
+    const abilityIsLearnable = abilitiesList.find(
+      (ability) => ability.pokemon_v2_ability.id === selectedAbility.abilityId
+    );
+    if (abilityIsLearnable) {
+      return abilityIsLearnable.pokemon_v2_ability.id;
+    }
+  } else {
+    return null;
+  }
+}
+
+
 const TeamPokemonEdit = ({
   teamPokemon,
   changeSelectedPokemon,
   changeSelectedMove,
+  changeSelectedAbility,
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
+  const [selectedAbility, setSelectedAbility] = useState()
 
   useEffect(() => {
     setSelectedMoves(teamPokemon.moves);
+    setSelectedAbility(teamPokemon.ability)
   }, [teamPokemon]);
 
   const { data: list, loading: loadingList } = useQuery(
@@ -63,6 +80,8 @@ const TeamPokemonEdit = ({
   };
 
   const movesList = pokemonData ? pokemonData.pokemon_details[0].moves : null;
+  const abilitiesList = pokemonData ? pokemonData.pokemon_details[0].abilities : null;
+
   return (
     <div className="app__team-pokemon">
       <div className="pokemon-search">
@@ -187,6 +206,32 @@ const TeamPokemonEdit = ({
                     value={move.pokemon_v2_move.id}
                   >
                     {formatName(move.pokemon_v2_move.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="ability-search">
+          <div>
+              <label htmlFor="abilty">Abilty</label>
+              <select
+                name="abilty"
+                onChange={(e) => 
+                  changeSelectedAbility(
+                    abilitiesList.find(
+                      (ability) => ability.pokemon_v2_ability.id == e.target.value
+                    )                  
+                  )
+                }
+                defaultValue={getSelectedAbility(abilitiesList, selectedAbility)}
+              >
+                <option value={null}>Select Ability</option>
+                {abilitiesList.map((ability) => (
+                  <option
+                    key={ability.pokemon_v2_ability.id}
+                    value={ability.pokemon_v2_ability.id}
+                  >
+                    {formatName(ability.pokemon_v2_ability.name)}
                   </option>
                 ))}
               </select>
