@@ -43,20 +43,35 @@ function getSelectedAbility(abilitiesList, selectedAbility) {
   }
 }
 
+function getSelectedItem(itemsList, selectedItem) {
+  if (selectedItem) {
+    const itemIsLearnable = itemsList.find(
+      (item) => item.id === selectedItem.itemId
+    );
+    if (itemIsLearnable) {
+      return itemIsLearnable.id;
+    }
+  } else {
+    return null;
+  }
+}
 
 const TeamPokemonEdit = ({
   teamPokemon,
   changeSelectedPokemon,
   changeSelectedMove,
   changeSelectedAbility,
+  changeSelectedItem,
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
-  const [selectedAbility, setSelectedAbility] = useState()
+  const [selectedAbility, setSelectedAbility] = useState(teamPokemon.ability);
+  const [selectedItem, setSelectedItem] = useState(teamPokemon.item);
 
   useEffect(() => {
     setSelectedMoves(teamPokemon.moves);
-    setSelectedAbility(teamPokemon.ability)
+    setSelectedAbility(teamPokemon.ability);
+    setSelectedItem(teamPokemon.item);
   }, [teamPokemon]);
 
   const { data: list, loading: loadingList } = useQuery(
@@ -80,7 +95,10 @@ const TeamPokemonEdit = ({
   };
 
   const movesList = pokemonData ? pokemonData.pokemon_details[0].moves : null;
-  const abilitiesList = pokemonData ? pokemonData.pokemon_details[0].abilities : null;
+  const abilitiesList = pokemonData
+    ? pokemonData.pokemon_details[0].abilities
+    : null;
+  const itemsList = pokemonData ? pokemonData.items : null;
 
   return (
     <div className="app__team-pokemon">
@@ -212,18 +230,22 @@ const TeamPokemonEdit = ({
             </div>
           </div>
           <div className="ability-search">
-          <div>
+            <div>
               <label htmlFor="abilty">Abilty</label>
               <select
                 name="abilty"
-                onChange={(e) => 
+                onChange={(e) =>
                   changeSelectedAbility(
                     abilitiesList.find(
-                      (ability) => ability.pokemon_v2_ability.id == e.target.value
-                    )                  
+                      (ability) =>
+                        ability.pokemon_v2_ability.id == e.target.value
+                    )
                   )
                 }
-                defaultValue={getSelectedAbility(abilitiesList, selectedAbility)}
+                defaultValue={getSelectedAbility(
+                  abilitiesList,
+                  selectedAbility
+                )}
               >
                 <option value={null}>Select Ability</option>
                 {abilitiesList.map((ability) => (
@@ -232,6 +254,32 @@ const TeamPokemonEdit = ({
                     value={ability.pokemon_v2_ability.id}
                   >
                     {formatName(ability.pokemon_v2_ability.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="item-search">
+            <div>
+              <label htmlFor="item">Item</label>
+              <select
+                name="item"
+                onChange={(e) =>
+                  changeSelectedItem(
+                    itemsList.find(
+                      (item) => item.id == e.target.value
+                    )
+                  )
+                }
+                defaultValue={getSelectedItem(itemsList, selectedItem)}
+              >
+                <option value={null}>Select Item</option>
+                {itemsList.map((item) => (
+                  <option
+                    key={item.id}
+                    value={item.id}
+                  >
+                    {formatName(item.name)}
                   </option>
                 ))}
               </select>

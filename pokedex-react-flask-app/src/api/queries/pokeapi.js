@@ -239,6 +239,10 @@ const GET_TEAM_POKEMON_INFO = gql`
         is_hidden
       }
     }
+    items: pokemon_v2_item(where: {pokemon_v2_itemattributemaps: {item_attribute_id: {_eq: 5}}}) {
+      id
+      name      
+    }
   }
 `
 

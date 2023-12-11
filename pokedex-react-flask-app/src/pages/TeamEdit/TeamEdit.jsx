@@ -89,6 +89,20 @@ const TeamEdit = () => {
     [tabs, selectedTab]
   );
 
+  const changeSelectedItem = useCallback(
+    (item) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? { ...p, item: { name: item.name, itemId: item.id } }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
   const changeSelectedMove = useCallback(
     (move, index) => {
       // TODO Improve this code
@@ -128,6 +142,7 @@ const TeamEdit = () => {
             changeSelectedPokemon={changeSelectedPokemon}
             changeSelectedMove={changeSelectedMove}
             changeSelectedAbility={changeSelectedAbility}
+            changeSelectedItem={changeSelectedItem}
             teamPokemon={tab}
           />
         </TabPanel>
