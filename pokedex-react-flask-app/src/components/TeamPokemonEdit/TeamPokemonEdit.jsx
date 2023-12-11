@@ -94,13 +94,33 @@ const TeamPokemonEdit = ({
     changeSelectedPokemon(selectedPokemon);
   };
 
-  const movesList = pokemonData ? pokemonData.pokemon_details[0].moves : null;
-  const abilitiesList = pokemonData
-    ? pokemonData.pokemon_details[0].abilities
+  const movesList = pokemonData
+    ? [...pokemonData.pokemon_details[0].moves].sort((a, b) =>
+        a.pokemon_v2_move.name.localeCompare(b.pokemon_v2_move.name)
+      )
     : null;
-  const itemsList = pokemonData ? pokemonData.items : null;
 
-  return (
+  const abilitiesList = pokemonData
+    ? [
+        ...pokemonData.pokemon_details[0].abilities.map((a) =>
+          a.is_hidden
+            ? {
+                ...a,
+                pokemon_v2_ability: {
+                  ...a.pokemon_v2_ability,
+                  name: `${a.pokemon_v2_ability.name} (H)`,
+                },
+              }
+            : a
+        ),
+      ]
+    : null;
+
+  const itemsList = pokemonData
+    ? [...pokemonData.items].sort((a, b) => a.name.localeCompare(b.name))
+    : null;
+
+    return (
     <div className="app__team-pokemon">
       <div className="pokemon-search">
         <DebouncedInput
@@ -143,14 +163,21 @@ const TeamPokemonEdit = ({
                 defaultValue={getSelectedMove(movesList, selectedMoves, 1)}
               >
                 <option value={null}>Select Move</option>
-                {movesList.map((move) => (
-                  <option
-                    key={move.pokemon_v2_move.id}
-                    value={move.pokemon_v2_move.id}
-                  >
-                    {formatName(move.pokemon_v2_move.name)}
-                  </option>
-                ))}
+                {movesList.map((move) => {
+                  const isSelected = selectedMoves.some(
+                    (selectedMove) =>
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                  );
+                  return (
+                    <option
+                      key={move.pokemon_v2_move.id}
+                      value={move.pokemon_v2_move.id}
+                      disabled={isSelected}
+                    >
+                      {formatName(move.pokemon_v2_move.name)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div>
@@ -168,14 +195,21 @@ const TeamPokemonEdit = ({
                 defaultValue={getSelectedMove(movesList, selectedMoves, 2)}
               >
                 <option value={null}>Select Move</option>
-                {movesList.map((move) => (
-                  <option
-                    key={move.pokemon_v2_move.id}
-                    value={move.pokemon_v2_move.id}
-                  >
-                    {formatName(move.pokemon_v2_move.name)}
-                  </option>
-                ))}
+                {movesList.map((move) => {
+                  const isSelected = selectedMoves.some(
+                    (selectedMove) =>
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                  );
+                  return (
+                    <option
+                      key={move.pokemon_v2_move.id}
+                      value={move.pokemon_v2_move.id}
+                      disabled={isSelected}
+                    >
+                      {formatName(move.pokemon_v2_move.name)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div>
@@ -193,14 +227,21 @@ const TeamPokemonEdit = ({
                 defaultValue={getSelectedMove(movesList, selectedMoves, 3)}
               >
                 <option value={null}>Select Move</option>
-                {movesList.map((move) => (
-                  <option
-                    key={move.pokemon_v2_move.id}
-                    value={move.pokemon_v2_move.id}
-                  >
-                    {formatName(move.pokemon_v2_move.name)}
-                  </option>
-                ))}
+                {movesList.map((move) => {
+                  const isSelected = selectedMoves.some(
+                    (selectedMove) =>
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                  );
+                  return (
+                    <option
+                      key={move.pokemon_v2_move.id}
+                      value={move.pokemon_v2_move.id}
+                      disabled={isSelected}
+                    >
+                      {formatName(move.pokemon_v2_move.name)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div>
@@ -218,14 +259,21 @@ const TeamPokemonEdit = ({
                 defaultValue={getSelectedMove(movesList, selectedMoves, 4)}
               >
                 <option value={null}>Select Move</option>
-                {movesList.map((move) => (
-                  <option
-                    key={move.pokemon_v2_move.id}
-                    value={move.pokemon_v2_move.id}
-                  >
-                    {formatName(move.pokemon_v2_move.name)}
-                  </option>
-                ))}
+                {movesList.map((move) => {
+                  const isSelected = selectedMoves.some(
+                    (selectedMove) =>
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
+                  );
+                  return (
+                    <option
+                      key={move.pokemon_v2_move.id}
+                      value={move.pokemon_v2_move.id}
+                      disabled={isSelected}
+                    >
+                      {formatName(move.pokemon_v2_move.name)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
@@ -266,19 +314,14 @@ const TeamPokemonEdit = ({
                 name="item"
                 onChange={(e) =>
                   changeSelectedItem(
-                    itemsList.find(
-                      (item) => item.id == e.target.value
-                    )
+                    itemsList.find((item) => item.id == e.target.value)
                   )
                 }
                 defaultValue={getSelectedItem(itemsList, selectedItem)}
               >
                 <option value={null}>Select Item</option>
                 {itemsList.map((item) => (
-                  <option
-                    key={item.id}
-                    value={item.id}
-                  >
+                  <option key={item.id} value={item.id}>
                     {formatName(item.name)}
                   </option>
                 ))}

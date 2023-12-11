@@ -204,7 +204,7 @@ const GET_TEAM_POKEMON_INFO = gql`
         }
       }
 
-      moves: pokemon_v2_pokemonmoves(order_by: {move_id: asc}, distinct_on: move_id) {
+      moves: pokemon_v2_pokemonmoves(distinct_on: move_id) {
         pokemon_v2_move {
           id
             name
