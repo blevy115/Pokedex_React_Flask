@@ -171,7 +171,7 @@ const ITEM_MUTATION = gql`
 `;
 
 const USER_TEAM_MUTATION = gql`
-  mutation createUserTeam($user_id: String!, $team_id: Int!, $name: String!, $pokemons: [TeamPokemonInput!]!) {
+  mutation createUserTeam($user_id: String!, $team_id: Int, $name: String!, $pokemons: [TeamPokemonInput!]!) {
     mutateTeam(userId: $user_id, teamId: $team_id, name: $name, pokemons: $pokemons) {
       team {
         id

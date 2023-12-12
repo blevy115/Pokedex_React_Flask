@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
 
 import { backEndClient } from "../../api/clients";
-import { GET_USER_TEAMS } from "../../api/queries/backend";
+import { GET_USER_TEAMS, USER_TEAM_MUTATION } from "../../api/queries/backend";
 
 import { TeamListItem } from "../../components";
 
@@ -12,7 +13,24 @@ import "./Teams.scss";
 
 const Teams = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
+
+  async function createTeam() {
+    const newTeam = await createUserTeam({
+      variables: {
+        user_id: user.id,
+        name: "New Team", // TODO input for team name
+        pokemons: [],
+      },
+    });
+    const teamId = newTeam.data.mutateTeam.team.teamId;
+    navigate(`/teams/${teamId}`);
+  }
+
+  const [createUserTeam] = useMutation(USER_TEAM_MUTATION, {
+    client: backEndClient,
+  });
 
   const {
     data: userTeamsData,
@@ -24,7 +42,7 @@ const Teams = () => {
   });
 
   useEffect(() => {
-    refetchUserTeams({ variables: { user_id: user.id } });
+    refetchUserTeams({ user_id: user.id });
   }, [user.id, refetchUserTeams]);
 
   useEffect(() => {
@@ -42,6 +60,7 @@ const Teams = () => {
       ) : (
         teams.map((team, index) => <TeamListItem key={index} team={team} />)
       )}
+      <button onClick={() => createTeam()}>New Team</button>
     </div>
   );
 };

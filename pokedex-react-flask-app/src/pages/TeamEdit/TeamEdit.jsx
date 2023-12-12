@@ -20,36 +20,36 @@ const newPokemon = (position) => ({
   position,
 });
 
-const modifyPokemonData = (p) => (
-  {
-    ability: p.ability
+const modifyPokemonData = (p) => ({
+  ability: p.ability
+    ? {
+        id: p.ability.abilityId,
+        name: p.ability.name,
+      }
+    : null,
+  item: p.item
+    ? {
+        id: p.item.itemId,
+        name: p.item.name,
+      }
+    : null,
+  pokemon: p.pokemon
+    ? {
+        id: p.pokemon.pokemonId,
+        name: p.pokemon.name,
+      }
+    : null,
+  moves: p.moves.map((m) =>
+    m.move
       ? {
-          id: p.ability.abilityId,
-          name: p.ability.name,
+          id: m.move.moveId,
+          name: m.move.name,
+          position: m.position,
         }
-      : null,
-    item: p.item
-      ? {
-          id: p.item.itemId,
-          name: p.item.name,
-        }
-      : null,
-    pokemon: {
-      id: p.pokemon.pokemonId,
-      name: p.pokemon.name,
-    },
-    moves: p.moves.map((m) =>
-      m.move
-        ? {
-            id: m.move.moveId,
-            name: m.move.name,
-            position: m.position,
-          }
-        : null
-    ),
-    position: p.position,
-  }
-)
+      : null
+  ),
+  position: p.position,
+});
 
 function updateMoves(moves, move, index) {
   const updatedMoves = [];
@@ -84,7 +84,7 @@ const TeamEdit = () => {
     data: teamData,
     loading: teamsLoading,
     error: teamError,
-    refetch: refetchTeamData 
+    refetch: refetchTeamData,
   } = useQuery(GET_USER_TEAM, {
     variables: { user_id: user.id, team_id: params.teamId },
     client: backEndClient,
@@ -102,6 +102,10 @@ const TeamEdit = () => {
       setTabs(team.pokemons);
     }
   }, [teamData]);
+
+  useEffect(() => {
+    refetchTeamData({ user_id: user.id, team_id: params.teamId });
+  }, [user.id, params.teamId, refetchTeamData]);
 
   const changeSelectedPokemon = useCallback(
     (pokemon) => {
@@ -205,15 +209,18 @@ const TeamEdit = () => {
     () => (
       <Tab className="pokemon-tab" key={tabs.length}>
         <button
-          onClick={ async() => {
+          onClick={async () => {
             const data = {
               user_id: user.id,
               team_id: params.teamId,
               name: team.name,
-              pokemons: [...team.pokemons.map((p) => modifyPokemonData(p)), newPokemon(tabs.length+1)],
+              pokemons: [
+                ...team.pokemons.map((p) => modifyPokemonData(p)),
+                newPokemon(tabs.length + 1),
+              ],
             };
             await updateUserTeam({ variables: data });
-            refetchTeamData()
+            refetchTeamData();
           }}
         >
           New

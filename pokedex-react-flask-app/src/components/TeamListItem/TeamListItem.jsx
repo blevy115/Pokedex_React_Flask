@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 import "./TeamListItem.scss";
 
 const TeamListItem = ({ team }) => {
-  console.log(team);
   const navigate = useNavigate();
   return (
     <div className="team-list-item">

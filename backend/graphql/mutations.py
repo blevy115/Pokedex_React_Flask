@@ -364,58 +364,17 @@ class TeamMutation(graphene.Mutation):
             else:
         # Create a new team since team_id is not provided
                 new_team = TeamModel(user_id=user.id, name=name)
-                db.session.add(new_team)
-                db.session.flush()
-
-                # Create team's Pokemon details
-                for pokemon_details in pokemons:
-                    ability_id = pokemon_details.get('ability_id')
-                    pokemon_id = pokemon_details.get('pokemon_id')
-                    move_ids = pokemon_details.get('move_ids')
-                    item_id = pokemon_details.get('item_id')
-
-                    ability = AbilityModel.query.filter_by(ability_id=ability_id).first()
-                    pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_id).first()
-                    item =  ItemModel.query.filter_by(item_id=item_id).first()
-                    moves = MoveModel.query.filter(MoveModel.move_id.in_(move_ids)).all()
-
-                    # Retrieve Moves using the provided move IDs
-                    new_pokemon = TeamPokemonModel(
-                        team_id=team.id,
-                        pokemon_id=pokemon.id,
-                        move_ids=[move.id for move in moves],
-                        ability_id=ability.id,
-                        item_id=item.id,  # Replace with your logic for item_id
-                        position=pokemon_details.get('position')
-                    )
-                    db.session.add(new_pokemon)
-
+                db.session.add(new_team)                
                 db.session.commit()
-                return TeamMutation(team=new_team)
+
+                created_team = TeamModel.query.filter_by(id=new_team.id).first()
+                if created_team:
+                    created_team.team_id = created_team.id
+                    db.session.commit()
+
+                return TeamMutation(team=created_team)
         else:
             raise Exception("User not found.")
-
-        # # Create a new team
-        # type_name, original_id = from_global_id(user_id)
-        # new_team = TeamModel(user_id=user_id, name=name)
-        # db.session.add(new_team)
-        # db.session.flush()
-
-        # # Create team's Pokemon details
-        # for pokemon_details in pokemons:
-        #     new_pokemon = TeamPokemonModel(
-        #         team_id=new_team.id,
-        #         pokemon_id=pokemon_details.get('pokemon_id'),
-        #         move_ids=pokemon_details.get('move_ids'),
-        #         ability_id=pokemon_details.get('ability_id'),
-        #         item_id=pokemon_details.get('item_id'),
-        #         position=pokemon_details.get('position')
-        #     )
-        #     db.session.add(new_pokemon)
-
-        # db.session.commit()
-        # return TeamMutation(team=new_team)
-
 
 class UserPokemonMutation(graphene.Mutation):
     class Arguments:
