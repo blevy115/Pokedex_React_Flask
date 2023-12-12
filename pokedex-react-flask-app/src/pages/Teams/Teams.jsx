@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { backEndClient } from "../../api/clients";
 import { GET_USER_TEAMS } from "../../api/queries/backend";
 
-import {TeamListItem} from "../../components";
+import { TeamListItem } from "../../components";
 
 import { Loading } from "../../components";
 
@@ -12,21 +12,26 @@ import "./Teams.scss";
 
 const Teams = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [teams, setTeams] = useState([])
+  const [teams, setTeams] = useState([]);
 
-  const { data: userTeamsData, loading: userTeamsLoading } = useQuery(
-    GET_USER_TEAMS,
-    {
-      variables: { user_id: user.id },
-      client: backEndClient,
-    }
-  );
+  const {
+    data: userTeamsData,
+    loading: userTeamsLoading,
+    refetch: refetchUserTeams,
+  } = useQuery(GET_USER_TEAMS, {
+    variables: { user_id: user.id },
+    client: backEndClient,
+  });
+
+  useEffect(() => {
+    refetchUserTeams({ variables: { user_id: user.id } });
+  }, [user.id, refetchUserTeams]);
 
   useEffect(() => {
     if (userTeamsData) {
-        setTeams(userTeamsData.userTeams)
+      setTeams(userTeamsData.userTeams);
     }
-  }, [userTeamsData])
+  }, [userTeamsData]);
 
   if (userTeamsLoading) return <Loading />;
 
@@ -35,7 +40,7 @@ const Teams = () => {
       {teams.length === 0 ? (
         <p>Please add some Teams</p>
       ) : (
-        teams.map((team, index) => <TeamListItem key={index} team={team}/>)
+        teams.map((team, index) => <TeamListItem key={index} team={team} />)
       )}
     </div>
   );

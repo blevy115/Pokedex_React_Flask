@@ -82,7 +82,8 @@ class TeamObject(SQLAlchemyObjectType):
     pokemons = graphene.List(lambda: TeamPokemonObject)
 
     def resolve_pokemons(self, info):
-        return self.pokemons
+        sorted_pokemons = sorted(self.pokemons, key=lambda pokemon: pokemon.position)
+        return sorted_pokemons
 
 
 class TeamPokemonObject(SQLAlchemyObjectType):

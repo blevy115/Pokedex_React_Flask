@@ -12,6 +12,45 @@ import { getSprite } from "../../helpers/pictures";
 
 import "./TeamEdit.scss";
 
+const newPokemon = (position) => ({
+  pokemon: null,
+  ability: null,
+  moves: [],
+  item: null,
+  position,
+});
+
+const modifyPokemonData = (p) => (
+  {
+    ability: p.ability
+      ? {
+          id: p.ability.abilityId,
+          name: p.ability.name,
+        }
+      : null,
+    item: p.item
+      ? {
+          id: p.item.itemId,
+          name: p.item.name,
+        }
+      : null,
+    pokemon: {
+      id: p.pokemon.pokemonId,
+      name: p.pokemon.name,
+    },
+    moves: p.moves.map((m) =>
+      m.move
+        ? {
+            id: m.move.moveId,
+            name: m.move.name,
+            position: m.position,
+          }
+        : null
+    ),
+    position: p.position,
+  }
+)
+
 function updateMoves(moves, move, index) {
   const updatedMoves = [];
   for (let i = 0; i < 4; i++) {
@@ -45,6 +84,7 @@ const TeamEdit = () => {
     data: teamData,
     loading: teamsLoading,
     error: teamError,
+    refetch: refetchTeamData 
   } = useQuery(GET_USER_TEAM, {
     variables: { user_id: user.id, team_id: params.teamId },
     client: backEndClient,
@@ -133,8 +173,8 @@ const TeamEdit = () => {
       (tab, index) => (
         <Tab className="pokemon-tab" key={index}>
           <img
-            src={getSprite(tab.pokemon.pokemonId)}
-            alt={tab.pokemon.name}
+            src={getSprite(tab.pokemon?.pokemonId)}
+            alt={tab.pokemon?.name}
             height="60"
             width="60"
           />
@@ -161,40 +201,44 @@ const TeamEdit = () => {
     )
   );
 
+  const newPokemonTab = useMemo(
+    () => (
+      <Tab className="pokemon-tab" key={tabs.length}>
+        <button
+          onClick={ async() => {
+            const data = {
+              user_id: user.id,
+              team_id: params.teamId,
+              name: team.name,
+              pokemons: [...team.pokemons.map((p) => modifyPokemonData(p)), newPokemon(tabs.length+1)],
+            };
+            await updateUserTeam({ variables: data });
+            refetchTeamData()
+          }}
+        >
+          New
+        </button>
+      </Tab>
+    ),
+    [tabs, team]
+  );
+
+  const newPokemonTabPanel = useMemo(
+    () => (
+      <TabPanel className="pokemon-tab-panel" key={tabs.length}>
+        <></>
+      </TabPanel>
+    ),
+    [tabs, team]
+  );
+
   const saveTeam = useCallback(
     (team) => {
       const data = {
         user_id: user.id,
         team_id: params.teamId,
         name: team.name,
-        pokemons: team.pokemons.map((p) => ({
-          ability: p.ability
-            ? {
-                id: p.ability.abilityId,
-                name: p.ability.name,
-              }
-            : null,
-          item: p.item
-            ? {
-                id: p.item.itemId,
-                name: p.item.name,
-              }
-            : null,
-          pokemon: {
-            id: p.pokemon.pokemonId,
-            name: p.pokemon.name,
-          },
-          moves: p.moves.map((m) =>
-            m.move
-              ? {
-                  id: m.move.moveId,
-                  name: m.move.name,
-                  position: m.position,
-                }
-              : null
-          ),
-          position: p.position,
-        })),
+        pokemons: team.pokemons.map((p) => modifyPokemonData(p)),
       };
       updateUserTeam({ variables: data });
     },
@@ -214,8 +258,14 @@ const TeamEdit = () => {
           selectedTabClassName="pokemon-tab--selected"
           selectedTabPanelClassName="pokemon-tab-panel--selected"
         >
-          <TabList className="pokemon-tab-list">{pokemonTabs}</TabList>
-          {pokemonTabPanels}
+          <TabList className="pokemon-tab-list">
+            {pokemonTabs.length <= 5
+              ? pokemonTabs.concat(newPokemonTab)
+              : pokemonTabs}
+          </TabList>
+          {pokemonTabPanels.length <= 5
+            ? pokemonTabPanels.concat(newPokemonTabPanel)
+            : pokemonTabPanels}
         </Tabs>
       </div>
     </>

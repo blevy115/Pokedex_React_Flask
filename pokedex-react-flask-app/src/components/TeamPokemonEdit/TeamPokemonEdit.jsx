@@ -86,8 +86,9 @@ const TeamPokemonEdit = ({
   );
 
   const { data: pokemonData } = useQuery(GET_TEAM_POKEMON_INFO, {
-    variables: { id: parseInt(teamPokemon.pokemon.pokemonId) },
+    variables: { id: parseInt(teamPokemon.pokemon?.pokemonId) },
     client: pokemonAPIClient,
+    skip: !teamPokemon.pokemon
   });
 
   const handlePokemonSelection = (selectedPokemon) => {
@@ -129,7 +130,7 @@ const TeamPokemonEdit = ({
           placeholder="Pokemon"
           debouceTime={400}
           label="Pokemon"
-          initialValue={formatName(teamPokemon.pokemon.name)}
+          initialValue={teamPokemon.pokemon ? formatName(teamPokemon.pokemon.name) : ""}
         />
         {loadingList && <Loading fullscreen={false} />}
         <div>
