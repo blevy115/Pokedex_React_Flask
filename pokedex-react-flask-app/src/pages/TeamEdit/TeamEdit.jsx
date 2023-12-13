@@ -17,6 +17,8 @@ const newPokemon = (position) => ({
   ability: null,
   moves: [],
   item: null,
+  nature: null,
+  teraType: null,
   position,
 });
 
@@ -48,6 +50,18 @@ const modifyPokemonData = (p) => ({
         }
       : null
   ),
+  nature: p.nature
+    ? {
+        id: p.nature.natureId,
+        name: p.nature.name,
+      }
+    : null,
+  teraType: p.teraType
+    ? {
+        id: p.teraType.typeId,
+        name: p.teraType.name,
+      }
+    : null,
   position: p.position,
 });
 
@@ -157,6 +171,44 @@ const TeamEdit = () => {
     [tabs, selectedTab]
   );
 
+  const changeSelectedNature = useCallback(
+    (nature) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? {
+              ...p,
+              nature: nature
+                ? { name: nature.name, natureId: nature.natureId }
+                : null,
+            }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
+  const changeSelectedTeraType = useCallback(
+    (teraType) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? {
+              ...p,
+              teraType: teraType
+                ? { name: teraType.name, typeId: teraType.typeId }
+                : null,
+            }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
   const changeSelectedMove = useCallback(
     (move, index) => {
       // TODO Improve this code
@@ -197,6 +249,8 @@ const TeamEdit = () => {
             changeSelectedMove={changeSelectedMove}
             changeSelectedAbility={changeSelectedAbility}
             changeSelectedItem={changeSelectedItem}
+            changeSelectedNature={changeSelectedNature}
+            changeSelectedTeraType={changeSelectedTeraType}
             teamPokemon={tab}
           />
         </TabPanel>
@@ -254,7 +308,6 @@ const TeamEdit = () => {
 
   if (teamsLoading) return;
   if (teamError) return <span className="error">{teamError.message}</span>;
-
   return (
     <>
       <button onClick={() => saveTeam(team)}>Save</button>

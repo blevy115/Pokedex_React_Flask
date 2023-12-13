@@ -25,6 +25,11 @@ class TeamPokemonDetails(db.Model):
     move4_id = db.Column(db.Integer, db.ForeignKey('move.id'))
     ability_id = db.Column(db.Integer, db.ForeignKey('ability.id'))
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    nature_id = db.Column(db.Integer, db.ForeignKey('nature.id'))
+    stats = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    ivs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    evs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    tera_type_id = db.Column(db.Integer, db.ForeignKey('type.id'))
     position = db.Column(db.Integer)
     
     __table_args__ = (db.UniqueConstraint('team_id', 'position', name='_team_position_uc'),)
@@ -55,6 +60,7 @@ class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    base_stats = db.Column(db.ARRAY(db.Integer, dimensions=1))
     type1_id = db.Column(db.Integer, db.ForeignKey('type.id'))
     type2_id = db.Column(db.Integer, db.ForeignKey('type.id'))
 
@@ -67,6 +73,7 @@ class Move(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     move_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    type_id = db.Column(db.Integer, db.ForeignKey('type.id'))
 
 
 class Ability(db.Model):
@@ -93,6 +100,7 @@ class Location(db.Model):
 class Nature(db.Model):
     __tablename__ = 'nature'
     id = db.Column(db.Integer, primary_key=True)
+    nature_id = db.Column(db.Integer)
     name = db.Column(db.String(20), nullable=False)
     increased_stat = db.Column(db.String(20), nullable=False)
     decreased_stat = db.Column(db.String(20), nullable=False)

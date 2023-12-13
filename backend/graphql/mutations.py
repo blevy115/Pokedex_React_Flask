@@ -215,11 +215,21 @@ class ItemInput(graphene.InputObjectType):
     id = graphene.Int(required=True)
     name = graphene.String(required=True)
 
+class NatureInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
+class TeraTypeInput(graphene.InputObjectType):
+    id = graphene.Int(required=True)
+    name = graphene.String(required=True)
+
 class TeamPokemonInput(graphene.InputObjectType):
     pokemon = graphene.Field(PokemonInput)
     moves = graphene.List(MoveInput)
     ability = graphene.Field(AbilityInput)
     item = graphene.Field(ItemInput)
+    nature = graphene.Field(NatureInput)
+    tera_type = graphene.Field(TeraTypeInput)
     position = graphene.Int(required=True)
     
 class TeamMutation(graphene.Mutation):
@@ -293,6 +303,21 @@ class TeamMutation(graphene.Mutation):
                                 item_id = item.id
                             else:
                                 item_id = None
+
+                            nature_data = pokemon_details.get('nature')
+                            if nature_data:
+                                nature =  NatureModel.query.filter_by(nature_id=nature_data.id).first()
+                                
+                                nature_id = nature.id
+                            else:
+                                nature_id = None
+
+                            tera_type_data = pokemon_details.get('tera_type')
+                            if tera_type_data:
+                                tera_type =  TypeModel.query.filter_by(type_id=tera_type_data.id).first()
+                                tera_type_id = tera_type.id
+                            else:
+                                tera_type_id = None
  
                             moves_data = pokemon_details.get('moves')
                             move1_id = None
@@ -338,6 +363,8 @@ class TeamMutation(graphene.Mutation):
                                     pokemon.move4_id = move4_id
                                     pokemon.ability_id = ability_id
                                     pokemon.item_id = item_id
+                                    pokemon.nature_id = nature_id
+                                    pokemon.tera_type_id = tera_type_id
                                     pokemon.position = pokemon_details.get('position')
                                     db.session.commit()
                                 
@@ -351,6 +378,8 @@ class TeamMutation(graphene.Mutation):
                                         move4_id=move4_id,
                                         ability_id=ability_id,
                                         item_id=item_id,
+                                        nature_id = nature_id,
+                                        tera_type_id = tera_type_id,
                                         position=pokemon_details.get('position')
                                     )
                                     db.session.add(new_pokemon)

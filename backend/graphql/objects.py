@@ -124,6 +124,16 @@ class TeamPokemonObject(SQLAlchemyObjectType):
     def resolve_item(self, info):
         return ItemModel.query.get(self.item_id)
 
+    nature = graphene.Field(lambda: NatureObject)
+
+    def resolve_nature(self, info):
+        return NatureModel.query.get(self.nature_id)
+    
+    tera_type = graphene.Field(lambda: TypeObject)
+
+    def resolve_tera_type(self, info):
+        return TypeModel.query.get(self.tera_type_id)
+
 
 class MoveObjectWithPosition(graphene.ObjectType):
     position = graphene.Int()

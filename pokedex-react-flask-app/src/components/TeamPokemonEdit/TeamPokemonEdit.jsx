@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
-import { pokemonAPIClient } from "../../api/clients";
+import { backEndClient, pokemonAPIClient } from "../../api/clients";
+import { GET_NATURES, GET_TYPES } from "../../api/queries/backend";
 import {
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
@@ -26,7 +27,7 @@ function getSelectedMove(movesList, selectedMoves, i) {
       return moveIsLearnable.pokemon_v2_move.id;
     }
   } else {
-    return null;
+    return "";
   }
 }
 
@@ -39,7 +40,7 @@ function getSelectedAbility(abilitiesList, selectedAbility) {
       return abilityIsLearnable.pokemon_v2_ability.id;
     }
   } else {
-    return null;
+    return "";
   }
 }
 
@@ -52,7 +53,7 @@ function getSelectedItem(itemsList, selectedItem) {
       return itemIsLearnable.id;
     }
   } else {
-    return null;
+    return "";
   }
 }
 
@@ -62,17 +63,33 @@ const TeamPokemonEdit = ({
   changeSelectedMove,
   changeSelectedAbility,
   changeSelectedItem,
+  changeSelectedNature,
+  changeSelectedTeraType,
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
   const [selectedAbility, setSelectedAbility] = useState(teamPokemon.ability);
   const [selectedItem, setSelectedItem] = useState(teamPokemon.item);
+  const [selectedNature, setselectedNature] = useState(teamPokemon.nature);
+  const [selectedTeraType, setselectedTeraType] = useState(
+    teamPokemon.teraType
+  );
 
   useEffect(() => {
     setSelectedMoves(teamPokemon.moves);
     setSelectedAbility(teamPokemon.ability);
     setSelectedItem(teamPokemon.item);
+    setselectedNature(teamPokemon.nature);
+    setselectedTeraType(teamPokemon.teraType);
   }, [teamPokemon]);
+
+  const { data: natureData } = useQuery(GET_NATURES, {
+    client: backEndClient,
+  });
+
+  const { data: typeData } = useQuery(GET_TYPES, {
+    client: backEndClient,
+  });
 
   const { data: list, loading: loadingList } = useQuery(
     !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
@@ -88,7 +105,7 @@ const TeamPokemonEdit = ({
   const { data: pokemonData } = useQuery(GET_TEAM_POKEMON_INFO, {
     variables: { id: parseInt(teamPokemon.pokemon?.pokemonId) },
     client: pokemonAPIClient,
-    skip: !teamPokemon.pokemon
+    skip: !teamPokemon.pokemon,
   });
 
   const handlePokemonSelection = (selectedPokemon) => {
@@ -121,7 +138,11 @@ const TeamPokemonEdit = ({
     ? [...pokemonData.items].sort((a, b) => a.name.localeCompare(b.name))
     : null;
 
-    return (
+  const naturesList = natureData ? natureData.natures : null;
+
+  const typesList = typeData ? typeData.types : null;
+
+  return (
     <div className="app__team-pokemon">
       <div className="pokemon-search">
         <DebouncedInput
@@ -130,7 +151,9 @@ const TeamPokemonEdit = ({
           placeholder="Pokemon"
           debouceTime={400}
           label="Pokemon"
-          initialValue={teamPokemon.pokemon ? formatName(teamPokemon.pokemon.name) : ""}
+          initialValue={
+            teamPokemon.pokemon ? formatName(teamPokemon.pokemon.name) : ""
+          }
         />
         {loadingList && <Loading fullscreen={false} />}
         <div>
@@ -161,13 +184,15 @@ const TeamPokemonEdit = ({
                     1
                   )
                 }
-                defaultValue={getSelectedMove(movesList, selectedMoves, 1)}
+                value={getSelectedMove(movesList, selectedMoves, 1)}
               >
                 <option value={null}>Select Move</option>
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                    selectedMove.move && selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move &&
+                      selectedMove.move &&
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -193,13 +218,14 @@ const TeamPokemonEdit = ({
                     2
                   )
                 }
-                defaultValue={getSelectedMove(movesList, selectedMoves, 2)}
+                value={getSelectedMove(movesList, selectedMoves, 2)}
               >
                 <option value={null}>Select Move</option>
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move &&
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -225,13 +251,14 @@ const TeamPokemonEdit = ({
                     3
                   )
                 }
-                defaultValue={getSelectedMove(movesList, selectedMoves, 3)}
+                value={getSelectedMove(movesList, selectedMoves, 3)}
               >
                 <option value={null}>Select Move</option>
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move &&
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -257,13 +284,14 @@ const TeamPokemonEdit = ({
                     4
                   )
                 }
-                defaultValue={getSelectedMove(movesList, selectedMoves, 4)}
+                value={getSelectedMove(movesList, selectedMoves, 4)}
               >
                 <option value={null}>Select Move</option>
                 {movesList.map((move) => {
                   const isSelected = selectedMoves.some(
                     (selectedMove) =>
-                      selectedMove.move && selectedMove.move.moveId === move.pokemon_v2_move.id
+                      selectedMove.move &&
+                      selectedMove.move.moveId === move.pokemon_v2_move.id
                   );
                   return (
                     <option
@@ -291,10 +319,7 @@ const TeamPokemonEdit = ({
                     )
                   )
                 }
-                defaultValue={getSelectedAbility(
-                  abilitiesList,
-                  selectedAbility
-                )}
+                value={getSelectedAbility(abilitiesList, selectedAbility)}
               >
                 <option value={null}>Select Ability</option>
                 {abilitiesList.map((ability) => (
@@ -318,12 +343,56 @@ const TeamPokemonEdit = ({
                     itemsList.find((item) => item.id == e.target.value)
                   )
                 }
-                defaultValue={getSelectedItem(itemsList, selectedItem)}
+                value={getSelectedItem(itemsList, selectedItem)}
               >
                 <option value={null}>Select Item</option>
                 {itemsList.map((item) => (
                   <option key={item.id} value={item.id}>
                     {formatName(item.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="nature-select">
+            <div>
+              <label htmlFor="nature">Nature</label>
+              <select
+                name="nature"
+                onChange={(e) =>
+                  changeSelectedNature(
+                    naturesList.find(
+                      (nature) => nature.natureId == e.target.value
+                    )
+                  )
+                }
+                value={selectedNature ? selectedNature.natureId : ""}
+              >
+                <option value={null}>Select Nature</option>
+                {naturesList.map((nature) => (
+                  <option key={nature.natureId} value={nature.natureId}>
+                    {formatName(nature.name)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="tera-type-select">
+            <div>
+              <label htmlFor="tera-type">Tera Type</label>
+              <select
+                name="tera-type"
+                onChange={(e) =>
+                  changeSelectedTeraType(
+                    typesList.find((type) => type.typeId == e.target.value)
+                  )
+                }
+                value={selectedTeraType ? selectedTeraType.typeId : ""}
+              >
+                <option value={null}>Select Type</option>
+                {typesList.map((type) => (
+                  <option key={type.typeId} value={type.typeId}>
+                    {formatName(type.name)}
                   </option>
                 ))}
               </select>

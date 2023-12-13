@@ -57,30 +57,30 @@ const GET_USER_POKEMON_SHINY_COUNT = gql`
 const GET_USER_TEAMS = gql`
   query getUserTeams($user_id: String!) {
     userTeams(userId: $user_id) {
-     name
-     teamId
-     pokemons {
-      position
-      moves {
+      name
+      teamId
+      pokemons {
         position
-        move {
+        moves {
+          position
+          move {
+            name
+            moveId
+          }
+        }
+        pokemon {
           name
-          moveId
+          pokemonId
+        }
+        ability {
+          name
+          abilityId
+        }
+        item {
+          name
+          itemId
         }
       }
-      pokemon {
-        name
-        pokemonId
-      }
-      ability {
-        name
-        abilityId
-      }
-      item {
-        name
-        itemId
-      }
-     }
     }
   }
 `;
@@ -88,29 +88,37 @@ const GET_USER_TEAMS = gql`
 const GET_USER_TEAM = gql`
   query getUserTeam($user_id: String!, $team_id: Int!) {
     team: userTeam(userId: $user_id, teamId: $team_id) {
-     name
-     pokemons {
-      position
-      moves {
+      name
+      pokemons {
         position
-        move {
+        moves {
+          position
+          move {
+            name
+            moveId
+          }
+        }
+        pokemon {
           name
-          moveId
+          pokemonId
+        }
+        ability {
+          name
+          abilityId
+        }
+        item {
+          name
+          itemId
+        }
+        nature {
+          name
+          natureId
+        }
+        teraType {
+          name
+          typeId
         }
       }
-      pokemon {
-        name
-        pokemonId
-      }
-      ability {
-        name
-        abilityId
-      }
-      item {
-        name
-        itemId
-      }
-     }
     }
   }
 `;
@@ -171,8 +179,18 @@ const ITEM_MUTATION = gql`
 `;
 
 const USER_TEAM_MUTATION = gql`
-  mutation createUserTeam($user_id: String!, $team_id: Int, $name: String!, $pokemons: [TeamPokemonInput!]!) {
-    mutateTeam(userId: $user_id, teamId: $team_id, name: $name, pokemons: $pokemons) {
+  mutation createUserTeam(
+    $user_id: String!
+    $team_id: Int
+    $name: String!
+    $pokemons: [TeamPokemonInput!]!
+  ) {
+    mutateTeam(
+      userId: $user_id
+      teamId: $team_id
+      name: $name
+      pokemons: $pokemons
+    ) {
       team {
         id
         name
@@ -188,6 +206,8 @@ const USER_TEAM_MUTATION = gql`
           }
           abilityId
           itemId
+          natureId
+          teraTypeId
           position
         }
       }
@@ -236,6 +256,8 @@ const SHINY_COUNTER_MUTATION = gql`
 const GET_NATURES = gql`
   query getNatures {
     natures(orderBy: "name") {
+      id
+      natureId
       name
       increasedStat
       decreasedStat
