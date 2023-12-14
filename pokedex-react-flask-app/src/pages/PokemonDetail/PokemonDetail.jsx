@@ -34,7 +34,7 @@ import { formatName } from "../../helpers/format";
 import { eggGroupNameHelper } from "../../helpers/eggGroupNamehelper";
 import { getSprite } from "../../helpers/pictures";
 import { handleSpriteError } from "../../helpers/error";
-import { getEvYield } from "../../helpers/statModifier";
+import { convertStats, getEvYield } from "../../helpers/statModifier";
 import { calculateCatchPercent } from "../../helpers/calculateCatchPercent";
 
 import "./PokemonDetail.scss";
@@ -71,6 +71,8 @@ const PokemonDetail = () => {
     ],
   });
   const name = !loading ? data.pokemon_details[0].name : undefined;
+  const types = !loading ? data.pokemon_details[0].types : undefined;
+  const stats = !loading ? data.pokemon_details[0].stats : undefined;
 
   const isAFavourite = useMemo(() => {
     return !userPokemonsLoading
@@ -82,12 +84,17 @@ const PokemonDetail = () => {
   }, [userPokemonsData, userPokemonsLoading, params.pokemonId]);
 
   useEffect(() => {
-    if (!loading && name) {
+    if (!loading && name && types && stats) {
       createOrGetPokemon({
-        variables: { pokemon_id: params.pokemonId, name: name },
+        variables: {
+          pokemon_id: params.pokemonId,
+          name: name,
+          base_stats: Object.values(convertStats(stats)),
+          types: types.map((t) => t.pokemon_v2_type.id),
+        },
       });
     }
-  }, [name, params.pokemonId, loading]);
+  }, [name, types, stats, params.pokemonId, loading]);
 
   function handleUserPokemonLinking(e) {
     e.preventDefault();
@@ -103,9 +110,7 @@ const PokemonDetail = () => {
   const {
     height,
     weight,
-    types,
     info,
-    stats,
     abilities,
     form,
     encounters,

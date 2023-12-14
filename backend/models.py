@@ -60,6 +60,7 @@ class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    # hp, attack, defense, speed, special-defense, special-attack  Ordered on Chart
     base_stats = db.Column(db.ARRAY(db.Integer, dimensions=1))
     type1_id = db.Column(db.Integer, db.ForeignKey('type.id'))
     type2_id = db.Column(db.Integer, db.ForeignKey('type.id'))

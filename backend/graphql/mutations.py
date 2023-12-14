@@ -92,18 +92,33 @@ class PokemonMutation(graphene.Mutation):
     class Arguments:
         pokemon_id = graphene.Int()
         name = graphene.String(required=True)
+        base_stats = graphene.List(graphene.Int)
+        types = graphene.List(graphene.Int)
 
     pokemon = graphene.Field(lambda: Pokemon)
 
-    def mutate(self, info, pokemon_id, name):
+    def mutate(self, info, pokemon_id, name, base_stats, types):
 
         existing_pokemon = PokemonModel.query.filter(
             PokemonModel.name == name and PokemonModel.pokemon_id == pokemon_id).first()
 
         if existing_pokemon:
+            if not existing_pokemon.base_stats:  # Check if some column is missing information
+                existing_pokemon.base_stats = base_stats  # Update missing column info
+                db.session.commit()
+            if not existing_pokemon.type1_id:
+                existing_pokemon.type1_id = types[0]
+                db.session.commit()
+            if len(types) > 1 and not existing_pokemon.type2_id:
+                existing_pokemon.type2_id = types[1]
+                db.session.commit()
+
             return PokemonMutation(pokemon=existing_pokemon)
 
-        pokemon = PokemonModel(pokemon_id=pokemon_id, name=name)
+        pokemon = PokemonModel(pokemon_id=pokemon_id, name=name, base_stats=base_stats)
+        pokemon.type1_id = types[0]
+        if len(types) > 1:
+                pokemon.type2_id = types[1]
 
         db.session.add(pokemon)
         db.session.commit()

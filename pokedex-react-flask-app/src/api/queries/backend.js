@@ -124,11 +124,24 @@ const GET_USER_TEAM = gql`
 `;
 
 const POKEMON_MUTATION = gql`
-  mutation pokemonMutation($name: String!, $pokemon_id: Int!) {
-    mutatePokemon(name: $name, pokemonId: $pokemon_id) {
+  mutation pokemonMutation(
+    $name: String!
+    $pokemon_id: Int!
+    $types: [Int!]!
+    $base_stats: [Int!]!
+  ) {
+    mutatePokemon(
+      name: $name
+      pokemonId: $pokemon_id
+      types: $types
+      baseStats: $base_stats
+    ) {
       pokemon {
         name
         pokemonId
+        type1Id
+        type2Id
+        baseStats
       }
     }
   }
