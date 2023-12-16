@@ -66,6 +66,7 @@ const GET_USER_TEAMS = gql`
           move {
             name
             moveId
+            typeId
           }
         }
         pokemon {
@@ -96,11 +97,15 @@ const GET_USER_TEAM = gql`
           move {
             name
             moveId
+            typeId
           }
         }
         pokemon {
           name
           pokemonId
+          baseStats
+          type1Id
+          type2Id
         }
         ability {
           name
@@ -148,11 +153,12 @@ const POKEMON_MUTATION = gql`
 `;
 
 const MOVE_MUTATION = gql`
-  mutation moveMutation($name: String!, $move_id: Int!) {
-    mutateMove(name: $name, moveId: $move_id) {
+  mutation moveMutation($name: String!, $move_id: Int!, $type_id: Int!) {
+    mutateMove(name: $name, moveId: $move_id, typeId: $type_id) {
       move {
         name
         moveId
+        typeId
       }
     }
   }
@@ -215,6 +221,7 @@ const USER_TEAM_MUTATION = gql`
             position
             move {
               moveId
+              typeId
             }
           }
           abilityId

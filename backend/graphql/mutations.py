@@ -130,16 +130,20 @@ class MoveMutation(graphene.Mutation):
     class Arguments:
         move_id = graphene.Int()
         name = graphene.String(required=True)
+        type_id = graphene.Int()
 
     move = graphene.Field(lambda: Move)
 
-    def mutate(self, info, move_id, name):
-        move = MoveModel(move_id=move_id, name=name)
+    def mutate(self, info, move_id, name, type_id):
+        move = MoveModel(move_id=move_id, name=name, type_id = type_id)
 
         existing_move = MoveModel.query.filter(
             MoveModel.name == name and MoveModel.move_id == move_id).first()
 
         if existing_move:
+            if not existing_move.type_id:
+                existing_move.type_id = type_id
+                db.session.commit()
             return MoveMutation(move=existing_move)
 
         db.session.add(move)
@@ -216,11 +220,14 @@ class LocationMutation(graphene.Mutation):
 class PokemonInput(graphene.InputObjectType):
     id = graphene.Int(required=True)
     name = graphene.String(required=True)
+    base_stats = graphene.List(graphene.Int)
+    types = graphene.List(graphene.Int)
 
 class MoveInput(graphene.InputObjectType):
     position = graphene.Int(required=True)
     id = graphene.Int(required=True)
     name = graphene.String(required=True)
+    type_id = graphene.Int(required = True)
 
 class AbilityInput(graphene.InputObjectType):
     id = graphene.Int(required=True)
@@ -275,12 +282,28 @@ class TeamMutation(graphene.Mutation):
                             pokemon_data = pokemon_details.get('pokemon')
                             if pokemon_data:
                                 pokemon = PokemonModel.query.filter_by(pokemon_id=pokemon_data.id).first()
+
+                                if pokemon:
+                                    if not pokemon.base_stats:  # Check if some column is missing information
+                                        pokemon.base_stats = pokemon_data.base_stats  # Update missing column info
+                                        db.session.commit()
+                                    if not pokemon.type1_id:
+                                        pokemon.type1_id = pokemon_data.types[0]
+                                        db.session.commit()
+                                    if len(pokemon_data.types) > 1 and not pokemon.type2_id:
+                                        pokemon.type2_id = pokemon_data.types[1]
+                                        db.session.commit()
                                 
                                 if not pokemon:
                                     new_pokemon = PokemonModel(
                                         pokemon_id=pokemon_data.id,
-                                        name=pokemon_data.name 
+                                        name=pokemon_data.name,
+                                        base_stats = pokemon_data.base_stats,  # Update missing column info
+                                        type1_id = pokemon_data.types[0]
                                     )
+                                    if len(pokemon_data.types) > 1:
+                                        new_pokemon.type2_id = pokemon_data.types[1]
+
                                     db.session.add(new_pokemon)
                                     db.session.commit()
                                     pokemon = new_pokemon
@@ -345,14 +368,20 @@ class TeamMutation(graphene.Mutation):
                                     move_id = move_data.get('id')
                                     move_name = move_data.get('name')
                                     move_position = move_data.get('position')
+                                    move_type_id = move_data.get('type_id')
 
                                     # Assuming your MoveModel has move_id as the field representing the move's ID
                                     move = MoveModel.query.filter_by(move_id=move_id).first()
-                                    
+                                    if move:
+                                        if not move.type_id:
+                                            move.type_id = move_data.get('type_id')
+                                            db.session.commit()
+
                                     if not move:
                                         new_move = MoveModel(
                                             move_id=move_id,
-                                            name=move_name
+                                            name=move_name,
+                                            type_id =move_type_id
                                         )
                                         db.session.add(new_move)
                                         db.session.commit()

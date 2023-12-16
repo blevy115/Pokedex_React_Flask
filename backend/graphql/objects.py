@@ -94,7 +94,9 @@ class TeamPokemonObject(SQLAlchemyObjectType):
     pokemon = graphene.Field(lambda: PokemonObject)
 
     def resolve_pokemon(self, info):
-        return PokemonModel.query.get(self.pokemon_id)
+        if self.pokemon_id:
+            return PokemonModel.query.get(self.pokemon_id)
+        return None
     
     moves = graphene.List(lambda: MoveObjectWithPosition)
 
@@ -117,22 +119,30 @@ class TeamPokemonObject(SQLAlchemyObjectType):
     ability = graphene.Field(lambda: AbilityObject)
 
     def resolve_ability(self, info):
-        return AbilityModel.query.get(self.ability_id)
+        if self.ability_id:
+            return AbilityModel.query.get(self.ability_id)
+        return None
     
     item = graphene.Field(lambda: ItemObject)
 
     def resolve_item(self, info):
-        return ItemModel.query.get(self.item_id)
+        if self.item_id:
+            return ItemModel.query.get(self.item_id)
+        return None
 
     nature = graphene.Field(lambda: NatureObject)
 
     def resolve_nature(self, info):
-        return NatureModel.query.get(self.nature_id)
+        if self.nature_id:
+            return NatureModel.query.get(self.nature_id)
+        return None
     
     tera_type = graphene.Field(lambda: TypeObject)
 
     def resolve_tera_type(self, info):
-        return TypeModel.query.get(self.tera_type_id)
+        if self.tera_type_id:
+            return TypeModel.query.get(self.tera_type_id)
+        return None
 
 
 class MoveObjectWithPosition(graphene.ObjectType):

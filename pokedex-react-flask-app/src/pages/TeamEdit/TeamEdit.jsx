@@ -9,6 +9,7 @@ import { GET_USER_TEAM, USER_TEAM_MUTATION } from "../../api/queries/backend";
 import { TeamPokemonEdit } from "../../components";
 
 import { getSprite } from "../../helpers/pictures";
+import { convertStats } from "../../helpers/statModifier";
 
 import "./TeamEdit.scss";
 
@@ -39,6 +40,12 @@ const modifyPokemonData = (p) => ({
     ? {
         id: p.pokemon.pokemonId,
         name: p.pokemon.name,
+        types: p.pokemon.types
+          ? p.pokemon.types
+          : p.pokemon.type2Id
+          ? [p.pokemon.type1Id, p.pokemon.type2Id]
+          : [p.pokemon.type1Id],
+        baseStats: p.pokemon.baseStats,
       }
     : null,
   moves: p.moves.map((m) =>
@@ -47,6 +54,7 @@ const modifyPokemonData = (p) => ({
           id: m.move.moveId,
           name: m.move.name,
           position: m.position,
+          typeId: m.move.typeId,
         }
       : null
   ),
@@ -75,6 +83,7 @@ function updateMoves(moves, move, index) {
           ? {
               name: move.pokemon_v2_move.name,
               moveId: move.pokemon_v2_move.id,
+              typeId: move.pokemon_v2_move.type.id,
             }
           : null,
       });
@@ -126,7 +135,15 @@ const TeamEdit = () => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
         p.position === tabs[selectedTab].position
-          ? { ...p, pokemon: { name: pokemon.name, pokemonId: pokemon.id } }
+          ? {
+              ...p,
+              pokemon: {
+                name: pokemon.name,
+                pokemonId: pokemon.id,
+                types: pokemon.types.map((t) => t.pokemon_v2_type.id),
+                baseStats: Object.values(convertStats(pokemon.stats)),
+              },
+            }
           : p
       );
       setTeam(updatedTeam);
@@ -308,6 +325,7 @@ const TeamEdit = () => {
 
   if (teamsLoading) return;
   if (teamError) return <span className="error">{teamError.message}</span>;
+
   return (
     <>
       <button onClick={() => saveTeam(team)}>Save</button>

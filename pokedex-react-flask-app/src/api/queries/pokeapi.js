@@ -187,7 +187,7 @@ const GET_TEAM_POKEMON_INFO = gql`
     pokemon_details: pokemon_v2_pokemon(where: { id: { _eq: $id } }) {
       id
       name
-      
+
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
           name
@@ -207,16 +207,17 @@ const GET_TEAM_POKEMON_INFO = gql`
       moves: pokemon_v2_pokemonmoves(distinct_on: move_id) {
         pokemon_v2_move {
           id
+          name
+          pp
+          accuracy
+          power
+          kind: pokemon_v2_movedamageclass {
             name
-            pp
-            accuracy
-            power
-            kind: pokemon_v2_movedamageclass {
-              name
-            }
-            type: pokemon_v2_type {
-              name
-            }
+          }
+          type: pokemon_v2_type {
+            id
+            name
+          }
         }
       }
 
@@ -239,12 +240,14 @@ const GET_TEAM_POKEMON_INFO = gql`
         is_hidden
       }
     }
-    items: pokemon_v2_item(where: {pokemon_v2_itemattributemaps: {item_attribute_id: {_eq: 5}}}) {
+    items: pokemon_v2_item(
+      where: { pokemon_v2_itemattributemaps: { item_attribute_id: { _eq: 5 } } }
+    ) {
       id
-      name      
+      name
     }
   }
-`
+`;
 
 // Change Distinct on for pokemon_v2_machines once function is made to sort TMS by game
 const GET_POKEMON_MOVES = gql`
@@ -317,6 +320,13 @@ const GET_POKEMON_LIST_BY_NAME = gql`
           id
         }
       }
+      stats: pokemon_v2_pokemonstats {
+        base_stat
+        pokemon_v2_stat {
+          name
+          id
+        }
+      }
     }
   }
 `;
@@ -329,6 +339,13 @@ const GET_POKEMON_LIST_BY_ID = gql`
       pokemon_species_id
       types: pokemon_v2_pokemontypes {
         pokemon_v2_type {
+          name
+          id
+        }
+      }
+      stats: pokemon_v2_pokemonstats {
+        base_stat
+        pokemon_v2_stat {
           name
           id
         }
