@@ -18,9 +18,8 @@ const PokemonForms = ({ forms, pokemonId }) => {
       <h4 className="text-center">Pokemon Forms</h4>
       <div className="pokemon-forms-container">
         {mergedForms.map((form) => {
-          const spritePath = JSON.parse(
-            form.pokemon_v2_pokemonformsprites[0].sprites
-          ).front_default;
+          const spritePath =
+            form.pokemon_v2_pokemonformsprites[0].sprites.front_default;
           return (
             <div
               className={`pokemon-form-item-container ${
