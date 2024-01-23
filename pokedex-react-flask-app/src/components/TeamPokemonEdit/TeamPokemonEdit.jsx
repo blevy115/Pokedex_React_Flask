@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+
 import { useQuery } from "@apollo/client";
 
 import { backEndClient, pokemonAPIClient } from "../../api/clients";
@@ -14,6 +17,110 @@ import { Loading, DebouncedInput } from "../../components";
 import { formatName } from "../../helpers/format";
 
 import "./TeamPokemonEdit.scss";
+
+const initialState = [0, 0, 0, 0, 0, 0];
+
+const SliderGroup = () => {
+  const labels = ["HP", "Attack", "Defense", "Speed", "Special Defense", "Special Attack" ];
+
+  const [ivs, setIvs] = useState(initialState);
+  const [evs, setEvs] = useState(initialState);
+
+  const handleIvsChange = (index, value) => {
+    const newValues = [...ivs];
+    newValues[index] = value;
+    setIvs(newValues);
+  };
+
+  const handleEvsChange = (index, value) => {
+    const newValues = [...evs];
+    newValues[index] = value;
+
+    const sum = newValues.reduce((acc, curr) => acc + curr, 0);
+    if (sum <= 510) {
+      setEvs(newValues);
+    }
+  };
+
+  const handleInputChange = (group, index, inputValue) => {
+    const parsedValue = parseInt(inputValue, 10) || 0;
+    const clampedValue = Math.min(
+      group === "ivs" ? 31 : 252,
+      Math.max(0, parsedValue)
+    );
+
+    if (group === "ivs") {
+      const newValues = [...ivs];
+      newValues[index] = clampedValue;
+      setEvs(newValues);
+    } else {
+      const newValues = [...evs];
+      newValues[index] = clampedValue;
+
+      const sum = newValues.reduce((acc, curr) => acc + curr, 0);
+      if (sum <= 510) {
+        setEvs(newValues);
+      }
+    }
+  };
+
+  return (
+    <div className="stats-slider-container">
+      <div className="stats-slider">
+        <h2>IVs</h2>
+        {ivs.map((value, index) => (
+          <div
+            key={index}
+            style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
+          >
+            <label className="stat-slider-label">{labels[index]}</label>
+            <Slider
+              min={0}
+              max={31}
+              value={value}
+              onChange={(newValue) => handleIvsChange(index, newValue)}
+            />
+            <input
+              type="text"
+              value={Number(ivs[index]).toString()}
+              onChange={(e) =>
+                handleInputChange("ivs", index, e.target.value)
+              }
+              style={{ width: "50px", marginLeft: "10px" }}
+            />
+          </div>
+        ))}
+        <button onClick={() => setEvs(initialState)}>Clear</button>
+      </div>
+      <div className="stats-slider"> 
+        <h2>EVs</h2>
+        {evs.map((value, index) => (
+          <div
+            key={index}
+            style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
+          >
+            <label className="stat-slider-label">{labels[index]}</label>
+            <Slider
+              min={0}
+              max={252}
+              value={value}
+              onChange={(newValue) => handleEvsChange(index, newValue)}
+            />
+            <input
+              type="text"
+              value={Number(evs[index]).toString()}
+              onChange={(e) =>
+                handleInputChange("evs", index, e.target.value)
+              }
+              style={{ width: "50px", marginLeft: "10px" }}
+            />
+          </div>
+        ))}
+        <button onClick={() => setEvs(initialState)}>Clear</button>
+      </div>
+    </div>
+  );
+};
 
 function getSelectedMove(movesList, selectedMoves, i) {
   const selectedMove = selectedMoves.find(
@@ -141,6 +248,9 @@ const TeamPokemonEdit = ({
   const naturesList = natureData ? natureData.natures : null;
 
   const typesList = typeData ? typeData.types : null;
+
+  console.log("ivs ", teamPokemon.ivs);
+  console.log("evs ", teamPokemon.evs);
 
   return (
     <div className="app__team-pokemon">
@@ -398,6 +508,8 @@ const TeamPokemonEdit = ({
               </select>
             </div>
           </div>
+          <SliderGroup />
+          {/* <StatChart baseStats={teamPokemon.stats} isAFavourite={true} /> */}
         </>
       ) : null}
     </div>

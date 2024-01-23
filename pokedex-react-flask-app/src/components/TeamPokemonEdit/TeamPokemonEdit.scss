@@ -1,0 +1,21 @@
+@import "../../helpers/breakpoints";
+
+.stats-slider-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+
+  .stats-slider {
+    width: 100%;
+
+    .stat-slider-label {
+      margin-right: 10px;
+      width: 35%;
+    
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-medium) {
+    flex-direction: column;
+  }
+}

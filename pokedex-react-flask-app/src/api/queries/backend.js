@@ -123,6 +123,9 @@ const GET_USER_TEAM = gql`
           name
           typeId
         }
+        stats
+        ivs
+        evs
       }
     }
   }
