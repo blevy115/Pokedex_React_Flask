@@ -232,6 +232,9 @@ const USER_TEAM_MUTATION = gql`
           natureId
           teraTypeId
           position
+          stats
+          ivs
+          evs
         }
       }
     }

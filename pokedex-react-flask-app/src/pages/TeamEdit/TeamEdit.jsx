@@ -13,6 +13,8 @@ import { convertStats } from "../../helpers/statModifier";
 
 import "./TeamEdit.scss";
 
+const initialState = [0, 0, 0, 0, 0, 0];
+
 const newPokemon = (position) => ({
   pokemon: null,
   ability: null,
@@ -70,6 +72,8 @@ const modifyPokemonData = (p) => ({
         name: p.teraType.name,
       }
     : null,
+  ivs: p.ivs ? [...p.ivs] : initialState,
+  evs: p.evs ? [...p.evs] : initialState,
   position: p.position,
 });
 
@@ -241,6 +245,56 @@ const TeamEdit = () => {
     [tabs, selectedTab]
   );
 
+  const changeIvs = useCallback(
+    (index, value) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? {
+              ...p,
+              ivs:
+                 value || value === 0
+                  ? [...p.ivs.slice(0, index), value, ...p.ivs.slice(index + 1)]
+                  : initialState,
+            }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
+  const changeEvs = useCallback(
+    (index, value) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? {
+              ...p,
+              evs:
+              value || value === 0
+                  ? [
+                      ...p.evs.slice(0, index),
+                      value,
+                      ...p.evs.slice(index + 1),
+                    ].reduce((acc, curr) => acc + curr, 0) <= 510
+                    ? [
+                        ...p.evs.slice(0, index),
+                        value,
+                        ...p.evs.slice(index + 1),
+                      ]
+                    : [...p.evs]
+                  : initialState,
+            }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
   const pokemonTabs = useMemo(() =>
     tabs.map(
       (tab, index) => (
@@ -268,6 +322,8 @@ const TeamEdit = () => {
             changeSelectedItem={changeSelectedItem}
             changeSelectedNature={changeSelectedNature}
             changeSelectedTeraType={changeSelectedTeraType}
+            changeIvs={changeIvs}
+            changeEvs={changeEvs}
             teamPokemon={tab}
           />
         </TabPanel>

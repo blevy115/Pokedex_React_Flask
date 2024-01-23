@@ -18,29 +18,16 @@ import { formatName } from "../../helpers/format";
 
 import "./TeamPokemonEdit.scss";
 
-const initialState = [0, 0, 0, 0, 0, 0];
+const labels = [
+  "HP",
+  "Attack",
+  "Defense",
+  "Speed",
+  "Special Defense",
+  "Special Attack",
+];
 
-const SliderGroup = () => {
-  const labels = ["HP", "Attack", "Defense", "Speed", "Special Defense", "Special Attack" ];
-
-  const [ivs, setIvs] = useState(initialState);
-  const [evs, setEvs] = useState(initialState);
-
-  const handleIvsChange = (index, value) => {
-    const newValues = [...ivs];
-    newValues[index] = value;
-    setIvs(newValues);
-  };
-
-  const handleEvsChange = (index, value) => {
-    const newValues = [...evs];
-    newValues[index] = value;
-
-    const sum = newValues.reduce((acc, curr) => acc + curr, 0);
-    if (sum <= 510) {
-      setEvs(newValues);
-    }
-  };
+const SliderGroup = ({savedIvs, savedEvs, changeIvs, changeEvs}) => {
 
   const handleInputChange = (group, index, inputValue) => {
     const parsedValue = parseInt(inputValue, 10) || 0;
@@ -50,17 +37,9 @@ const SliderGroup = () => {
     );
 
     if (group === "ivs") {
-      const newValues = [...ivs];
-      newValues[index] = clampedValue;
-      setEvs(newValues);
+      changeIvs(index, clampedValue)
     } else {
-      const newValues = [...evs];
-      newValues[index] = clampedValue;
-
-      const sum = newValues.reduce((acc, curr) => acc + curr, 0);
-      if (sum <= 510) {
-        setEvs(newValues);
-      }
+      changeEvs(index, clampedValue)
     }
   };
 
@@ -68,7 +47,7 @@ const SliderGroup = () => {
     <div className="stats-slider-container">
       <div className="stats-slider">
         <h2>IVs</h2>
-        {ivs.map((value, index) => (
+        {savedIvs.map((value, index) => (
           <div
             key={index}
             style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
@@ -78,23 +57,21 @@ const SliderGroup = () => {
               min={0}
               max={31}
               value={value}
-              onChange={(newValue) => handleIvsChange(index, newValue)}
+              onChange={(newValue) => changeIvs(index, newValue)}
             />
             <input
               type="text"
-              value={Number(ivs[index]).toString()}
-              onChange={(e) =>
-                handleInputChange("ivs", index, e.target.value)
-              }
+              value={Number(savedIvs[index]).toString()}
+              onChange={(e) => handleInputChange("ivs", index, e.target.value)}
               style={{ width: "50px", marginLeft: "10px" }}
             />
           </div>
         ))}
-        <button onClick={() => setEvs(initialState)}>Clear</button>
+        <button onClick={() => changeIvs(null, null)}>Clear</button>
       </div>
-      <div className="stats-slider"> 
+      <div className="stats-slider">
         <h2>EVs</h2>
-        {evs.map((value, index) => (
+        {savedEvs.map((value, index) => (
           <div
             key={index}
             style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
@@ -104,19 +81,17 @@ const SliderGroup = () => {
               min={0}
               max={252}
               value={value}
-              onChange={(newValue) => handleEvsChange(index, newValue)}
+              onChange={(newValue) => changeEvs(index, newValue)}
             />
             <input
               type="text"
-              value={Number(evs[index]).toString()}
-              onChange={(e) =>
-                handleInputChange("evs", index, e.target.value)
-              }
+              value={Number(savedEvs[index]).toString()}
+              onChange={(e) => handleInputChange("evs", index, e.target.value)}
               style={{ width: "50px", marginLeft: "10px" }}
             />
           </div>
         ))}
-        <button onClick={() => setEvs(initialState)}>Clear</button>
+        <button onClick={() => changeEvs(null, null)}>Clear</button>
       </div>
     </div>
   );
@@ -172,6 +147,8 @@ const TeamPokemonEdit = ({
   changeSelectedItem,
   changeSelectedNature,
   changeSelectedTeraType,
+  changeIvs,
+  changeEvs
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
@@ -181,6 +158,8 @@ const TeamPokemonEdit = ({
   const [selectedTeraType, setselectedTeraType] = useState(
     teamPokemon.teraType
   );
+  const [ivs, setIvs] = useState(teamPokemon.ivs);
+  const [evs, setEvs] = useState(teamPokemon.evs);
 
   useEffect(() => {
     setSelectedMoves(teamPokemon.moves);
@@ -188,6 +167,8 @@ const TeamPokemonEdit = ({
     setSelectedItem(teamPokemon.item);
     setselectedNature(teamPokemon.nature);
     setselectedTeraType(teamPokemon.teraType);
+    setIvs(teamPokemon.ivs)
+    setEvs(teamPokemon.evs)
   }, [teamPokemon]);
 
   const { data: natureData } = useQuery(GET_NATURES, {
@@ -249,8 +230,6 @@ const TeamPokemonEdit = ({
 
   const typesList = typeData ? typeData.types : null;
 
-  console.log("ivs ", teamPokemon.ivs);
-  console.log("evs ", teamPokemon.evs);
 
   return (
     <div className="app__team-pokemon">
@@ -508,7 +487,17 @@ const TeamPokemonEdit = ({
               </select>
             </div>
           </div>
-          <SliderGroup />
+          <div>
+            <p className="text-center">Base Stats</p>
+            <div className="base-stat-container">
+            {teamPokemon.pokemon.baseStats.map((stat, index) => (
+              <p key={`${teamPokemon.position}-${index}`}>
+                {labels[index]}: {stat}
+              </p>
+            ))}
+            </div>
+          </div>
+          <SliderGroup savedIvs={ivs} savedEvs={evs} changeIvs={changeIvs} changeEvs={changeEvs}/>
           {/* <StatChart baseStats={teamPokemon.stats} isAFavourite={true} /> */}
         </>
       ) : null}

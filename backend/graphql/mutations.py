@@ -252,6 +252,8 @@ class TeamPokemonInput(graphene.InputObjectType):
     item = graphene.Field(ItemInput)
     nature = graphene.Field(NatureInput)
     tera_type = graphene.Field(TeraTypeInput)
+    ivs = graphene.List(graphene.Int)
+    evs = graphene.List(graphene.Int)
     position = graphene.Int(required=True)
     
 class TeamMutation(graphene.Mutation):
@@ -396,6 +398,9 @@ class TeamMutation(graphene.Mutation):
                                     elif move_position == 4:
                                         move4_id = move.id
 
+                            ivs = pokemon_details.get('ivs')
+                            evs = pokemon_details.get('evs')
+                                
                             if team_id:
                                 pokemon = TeamPokemonModel.query.filter_by(team_id=team_id, position=pokemon_details.get('position')).first()
                                 if pokemon:
@@ -409,6 +414,8 @@ class TeamMutation(graphene.Mutation):
                                     pokemon.item_id = item_id
                                     pokemon.nature_id = nature_id
                                     pokemon.tera_type_id = tera_type_id
+                                    pokemon.ivs = ivs
+                                    pokemon.evs = evs
                                     pokemon.position = pokemon_details.get('position')
                                     db.session.commit()
                                 
@@ -424,6 +431,8 @@ class TeamMutation(graphene.Mutation):
                                         item_id=item_id,
                                         nature_id = nature_id,
                                         tera_type_id = tera_type_id,
+                                        ivs = ivs,
+                                        evs = evs,
                                         position=pokemon_details.get('position')
                                     )
                                     db.session.add(new_pokemon)
