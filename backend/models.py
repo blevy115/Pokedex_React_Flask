@@ -30,6 +30,7 @@ class TeamPokemonDetails(db.Model):
     ivs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
     evs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
     tera_type_id = db.Column(db.Integer, db.ForeignKey('type.id'))
+    level = db.Column(db.Integer, default=50)
     position = db.Column(db.Integer)
     
     __table_args__ = (db.UniqueConstraint('team_id', 'position', name='_team_position_uc'),)

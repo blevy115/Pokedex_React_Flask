@@ -83,6 +83,7 @@ const modifyPokemonData = (p) => ({
   ivs: p.ivs ? [...p.ivs] : initialState,
   evs: p.evs ? [...p.evs] : initialState,
   stats: p.pokemon ? calculateTeamPokemonStats(p) : initialState,
+  level: p.level,
   position: p.position,
 });
 
@@ -317,6 +318,23 @@ const TeamEdit = () => {
     [tabs, selectedTab]
   );
 
+  const changeLevel =  useCallback(
+    (level) => {
+      const updatedTeam = { ...team };
+      updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
+        p.position === tabs[selectedTab].position
+          ? {
+              ...p,
+              level: level,
+            }
+          : p
+      );
+      setTeam(updatedTeam);
+      setTabs(updatedTeam.pokemons);
+    },
+    [tabs, selectedTab]
+  );
+
   const pokemonTabs = useMemo(() =>
     tabs.map(
       (tab, index) => (
@@ -346,6 +364,7 @@ const TeamEdit = () => {
             changeSelectedTeraType={changeSelectedTeraType}
             changeIvs={changeIvs}
             changeEvs={changeEvs}
+            changeLevel={changeLevel}
             teamPokemon={tab}
             natureData={natureData}
             typeData={typeData}

@@ -33,12 +33,12 @@ export function calculateTeamPokemonStats(teamPokemon) {
     let value
     if (statOrder[index] === "hp") {
       value = Math.trunc(
-        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * 50) / 100
+        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * teamPokemon.level) / 100
       ) +
-      (50 + 10);
+      (teamPokemon.level + 10);
     } else {
       value = Math.trunc(
-        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * 50) / 100
+        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * teamPokemon.level) / 100
       ) + 5;
     }
     console.log(teamPokemon)

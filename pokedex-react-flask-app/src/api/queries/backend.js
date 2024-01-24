@@ -128,6 +128,7 @@ const GET_USER_TEAM = gql`
         stats
         ivs
         evs
+        level
       }
     }
   }
@@ -237,6 +238,7 @@ const USER_TEAM_MUTATION = gql`
           stats
           ivs
           evs
+          level
         }
       }
     }

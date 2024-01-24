@@ -255,6 +255,7 @@ class TeamPokemonInput(graphene.InputObjectType):
     ivs = graphene.List(graphene.Int)
     evs = graphene.List(graphene.Int)
     stats = graphene.List(graphene.Int)
+    level = graphene.Int()
     position = graphene.Int(required=True)
     
 class TeamMutation(graphene.Mutation):
@@ -402,6 +403,7 @@ class TeamMutation(graphene.Mutation):
                             ivs = pokemon_details.get('ivs')
                             evs = pokemon_details.get('evs')
                             stats = pokemon_details.get('stats')
+                            level = pokemon_details.get('level')
                                 
                             if team_id:
                                 pokemon = TeamPokemonModel.query.filter_by(team_id=team_id, position=pokemon_details.get('position')).first()
@@ -419,6 +421,7 @@ class TeamMutation(graphene.Mutation):
                                     pokemon.ivs = ivs
                                     pokemon.evs = evs
                                     pokemon.stats = stats
+                                    pokemon.level = level
                                     pokemon.position = pokemon_details.get('position')
                                     db.session.commit()
                                 
@@ -437,6 +440,7 @@ class TeamMutation(graphene.Mutation):
                                         ivs = ivs,
                                         evs = evs,
                                         stats = stats,
+                                        level= level,
                                         position=pokemon_details.get('position')
                                     )
                                     db.session.add(new_pokemon)

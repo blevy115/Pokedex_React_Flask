@@ -151,6 +151,7 @@ const TeamPokemonEdit = ({
   changeSelectedTeraType,
   changeIvs,
   changeEvs,
+  changeLevel,
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
@@ -160,6 +161,7 @@ const TeamPokemonEdit = ({
   const [selectedTeraType, setselectedTeraType] = useState(
     teamPokemon.teraType
   );
+  const [level, setLevel] = useState(teamPokemon.level);
   const [ivs, setIvs] = useState(teamPokemon.ivs);
   const [evs, setEvs] = useState(teamPokemon.evs);
 
@@ -171,6 +173,7 @@ const TeamPokemonEdit = ({
     setselectedTeraType(teamPokemon.teraType);
     setIvs(teamPokemon.ivs);
     setEvs(teamPokemon.evs);
+    setLevel(teamPokemon.level);
   }, [teamPokemon]);
 
   const { data: list, loading: loadingList } = useQuery(
@@ -253,6 +256,22 @@ const TeamPokemonEdit = ({
       </div>
       {pokemonData ? (
         <>
+          <div className="level-select">
+            <div>
+              <label htmlFor="level">Level</label>
+              <select
+                name="level"
+                onChange={(e) => changeLevel(parseInt(e.target.value))}
+                value={level}
+              >
+                {Array.from({ length: 100 }, (_, index) => (
+                  <option key={index + 1} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           <div className="moves-search">
             <div>
               <label htmlFor="move-1">Move 1</label>
