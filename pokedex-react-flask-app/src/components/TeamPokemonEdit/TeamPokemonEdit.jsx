@@ -20,12 +20,12 @@ import "./TeamPokemonEdit.scss";
 import { calculateTeamPokemonStats } from "../../helpers/statModifier";
 
 const labels = [
-  "HP",
-  "Attack",
-  "Defense",
-  "Speed",
-  "Special Defense",
-  "Special Attack",
+  "hp",
+  "attack",
+  "defense",
+  "speed",
+  "special-defense",
+  "special-attack",
 ];
 
 const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
@@ -52,7 +52,9 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
             key={index}
             style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
           >
-            <label className="stat-slider-label">{labels[index]}</label>
+            <label className="stat-slider-label">
+              {formatName(labels[index])}
+            </label>
             <Slider
               min={0}
               max={31}
@@ -76,7 +78,9 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
             key={index}
             style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
           >
-            <label className="stat-slider-label">{labels[index]}</label>
+            <label className="stat-slider-label">
+              {formatName(labels[index])}
+            </label>
             <Slider
               min={0}
               max={252}
@@ -504,7 +508,7 @@ const TeamPokemonEdit = ({
             <div className="base-stat-container">
               {teamPokemon.pokemon.baseStats.map((stat, index) => (
                 <p key={`${teamPokemon.position}-${index}`}>
-                  {labels[index]}: {stat}
+                  {formatName(labels[index])}: {stat}
                 </p>
               ))}
             </div>
@@ -515,12 +519,26 @@ const TeamPokemonEdit = ({
             changeIvs={changeIvs}
             changeEvs={changeEvs}
           />
-          <div className="base-stat-container">
-            {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
-              <p key={`${teamPokemon.position}-${index}-c`}>
-                {labels[index]}: {stat}
-              </p>
-            ))}
+          <div>
+            <p className="text-center">Calculate Stats</p>
+            <div className="base-stat-container">
+              {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
+                <p
+                  className={
+                    !teamPokemon.nature
+                      ? ""
+                      : labels[index] === teamPokemon.nature.increasedStat
+                      ? "increased"
+                      : labels[index] === teamPokemon.nature.decreasedStat
+                      ? "decreased"
+                      : ""
+                  }
+                  key={`${teamPokemon.position}-${index}-c`}
+                >
+                  {formatName(labels[index])}: {stat}
+                </p>
+              ))}
+            </div>
           </div>
           {/* <StatChart baseStats={teamPokemon.stats} isAFavourite={true} /> */}
         </>

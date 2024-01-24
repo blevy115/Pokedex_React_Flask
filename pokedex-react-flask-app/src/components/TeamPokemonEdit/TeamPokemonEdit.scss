@@ -11,34 +11,48 @@
     .stat-slider-label {
       margin-right: 10px;
       width: 35%;
-    
     }
   }
 
   @media screen and (max-width: $breakpoint-medium) {
     flex-direction: column;
   }
-
-  
 }
 
-
 .base-stat-container {
+  display: flex;
+  justify-content: space-around;
+
+  @media screen and (max-width: $breakpoint-medium) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: $breakpoint-small) {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+  }
 
-    @media screen and (max-width: $breakpoint-medium){
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+  p {
+    text-align: center;
+    margin: 0.5em;
+
+    &.increased {
+      color: red;
     }
 
-    @media screen and (max-width: $breakpoint-small){
-        display: flex;
-        flex-direction: column;
+    &.decreased {
+      color: blue;
     }
 
-    p {
-        text-align: center;
-        margin: 0.5em;
+    &.increased::before {
+      content: "\2191"; /* Unicode character for up arrow */
+      margin-right: 5px;
     }
+
+    &.decreased::before {
+      content: "\2193"; /* Unicode character for down arrow */
+      margin-right: 5px;
+    }
+  }
 }
