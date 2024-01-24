@@ -4,12 +4,20 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { backEndClient } from "../../api/clients";
-import { GET_USER_TEAM, USER_TEAM_MUTATION } from "../../api/queries/backend";
+import {
+  GET_USER_TEAM,
+  GET_NATURES,
+  GET_TYPES,
+  USER_TEAM_MUTATION,
+} from "../../api/queries/backend";
 
 import { TeamPokemonEdit } from "../../components";
 
 import { getSprite } from "../../helpers/pictures";
-import { convertStats } from "../../helpers/statModifier";
+import {
+  convertStats,
+  calculateTeamPokemonStats,
+} from "../../helpers/statModifier";
 
 import "./TeamEdit.scss";
 
@@ -74,6 +82,7 @@ const modifyPokemonData = (p) => ({
     : null,
   ivs: p.ivs ? [...p.ivs] : initialState,
   evs: p.evs ? [...p.evs] : initialState,
+  stats: p.pokemon ? calculateTeamPokemonStats(p) : initialState,
   position: p.position,
 });
 
@@ -118,6 +127,14 @@ const TeamEdit = () => {
   });
 
   const [updateUserTeam] = useMutation(USER_TEAM_MUTATION, {
+    client: backEndClient,
+  });
+
+  const { data: natureData } = useQuery(GET_NATURES, {
+    client: backEndClient,
+  });
+
+  const { data: typeData } = useQuery(GET_TYPES, {
     client: backEndClient,
   });
 
@@ -200,7 +217,12 @@ const TeamEdit = () => {
           ? {
               ...p,
               nature: nature
-                ? { name: nature.name, natureId: nature.natureId }
+                ? {
+                    name: nature.name,
+                    natureId: nature.natureId,
+                    increasedStat: nature.increasedStat,
+                    decreasedStat: nature.decreasedStat,
+                  }
                 : null,
             }
           : p
@@ -253,7 +275,7 @@ const TeamEdit = () => {
           ? {
               ...p,
               ivs:
-                 value || value === 0
+                value || value === 0
                   ? [...p.ivs.slice(0, index), value, ...p.ivs.slice(index + 1)]
                   : initialState,
             }
@@ -273,7 +295,7 @@ const TeamEdit = () => {
           ? {
               ...p,
               evs:
-              value || value === 0
+                value || value === 0
                   ? [
                       ...p.evs.slice(0, index),
                       value,
@@ -325,6 +347,8 @@ const TeamEdit = () => {
             changeIvs={changeIvs}
             changeEvs={changeEvs}
             teamPokemon={tab}
+            natureData={natureData}
+            typeData={typeData}
           />
         </TabPanel>
       ),

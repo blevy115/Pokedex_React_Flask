@@ -4,8 +4,8 @@ import "rc-slider/assets/index.css";
 
 import { useQuery } from "@apollo/client";
 
-import { backEndClient, pokemonAPIClient } from "../../api/clients";
-import { GET_NATURES, GET_TYPES } from "../../api/queries/backend";
+import { pokemonAPIClient } from "../../api/clients";
+
 import {
   GET_POKEMON_LIST_BY_NAME,
   GET_POKEMON_LIST_BY_ID,
@@ -17,6 +17,7 @@ import { Loading, DebouncedInput } from "../../components";
 import { formatName } from "../../helpers/format";
 
 import "./TeamPokemonEdit.scss";
+import { calculateTeamPokemonStats } from "../../helpers/statModifier";
 
 const labels = [
   "HP",
@@ -27,8 +28,7 @@ const labels = [
   "Special Attack",
 ];
 
-const SliderGroup = ({savedIvs, savedEvs, changeIvs, changeEvs}) => {
-
+const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
   const handleInputChange = (group, index, inputValue) => {
     const parsedValue = parseInt(inputValue, 10) || 0;
     const clampedValue = Math.min(
@@ -37,9 +37,9 @@ const SliderGroup = ({savedIvs, savedEvs, changeIvs, changeEvs}) => {
     );
 
     if (group === "ivs") {
-      changeIvs(index, clampedValue)
+      changeIvs(index, clampedValue);
     } else {
-      changeEvs(index, clampedValue)
+      changeEvs(index, clampedValue);
     }
   };
 
@@ -141,6 +141,8 @@ function getSelectedItem(itemsList, selectedItem) {
 
 const TeamPokemonEdit = ({
   teamPokemon,
+  natureData,
+  typeData,
   changeSelectedPokemon,
   changeSelectedMove,
   changeSelectedAbility,
@@ -148,7 +150,7 @@ const TeamPokemonEdit = ({
   changeSelectedNature,
   changeSelectedTeraType,
   changeIvs,
-  changeEvs
+  changeEvs,
 }) => {
   const [textInput, setTextInput] = useState("");
   const [selectedMoves, setSelectedMoves] = useState(teamPokemon.moves);
@@ -167,17 +169,9 @@ const TeamPokemonEdit = ({
     setSelectedItem(teamPokemon.item);
     setselectedNature(teamPokemon.nature);
     setselectedTeraType(teamPokemon.teraType);
-    setIvs(teamPokemon.ivs)
-    setEvs(teamPokemon.evs)
+    setIvs(teamPokemon.ivs);
+    setEvs(teamPokemon.evs);
   }, [teamPokemon]);
-
-  const { data: natureData } = useQuery(GET_NATURES, {
-    client: backEndClient,
-  });
-
-  const { data: typeData } = useQuery(GET_TYPES, {
-    client: backEndClient,
-  });
 
   const { data: list, loading: loadingList } = useQuery(
     !parseInt(textInput) ? GET_POKEMON_LIST_BY_NAME : GET_POKEMON_LIST_BY_ID,
@@ -226,10 +220,9 @@ const TeamPokemonEdit = ({
     ? [...pokemonData.items].sort((a, b) => a.name.localeCompare(b.name))
     : null;
 
-  const naturesList = natureData ? natureData.natures : null;
+  const naturesList = natureData.natures;
 
-  const typesList = typeData ? typeData.types : null;
-
+  const typesList = typeData.types;
 
   return (
     <div className="app__team-pokemon">
@@ -490,14 +483,26 @@ const TeamPokemonEdit = ({
           <div>
             <p className="text-center">Base Stats</p>
             <div className="base-stat-container">
-            {teamPokemon.pokemon.baseStats.map((stat, index) => (
-              <p key={`${teamPokemon.position}-${index}`}>
+              {teamPokemon.pokemon.baseStats.map((stat, index) => (
+                <p key={`${teamPokemon.position}-${index}`}>
+                  {labels[index]}: {stat}
+                </p>
+              ))}
+            </div>
+          </div>
+          <SliderGroup
+            savedIvs={ivs}
+            savedEvs={evs}
+            changeIvs={changeIvs}
+            changeEvs={changeEvs}
+          />
+          <div className="base-stat-container">
+            {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
+              <p key={`${teamPokemon.position}-${index}-c`}>
                 {labels[index]}: {stat}
               </p>
             ))}
-            </div>
           </div>
-          <SliderGroup savedIvs={ivs} savedEvs={evs} changeIvs={changeIvs} changeEvs={changeEvs}/>
           {/* <StatChart baseStats={teamPokemon.stats} isAFavourite={true} /> */}
         </>
       ) : null}

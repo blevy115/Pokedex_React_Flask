@@ -118,6 +118,8 @@ const GET_USER_TEAM = gql`
         nature {
           name
           natureId
+          increasedStat
+          decreasedStat
         }
         teraType {
           name
