@@ -170,6 +170,7 @@ const TeamPokemonEdit = ({
   const [evs, setEvs] = useState(teamPokemon.evs);
 
   useEffect(() => {
+    setTextInput("")
     setSelectedMoves(teamPokemon.moves);
     setSelectedAbility(teamPokemon.ability);
     setSelectedItem(teamPokemon.item);
@@ -520,7 +521,7 @@ const TeamPokemonEdit = ({
             changeEvs={changeEvs}
           />
           <div>
-            <p className="text-center">Calculate Stats</p>
+            <p className="text-center">Final Stats</p>
             <div className="base-stat-container">
               {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
                 <p
