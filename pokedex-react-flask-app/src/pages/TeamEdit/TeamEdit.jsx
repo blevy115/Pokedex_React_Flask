@@ -113,6 +113,7 @@ function updateMoves(moves, move, index) {
 const TeamEdit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const params = useParams();
+  const [name, setName] = useState("");
   const [tabs, setTabs] = useState([]);
   const [selectedTab, setselectedTab] = useState(0);
   const [team, setTeam] = useState({});
@@ -143,6 +144,7 @@ const TeamEdit = () => {
     if (teamData) {
       const { team } = teamData;
       // TODO maybe fix 2 setState function REPEAT through file
+      setName(team.name);
       setTeam(team);
       setTabs(team.pokemons);
     }
@@ -318,7 +320,7 @@ const TeamEdit = () => {
     [tabs, selectedTab]
   );
 
-  const changeLevel =  useCallback(
+  const changeLevel = useCallback(
     (level) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
@@ -414,7 +416,7 @@ const TeamEdit = () => {
       const data = {
         user_id: user.id,
         team_id: params.teamId,
-        name: team.name,
+        name: name,
         pokemons: team.pokemons.map((p) => modifyPokemonData(p)),
       };
       updateUserTeam({ variables: data });
@@ -428,6 +430,12 @@ const TeamEdit = () => {
   return (
     <>
       <button onClick={() => saveTeam(team)}>Save</button>
+      <input
+        id="team-name"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
       <div className="pokemon-tabs-container">
         <Tabs
           selectedIndex={selectedTab}
