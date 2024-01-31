@@ -113,10 +113,9 @@ function updateMoves(moves, move, index) {
 const TeamEdit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const params = useParams();
+  const [team, setTeam] = useState({ pokemons: [] });
   const [name, setName] = useState("");
-  const [tabs, setTabs] = useState([]);
   const [selectedTab, setselectedTab] = useState(0);
-  const [team, setTeam] = useState({});
 
   const {
     data: teamData,
@@ -146,7 +145,6 @@ const TeamEdit = () => {
       // TODO maybe fix 2 setState function REPEAT through file
       setName(team.name);
       setTeam(team);
-      setTabs(team.pokemons);
     }
   }, [teamData]);
 
@@ -158,7 +156,7 @@ const TeamEdit = () => {
     (pokemon) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               pokemon: {
@@ -171,16 +169,15 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeSelectedAbility = useCallback(
     (ability) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               ability: ability
@@ -193,30 +190,28 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeSelectedItem = useCallback(
     (item) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? { ...p, item: item ? { name: item.name, itemId: item.id } : null }
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeSelectedNature = useCallback(
     (nature) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               nature: nature
@@ -231,16 +226,15 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeSelectedTeraType = useCallback(
     (teraType) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               teraType: teraType
@@ -250,9 +244,8 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeSelectedMove = useCallback(
@@ -260,21 +253,20 @@ const TeamEdit = () => {
       // TODO Improve this code
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? { ...p, moves: updateMoves(p.moves, move, index) }
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeIvs = useCallback(
     (index, value) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               ivs:
@@ -285,16 +277,15 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeEvs = useCallback(
     (index, value) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               evs:
@@ -315,16 +306,15 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const changeLevel = useCallback(
     (level) => {
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
-        p.position === tabs[selectedTab].position
+        p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
               level: level,
@@ -332,13 +322,12 @@ const TeamEdit = () => {
           : p
       );
       setTeam(updatedTeam);
-      setTabs(updatedTeam.pokemons);
     },
-    [tabs, selectedTab]
+    [team, selectedTab]
   );
 
   const pokemonTabs = useMemo(() =>
-    tabs.map(
+    team.pokemons.map(
       (tab, index) => (
         <Tab className="pokemon-tab" key={index}>
           <img
@@ -349,12 +338,12 @@ const TeamEdit = () => {
           />
         </Tab>
       ),
-      [tabs]
+      [team]
     )
   );
 
   const pokemonTabPanels = useMemo(() =>
-    tabs.map(
+    team.pokemons.map(
       (tab, index) => (
         <TabPanel className="pokemon-tab-panel" key={index}>
           <TeamPokemonEdit
@@ -373,42 +362,44 @@ const TeamEdit = () => {
           />
         </TabPanel>
       ),
-      [tabs, team]
+      [team]
     )
   );
 
   const newPokemonTab = useMemo(
     () => (
-      <Tab className="pokemon-tab" key={tabs.length}>
+      <Tab disabled className="pokemon-tab add" key={team.pokemons.length}>
         <button
           onClick={async () => {
             const data = {
               user_id: user.id,
               team_id: params.teamId,
               name: team.name,
-              pokemons: [
-                ...team.pokemons.map((p) => modifyPokemonData(p)),
-                newPokemon(tabs.length + 1),
-              ],
+              pokemons: team.pokemons
+                ? [
+                    ...team.pokemons.map((p) => modifyPokemonData(p)),
+                    newPokemon(team.pokemons?.length + 1),
+                  ]
+                : [],
             };
             await updateUserTeam({ variables: data });
             refetchTeamData();
           }}
         >
-          New
+          Add
         </button>
       </Tab>
     ),
-    [tabs, team]
+    [team]
   );
 
   const newPokemonTabPanel = useMemo(
     () => (
-      <TabPanel className="pokemon-tab-panel" key={tabs.length}>
+      <TabPanel className="pokemon-tab-panel" key={team.pokemons.length}>
         <></>
       </TabPanel>
     ),
-    [tabs, team]
+    [team]
   );
 
   const saveTeam = useCallback(
@@ -426,13 +417,14 @@ const TeamEdit = () => {
 
   if (teamsLoading) return;
   if (teamError) return <span className="error">{teamError.message}</span>;
-
+  console.log(team);
   return (
     <>
       <button onClick={() => saveTeam(team)}>Save</button>
       <input
         id="team-name"
         type="text"
+        autoComplete="off"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />

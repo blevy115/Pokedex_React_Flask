@@ -41,7 +41,7 @@ export function calculateTeamPokemonStats(teamPokemon) {
         (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * teamPokemon.level) / 100
       ) + 5;
     }
-    console.log(teamPokemon)
+
     if (teamPokemon.nature) {
       if (teamPokemon.nature.increasedStat === statOrder[index]) {
         value = Math.trunc(value * 1.1);

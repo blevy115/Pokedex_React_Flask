@@ -5,6 +5,7 @@
 .pokemon-tab-list {
   margin: 0;
   padding: 0;
+  display: flex;
 }
 
 .pokemon-tab {
@@ -16,6 +17,19 @@
   border-radius: 5px 5px 0 0;
   margin-right: 2px;
   background-color: lightgray;
+
+  &.add {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: default;
+    min-height: 69px;
+    min-width: 84px;
+
+    button {
+      cursor: pointer;
+    }
+  }
 
   &--selected {
     box-shadow: 2px -1px 2px 0px rgba(0, 0, 0, 0.5);

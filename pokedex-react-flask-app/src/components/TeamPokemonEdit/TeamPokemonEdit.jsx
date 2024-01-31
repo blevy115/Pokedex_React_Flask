@@ -521,7 +521,7 @@ const TeamPokemonEdit = ({
             changeEvs={changeEvs}
           />
           <div>
-            <p className="text-center">Final Stats</p>
+            <p className="text-center">Calculated Stats</p>
             <div className="base-stat-container">
               {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
                 <p
