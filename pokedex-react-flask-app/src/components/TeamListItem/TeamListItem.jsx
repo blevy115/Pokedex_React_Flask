@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getSprite } from "../../helpers/pictures";
 import { formatName } from "../../helpers/format";
 import { Tooltip } from "react-tooltip";
+import { BsTrash2 } from "react-icons/bs";
+import { useMutation } from "@apollo/client";
+import { GET_USER_TEAMS, USER_TEAM_DELETION } from "../../api/queries/backend";
+import { backEndClient } from "../../api/clients";
+
 import { v4 as uuidv4 } from "uuid";
 
 import "./TeamListItem.scss";
 
 const TeamListItem = ({ team }) => {
+  const [user] = useState(JSON.parse(localStorage.getItem("user")));
+
   const navigate = useNavigate();
+  const [deleteTeam] = useMutation(USER_TEAM_DELETION, {
+    client: backEndClient,
+    variables: {
+      user_id: user.id,
+      team_id: team.teamId,
+    },
+    refetchQueries: [
+      {
+        query: GET_USER_TEAMS,
+        variables: { user_id: user.id },
+      },
+    ],
+  });
+
   return (
     <div className="team-list-item">
+      <BsTrash2 className="close-button" onClick={() => deleteTeam()} />
       <h4 className="team-list-name">{team.name}</h4>
       <div className="team-pokemons-container">
         {team.pokemons.map((tp, index) => {
@@ -18,7 +40,7 @@ const TeamListItem = ({ team }) => {
           const pokemonTooltipId = uuidv4();
           return tp.pokemon ? (
             <div key={index}>
-              <div className="container">
+              <div key={index} className="container">
                 <div className="images-container clickable">
                   <div
                     className="image-wrapper"

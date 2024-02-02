@@ -245,6 +245,15 @@ const USER_TEAM_MUTATION = gql`
   }
 `;
 
+const USER_TEAM_DELETION = gql`
+  mutation deleUserTeam($user_id: String!, $team_id: Int!) {
+    deleteTeam(userId: $user_id, teamId: $team_id) {
+      success
+      message
+    }
+  }
+`;
+
 const USER_POKEMON_MUTATION = gql`
   mutation userPokemonMutation(
     $user_id: String!
@@ -332,4 +341,5 @@ export {
   GET_EGG_GROUPS,
   GET_USER_TEAMS,
   GET_USER_TEAM,
+  USER_TEAM_DELETION,
 };

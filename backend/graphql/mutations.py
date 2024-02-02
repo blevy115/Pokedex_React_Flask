@@ -466,6 +466,29 @@ class TeamMutation(graphene.Mutation):
         else:
             raise Exception("User not found.")
 
+class DeleteTeamMutation(graphene.Mutation):
+    class Arguments:
+        team_id = graphene.Int(required=True)
+        user_id = graphene.String()
+
+    success = graphene.Boolean()
+    message = graphene.String()
+
+    @staticmethod
+    def mutate(root, info, team_id, user_id):
+        # Perform the deletion logic here
+        try:
+            type_name, original_id = from_global_id(user_id)
+            user = UserModel.query.filter_by(id=original_id).first() 
+            team = TeamModel.query.filter_by(id=team_id, user_id=user.id).first()
+            if team and team.user_id == user.id:
+                db.session.delete(team)
+                db.session.commit()
+                return DeleteTeamMutation(success=True, message="Team deleted successfully")
+        except Team.DoesNotExist:
+            return DeleteTeamMutation(success=False, message="Team not found")
+
+
 class UserPokemonMutation(graphene.Mutation):
     class Arguments:
         user_id = graphene.String()
@@ -538,6 +561,7 @@ class Mutation(graphene.ObjectType):
     mutate_location = LocationMutation.Field()
     mutate_user_pokemon = UserPokemonMutation.Field()
     mutate_team = TeamMutation.Field()
+    delete_team = DeleteTeamMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()
     mutate_shiny_counter = ShinyCounterMutation.Field()

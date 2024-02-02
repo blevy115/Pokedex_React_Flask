@@ -1,94 +1,106 @@
 .team-list-item {
-    min-width: 10em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 20em;
-    border: 1px solid black;
-    border-radius: 1em;
-
-    .team-list-name {
-        margin-bottom: 0.25em;
-    }
+  min-width: 10em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 20em;
+  border: 1px solid black;
+  border-radius: 1em;
+  position: relative;
+  .team-list-name {
+    margin-bottom: 0.25em;
+  }
 }
 
 .team-pokemons-container {
-    display: grid;
-    position: relative;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    grid-gap: 0.5em; /* Adjust the gap between grid items */
-    padding: 0 0.25em;
-    min-height:3 *75px;
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-gap: 0.5em; /* Adjust the gap between grid items */
+  padding: 0 0.25em;
+  min-height: 3 * 75px;
+}
+
+.close-button {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  cursor: pointer;
+
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .images-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .image-wrapper {
-    position: relative;
-    text-align: center;
-  }
-  
-  .image-a,
-  .image-b {
-    display: block;
-    max-width: 100%;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .image-a{
-    width: 75px;
-    height: 75px;
-    transform: rotate(-15deg);
-    user-select: none;
-  }
-  
-  .image-b {
-    position: absolute;
-    top: 0;
-    left: 0;
-    /* Adjust width and height of the icon as needed */
-    width: 80px;
-    height: 80px;
-    /* Additional styles for the icon */
-    &:hover {
-        transition: transform 0.3s ease;
-        transform: scale(1.2);
-    }
-  }
-  
-  .small-image-wrapper {
-    position: absolute;
-    right: 10px;
-    top: 30%;
-    transform: translateY(-50%);
-    text-align: center;
-  }
-  
-  .small-image {
-    display: block;
-    max-width: 100%;
-    /* Adjust width and height of the small image */
-    width: 15px;
-    height: 15px;
-    &:hover {
-        transition: transform 0.3s ease;
-        transform: scale(1.2);
-    }
-    /* Additional styles for the small image */
-  }
+.images-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-  .edit-button {
-    position: absolute;
+.image-wrapper {
+  position: relative;
+  text-align: center;
+}
+
+.image-a,
+.image-b {
+  display: block;
+  max-width: 100%;
+}
+
+.image-a {
+  width: 75px;
+  height: 75px;
+  transform: rotate(-15deg);
+  user-select: none;
+}
+
+.image-b {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Adjust width and height of the icon as needed */
+  width: 80px;
+  height: 80px;
+  /* Additional styles for the icon */
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
+}
+
+.small-image-wrapper {
+  position: absolute;
+  right: 10px;
+  top: 30%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.small-image {
+  display: block;
+  max-width: 100%;
+  /* Adjust width and height of the small image */
+  width: 15px;
+  height: 15px;
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
+  /* Additional styles for the small image */
+}
+
+.edit-button {
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   bottom: -30px; /* Adjust the distance from the grid items */
-  }
+}
