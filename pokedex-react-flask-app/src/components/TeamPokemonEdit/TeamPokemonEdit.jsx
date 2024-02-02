@@ -507,7 +507,7 @@ const TeamPokemonEdit = ({
           <div>
             <p className="text-center">Base Stats</p>
             <div className="base-stat-container">
-              {teamPokemon.pokemon.baseStats.map((stat, index) => (
+              {teamPokemon.pokemon.baseStats?.map((stat, index) => (
                 <p key={`${teamPokemon.position}-${index}`}>
                   {formatName(labels[index])}: {stat}
                 </p>
@@ -523,7 +523,7 @@ const TeamPokemonEdit = ({
           <div>
             <p className="text-center">Calculated Stats</p>
             <div className="base-stat-container">
-              {calculateTeamPokemonStats(teamPokemon).map((stat, index) => (
+              {calculateTeamPokemonStats(teamPokemon)?.map((stat, index) => (
                 <p
                   className={
                     !teamPokemon.nature

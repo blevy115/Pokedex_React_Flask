@@ -29,6 +29,7 @@ function orderStats(stats) {
 }
 
 export function calculateTeamPokemonStats(teamPokemon) {
+  if (!teamPokemon.pokemon.baseStats) return
   return teamPokemon.pokemon.baseStats.map((stat, index) => {
     let value
     if (statOrder[index] === "hp") {

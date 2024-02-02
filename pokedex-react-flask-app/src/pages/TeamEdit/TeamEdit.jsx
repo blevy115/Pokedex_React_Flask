@@ -82,7 +82,7 @@ const modifyPokemonData = (p) => ({
     : null,
   ivs: p.ivs ? [...p.ivs] : initialState,
   evs: p.evs ? [...p.evs] : initialState,
-  stats: p.pokemon ? calculateTeamPokemonStats(p) : initialState,
+  stats: p.pokemon?.baseStats ? calculateTeamPokemonStats(p) : initialState,
   level: p.level,
   position: p.position,
 });
@@ -417,7 +417,7 @@ const TeamEdit = () => {
 
   if (teamsLoading) return;
   if (teamError) return <span className="error">{teamError.message}</span>;
-  console.log(team);
+
   return (
     <>
       <button onClick={() => saveTeam(team)}>Save</button>
