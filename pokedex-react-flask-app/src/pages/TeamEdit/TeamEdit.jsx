@@ -374,7 +374,7 @@ const TeamEdit = () => {
             const data = {
               user_id: user.id,
               team_id: params.teamId,
-              name: team.name,
+              name: name,
               pokemons: team.pokemons
                 ? [
                     ...team.pokemons.map((p) => modifyPokemonData(p)),
@@ -390,7 +390,7 @@ const TeamEdit = () => {
         </button>
       </Tab>
     ),
-    [team]
+    [team, name]
   );
 
   const newPokemonTabPanel = useMemo(

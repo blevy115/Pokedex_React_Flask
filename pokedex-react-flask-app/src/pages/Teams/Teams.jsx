@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import { HiOutlinePlus } from "react-icons/hi2";
 
 import { backEndClient } from "../../api/clients";
 import { GET_USER_TEAMS, USER_TEAM_MUTATION } from "../../api/queries/backend";
 
-import { TeamListItem } from "../../components";
-
-import { Loading } from "../../components";
+import { TeamListItem, Loading } from "../../components";
 
 import "./Teams.scss";
 
@@ -60,7 +59,10 @@ const Teams = () => {
       ) : (
         teams.map((team, index) => <TeamListItem key={index} team={team} />)
       )}
-      <button onClick={() => createTeam()}>New Team</button>
+      <div className="new-team-button" onClick={() => createTeam()}>
+        <p>Add</p>
+        <HiOutlinePlus size={25} />
+      </div>
     </div>
   );
 };

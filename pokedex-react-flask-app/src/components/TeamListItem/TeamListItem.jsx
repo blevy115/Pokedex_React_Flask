@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { getSprite } from "../../helpers/pictures";
-import { formatName } from "../../helpers/format";
 import { Tooltip } from "react-tooltip";
 import { BsTrash2 } from "react-icons/bs";
-import { useMutation } from "@apollo/client";
+import { MdModeEdit } from "react-icons/md";
+import { v4 as uuidv4 } from "uuid";
+
 import { GET_USER_TEAMS, USER_TEAM_DELETION } from "../../api/queries/backend";
 import { backEndClient } from "../../api/clients";
 
-import { v4 as uuidv4 } from "uuid";
+import { getSprite } from "../../helpers/pictures";
+import { formatName } from "../../helpers/format";
 
 import "./TeamListItem.scss";
 
@@ -29,16 +31,21 @@ const TeamListItem = ({ team }) => {
       },
     ],
   });
-
+  console.log(team);
   return (
     <div className="team-list-item">
+      <MdModeEdit
+        className="edit-button"
+        onClick={() => navigate(`/teams/${team.teamId}`)}
+      />
       <BsTrash2 className="close-button" onClick={() => deleteTeam()} />
       <h4 className="team-list-name">{team.name}</h4>
       <div className="team-pokemons-container">
         {team.pokemons.map((tp, index) => {
           const itemTooltipId = uuidv4();
           const pokemonTooltipId = uuidv4();
-          return tp.pokemon ? (
+          const hasPokemon = tp.pokemon;
+          return (
             <div key={index}>
               <div key={index} className="container">
                 <div className="images-container clickable">
@@ -52,14 +59,16 @@ const TeamListItem = ({ team }) => {
                       alt="Image A"
                       className="image-a"
                     ></img>
-                    <img
-                      src={getSprite(tp.pokemon.pokemonId)}
-                      alt="Image B"
-                      className="image-b"
-                      onClick={() =>
-                        navigate(`/pokemon/${tp.pokemon.pokemonId}`)
-                      }
-                    ></img>
+                    {hasPokemon ? (
+                      <img
+                        src={getSprite(tp.pokemon.pokemonId)}
+                        alt="Image B"
+                        className="image-b"
+                        onClick={() =>
+                          navigate(`/pokemon/${tp.pokemon.pokemonId}`)
+                        }
+                      ></img>
+                    ) : null}
                     <Tooltip
                       id={pokemonTooltipId}
                       effect="solid"
@@ -68,7 +77,7 @@ const TeamListItem = ({ team }) => {
                       offset={-10}
                       opacity={1}
                     >
-                      {formatName(tp.pokemon.name)}
+                      {hasPokemon ? formatName(tp.pokemon.name) : null}
                     </Tooltip>
                   </div>{" "}
                   {tp.item ? (
@@ -97,14 +106,14 @@ const TeamListItem = ({ team }) => {
                 </div>
               </div>
             </div>
-          ) : null;
+          );
         })}
-        <button
+        {/* <button
           className="clickable edit-button"
           onClick={() => navigate(`/teams/${team.teamId}`)}
         >
           Edit
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 20em;
+  padding-bottom: 0.5em;
   border: 1px solid black;
   border-radius: 1em;
   position: relative;
@@ -24,6 +24,18 @@
 .close-button {
   position: absolute;
   right: 0.5em;
+  top: 0.5em;
+  cursor: pointer;
+
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.2);
+  }
+}
+
+.edit-button {
+  position: absolute;
+  left: 0.5em;
   top: 0.5em;
   cursor: pointer;
 
@@ -96,11 +108,4 @@
     transform: scale(1.2);
   }
   /* Additional styles for the small image */
-}
-
-.edit-button {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -30px; /* Adjust the distance from the grid items */
 }
