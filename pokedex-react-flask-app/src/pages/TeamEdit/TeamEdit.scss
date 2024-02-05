@@ -1,11 +1,31 @@
+@import "../../helpers/breakpoints";
+
 .pokemon-tabs-container {
-  padding: 2em 3em;
+  padding: 2em 4em;
+
+  @media screen and (max-width: $breakpoint-medium) {
+    padding: 2em 2em;
+  }
+}
+
+.pokemon-tabs {
+  display: flex;
+
+  @media screen and (max-width: $breakpoint-medium) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .pokemon-tab-list {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: $breakpoint-medium) {
+    flex-direction: row;
+  }
 }
 
 .pokemon-tab {
@@ -18,36 +38,62 @@
   margin-right: 2px;
   background-color: lightgray;
 
+  img {
+    height: 60px;
+    width: 60px;
+
+    @media screen and (max-width: $breakpoint-small) {
+      height: 38px;
+      width: 38px;
+    }
+  }
+
   &.add {
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: default;
     min-height: 69px;
-    min-width: 84px;
+    padding: 0;
 
-    button {
+    .add-pokemon-button {
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      border: none;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
     }
   }
 
   &--selected {
     box-shadow: 2px -1px 2px 0px rgba(0, 0, 0, 0.5);
-    background-color: lightgray;
+    background-color: paleturquoise;
     color: black;
     z-index: 3;
   }
 }
 
 .pokemon-tab-panel {
+  flex-grow: 1;
   padding: 10px;
   display: none;
   z-index: 2;
   position: relative;
+  justify-content: center;
 
   &--selected {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
   }
+}
+
+.team-name-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #team-name {
@@ -60,7 +106,7 @@
   background-color: transparent;
   width: auto;
   display: block;
-  margin: 1em auto 0;
+  margin: 1em auto;
   text-align: center;
   font-size: 2em;
 

@@ -31,7 +31,7 @@ const TeamListItem = ({ team }) => {
       },
     ],
   });
-  console.log(team);
+
   return (
     <div className="team-list-item">
       <MdModeEdit

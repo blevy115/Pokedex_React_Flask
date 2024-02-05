@@ -19,7 +19,7 @@ const Teams = () => {
     const newTeam = await createUserTeam({
       variables: {
         user_id: user.id,
-        name: "New Team", // TODO input for team name
+        name: "New Team",
         pokemons: [],
       },
     });
@@ -53,16 +53,21 @@ const Teams = () => {
   if (userTeamsLoading) return <Loading />;
 
   return (
-    <div className="app__teams-list">
-      {teams.length === 0 ? (
-        <p>Please add some Teams</p>
-      ) : (
-        teams.map((team, index) => <TeamListItem key={index} team={team} />)
-      )}
+    <div className="app__teams-page">
+      <h2 className="header-text text-center">{user.name}&#x27;s Teams</h2>
       <div className="new-team-button" onClick={() => createTeam()}>
         <p>Add</p>
         <HiOutlinePlus size={25} />
       </div>
+      {teams.length > 0 ? (
+        <div className="app__teams-list">
+          {teams.map((team, index) => (
+            <TeamListItem key={index} team={team} />
+          ))}
+        </div>
+      ) : (
+        <p className="text-center">Please add some Teams</p>
+      )}
     </div>
   );
 };

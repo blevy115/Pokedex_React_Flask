@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { HiOutlinePlus } from "react-icons/hi2";
+
 import { useQuery, useMutation } from "@apollo/client";
 
 import { backEndClient } from "../../api/clients";
@@ -11,7 +13,7 @@ import {
   USER_TEAM_MUTATION,
 } from "../../api/queries/backend";
 
-import { TeamPokemonEdit } from "../../components";
+import { Loading, TeamPokemonEdit } from "../../components";
 
 import { getSprite } from "../../helpers/pictures";
 import {
@@ -113,6 +115,7 @@ function updateMoves(moves, move, index) {
 const TeamEdit = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const params = useParams();
+  const [loading, setLoading] = useState(false);
   const [team, setTeam] = useState({ pokemons: [] });
   const [name, setName] = useState("");
   const [selectedTab, setselectedTab] = useState(0);
@@ -131,11 +134,14 @@ const TeamEdit = () => {
     client: backEndClient,
   });
 
-  const { data: natureData } = useQuery(GET_NATURES, {
-    client: backEndClient,
-  });
+  const { data: natureData, loading: natureDataLoading } = useQuery(
+    GET_NATURES,
+    {
+      client: backEndClient,
+    }
+  );
 
-  const { data: typeData } = useQuery(GET_TYPES, {
+  const { data: typeData, loading: typeDataLoading } = useQuery(GET_TYPES, {
     client: backEndClient,
   });
 
@@ -333,8 +339,6 @@ const TeamEdit = () => {
           <img
             src={getSprite(tab.pokemon?.pokemonId)}
             alt={tab.pokemon?.name}
-            height="60"
-            width="60"
           />
         </Tab>
       ),
@@ -370,6 +374,7 @@ const TeamEdit = () => {
     () => (
       <Tab disabled className="pokemon-tab add" key={team.pokemons.length}>
         <button
+          className="add-pokemon-button"
           onClick={async () => {
             const data = {
               user_id: user.id,
@@ -383,10 +388,12 @@ const TeamEdit = () => {
                 : [],
             };
             await updateUserTeam({ variables: data });
+            setselectedTab(team.pokemons.length || 0);
             refetchTeamData();
           }}
         >
           Add
+          <HiOutlinePlus size={25} />
         </button>
       </Tab>
     ),
@@ -394,57 +401,69 @@ const TeamEdit = () => {
   );
 
   const newPokemonTabPanel = useMemo(
-    () => (
-      <TabPanel className="pokemon-tab-panel" key={team.pokemons.length}>
-        <></>
-      </TabPanel>
-    ),
+    () => <TabPanel className="pokemon-tab-panel" key={team.pokemons.length} />,
     [team]
   );
 
   const saveTeam = useCallback(
-    (team) => {
+    async (team) => {
+      setLoading(true);
       const data = {
         user_id: user.id,
         team_id: params.teamId,
         name: name,
         pokemons: team.pokemons.map((p) => modifyPokemonData(p)),
       };
-      updateUserTeam({ variables: data });
+      try {
+        await updateUserTeam({ variables: data });
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
+      }
     },
     [user, params]
   );
 
-  if (teamsLoading) return;
+  if (teamsLoading || natureDataLoading || typeDataLoading) return;
   if (teamError) return <span className="error">{teamError.message}</span>;
 
   return (
     <>
-      <button onClick={() => saveTeam(team)}>Save</button>
-      <input
-        id="team-name"
-        type="text"
-        autoComplete="off"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <div className="pokemon-tabs-container">
-        <Tabs
-          selectedIndex={selectedTab}
-          onSelect={(index) => setselectedTab(index)}
-          selectedTabClassName="pokemon-tab--selected"
-          selectedTabPanelClassName="pokemon-tab-panel--selected"
-        >
-          <TabList className="pokemon-tab-list">
-            {pokemonTabs.length <= 5
-              ? pokemonTabs.concat(newPokemonTab)
-              : pokemonTabs}
-          </TabList>
-          {pokemonTabPanels.length <= 5
-            ? pokemonTabPanels.concat(newPokemonTabPanel)
-            : pokemonTabPanels}
-        </Tabs>
+      <div className="team-name-container">
+        <input
+          id="team-name"
+          type="text"
+          autoComplete="off"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button className="clickable" onClick={() => saveTeam(team)}>
+          Save
+        </button>
       </div>
+      {!loading ? (
+        <div className="pokemon-tabs-container">
+          <Tabs
+            className="pokemon-tabs"
+            selectedIndex={selectedTab}
+            onSelect={(index) => setselectedTab(index)}
+            selectedTabClassName="pokemon-tab--selected"
+            selectedTabPanelClassName="pokemon-tab-panel--selected"
+          >
+            <TabList className="pokemon-tab-list">
+              {pokemonTabs.length <= 5
+                ? pokemonTabs.concat(newPokemonTab)
+                : pokemonTabs}
+            </TabList>
+            {pokemonTabPanels.length <= 5
+              ? pokemonTabPanels.concat(newPokemonTabPanel)
+              : pokemonTabPanels}
+          </Tabs>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </>
   );
 };

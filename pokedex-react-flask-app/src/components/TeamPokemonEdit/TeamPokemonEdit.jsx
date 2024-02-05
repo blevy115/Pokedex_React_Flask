@@ -170,7 +170,7 @@ const TeamPokemonEdit = ({
   const [evs, setEvs] = useState(teamPokemon.evs);
 
   useEffect(() => {
-    setTextInput("")
+    setTextInput("");
     setSelectedMoves(teamPokemon.moves);
     setSelectedAbility(teamPokemon.ability);
     setSelectedItem(teamPokemon.item);
@@ -245,303 +245,322 @@ const TeamPokemonEdit = ({
             teamPokemon.pokemon ? formatName(teamPokemon.pokemon.name) : ""
           }
         />
-        {loadingList && <Loading fullscreen={false} />}
-        <div>
-          {list &&
-            list.pokemon_list.map((pokemon) => (
-              <div
-                key={pokemon.id}
-                onClick={() => handlePokemonSelection(pokemon)}
-                style={{ cursor: "pointer" }}
-              >
-                {pokemon.name}
-              </div>
-            ))}
+        <div
+          className={`dropdown-menu ${list || loadingList ? "show" : ""}`}
+          aria-labelledby="dropdownMenuButton"
+        >
+          {loadingList && <Loading fullscreen={false} />}
+          {list?.pokemon_list.map((pokemon) => (
+            <div
+              key={pokemon.id}
+              onClick={() => handlePokemonSelection(pokemon)}
+              style={{ cursor: "pointer" }}
+              className="dropdown-item"
+            >
+              {formatName(pokemon.name)}
+            </div>
+          ))}
+          {list?.pokemon_list.length === 0 && (
+            <div className="dropdown-item-none">No Pokemon Found</div>
+          )}
         </div>
+        {/* )} */}
       </div>
       {pokemonData ? (
         <>
-          <div className="level-select">
-            <div>
-              <label htmlFor="level">Level</label>
-              <select
-                name="level"
-                onChange={(e) => changeLevel(parseInt(e.target.value))}
-                value={level}
-              >
-                {Array.from({ length: 100 }, (_, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="moves-search">
-            <div>
-              <label htmlFor="move-1">Move 1</label>
-              <select
-                name="move-1"
-                onChange={(e) =>
-                  changeSelectedMove(
-                    movesList.find(
-                      (move) => move.pokemon_v2_move.id == e.target.value
-                    ),
-                    1
-                  )
-                }
-                value={getSelectedMove(movesList, selectedMoves, 1)}
-              >
-                <option value={null}>Select Move</option>
-                {movesList.map((move) => {
-                  const isSelected = selectedMoves.some(
-                    (selectedMove) =>
-                      selectedMove.move &&
-                      selectedMove.move &&
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
-                  );
-                  return (
-                    <option
-                      key={move.pokemon_v2_move.id}
-                      value={move.pokemon_v2_move.id}
-                      disabled={isSelected}
-                    >
-                      {formatName(move.pokemon_v2_move.name)}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="move-2">Move 2</label>
-              <select
-                name="move-2"
-                onChange={(e) =>
-                  changeSelectedMove(
-                    movesList.find(
-                      (move) => move.pokemon_v2_move.id == e.target.value
-                    ),
-                    2
-                  )
-                }
-                value={getSelectedMove(movesList, selectedMoves, 2)}
-              >
-                <option value={null}>Select Move</option>
-                {movesList.map((move) => {
-                  const isSelected = selectedMoves.some(
-                    (selectedMove) =>
-                      selectedMove.move &&
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
-                  );
-                  return (
-                    <option
-                      key={move.pokemon_v2_move.id}
-                      value={move.pokemon_v2_move.id}
-                      disabled={isSelected}
-                    >
-                      {formatName(move.pokemon_v2_move.name)}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="move-3">Move 3</label>
-              <select
-                name="move-3"
-                onChange={(e) =>
-                  changeSelectedMove(
-                    movesList.find(
-                      (move) => move.pokemon_v2_move.id == e.target.value
-                    ),
-                    3
-                  )
-                }
-                value={getSelectedMove(movesList, selectedMoves, 3)}
-              >
-                <option value={null}>Select Move</option>
-                {movesList.map((move) => {
-                  const isSelected = selectedMoves.some(
-                    (selectedMove) =>
-                      selectedMove.move &&
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
-                  );
-                  return (
-                    <option
-                      key={move.pokemon_v2_move.id}
-                      value={move.pokemon_v2_move.id}
-                      disabled={isSelected}
-                    >
-                      {formatName(move.pokemon_v2_move.name)}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="move-4">Move 4</label>
-              <select
-                name="move-4"
-                onChange={(e) =>
-                  changeSelectedMove(
-                    movesList.find(
-                      (move) => move.pokemon_v2_move.id == e.target.value
-                    ),
-                    4
-                  )
-                }
-                value={getSelectedMove(movesList, selectedMoves, 4)}
-              >
-                <option value={null}>Select Move</option>
-                {movesList.map((move) => {
-                  const isSelected = selectedMoves.some(
-                    (selectedMove) =>
-                      selectedMove.move &&
-                      selectedMove.move.moveId === move.pokemon_v2_move.id
-                  );
-                  return (
-                    <option
-                      key={move.pokemon_v2_move.id}
-                      value={move.pokemon_v2_move.id}
-                      disabled={isSelected}
-                    >
-                      {formatName(move.pokemon_v2_move.name)}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-          <div className="ability-search">
-            <div>
-              <label htmlFor="abilty">Abilty</label>
-              <select
-                name="abilty"
-                onChange={(e) =>
-                  changeSelectedAbility(
-                    abilitiesList.find(
-                      (ability) =>
-                        ability.pokemon_v2_ability.id == e.target.value
-                    )
-                  )
-                }
-                value={getSelectedAbility(abilitiesList, selectedAbility)}
-              >
-                <option value={null}>Select Ability</option>
-                {abilitiesList.map((ability) => (
-                  <option
-                    key={ability.pokemon_v2_ability.id}
-                    value={ability.pokemon_v2_ability.id}
+          <div className="team-pokemon-sections">
+            <div className="team-pokemon-selectors">
+              <h2>Options</h2>
+              <div className="level-select">
+                <div className="select-container">
+                  <label htmlFor="level">Level</label>
+                  <select
+                    name="level"
+                    onChange={(e) => changeLevel(parseInt(e.target.value))}
+                    value={level}
                   >
-                    {formatName(ability.pokemon_v2_ability.name)}
-                  </option>
-                ))}
-              </select>
+                    {Array.from({ length: 100 }, (_, index) => (
+                      <option key={index + 1} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="moves-search">
+                <div className="select-container">
+                  <label htmlFor="move-1">Move 1</label>
+                  <select
+                    name="move-1"
+                    onChange={(e) =>
+                      changeSelectedMove(
+                        movesList.find(
+                          (move) => move.pokemon_v2_move.id == e.target.value
+                        ),
+                        1
+                      )
+                    }
+                    value={getSelectedMove(movesList, selectedMoves, 1)}
+                  >
+                    <option value={null}>Select Move</option>
+                    {movesList.map((move) => {
+                      const isSelected = selectedMoves.some(
+                        (selectedMove) =>
+                          selectedMove.move &&
+                          selectedMove.move &&
+                          selectedMove.move.moveId === move.pokemon_v2_move.id
+                      );
+                      return (
+                        <option
+                          key={move.pokemon_v2_move.id}
+                          value={move.pokemon_v2_move.id}
+                          disabled={isSelected}
+                        >
+                          {formatName(move.pokemon_v2_move.name)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="select-container">
+                  <label htmlFor="move-2">Move 2</label>
+                  <select
+                    name="move-2"
+                    onChange={(e) =>
+                      changeSelectedMove(
+                        movesList.find(
+                          (move) => move.pokemon_v2_move.id == e.target.value
+                        ),
+                        2
+                      )
+                    }
+                    value={getSelectedMove(movesList, selectedMoves, 2)}
+                  >
+                    <option value={null}>Select Move</option>
+                    {movesList.map((move) => {
+                      const isSelected = selectedMoves.some(
+                        (selectedMove) =>
+                          selectedMove.move &&
+                          selectedMove.move.moveId === move.pokemon_v2_move.id
+                      );
+                      return (
+                        <option
+                          key={move.pokemon_v2_move.id}
+                          value={move.pokemon_v2_move.id}
+                          disabled={isSelected}
+                        >
+                          {formatName(move.pokemon_v2_move.name)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="select-container">
+                  <label htmlFor="move-3">Move 3</label>
+                  <select
+                    name="move-3"
+                    onChange={(e) =>
+                      changeSelectedMove(
+                        movesList.find(
+                          (move) => move.pokemon_v2_move.id == e.target.value
+                        ),
+                        3
+                      )
+                    }
+                    value={getSelectedMove(movesList, selectedMoves, 3)}
+                  >
+                    <option value={null}>Select Move</option>
+                    {movesList.map((move) => {
+                      const isSelected = selectedMoves.some(
+                        (selectedMove) =>
+                          selectedMove.move &&
+                          selectedMove.move.moveId === move.pokemon_v2_move.id
+                      );
+                      return (
+                        <option
+                          key={move.pokemon_v2_move.id}
+                          value={move.pokemon_v2_move.id}
+                          disabled={isSelected}
+                        >
+                          {formatName(move.pokemon_v2_move.name)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="select-container">
+                  <label htmlFor="move-4">Move 4</label>
+                  <select
+                    name="move-4"
+                    onChange={(e) =>
+                      changeSelectedMove(
+                        movesList.find(
+                          (move) => move.pokemon_v2_move.id == e.target.value
+                        ),
+                        4
+                      )
+                    }
+                    value={getSelectedMove(movesList, selectedMoves, 4)}
+                  >
+                    <option value={null}>Select Move</option>
+                    {movesList.map((move) => {
+                      const isSelected = selectedMoves.some(
+                        (selectedMove) =>
+                          selectedMove.move &&
+                          selectedMove.move.moveId === move.pokemon_v2_move.id
+                      );
+                      return (
+                        <option
+                          key={move.pokemon_v2_move.id}
+                          value={move.pokemon_v2_move.id}
+                          disabled={isSelected}
+                        >
+                          {formatName(move.pokemon_v2_move.name)}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              <div className="ability-search">
+                <div className="select-container">
+                  <label htmlFor="abilty">Abilty</label>
+                  <select
+                    name="abilty"
+                    onChange={(e) =>
+                      changeSelectedAbility(
+                        abilitiesList.find(
+                          (ability) =>
+                            ability.pokemon_v2_ability.id == e.target.value
+                        )
+                      )
+                    }
+                    value={getSelectedAbility(abilitiesList, selectedAbility)}
+                  >
+                    <option value={null}>Select Ability</option>
+                    {abilitiesList.map((ability) => (
+                      <option
+                        key={ability.pokemon_v2_ability.id}
+                        value={ability.pokemon_v2_ability.id}
+                      >
+                        {formatName(ability.pokemon_v2_ability.name)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="item-search">
+                <div className="select-container">
+                  <label htmlFor="item">Item</label>
+                  <select
+                    name="item"
+                    onChange={(e) =>
+                      changeSelectedItem(
+                        itemsList.find((item) => item.id == e.target.value)
+                      )
+                    }
+                    value={getSelectedItem(itemsList, selectedItem)}
+                  >
+                    <option value={null}>Select Item</option>
+                    {itemsList.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {formatName(item.name)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="nature-select">
+                <div className="select-container">
+                  <label htmlFor="nature">Nature</label>
+                  <select
+                    name="nature"
+                    onChange={(e) =>
+                      changeSelectedNature(
+                        naturesList.find(
+                          (nature) => nature.natureId == e.target.value
+                        )
+                      )
+                    }
+                    value={selectedNature ? selectedNature.natureId : ""}
+                  >
+                    <option value={null}>Select Nature</option>
+                    {naturesList.map((nature) => (
+                      <option key={nature.natureId} value={nature.natureId}>
+                        {formatName(nature.name)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="tera-type-select">
+                <div className="select-container">
+                  <label htmlFor="tera-type">Tera Type</label>
+                  <select
+                    name="tera-type"
+                    onChange={(e) =>
+                      changeSelectedTeraType(
+                        typesList.find((type) => type.typeId == e.target.value)
+                      )
+                    }
+                    value={selectedTeraType ? selectedTeraType.typeId : ""}
+                  >
+                    <option value={null}>Select Type</option>
+                    {typesList.map((type) => (
+                      <option key={type.typeId} value={type.typeId}>
+                        {formatName(type.name)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="item-search">
-            <div>
-              <label htmlFor="item">Item</label>
-              <select
-                name="item"
-                onChange={(e) =>
-                  changeSelectedItem(
-                    itemsList.find((item) => item.id == e.target.value)
-                  )
-                }
-                value={getSelectedItem(itemsList, selectedItem)}
-              >
-                <option value={null}>Select Item</option>
-                {itemsList.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {formatName(item.name)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="nature-select">
-            <div>
-              <label htmlFor="nature">Nature</label>
-              <select
-                name="nature"
-                onChange={(e) =>
-                  changeSelectedNature(
-                    naturesList.find(
-                      (nature) => nature.natureId == e.target.value
+            <SliderGroup
+              savedIvs={ivs}
+              savedEvs={evs}
+              changeIvs={changeIvs}
+              changeEvs={changeEvs}
+            />
+            <div className="stats-container">
+              <div className="base-stats">
+                <h2 className="text-center">Base Stats</h2>
+                <div className="base-stat-container">
+                  {teamPokemon.pokemon.baseStats?.map((stat, index) => (
+                    <p key={`${teamPokemon.position}-${index}`}>
+                      {formatName(labels[index])}: {stat}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <div className="calculated-stats">
+                <h2 className="text-center">Calculated Stats</h2>
+                <div className="base-stat-container">
+                  {calculateTeamPokemonStats(teamPokemon)?.map(
+                    (stat, index) => (
+                      <p
+                        className={
+                          !teamPokemon.nature
+                            ? ""
+                            : labels[index] ===
+                                teamPokemon.nature.increasedStat &&
+                              labels[index] !== teamPokemon.nature.decreasedStat
+                            ? "increased"
+                            : labels[index] ===
+                                teamPokemon.nature.decreasedStat &&
+                              labels[index] !== teamPokemon.nature.increasedStat
+                            ? "decreased"
+                            : ""
+                        }
+                        key={`${teamPokemon.position}-${index}-c`}
+                      >
+                        {formatName(labels[index])}: {stat}
+                      </p>
                     )
-                  )
-                }
-                value={selectedNature ? selectedNature.natureId : ""}
-              >
-                <option value={null}>Select Nature</option>
-                {naturesList.map((nature) => (
-                  <option key={nature.natureId} value={nature.natureId}>
-                    {formatName(nature.name)}
-                  </option>
-                ))}
-              </select>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-          <div className="tera-type-select">
-            <div>
-              <label htmlFor="tera-type">Tera Type</label>
-              <select
-                name="tera-type"
-                onChange={(e) =>
-                  changeSelectedTeraType(
-                    typesList.find((type) => type.typeId == e.target.value)
-                  )
-                }
-                value={selectedTeraType ? selectedTeraType.typeId : ""}
-              >
-                <option value={null}>Select Type</option>
-                {typesList.map((type) => (
-                  <option key={type.typeId} value={type.typeId}>
-                    {formatName(type.name)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div>
-            <p className="text-center">Base Stats</p>
-            <div className="base-stat-container">
-              {teamPokemon.pokemon.baseStats?.map((stat, index) => (
-                <p key={`${teamPokemon.position}-${index}`}>
-                  {formatName(labels[index])}: {stat}
-                </p>
-              ))}
-            </div>
-          </div>
-          <SliderGroup
-            savedIvs={ivs}
-            savedEvs={evs}
-            changeIvs={changeIvs}
-            changeEvs={changeEvs}
-          />
-          <div>
-            <p className="text-center">Calculated Stats</p>
-            <div className="base-stat-container">
-              {calculateTeamPokemonStats(teamPokemon)?.map((stat, index) => (
-                <p
-                  className={
-                    !teamPokemon.nature
-                      ? ""
-                      : labels[index] === teamPokemon.nature.increasedStat
-                      ? "increased"
-                      : labels[index] === teamPokemon.nature.decreasedStat
-                      ? "decreased"
-                      : ""
-                  }
-                  key={`${teamPokemon.position}-${index}-c`}
-                >
-                  {formatName(labels[index])}: {stat}
-                </p>
-              ))}
-            </div>
-          </div>
-          {/* <StatChart baseStats={teamPokemon.stats} isAFavourite={true} /> */}
         </>
       ) : null}
     </div>
