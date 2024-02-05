@@ -73,7 +73,7 @@ const PokemonDetail = () => {
   const name = !loading ? data.pokemon_details[0].name : undefined;
 
   const isAFavourite = useMemo(() => {
-    return !userPokemonsLoading
+    return !userPokemonsLoading && userPokemonsData
       ? userPokemonsData.userPokemons.some(
           (pokemon) =>
             pokemon.pokemons.pokemonId == params.pokemonId && pokemon.isActive
