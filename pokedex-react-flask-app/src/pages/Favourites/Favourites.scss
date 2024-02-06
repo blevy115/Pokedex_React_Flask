@@ -1,12 +1,17 @@
+@import "../../helpers/breakpoints";
+
 .favourites-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 15%));
+  justify-content: space-around;
   grid-gap: 20px;
-  margin: 20px;
+  padding: 20px;
   max-height: 89vh;
   overflow: auto;
-  margin-right: 0;
-  padding-right: 20px;
+
+  @media screen and (min-width: $breakpoint-xxlarge) {
+    justify-content: flex-start;
+  }
 }
 
 .favourites-list-item {
@@ -18,6 +23,11 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 2px grey;
+
+  &:hover {
+    transition: transform 0.3s ease;
+    transform: scale(1.1);
+  }
 
   .favourites-list-item-header,
   .favourites-list-item-shiny-counter {
