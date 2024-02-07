@@ -16,6 +16,7 @@ import {
 import { Loading, TeamPokemonEdit } from "../../components";
 
 import { getSprite } from "../../helpers/pictures";
+import { exportTeam } from "../../helpers/exportTeam";
 import {
   convertStats,
   calculateTeamPokemonStats,
@@ -438,9 +439,10 @@ const TeamEdit = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button className="clickable" onClick={() => saveTeam(team)}>
-          Save
-        </button>
+          <button className="team-button" onClick={() => exportTeam(team)}>
+            <TbFileExport />
+            Export
+          </button>
       </div>
       {!loading ? (
         <div className="pokemon-tabs-container">
