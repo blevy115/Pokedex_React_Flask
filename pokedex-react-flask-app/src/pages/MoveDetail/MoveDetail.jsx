@@ -43,13 +43,13 @@ const MoveDetail = () => {
     : undefined;
 
   const type = !loading
-  ? gmaxMove
-    ? gmaxMove.type
-    : data.move[0].type
-  : undefined;
+    ? gmaxMove
+      ? gmaxMove.type
+      : data.move[0].type
+    : undefined;
 
   useEffect(() => {
-    if (!loading && name) {
+    if (!loading && name && type) {
       createOrGetMove({
         variables: { move_id: params.moveId, name: name, type_id: type.id },
       });
@@ -65,7 +65,10 @@ const MoveDetail = () => {
       {gmaxMove ? (
         <GMaxMoveDetail move={gmaxMove} />
       ) : maxMove ? (
-        <MaxMoveDetail move={data.move[0]} isStatus={maxMove.kind === "status"}/>
+        <MaxMoveDetail
+          move={data.move[0]}
+          isStatus={maxMove.kind === "status"}
+        />
       ) : isMoveZMove ? (
         <ZMoveDetail move={data.move[0]} />
       ) : (
