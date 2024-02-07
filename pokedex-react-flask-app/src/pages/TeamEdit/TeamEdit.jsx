@@ -154,7 +154,6 @@ const TeamEdit = () => {
   useEffect(() => {
     if (teamData) {
       const { team } = teamData;
-      // TODO maybe fix 2 setState function REPEAT through file
       setName(team.name);
       setTeam(team);
     }
@@ -271,7 +270,6 @@ const TeamEdit = () => {
 
   const changeSelectedMove = useCallback(
     (move, index) => {
-      // TODO Improve this code
       const updatedTeam = { ...team };
       updatedTeam.pokemons = updatedTeam.pokemons.map((p) =>
         p.position === team.pokemons[selectedTab].position

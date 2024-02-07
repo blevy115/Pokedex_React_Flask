@@ -102,7 +102,7 @@ class TeamPokemonObject(SQLAlchemyObjectType):
 
     def resolve_moves(self, info):
         resolved_moves = []
-        #  TODO Maybe check the 2 elses
+
         for i in range(1, 5):
             move_id = getattr(self, f"move{i}_id")
             if move_id is not None:
