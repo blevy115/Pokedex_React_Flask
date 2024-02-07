@@ -27,8 +27,7 @@ import {
   TypeList,
   TypeDetail,
   Teams,
-  TeamCreate,
-  TeamEdit
+  TeamEdit,
 } from "./pages";
 import { ProtectedRoute, AuthRoute } from "./wrapper/routes";
 
@@ -88,6 +87,15 @@ function EggGroupDetailErrorElement() {
   );
 }
 
+function TeamErrorElement() {
+  return (
+    <>
+      <Link to="/teams">Back to List</Link>
+      <h2>Not valid Team ID</h2>
+    </>
+  );
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -136,8 +144,11 @@ const router = createBrowserRouter(
         <Route path="/types/:typeId" element={<TypeDetail />} />
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/teams" element={<Teams />} />
-        <Route path="/teams/:teamId" element={<TeamEdit />} />
-        <Route path="/team/create" element={<TeamCreate />} />
+        <Route
+          path="/teams/:teamId"
+          element={<TeamEdit />}
+          errorElement={<TeamErrorElement />}
+        />
       </Route>
       <Route path="*" element={<Navigate to="/pokemon" />}></Route>
     </>
