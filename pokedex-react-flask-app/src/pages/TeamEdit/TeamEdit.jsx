@@ -458,7 +458,7 @@ const TeamEdit = () => {
             Save
             {saving && <FaSpinner className="spin" />}
           </button>
-          <button className="team-button" onClick={() => exportTeam(team)}>
+          <button className="team-button" onClick={() => exportTeam(team, name)}>
             <TbFileExport />
             Export
           </button>

@@ -2,7 +2,7 @@ import { formatName } from "./format";
 
 const statsOrder = ["HP", "Atk", "Def", "Spe", "SpD", "SpA"];
 
-export function exportTeam(team) {
+export function exportTeam(team, name) {
   let textData = "";
 
   team.pokemons.forEach((pokemon) => {
@@ -36,7 +36,7 @@ export function exportTeam(team) {
   const element = document.createElement("a");
   const file = new Blob([textData], { type: "text/plain" });
   element.href = URL.createObjectURL(file);
-  element.download = "team_details.txt";
+  element.download = `${name}_details.txt`;
   document.body.appendChild(element);
   element.click();
 }
