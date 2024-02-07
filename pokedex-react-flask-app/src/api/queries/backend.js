@@ -222,19 +222,40 @@ const USER_TEAM_MUTATION = gql`
         userId
         teamId
         pokemons {
-          pokemonId
+          position
           moves {
             position
             move {
+              name
               moveId
               typeId
             }
           }
-          abilityId
-          itemId
-          natureId
-          teraTypeId
-          position
+          pokemon {
+            name
+            pokemonId
+            baseStats
+            type1Id
+            type2Id
+          }
+          ability {
+            name
+            abilityId
+          }
+          item {
+            name
+            itemId
+          }
+          nature {
+            name
+            natureId
+            increasedStat
+            decreasedStat
+          }
+          teraType {
+            name
+            typeId
+          }
           stats
           ivs
           evs

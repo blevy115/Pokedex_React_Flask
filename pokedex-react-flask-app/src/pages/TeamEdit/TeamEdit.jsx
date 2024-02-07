@@ -2,6 +2,10 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { HiOutlinePlus } from "react-icons/hi2";
+import { FiSave } from "react-icons/fi";
+import { FaSpinner } from "react-icons/fa";
+
+import { TbFileExport } from "react-icons/tb";
 
 import { useQuery, useMutation } from "@apollo/client";
 
@@ -25,6 +29,7 @@ import {
 import "./TeamEdit.scss";
 
 const initialState = [0, 0, 0, 0, 0, 0];
+const initialLevel = 50;
 
 const newPokemon = (position) => ({
   pokemon: null,
@@ -131,7 +136,7 @@ const TeamEdit = () => {
     client: backEndClient,
   });
 
-  const [updateUserTeam] = useMutation(USER_TEAM_MUTATION, {
+  const [updateUserTeam, { loading: saving }] = useMutation(USER_TEAM_MUTATION, {
     client: backEndClient,
   });
 
@@ -166,12 +171,21 @@ const TeamEdit = () => {
         p.position === team.pokemons[selectedTab].position
           ? {
               ...p,
+              ability: null,
+              level: initialLevel,
+              item: null,
+              moves: p.moves.map((m) => ({ ...m, move: null })),
+              nature: null,
               pokemon: {
                 name: pokemon.name,
                 pokemonId: pokemon.id,
                 types: pokemon.types.map((t) => t.pokemon_v2_type.id),
                 baseStats: Object.values(convertStats(pokemon.stats)),
               },
+              teraType: null,
+              ivs: initialState,
+              evs: initialState,
+              stats: initialState,
             }
           : p
       );
@@ -416,7 +430,8 @@ const TeamEdit = () => {
         pokemons: team.pokemons.map((p) => modifyPokemonData(p)),
       };
       try {
-        await updateUserTeam({ variables: data });
+        const result = await updateUserTeam({ variables: data });
+        setTeam(result.data.mutateTeam.team);
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -439,10 +454,17 @@ const TeamEdit = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        <div className="team-buttons-container">
+          <button className="team-button" onClick={() => saveTeam(team)}>
+            <FiSave />
+            Save
+            {saving && <FaSpinner className="spin" />}
+          </button>
           <button className="team-button" onClick={() => exportTeam(team)}>
             <TbFileExport />
             Export
           </button>
+        </div>
       </div>
       {!loading ? (
         <div className="pokemon-tabs-container">

@@ -114,3 +114,33 @@
     outline: none;
   }
 }
+
+.team-buttons-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  @media screen and (max-width: $breakpoint-small) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+  }
+}
+
+.team-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  svg {
+    margin-right: 0.25rem;
+  }
+
+  .spin {
+    margin-right: 0;
+    margin-left: 0.25rem;
+  }
+  
+}
