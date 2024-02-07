@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
@@ -168,6 +168,17 @@ const TeamPokemonEdit = ({
   const [level, setLevel] = useState(teamPokemon.level);
   const [ivs, setIvs] = useState(teamPokemon.ivs);
   const [evs, setEvs] = useState(teamPokemon.evs);
+  const dropdownRef = useRef(null);
+
+  const handleOutsideClick = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setTextInput("");
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick, true);
+  }, []);
 
   useEffect(() => {
     setTextInput("");
@@ -246,6 +257,7 @@ const TeamPokemonEdit = ({
           }
         />
         <div
+          ref={dropdownRef}
           className={`dropdown-menu ${list || loadingList ? "show" : ""}`}
           aria-labelledby="dropdownMenuButton"
         >
