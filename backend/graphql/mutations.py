@@ -11,7 +11,7 @@ from ..models import User as UserModel, \
     Nature as NatureModel, \
     Type as TypeModel, \
     Team as TeamModel, \
-    TeamPokemonDetails as TeamPokemonModel
+    TeamPokemon as TeamPokemonModel
 
 from ..graphql.objects import UserObject as User, \
     PokemonObject as Pokemon, \
@@ -476,7 +476,7 @@ class DeleteTeamMutation(graphene.Mutation):
 
     @staticmethod
     def mutate(root, info, team_id, user_id):
-        # Perform the deletion logic here
+
         try:
             type_name, original_id = from_global_id(user_id)
             user = UserModel.query.filter_by(id=original_id).first() 

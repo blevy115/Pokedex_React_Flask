@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useQuery } from "@apollo/client";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-
-import { useQuery } from "@apollo/client";
 
 import { pokemonAPIClient } from "../../api/clients";
 
@@ -12,12 +11,12 @@ import {
   GET_TEAM_POKEMON_INFO,
 } from "../../api/queries/pokeapi";
 
+import { formatName } from "../../helpers/format";
+import { calculateTeamPokemonStats } from "../../helpers/statModifier";
+
 import { Loading, DebouncedInput } from "../../components";
 
-import { formatName } from "../../helpers/format";
-
 import "./TeamPokemonEdit.scss";
-import { calculateTeamPokemonStats } from "../../helpers/statModifier";
 
 const labels = [
   "hp",
@@ -48,10 +47,7 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
       <div className="stats-slider">
         <h2>IVs</h2>
         {savedIvs.map((value, index) => (
-          <div
-            key={index}
-            style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
-          >
+          <div key={index} className="slider">
             <label className="stat-slider-label">
               {formatName(labels[index])}
             </label>
@@ -65,7 +61,6 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
               type="text"
               value={Number(savedIvs[index]).toString()}
               onChange={(e) => handleInputChange("ivs", index, e.target.value)}
-              style={{ width: "50px", marginLeft: "10px" }}
             />
           </div>
         ))}
@@ -74,10 +69,7 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
       <div className="stats-slider">
         <h2>EVs</h2>
         {savedEvs.map((value, index) => (
-          <div
-            key={index}
-            style={{ display: "flex", alignItems: "center", margin: "10px 0" }}
-          >
+          <div key={index} className="slider">
             <label className="stat-slider-label">
               {formatName(labels[index])}
             </label>
@@ -91,7 +83,6 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
               type="text"
               value={Number(savedEvs[index]).toString()}
               onChange={(e) => handleInputChange("evs", index, e.target.value)}
-              style={{ width: "50px", marginLeft: "10px" }}
             />
           </div>
         ))}
@@ -266,7 +257,6 @@ const TeamPokemonEdit = ({
             <div
               key={pokemon.id}
               onClick={() => handlePokemonSelection(pokemon)}
-              style={{ cursor: "pointer" }}
               className="dropdown-item"
             >
               {formatName(pokemon.name)}
@@ -276,7 +266,6 @@ const TeamPokemonEdit = ({
             <div className="dropdown-item-none">No Pokemon Found</div>
           )}
         </div>
-        {/* )} */}
       </div>
       {pokemonData ? (
         <>
@@ -318,7 +307,6 @@ const TeamPokemonEdit = ({
                     {movesList.map((move) => {
                       const isSelected = selectedMoves.some(
                         (selectedMove) =>
-                          selectedMove.move &&
                           selectedMove.move &&
                           selectedMove.move.moveId === move.pokemon_v2_move.id
                       );
@@ -574,7 +562,9 @@ const TeamPokemonEdit = ({
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <Loading fullscreen={false} />
+      )}
     </div>
   );
 };

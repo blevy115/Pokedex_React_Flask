@@ -14,7 +14,7 @@ class UserPokemonAssociation(db.Model):
         'user_pokemon', cascade='all, delete-orphan'))
     is_active = db.Column(db.Boolean, default=True)
 
-class TeamPokemonDetails(db.Model):
+class TeamPokemon(db.Model):
     __tablename__ = 'team_pokemon'
     id = db.Column(db.Integer, primary_key=True)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
@@ -53,7 +53,7 @@ class Team(db.Model):
     team_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    pokemons = db.relationship('TeamPokemonDetails', backref='team', lazy=True)
+    pokemons = db.relationship('TeamPokemon', backref='team', lazy=True)
 
 
 class Pokemon(db.Model):

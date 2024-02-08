@@ -10,7 +10,7 @@ from ..models import User as UserModel, \
     Location as LocationModel, \
     Team as TeamModel, \
     UserPokemonAssociation as UserPokemonModel, \
-    TeamPokemonDetails as TeamPokemonModel, \
+    TeamPokemon as TeamPokemonModel, \
     Nature as NatureModel, \
     Type as TypeModel, \
     EggGroup as EggGroupModel

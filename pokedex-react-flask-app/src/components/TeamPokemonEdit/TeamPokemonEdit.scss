@@ -98,6 +98,18 @@
   .stats-slider {
     width: 100%;
 
+    .slider {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+
+      input {
+        width: 30px;
+        margin-left: 10px;
+        text-align: right;
+      }
+    }
+
     .stat-slider-label {
       margin-right: 10px;
       width: 35%;

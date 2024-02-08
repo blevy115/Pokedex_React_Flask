@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "@apollo/client";
+
 import { HiOutlinePlus } from "react-icons/hi2";
 
 import { backEndClient } from "../../api/clients";
@@ -14,18 +15,6 @@ const Teams = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
   const [teams, setTeams] = useState([]);
-
-  async function createTeam() {
-    const newTeam = await createUserTeam({
-      variables: {
-        user_id: user.id,
-        name: "New Team",
-        pokemons: [],
-      },
-    });
-    const teamId = newTeam.data.mutateTeam.team.teamId;
-    navigate(`/teams/${teamId}`);
-  }
 
   const [createUserTeam] = useMutation(USER_TEAM_MUTATION, {
     client: backEndClient,
@@ -49,6 +38,18 @@ const Teams = () => {
       setTeams(userTeamsData.userTeams);
     }
   }, [userTeamsData]);
+
+  async function createTeam() {
+    const newTeam = await createUserTeam({
+      variables: {
+        user_id: user.id,
+        name: "New Team",
+        pokemons: [],
+      },
+    });
+    const teamId = newTeam.data.mutateTeam.team.teamId;
+    navigate(`/teams/${teamId}`);
+  }
 
   if (userTeamsLoading) return <Loading />;
 

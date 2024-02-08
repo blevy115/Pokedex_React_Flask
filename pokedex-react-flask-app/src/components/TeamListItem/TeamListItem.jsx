@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@apollo/client";
 import { Tooltip } from "react-tooltip";
 import { BsTrash2 } from "react-icons/bs";
 import { MdModeEdit } from "react-icons/md";
@@ -56,14 +56,14 @@ const TeamListItem = ({ team }) => {
                   >
                     <img
                       src="/icons/loading/pokeball.png"
-                      alt="Image A"
-                      className="image-a"
+                      alt="Pokeball Image"
+                      className="pokeball-image"
                     ></img>
                     {hasPokemon ? (
                       <img
                         src={getSprite(tp.pokemon.pokemonId)}
-                        alt="Image B"
-                        className="image-b"
+                        alt="Pokemon Sprite"
+                        className="pokemon-sprite"
                         onClick={() =>
                           navigate(`/pokemon/${tp.pokemon.pokemonId}`)
                         }
@@ -108,12 +108,6 @@ const TeamListItem = ({ team }) => {
             </div>
           );
         })}
-        {/* <button
-          className="clickable edit-button"
-          onClick={() => navigate(`/teams/${team.teamId}`)}
-        >
-          Edit
-        </button> */}
       </div>
     </div>
   );
