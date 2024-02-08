@@ -136,9 +136,12 @@ const TeamEdit = () => {
     client: backEndClient,
   });
 
-  const [updateUserTeam, { loading: saving }] = useMutation(USER_TEAM_MUTATION, {
-    client: backEndClient,
-  });
+  const [updateUserTeam, { loading: saving }] = useMutation(
+    USER_TEAM_MUTATION,
+    {
+      client: backEndClient,
+    }
+  );
 
   const { data: natureData, loading: natureDataLoading } = useQuery(
     GET_NATURES,
@@ -289,7 +292,9 @@ const TeamEdit = () => {
           ? {
               ...p,
               ivs:
-                value || value === 0
+                index === "all"
+                  ? initialState.map(() => value)
+                  : value || value === 0
                   ? [...p.ivs.slice(0, index), value, ...p.ivs.slice(index + 1)]
                   : initialState,
             }
@@ -458,7 +463,10 @@ const TeamEdit = () => {
             Save
             {saving && <FaSpinner className="spin" />}
           </button>
-          <button className="team-button" onClick={() => exportTeam(team, name)}>
+          <button
+            className="team-button"
+            onClick={() => exportTeam(team, name)}
+          >
             <TbFileExport />
             Export
           </button>

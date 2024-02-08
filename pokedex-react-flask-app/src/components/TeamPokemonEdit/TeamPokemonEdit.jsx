@@ -64,7 +64,10 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
             />
           </div>
         ))}
-        <button onClick={() => changeIvs(null, null)}>Clear</button>
+        <div className="ivs-buttons-container">
+          <button onClick={() => changeIvs("all", 31)}>Max</button>
+          <button onClick={() => changeIvs(null, null)}>Clear</button>
+        </div>
       </div>
       <div className="stats-slider">
         <h2>EVs</h2>
@@ -86,7 +89,9 @@ const SliderGroup = ({ savedIvs, savedEvs, changeIvs, changeEvs }) => {
             />
           </div>
         ))}
-        <button onClick={() => changeEvs(null, null)}>Clear</button>
+        <div className="evs-buttons-container">
+          <button onClick={() => changeEvs(null, null)}>Clear</button>
+        </div>
       </div>
     </div>
   );

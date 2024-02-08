@@ -114,6 +114,22 @@
       margin-right: 10px;
       width: 35%;
     }
+
+    .ivs-buttons-container, .evs-buttons-container {
+      display: flex;
+      
+      button {
+        cursor: pointer;
+      }
+    }
+
+    .ivs-buttons-container {
+      justify-content: space-between;
+    }
+
+    .evs-buttons-container {
+      justify-content: flex-end;
+    }
   }
 }
 
