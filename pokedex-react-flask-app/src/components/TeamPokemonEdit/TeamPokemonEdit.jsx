@@ -199,11 +199,14 @@ const TeamPokemonEdit = ({
     }
   );
 
-  const { data: pokemonData } = useQuery(GET_TEAM_POKEMON_INFO, {
-    variables: { id: parseInt(teamPokemon.pokemon?.pokemonId) },
-    client: pokemonAPIClient,
-    skip: !teamPokemon.pokemon,
-  });
+  const { data: pokemonData, loading: loadingPokemonData } = useQuery(
+    GET_TEAM_POKEMON_INFO,
+    {
+      variables: { id: parseInt(teamPokemon.pokemon?.pokemonId) },
+      client: pokemonAPIClient,
+      skip: !teamPokemon.pokemon,
+    }
+  );
 
   const handlePokemonSelection = (selectedPokemon) => {
     changeSelectedPokemon(selectedPokemon);
@@ -567,9 +570,9 @@ const TeamPokemonEdit = ({
             </div>
           </div>
         </>
-      ) : (
+      ) : loadingPokemonData ? (
         <Loading fullscreen={false} />
-      )}
+      ) : null}
     </div>
   );
 };
