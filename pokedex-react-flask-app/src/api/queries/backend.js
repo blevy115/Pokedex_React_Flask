@@ -54,23 +54,117 @@ const GET_USER_POKEMON_SHINY_COUNT = gql`
   }
 `;
 
+const GET_USER_TEAMS = gql`
+  query getUserTeams($user_id: String!) {
+    userTeams(userId: $user_id) {
+      name
+      teamId
+      pokemons {
+        position
+        moves {
+          position
+          move {
+            name
+            moveId
+            typeId
+          }
+        }
+        pokemon {
+          name
+          pokemonId
+        }
+        ability {
+          name
+          abilityId
+        }
+        item {
+          name
+          itemId
+        }
+      }
+    }
+  }
+`;
+
+const GET_USER_TEAM = gql`
+  query getUserTeam($user_id: String!, $team_id: Int!) {
+    team: userTeam(userId: $user_id, teamId: $team_id) {
+      name
+      pokemons {
+        position
+        moves {
+          position
+          move {
+            name
+            moveId
+            typeId
+          }
+        }
+        pokemon {
+          name
+          pokemonId
+          baseStats
+          type1Id
+          type2Id
+        }
+        ability {
+          name
+          abilityId
+        }
+        item {
+          name
+          itemId
+        }
+        nature {
+          name
+          natureId
+          increasedStat
+          decreasedStat
+        }
+        teraType {
+          name
+          typeId
+        }
+        stats
+        ivs
+        evs
+        level
+      }
+    }
+  }
+`;
+
 const POKEMON_MUTATION = gql`
-  mutation pokemonMutation($name: String!, $pokemon_id: Int!) {
-    mutatePokemon(name: $name, pokemonId: $pokemon_id) {
+  mutation pokemonMutation(
+    $name: String!
+    $pokemon_id: Int!
+    $types: [Int!]!
+    $base_stats: [Int!]!
+  ) {
+    mutatePokemon(
+      name: $name
+      pokemonId: $pokemon_id
+      types: $types
+      baseStats: $base_stats
+    ) {
       pokemon {
         name
         pokemonId
+        type1Id
+        type2Id
+        baseStats
       }
     }
   }
 `;
 
 const MOVE_MUTATION = gql`
-  mutation moveMutation($name: String!, $move_id: Int!) {
-    mutateMove(name: $name, moveId: $move_id) {
+  mutation moveMutation($name: String!, $move_id: Int!, $type_id: Int!) {
+    mutateMove(name: $name, moveId: $move_id, typeId: $type_id) {
       move {
         name
         moveId
+        typeId
       }
     }
   }
@@ -105,6 +199,77 @@ const ITEM_MUTATION = gql`
         name
         itemId
       }
+    }
+  }
+`;
+
+const USER_TEAM_MUTATION = gql`
+  mutation createUserTeam(
+    $user_id: String!
+    $team_id: Int
+    $name: String!
+    $pokemons: [TeamPokemonInput!]!
+  ) {
+    mutateTeam(
+      userId: $user_id
+      teamId: $team_id
+      name: $name
+      pokemons: $pokemons
+    ) {
+      team {
+        name
+        userId
+        teamId
+        pokemons {
+          position
+          moves {
+            position
+            move {
+              name
+              moveId
+              typeId
+            }
+          }
+          pokemon {
+            name
+            pokemonId
+            baseStats
+            type1Id
+            type2Id
+          }
+          ability {
+            name
+            abilityId
+          }
+          item {
+            name
+            itemId
+          }
+          nature {
+            name
+            natureId
+            increasedStat
+            decreasedStat
+          }
+          teraType {
+            name
+            typeId
+          }
+          stats
+          ivs
+          evs
+          level
+        }
+      }
+    }
+  }
+`;
+
+const USER_TEAM_DELETION = gql`
+  mutation deleUserTeam($user_id: String!, $team_id: Int!) {
+    deleteTeam(userId: $user_id, teamId: $team_id) {
+      success
+      message
     }
   }
 `;
@@ -150,6 +315,8 @@ const SHINY_COUNTER_MUTATION = gql`
 const GET_NATURES = gql`
   query getNatures {
     natures(orderBy: "name") {
+      id
+      natureId
       name
       increasedStat
       decreasedStat
@@ -185,10 +352,14 @@ export {
   ITEM_MUTATION,
   LOCATION_MUTATION,
   USER_POKEMON_MUTATION,
+  USER_TEAM_MUTATION,
+  USER_TEAM_DELETION,
+  SHINY_COUNTER_MUTATION,
   GET_USER_POKEMONS,
   GET_USER_POKEMON_SHINY_COUNT,
-  SHINY_COUNTER_MUTATION,
   GET_NATURES,
   GET_TYPES,
   GET_EGG_GROUPS,
+  GET_USER_TEAMS,
+  GET_USER_TEAM,
 };

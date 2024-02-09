@@ -1,0 +1,170 @@
+@import "../../helpers/breakpoints";
+
+.app__team-pokemon {
+  flex-grow: 1;
+  label {
+    margin-right: 0.5rem;
+  }
+}
+
+.pokemon-search {
+  position: relative;
+  margin-bottom: 1rem;
+
+  label {
+    display: none;
+  }
+
+  .debounced-input {
+    font-size: 2rem;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 1em;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+    min-width: 160px;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  .dropdown-item {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .dropdown-item-none {
+    padding: 10px 20px;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+}
+
+.team-pokemon-sections {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-wrap: wrap;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+.team-pokemon-selectors {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  @media screen and (max-width: $breakpoint-medium) {
+
+    flex-grow: 1;
+
+    & .select-container {
+      display: flex;
+      align-items: center;
+
+      select {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.stats-slider-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  flex-grow: 1;
+
+  .stats-slider {
+    width: 100%;
+
+    .slider {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+
+      input {
+        width: 30px;
+        margin-left: 10px;
+        text-align: right;
+      }
+    }
+
+    .stat-slider-label {
+      margin-right: 10px;
+      width: 35%;
+    }
+
+    .ivs-buttons-container, .evs-buttons-container {
+      display: flex;
+      
+      button {
+        cursor: pointer;
+      }
+    }
+
+    .ivs-buttons-container {
+      justify-content: space-between;
+    }
+
+    .evs-buttons-container {
+      justify-content: flex-end;
+    }
+  }
+}
+
+.base-stat-container {
+  display: flex;
+  justify-content: space-around;
+
+  flex-direction: column;
+
+  p {
+    text-align: center;
+    margin: 0.5em;
+
+    &.increased {
+      color: red;
+    }
+
+    &.decreased {
+      color: blue;
+    }
+
+    &.increased::before {
+      content: "\2191"; /* Unicode character for up arrow */
+      margin-right: 5px;
+    }
+
+    &.decreased::before {
+      content: "\2193"; /* Unicode character for down arrow */
+      margin-right: 5px;
+    }
+  }
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+}

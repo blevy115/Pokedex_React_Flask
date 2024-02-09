@@ -1,13 +1,17 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 
 import "./DebouncedInput.scss";
 
 const DebouncedInput = forwardRef(function DebouncedInput(
-  { label, placeholder, debouceTime = 500, onValueChange },
+  { label, placeholder, debouceTime = 500, onValueChange, initialValue = "" },
   ref
 ) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(initialValue);
   const [timeoutId, setTimeoutId] = useState(null);
+
+  useEffect(() => {
+    setInputValue(initialValue)
+  }, [initialValue])
 
   const handleInputChange = (event) => {
     const { value } = event.target;

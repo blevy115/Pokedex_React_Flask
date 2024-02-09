@@ -28,6 +28,33 @@ function orderStats(stats) {
   );
 }
 
+export function calculateTeamPokemonStats(teamPokemon) {
+  if (!teamPokemon.pokemon.baseStats) return
+  return teamPokemon.pokemon.baseStats.map((stat, index) => {
+    let value
+    if (statOrder[index] === "hp") {
+      value = Math.trunc(
+        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * teamPokemon.level) / 100
+      ) +
+      (teamPokemon.level + 10);
+    } else {
+      value = Math.trunc(
+        (Math.trunc(2 * stat + teamPokemon.ivs[index] + teamPokemon.evs[index] / 4) * teamPokemon.level) / 100
+      ) + 5;
+    }
+
+    if (teamPokemon.nature) {
+      if (teamPokemon.nature.increasedStat === statOrder[index]) {
+        value = Math.trunc(value * 1.1);
+      }
+      if (teamPokemon?.nature.decreasedStat === statOrder[index]) {
+        value = Math.trunc(value * 0.9);
+      }
+    }
+    return value
+  })
+}
+
 export function calculateStats({ baseStats, level, nature, ivs, evs }) {
   const calculatedValues = baseStats.reduce((stats, stat) => {
     const name = stat.pokemon_v2_stat.name;

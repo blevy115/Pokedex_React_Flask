@@ -1,0 +1,20 @@
+.app__teams-list {
+  margin: 1em 2em;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.new-team-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  cursor: pointer;
+  margin-top: 0.5em;
+
+  p {
+    margin: 0;
+  }
+}

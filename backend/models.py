@@ -14,6 +14,27 @@ class UserPokemonAssociation(db.Model):
         'user_pokemon', cascade='all, delete-orphan'))
     is_active = db.Column(db.Boolean, default=True)
 
+class TeamPokemon(db.Model):
+    __tablename__ = 'team_pokemon'
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer, db.ForeignKey('team.id'))
+    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'))
+    move1_id = db.Column(db.Integer, db.ForeignKey('move.id'))
+    move2_id = db.Column(db.Integer, db.ForeignKey('move.id'))
+    move3_id = db.Column(db.Integer, db.ForeignKey('move.id'))
+    move4_id = db.Column(db.Integer, db.ForeignKey('move.id'))
+    ability_id = db.Column(db.Integer, db.ForeignKey('ability.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
+    nature_id = db.Column(db.Integer, db.ForeignKey('nature.id'))
+    stats = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    ivs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    evs = db.Column(db.ARRAY(db.Integer, dimensions=1), default=[0, 0, 0, 0, 0, 0])
+    tera_type_id = db.Column(db.Integer, db.ForeignKey('type.id'))
+    level = db.Column(db.Integer, default=50)
+    position = db.Column(db.Integer)
+    
+    __table_args__ = (db.UniqueConstraint('team_id', 'position', name='_team_position_uc'),)
+
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
@@ -21,9 +42,18 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
+    teams = db.relationship('Team', backref='user', lazy=True)
 
     def __repr__(self):
         return f"<User {self.email} >"
+    
+class Team(db.Model):
+    __tablename__ = 'team'
+    id = db.Column(db.Integer, primary_key=True)
+    team_id = db.Column(db.Integer)
+    name = db.Column(db.String(50))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    pokemons = db.relationship('TeamPokemon', backref='team', lazy=True)
 
 
 class Pokemon(db.Model):
@@ -31,6 +61,10 @@ class Pokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    # hp, attack, defense, speed, special-defense, special-attack  Ordered on Chart
+    base_stats = db.Column(db.ARRAY(db.Integer, dimensions=1))
+    type1_id = db.Column(db.Integer, db.ForeignKey('type.id'))
+    type2_id = db.Column(db.Integer, db.ForeignKey('type.id'))
 
     def __repr__(self):
         return f"Pokemon {self.name}"
@@ -41,6 +75,7 @@ class Move(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     move_id = db.Column(db.Integer)
     name = db.Column(db.String(50))
+    type_id = db.Column(db.Integer, db.ForeignKey('type.id'))
 
 
 class Ability(db.Model):
@@ -67,6 +102,7 @@ class Location(db.Model):
 class Nature(db.Model):
     __tablename__ = 'nature'
     id = db.Column(db.Integer, primary_key=True)
+    nature_id = db.Column(db.Integer)
     name = db.Column(db.String(20), nullable=False)
     increased_stat = db.Column(db.String(20), nullable=False)
     decreased_stat = db.Column(db.String(20), nullable=False)
