@@ -10,6 +10,7 @@ export { default as MovesList } from "./MovesList/MovesList";
 export { default as MovesTable } from "./MovesTable/MovesTable";
 export { default as Loading } from "./Loading/Loading";
 export { default as NavBar } from "./NavBar/NavBar";
+export { default as PokemonCry } from "./PokemonCry/PokemonCry";
 export { default as PokemonImage } from "./PokemonImage/PokemonImage";
 export { default as PokemonList } from "./PokemonList/PokemonList";
 export { default as MovePokemonsTable } from "./PokemonsTable/MovePokemonsTable/MovePokemonsTable";

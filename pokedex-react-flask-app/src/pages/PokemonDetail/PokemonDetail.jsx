@@ -15,6 +15,7 @@ import { pokemonAPIClient, backEndClient } from "../../api/clients";
 
 import {
   TypeEffectiveness,
+  PokemonCry,
   PokemonImage,
   StatChart,
   Abilities,
@@ -160,6 +161,7 @@ const PokemonDetail = () => {
           generation={generation}
           pokedexes={info.pokedexes}
         />
+        <PokemonCry id={params.pokemonId} />
         <PokemonImage id={params.pokemonId} />
         <Types types={types} />
         <button
