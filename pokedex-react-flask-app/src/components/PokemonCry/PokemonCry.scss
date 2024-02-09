@@ -1,0 +1,16 @@
+.pokemon-cry-container {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 1rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .music-note {
+      margin-left: 0.25rem;
+    }
+  }
+}
