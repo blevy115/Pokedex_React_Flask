@@ -13,6 +13,7 @@ export { default as NavBar } from "./NavBar/NavBar";
 export { default as PokemonCry } from "./PokemonCry/PokemonCry";
 export { default as PokemonImage } from "./PokemonImage/PokemonImage";
 export { default as PokemonList } from "./PokemonList/PokemonList";
+export { default as PokemonNav } from "./PokemonNav/PokemonNav";
 export { default as MovePokemonsTable } from "./PokemonsTable/MovePokemonsTable/MovePokemonsTable";
 export { default as AbilityPokemonsTable } from "./PokemonsTable/AbilityPokemonsTable/AbilityPokemonsTable";
 export { default as ShinyCounter } from "./ShinyCounter/ShinyCounter";

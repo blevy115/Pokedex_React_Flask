@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi";
 
 import { GET_POKEMON_INFO } from "../../api/queries/pokeapi";
 import {
@@ -17,6 +16,7 @@ import {
   TypeEffectiveness,
   PokemonCry,
   PokemonImage,
+  PokemonNav,
   StatChart,
   Abilities,
   MovesTable,
@@ -33,8 +33,7 @@ import {
 
 import { formatName } from "../../helpers/format";
 import { eggGroupNameHelper } from "../../helpers/eggGroupNamehelper";
-import { getSprite } from "../../helpers/pictures";
-import { handleSpriteError } from "../../helpers/error";
+
 import { convertStats, getEvYield } from "../../helpers/statModifier";
 import { calculateCatchPercent } from "../../helpers/calculateCatchPercent";
 
@@ -132,31 +131,7 @@ const PokemonDetail = () => {
       }`}
     >
       <div className="app-pokemon-detail-info">
-        <div className="pokemon-headers">
-          <div className={pokemonIdInt <= 1 ? "hide" : ""}>
-            <Link to={`/pokemon/${pokemonIdInt - 1}`}>
-              <HiOutlineChevronLeft />
-              <img
-                onError={handleSpriteError}
-                src={getSprite(pokemonIdInt - 1)}
-              />
-            </Link>
-          </div>
-          <div className="pokemon-name">
-            <p>#{params.pokemonId}</p>
-            <h3>{formatName(name)}</h3>
-          </div>
-          <div>
-            <Link to={`/pokemon/${pokemonIdInt + 1}`}>
-              <img
-                onError={handleSpriteError}
-                src={getSprite(pokemonIdInt + 1)}
-              />
-
-              <HiOutlineChevronRight />
-            </Link>
-          </div>
-        </div>
+        <PokemonNav name={name} id ={pokemonIdInt} />
         <GenerationSelector
           generation={generation}
           pokedexes={info.pokedexes}
