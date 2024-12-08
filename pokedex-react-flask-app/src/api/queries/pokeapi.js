@@ -811,6 +811,13 @@ const GET_TYPE_INFO = gql`
               id
             }
           }
+          stats: pokemon_v2_pokemonstats {
+            base_stat
+            pokemon_v2_stat {
+              name
+              id
+            }
+          }
         }
       }
     }
@@ -839,6 +846,13 @@ const GET_EGG_GROUP_INFO = gql`
             types: pokemon_v2_pokemontypes {
               type_id
               pokemon_v2_type {
+                name
+                id
+              }
+            }
+            stats: pokemon_v2_pokemonstats {
+              base_stat
+              pokemon_v2_stat {
                 name
                 id
               }

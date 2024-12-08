@@ -36,13 +36,12 @@ const TypeDetail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setSelectedGenerationId("All")
-    setShowOnlySelectedGenResults(false)
+    setSelectedGenerationId("All");
+    setShowOnlySelectedGenResults(false);
   }, [data]);
-  
 
   const generationOptions = useMemo(() => {
-    if (!generationId) return []; // Handle undefined or missing generation_id
+    if (!generationId) return [];
     const options = [
       <option key="all" value="All">
         All
@@ -83,21 +82,6 @@ const TypeDetail = () => {
         </div>
       </div>
       <div className="app__type-table-container">
-        {selectedGenerationId && selectedGenerationId !== "All" ? (
-          <div className="checkbox-input">
-            <label htmlFor="ShowOnlySelectedGenResults">
-              Only Generation {selectedGenerationId}
-              <input
-                type="checkbox"
-                id="ShowOnlySelectedGenResults"
-                checked={showOnlySelectedGenResults}
-                onChange={(e) =>
-                  setShowOnlySelectedGenResults(e.target.checked)
-                }
-              />
-            </label>
-          </div>
-        ) : null}
         <div className="select-input">
           <label htmlFor="GenerationSelector">Generation:</label>
           <select
@@ -112,6 +96,22 @@ const TypeDetail = () => {
             {generationOptions}
           </select>
         </div>
+        {selectedGenerationId && selectedGenerationId !== "All" ? (
+          <div className="checkbox-input">
+            <label htmlFor="ShowOnlySelectedGenResults">
+              Only Generation {selectedGenerationId}
+              <input
+                id="ShowOnlySelectedGenResults"
+                type="checkbox"
+                className="clickable"
+                checked={showOnlySelectedGenResults}
+                onChange={(e) =>
+                  setShowOnlySelectedGenResults(e.target.checked)
+                }
+              />
+            </label>
+          </div>
+        ) : null}
         {selectedTab === "Pokemon" && (
           <TypePokemon
             name={name}

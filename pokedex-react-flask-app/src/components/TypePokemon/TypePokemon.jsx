@@ -16,6 +16,7 @@ import "./TypePokemon.scss";
 
 const TypePokemon = ({ name, list, typeId, generationId, onlySelectedGen }) => {
   const [byType, setbyType] = useState();
+  const [tableExtended, setTableExtended] = useState(false);
 
   const typeBarRefs = useRef(null);
   const secondaryTypeTableRefsList = useRef([]);
@@ -63,6 +64,7 @@ const TypePokemon = ({ name, list, typeId, generationId, onlySelectedGen }) => {
     NameComponent: PokemonNameComponent,
     hasType: false,
     hasGeneration: !onlySelectedGen,
+    hasStats: tableExtended,
   });
 
   const modifiedSemiData = Object.values(semi).map((group) => {
@@ -74,6 +76,7 @@ const TypePokemon = ({ name, list, typeId, generationId, onlySelectedGen }) => {
         TypesImageComponent,
         pageId: typeId,
         hasGeneration: !onlySelectedGen,
+        hasStats: tableExtended,
       }),
       name: group.type_name,
     };
@@ -81,6 +84,18 @@ const TypePokemon = ({ name, list, typeId, generationId, onlySelectedGen }) => {
 
   return (
     <div>
+      <div className="checkbox-input">
+        <label htmlFor="ExtendTable">
+          Show Stats
+          <input
+            id="ExtendTable"
+            type="checkbox"
+            className="clickable"
+            checked={tableExtended}
+            onChange={(e) => setTableExtended(e.target.checked)}
+          />
+        </label>
+      </div>
       <h4 className="pure-pokemon-table-header">
         Pure {formatName(name)} Pokemon
       </h4>

@@ -24,6 +24,7 @@ const EggGroupPokemon = ({
   onlySelectedGen,
 }) => {
   const [byEggGroup, setbyEggGroup] = useState();
+  const [tableExtended, setTableExtended] = useState(false);
 
   const eggGroupBarRefs = useRef(null);
   const secondaryEggGroupTableRefsList = useRef([]);
@@ -73,6 +74,8 @@ const EggGroupPokemon = ({
       SpriteComponent,
       NameComponent: PokemonNameComponent,
       TypesImageComponent,
+      hasGeneration: !onlySelectedGen,
+      hasStats: tableExtended,
     });
 
   const modifiedSemiData = Object.values(semi).map((group) => {
@@ -85,6 +88,8 @@ const EggGroupPokemon = ({
         TypesImageComponent,
         pageId: eggGroupId,
         hasEggGroup: true,
+        hasGeneration: !onlySelectedGen,
+        hasStats: tableExtended,
       }),
       name: group.egg_group_name,
     };
@@ -95,6 +100,18 @@ const EggGroupPokemon = ({
     (byEggGroup && Object.keys(semi).length > 0);
   return (
     <div>
+      <div className="checkbox-input">
+        <label htmlFor="ExtendTable">
+          Show Stats
+          <input
+            id="ExtendTable"
+            type="checkbox"
+            className="clickable"
+            checked={tableExtended}
+            onChange={(e) => setTableExtended(e.target.checked)}
+          />
+        </label>
+      </div>
       <h4 className="pure-pokemon-table-header">
         Pure {formatName(name)} Pokemon
       </h4>

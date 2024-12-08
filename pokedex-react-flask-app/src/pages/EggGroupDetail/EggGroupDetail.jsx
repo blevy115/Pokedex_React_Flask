@@ -54,21 +54,6 @@ const EggGroupDetail = () => {
         <h1>{formatName(eggGroupName)} Egg Group</h1>
       </div>
       <div className="app__egg-group-table-container">
-        {selectedGenerationId && selectedGenerationId !== "All" ? (
-          <div className="checkbox-input">
-            <label htmlFor="ShowOnlySelectedGenResults">
-              Only Generation {selectedGenerationId}
-              <input
-                type="checkbox"
-                id="ShowOnlySelectedGenResults"
-                checked={showOnlySelectedGenResults}
-                onChange={(e) =>
-                  setShowOnlySelectedGenResults(e.target.checked)
-                }
-              />
-            </label>
-          </div>
-        ) : null}
         <div className="select-input">
           <label htmlFor="GenerationSelector">Generation:</label>
           <select
@@ -83,6 +68,22 @@ const EggGroupDetail = () => {
             {generationOptions}
           </select>
         </div>
+        {selectedGenerationId && selectedGenerationId !== "All" ? (
+          <div className="checkbox-input">
+            <label htmlFor="ShowOnlySelectedGenResults">
+              Only Generation {selectedGenerationId}
+              <input
+                id="ShowOnlySelectedGenResults"
+                type="checkbox"
+                className="clickable"
+                checked={showOnlySelectedGenResults}
+                onChange={(e) =>
+                  setShowOnlySelectedGenResults(e.target.checked)
+                }
+              />
+            </label>
+          </div>
+        ) : null}
         <EggGroupPokemon
           name={eggGroupName}
           list={pokemons}
