@@ -21,6 +21,8 @@ import { Loading, TeamPokemonEdit } from "../../components";
 
 import { getSprite } from "../../helpers/pictures";
 import { exportTeam } from "../../helpers/exportTeam";
+import { handleSpriteError } from "../../helpers/error";
+
 import {
   convertStats,
   calculateTeamPokemonStats,
@@ -357,6 +359,7 @@ const TeamEdit = () => {
           <img
             src={getSprite(tab.pokemon?.pokemonId)}
             alt={tab.pokemon?.name}
+            onError={handleSpriteError}
           />
         </Tab>
       ),
