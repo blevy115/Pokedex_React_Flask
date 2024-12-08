@@ -8,10 +8,12 @@ import "./PokemonCry.scss";
 
 const PokemonCry = ({ id }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(userAgent);
+
   useEffect(() => {
-    setIsPlaying(false)
-  }, [id])
+    setIsPlaying(false);
+  }, [id]);
 
   const audioRef = useRef(null);
   const audioFile = getCry(id);
@@ -23,7 +25,7 @@ const PokemonCry = ({ id }) => {
     setIsPlaying(true);
   };
 
-  return (
+  return !isIOS ? (
     <div className="pokemon-cry-container">
       <button onClick={togglePlay}>
         Cry{isPlaying && <FiMusic className="music-note" />}
@@ -33,6 +35,8 @@ const PokemonCry = ({ id }) => {
         Your browser does not support the audio element.
       </audio>
     </div>
+  ) : (
+    <></>
   );
 };
 
