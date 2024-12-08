@@ -8,6 +8,7 @@ function modifyMoves({
   hasTms = false,
   hasPopUpText = false,
   hasType = true,
+  hasGeneration = false,
   TypeImageComponent,
   KindImageComponent,
   NameComponent,
@@ -32,6 +33,9 @@ function modifyMoves({
   }
   if (hasTms) {
     columns.unshift({ Header: "TM", accessor: "tm" });
+  }
+  if (hasGeneration) {
+    columns.unshift({ Header: "Gen", accessor: "gen" });
   }
   const tableData = moves.map((move, i) => {
     const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
@@ -58,6 +62,9 @@ function modifyMoves({
         ...modifiedMove,
       };
     }
+    if (hasGeneration) {
+      return { gen: move.moveInfo.generation_id, ...modifiedMove };
+    }
     return modifiedMove;
   });
   return { columns, tableData };
@@ -69,6 +76,7 @@ function modifyPokemon({
   hasItemRarityData = false,
   hasAbilities = false,
   hasType = true,
+  hasGeneration = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
@@ -116,6 +124,9 @@ function modifyPokemon({
       }
     );
   }
+  if (hasGeneration) {
+    columns.splice(1, 0, { Header: "Gen", accessor: "gen" });
+  }
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
     const modifiedPokemon = {
@@ -145,7 +156,13 @@ function modifyPokemon({
         ?.pokemon_v2_ability || { name: "None" };
       return { ...modifiedPokemon, ...modifiedAbilities };
     }
-
+    if (hasGeneration) {
+      return {
+        ...modifiedPokemon,
+        gen: pokemonData.pokemon_v2_pokemonforms[0].pokemon_v2_versiongroup
+          .generation_id,
+      };
+    }
     return modifiedPokemon;
   });
   return { columns, tableData };

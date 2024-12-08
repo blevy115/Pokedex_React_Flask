@@ -16,7 +16,13 @@ import {
 
 import "./EggGroupPokemon.scss";
 
-const EggGroupPokemon = ({ name, list, eggGroupId }) => {
+const EggGroupPokemon = ({
+  name,
+  list,
+  eggGroupId,
+  generationId,
+  onlySelectedGen,
+}) => {
   const [byEggGroup, setbyEggGroup] = useState();
 
   const eggGroupBarRefs = useRef(null);
@@ -28,10 +34,24 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
     setbyEggGroup(false);
   }, [eggGroupId]);
 
+  const filteredPokemon = useMemo(() => {
+    if (generationId === "All") return list;
+    return list.filter((pokemon) => {
+      const gen = pokemon.pokemon_v2_pokemonspecy.generation_id;
+      const isWithinGen = gen <= generationId;
+      const isExactGen = gen === generationId;
+      return onlySelectedGen ? isExactGen : isWithinGen;
+    });
+  }, [list, generationId, onlySelectedGen]);
+
   const sortedPokemonData = useMemo(
     () =>
-      sortPokemonByEggGroups({ pokemons: list, id: eggGroupId, byEggGroup }),
-    [list, byEggGroup]
+      sortPokemonByEggGroups({
+        pokemons: filteredPokemon,
+        id: eggGroupId,
+        byEggGroup,
+      }),
+    [filteredPokemon, byEggGroup]
   );
   const { 0: pure, ...semi } = sortedPokemonData;
 

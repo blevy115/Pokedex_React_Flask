@@ -777,6 +777,7 @@ const GET_TYPE_INFO = gql`
     pokemon_v2_type(where: { id: { _eq: $id } }) {
       name
       id
+      generation_id
       moves: pokemon_v2_moves(where: { name: { _nregex: "(--special)" } }) {
         id
         name
@@ -798,6 +799,11 @@ const GET_TYPE_INFO = gql`
           name
           id
           pokemon_species_id
+          pokemon_v2_pokemonforms {
+            pokemon_v2_versiongroup {
+              generation_id
+            }
+          }
           types: pokemon_v2_pokemontypes {
             type_id
             pokemon_v2_type {
@@ -821,6 +827,7 @@ const GET_EGG_GROUP_INFO = gql`
         pokemon_v2_pokemonspecy {
           name
           id
+          generation_id
           egg_groups: pokemon_v2_pokemonegggroups {
             pokemon_v2_egggroup {
               name
