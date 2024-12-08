@@ -8,6 +8,7 @@ function modifyMoves({
   hasTms = false,
   hasPopUpText = false,
   hasType = true,
+  hasGeneration = false,
   TypeImageComponent,
   KindImageComponent,
   NameComponent,
@@ -32,6 +33,9 @@ function modifyMoves({
   }
   if (hasTms) {
     columns.unshift({ Header: "TM", accessor: "tm" });
+  }
+  if (hasGeneration) {
+    columns.unshift({ Header: "Gen", accessor: "gen" });
   }
   const tableData = moves.map((move, i) => {
     const hasFlavourText = hasPopUpText && move.moveInfo.flavourText.length > 0;
@@ -58,6 +62,9 @@ function modifyMoves({
         ...modifiedMove,
       };
     }
+    if (hasGeneration) {
+      return { gen: move.moveInfo.generation_id, ...modifiedMove };
+    }
     return modifiedMove;
   });
   return { columns, tableData };
@@ -69,6 +76,8 @@ function modifyPokemon({
   hasItemRarityData = false,
   hasAbilities = false,
   hasType = true,
+  hasGeneration = false,
+  hasStats = false,
   SpriteComponent,
   NameComponent,
   TypesImageComponent,
@@ -116,8 +125,25 @@ function modifyPokemon({
       }
     );
   }
+  if (hasGeneration) {
+    columns.splice(1, 0, { Header: "Gen", accessor: "gen" });
+  }
+  if (hasStats) {
+    Object.keys(statHeaderModifier).forEach((statKey) => {
+      columns.push({
+        Header: statHeaderModifier[statKey],
+        accessor: statKey,
+      });
+    });
+
+    columns.push({
+      Header: "Total",
+      accessor: "total",
+    });
+  }
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemon;
+
     const modifiedPokemon = {
       id: i,
       pokemonId: `#${pokemonData.pokemon_species_id}`,
@@ -127,9 +153,14 @@ function modifyPokemon({
       pageId: pageId,
     };
 
-    if (hasLevelData) return { ...modifiedPokemon, level: pokemon.values };
-    if (hasItemRarityData)
-      return { ...modifiedPokemon, rarity: `${pokemon.rarity}%` };
+    if (hasLevelData) {
+      modifiedPokemon.level = pokemon.values;
+    }
+
+    if (hasItemRarityData) {
+      modifiedPokemon.rarity = `${pokemon.rarity}%`;
+    }
+
     if (hasAbilities) {
       const standardAbilities = pokemonData.abilities.filter(
         (ability) => !ability.is_hidden
@@ -137,17 +168,32 @@ function modifyPokemon({
       const hiddenAbilities = pokemonData.abilities.filter(
         (ability) => ability.is_hidden
       );
-      const modifiedAbilities = {};
-      modifiedAbilities["ability-1"] = standardAbilities[0].pokemon_v2_ability;
-      modifiedAbilities["ability-2"] = standardAbilities[1]
+      modifiedPokemon["ability-1"] = standardAbilities[0]
         ?.pokemon_v2_ability || { name: "None" };
-      modifiedAbilities["ability-hidden"] = hiddenAbilities[0]
+      modifiedPokemon["ability-2"] = standardAbilities[1]
         ?.pokemon_v2_ability || { name: "None" };
-      return { ...modifiedPokemon, ...modifiedAbilities };
+      modifiedPokemon["ability-hidden"] = hiddenAbilities[0]
+        ?.pokemon_v2_ability || { name: "None" };
+    }
+
+    if (hasGeneration) {
+      modifiedPokemon.gen =
+        pokemonData.pokemon_v2_pokemonforms[0].pokemon_v2_versiongroup.generation_id;
+    }
+
+    if (hasStats) {
+      pokemonData.stats.forEach((stat) => {
+        modifiedPokemon[stat.pokemon_v2_stat.name] = stat.base_stat;
+      });
+      modifiedPokemon.total = pokemonData.stats.reduce(
+        (sum, stat) => sum + stat.base_stat,
+        0
+      );
     }
 
     return modifiedPokemon;
   });
+
   return { columns, tableData };
 }
 
@@ -474,6 +520,8 @@ function modifyEggGroupPokemon({
   EggGroupsComponent,
   pageId,
   hasEggGroup = false,
+  hasStats = false,
+  hasGeneration = false,
 }) {
   const columns = [
     { Header: "ID", accessor: "pokemonId" },
@@ -490,6 +538,22 @@ function modifyEggGroupPokemon({
         ]
       : []),
   ];
+  if (hasGeneration) {
+    columns.splice(1, 0, { Header: "Gen", accessor: "gen" });
+  }
+  if (hasStats) {
+    Object.keys(statHeaderModifier).forEach((statKey) => {
+      columns.push({
+        Header: statHeaderModifier[statKey],
+        accessor: statKey,
+      });
+    });
+
+    columns.push({
+      Header: "Total",
+      accessor: "total",
+    });
+  }
 
   const tableData = pokemons.map((pokemon, i) => {
     const pokemonData = pokemon.pokemon_v2_pokemonspecy;
@@ -502,6 +566,20 @@ function modifyEggGroupPokemon({
       eggGroups: pokemonData.egg_groups,
       pageId: pageId,
     };
+
+    if (hasGeneration) {
+      modifiedPokemon.gen = pokemonData.generation_id;
+    }
+
+    if (hasStats) {
+      pokemonData.pokemon[0].stats.forEach((stat) => {
+        modifiedPokemon[stat.pokemon_v2_stat.name] = stat.base_stat;
+      });
+      modifiedPokemon.total = pokemonData.pokemon[0].stats.reduce(
+        (sum, stat) => sum + stat.base_stat,
+        0
+      );
+    }
 
     return modifiedPokemon;
   });

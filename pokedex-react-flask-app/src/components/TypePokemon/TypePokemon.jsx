@@ -14,8 +14,9 @@ import {
 
 import "./TypePokemon.scss";
 
-const TypePokemon = ({ name, list, typeId }) => {
+const TypePokemon = ({ name, list, typeId, generationId, onlySelectedGen }) => {
   const [byType, setbyType] = useState();
+  const [tableExtended, setTableExtended] = useState(false);
 
   const typeBarRefs = useRef(null);
   const secondaryTypeTableRefsList = useRef([]);
@@ -27,9 +28,21 @@ const TypePokemon = ({ name, list, typeId }) => {
     setbyType(false);
   }, [typeId]);
 
+  const filteredPokemon = useMemo(() => {
+    if (generationId === "All") return list;
+    return list.filter((pokemon) => {
+      const gen =
+        pokemon.pokemon_v2_pokemon.pokemon_v2_pokemonforms[0]
+          .pokemon_v2_versiongroup.generation_id;
+      const isWithinGen = gen <= generationId;
+      const isExactGen = gen === generationId;
+      return onlySelectedGen ? isExactGen : isWithinGen;
+    });
+  }, [list, generationId, onlySelectedGen]);
+
   const sortedPokemonData = useMemo(
-    () => sortPokemonByTypes({ pokemons: list, id: typeId, byType }),
-    [list, byType]
+    () => sortPokemonByTypes({ pokemons: filteredPokemon, id: typeId, byType }),
+    [filteredPokemon, byType]
   );
   const { 0: pure, ...semi } = sortedPokemonData;
 
@@ -50,6 +63,8 @@ const TypePokemon = ({ name, list, typeId }) => {
     SpriteComponent,
     NameComponent: PokemonNameComponent,
     hasType: false,
+    hasGeneration: !onlySelectedGen,
+    hasStats: tableExtended,
   });
 
   const modifiedSemiData = Object.values(semi).map((group) => {
@@ -60,6 +75,8 @@ const TypePokemon = ({ name, list, typeId }) => {
         NameComponent: PokemonNameComponent,
         TypesImageComponent,
         pageId: typeId,
+        hasGeneration: !onlySelectedGen,
+        hasStats: tableExtended,
       }),
       name: group.type_name,
     };
@@ -67,6 +84,18 @@ const TypePokemon = ({ name, list, typeId }) => {
 
   return (
     <div>
+      <div className="checkbox-input">
+        <label htmlFor="ExtendTable">
+          Show Stats
+          <input
+            id="ExtendTable"
+            type="checkbox"
+            className="clickable"
+            checked={tableExtended}
+            onChange={(e) => setTableExtended(e.target.checked)}
+          />
+        </label>
+      </div>
       <h4 className="pure-pokemon-table-header">
         Pure {formatName(name)} Pokemon
       </h4>

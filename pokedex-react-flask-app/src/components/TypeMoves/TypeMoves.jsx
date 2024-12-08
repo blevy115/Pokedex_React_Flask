@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { modifyMoves } from "../../helpers/modifyForTable";
 
@@ -10,12 +10,22 @@ import {
 
 import "./TypeMoves.scss";
 
-const TypeMoves = ({ list }) => {
+const TypeMoves = ({ list, generationId, onlySelectedGen }) => {
+  const filteredMoves = useMemo(() => {
+    if (generationId === "All") return list;
+    return list.filter((move) => {
+      const isWithinGen = move.generation_id <= generationId;
+      const isExactGen = move.generation_id === generationId;
+      return onlySelectedGen ? isExactGen : isWithinGen;
+    });
+  }, [list, generationId, onlySelectedGen]);
+
   const { tableData, columns } = modifyMoves({
-    moves: list.map((move) => ({ moveInfo: move })),
+    moves: filteredMoves.map((move) => ({ moveInfo: move })),
     KindImageComponent,
     NameComponent: MoveNameComponent,
     hasType: false,
+    hasGeneration: !onlySelectedGen,
   });
 
   return <Table data={tableData} columns={columns} />;

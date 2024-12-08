@@ -16,8 +16,15 @@ import {
 
 import "./EggGroupPokemon.scss";
 
-const EggGroupPokemon = ({ name, list, eggGroupId }) => {
+const EggGroupPokemon = ({
+  name,
+  list,
+  eggGroupId,
+  generationId,
+  onlySelectedGen,
+}) => {
   const [byEggGroup, setbyEggGroup] = useState();
+  const [tableExtended, setTableExtended] = useState(false);
 
   const eggGroupBarRefs = useRef(null);
   const secondaryEggGroupTableRefsList = useRef([]);
@@ -28,10 +35,24 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
     setbyEggGroup(false);
   }, [eggGroupId]);
 
+  const filteredPokemon = useMemo(() => {
+    if (generationId === "All") return list;
+    return list.filter((pokemon) => {
+      const gen = pokemon.pokemon_v2_pokemonspecy.generation_id;
+      const isWithinGen = gen <= generationId;
+      const isExactGen = gen === generationId;
+      return onlySelectedGen ? isExactGen : isWithinGen;
+    });
+  }, [list, generationId, onlySelectedGen]);
+
   const sortedPokemonData = useMemo(
     () =>
-      sortPokemonByEggGroups({ pokemons: list, id: eggGroupId, byEggGroup }),
-    [list, byEggGroup]
+      sortPokemonByEggGroups({
+        pokemons: filteredPokemon,
+        id: eggGroupId,
+        byEggGroup,
+      }),
+    [filteredPokemon, byEggGroup]
   );
   const { 0: pure, ...semi } = sortedPokemonData;
 
@@ -53,6 +74,8 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
       SpriteComponent,
       NameComponent: PokemonNameComponent,
       TypesImageComponent,
+      hasGeneration: !onlySelectedGen,
+      hasStats: tableExtended,
     });
 
   const modifiedSemiData = Object.values(semi).map((group) => {
@@ -65,6 +88,8 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
         TypesImageComponent,
         pageId: eggGroupId,
         hasEggGroup: true,
+        hasGeneration: !onlySelectedGen,
+        hasStats: tableExtended,
       }),
       name: group.egg_group_name,
     };
@@ -75,6 +100,18 @@ const EggGroupPokemon = ({ name, list, eggGroupId }) => {
     (byEggGroup && Object.keys(semi).length > 0);
   return (
     <div>
+      <div className="checkbox-input">
+        <label htmlFor="ExtendTable">
+          Show Stats
+          <input
+            id="ExtendTable"
+            type="checkbox"
+            className="clickable"
+            checked={tableExtended}
+            onChange={(e) => setTableExtended(e.target.checked)}
+          />
+        </label>
+      </div>
       <h4 className="pure-pokemon-table-header">
         Pure {formatName(name)} Pokemon
       </h4>

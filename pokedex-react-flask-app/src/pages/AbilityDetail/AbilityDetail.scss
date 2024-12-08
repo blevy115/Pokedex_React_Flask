@@ -1,3 +1,9 @@
 .app__ability-info {
-    text-align: center;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+
+  @media screen and (max-width: 700px) {
+    width: 100%;
+  }
 }
