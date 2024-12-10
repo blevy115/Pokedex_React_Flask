@@ -876,6 +876,213 @@
           }
         }
       ]
+    },
+    "2109": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 1011,
+          "evolution_item_id": 2109,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 840,
+            "id": 1011,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 840,
+                  "name": "applin",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 840,
+                      "name": "applin",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "dragon",
+                            "id": 16
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1011,
+                  "name": "dipplin",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 1011,
+                      "name": "dipplin",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "dragon",
+                            "id": 16
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "2110": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 1013,
+          "evolution_item_id": 2110,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 1012,
+            "id": 1013,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 1012,
+                  "name": "poltchageist",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 1012,
+                      "name": "poltchageist",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1013,
+                  "name": "sinistcha",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 1013,
+                      "name": "sinistcha",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "2111": {
+      "hasAddedEvolution": true,
+      "addedEvolution": [
+        {
+          "evolved_species_id": 1013,
+          "evolution_item_id": 2111,
+          "pokemon_v2_evolutiontrigger": {
+            "name": "use-item",
+            "id": 3
+          },
+          "pokemon_v2_pokemonspecy": {
+            "evolves_from_species_id": 1012,
+            "id": 1013,
+            "pokemon_v2_evolutionchain": {
+              "pokemon_v2_pokemonspecies": [
+                {
+                  "id": 1012,
+                  "name": "poltchageist",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 1012,
+                      "name": "poltchageist",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": 1013,
+                  "name": "sinistcha",
+                  "pokemon_v2_pokemons": [
+                    {
+                      "id": 1013,
+                      "name": "sinistcha",
+                      "types": [
+                        {
+                          "pokemon_v2_type": {
+                            "name": "grass",
+                            "id": 12
+                          }
+                        },
+                        {
+                          "pokemon_v2_type": {
+                            "name": "ghost",
+                            "id": 8
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   },
   "held": {

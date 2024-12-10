@@ -970,6 +970,51 @@
       "removeEvolutionIds": []
     }
   ],
+  "442": [
+    {
+      "ids": [840, 841, 842, 1011, 1019, 10216, 10217],
+      "change": {},
+      "hasOverrideEvolution": true,
+      "overrideEvolution": [
+        {
+          "evolves_from_species_id": 840,
+          "name": "dipplin",
+          "id": 1011,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "use-item",
+                "id": 3
+              },
+              "pokemon_v2_item": {
+                "name": "syrupy-apple",
+                "id": 2109
+              }
+            }
+          ]
+        },
+        {
+          "evolves_from_species_id": 1011,
+          "name": "hydrapple",
+          "id": 1019,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "level-up",
+                "id": 1
+              },
+              "pokemon_v2_move": {
+                "name": "dragon-cheer",
+                "id": 913
+              }
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
+    }
+  ],
   "446": [
     {
       "ids": [848, 849, 10184, 10219, 10228],
@@ -1009,6 +1054,34 @@
           ]
         }
       ]
+    }
+  ],
+  "465": [
+    {
+      "ids": [884, 1018, 10225],
+      "change": {},
+      "hasOverrideEvolution": true,
+      "overrideEvolution": [
+        {
+          "evolves_from_species_id": 884,
+          "name": "archaludon",
+          "id": 1018,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "use-item",
+                "id": 3
+              },
+              "pokemon_v2_item": {
+                "name": "metal-alloy",
+                "id": ""
+              }
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
     }
   ],
   "470": [
@@ -1187,6 +1260,34 @@
           }
         }
       ]
+    }
+  ],
+  "539": [
+    {
+      "ids": [1012, 1013],
+      "change": {},
+      "hasOverrideEvolution": true,
+      "overrideEvolution": [
+        {
+          "evolves_from_species_id": 1012,
+          "name": "sinistcha",
+          "id": 1013,
+          "pokemon_v2_pokemonevolutions": [
+            {
+              "pokemon_v2_evolutiontrigger": {
+                "name": "use-item",
+                "id": 3
+              },
+              "pokemon_v2_item": {
+                "name": "unremarkable-teacup",
+                "id": 2110
+              }
+            }
+          ]
+        }
+      ],
+      "evolutionIndex": 0,
+      "removeEvolutionIds": []
     }
   ]
 }

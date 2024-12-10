@@ -39,6 +39,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
   const [generationId, setGenerationId] = useState(generation);
   const [moveType, setMoveType] = useState(defaultMoveLearnMethod);
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  const [tableExtended, setTableExtended] = useState(false);
 
   const tmByGeneration = useMemo(() => {
     return mergeTmEntries(tm);
@@ -96,6 +97,7 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
     TypesImageComponent,
     LevelComponent,
     hasLevelData: moveType === "level",
+    hasStats: tableExtended
   });
 
   return (
@@ -157,9 +159,23 @@ const MovePokemonsTable = ({ id, generation, tm }) => {
         </>
       )}
       {pokemons.length > 0 && selectedTab === "Pokemon" ? (
-        <div className="pokemons-table">
-          <Table data={tableData} columns={columns} />
-        </div>
+        <>
+          <div className="checkbox-input">
+            <label htmlFor="ExtendTable">
+              Show Stats
+              <input
+                id="ExtendTable"
+                type="checkbox"
+                className="clickable"
+                checked={tableExtended}
+                onChange={(e) => setTableExtended(e.target.checked)}
+              />
+            </label>
+          </div>
+          <div className="pokemons-table">
+            <Table data={tableData} columns={columns} />
+          </div>
+        </>
       ) : (
         selectedTab === "Pokemon" && <p>No Pokemons Found</p>
       )}

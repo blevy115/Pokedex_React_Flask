@@ -96,6 +96,14 @@ export function buildEvolutionTree(
     const showDifferentChain = newInfo && newInfo["change"][speciesId];
     const evolvesFromId = species.evolves_from_species_id;
     let evolutions = species.pokemon_v2_pokemonevolutions;
+    if (newInfo && newInfo["hasOverrideEvolution"]) {
+      const override = newInfo["overrideEvolution"].find(
+        (override) => override.id === speciesId
+      );
+      if (override) {
+        evolutions = override.pokemon_v2_pokemonevolutions;
+      }
+    }
     if (
       showDifferentChain &&
       newInfo["hasAddedGenerationEvolutions"] &&
