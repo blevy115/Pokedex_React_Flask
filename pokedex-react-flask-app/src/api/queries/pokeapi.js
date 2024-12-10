@@ -696,6 +696,7 @@ const GET_ABILITY_POKEMONS = gql`
   query getAbilityPokemons($id: Int!) {
     ability: pokemon_v2_ability(where: { id: { _eq: $id } }) {
       id
+      generation_id
       pokemons: pokemon_v2_pokemonabilities(
         order_by: { id: asc, pokemon_v2_pokemon: { pokemon_species_id: asc } }
       ) {
@@ -704,6 +705,11 @@ const GET_ABILITY_POKEMONS = gql`
           id
           name
           pokemon_species_id
+          pokemon_v2_pokemonforms {
+            pokemon_v2_versiongroup {
+              generation_id
+            }
+          }
           abilities: pokemon_v2_pokemonabilities {
             is_hidden
             id
@@ -717,6 +723,12 @@ const GET_ABILITY_POKEMONS = gql`
             pokemon_v2_type {
               name
               id
+            }
+          }
+          stats: pokemon_v2_pokemonstats {
+            base_stat
+            pokemon_v2_stat {
+              name
             }
           }
         }
@@ -753,6 +765,12 @@ const GET_MOVE_POKEMONS = gql`
             pokemon_v2_type {
               name
               id
+            }
+          }
+          stats: pokemon_v2_pokemonstats {
+            base_stat
+            pokemon_v2_stat {
+              name
             }
           }
         }
