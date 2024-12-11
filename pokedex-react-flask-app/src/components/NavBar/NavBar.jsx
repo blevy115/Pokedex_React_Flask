@@ -193,13 +193,13 @@ const NavBar = () => {
                         Teams
                       </NavLink>
                     </li>
-                    <li className="logout">
-                      <a href="#" onClick={handleLogout}>
-                        Logout
-                      </a>
-                    </li>
                   </>
                 )}
+                <li className="logout">
+                  <a href="#" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </li>
               </ul>
             </motion.div>
           )}
