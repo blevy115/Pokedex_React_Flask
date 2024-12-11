@@ -142,6 +142,8 @@ const router = createBrowserRouter(
           errorElement={<EggGroupDetailErrorElement />}
         />
         <Route path="/types/:typeId" element={<TypeDetail />} />
+      </Route>
+      <Route element={<ProtectedRoute allowGuest={false} />}>
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/teams" element={<Teams />} />
         <Route

@@ -45,6 +45,7 @@ const Signup = () => {
       }
       localStorage.setItem("token", response.data.signup.token);
       localStorage.setItem("user", JSON.stringify(response.data.signup.user));
+      localStorage.setItem("role", "member");
       navigate("/pokemon", { replace: true });
     } catch (e) {
       setLoading(false);

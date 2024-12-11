@@ -1,5 +1,18 @@
 import { gql } from "@apollo/client";
 
+const GUEST_LOGIN_MUTATION = gql`
+  mutation guestLoginMutation {
+    guestLogin {
+      token
+      user {
+        name
+        email
+        id
+      }
+    }
+  }
+`;
+
 const LOGIN_MUTATION = gql`
   mutation loginMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -343,6 +356,7 @@ const GET_EGG_GROUPS = gql`
 `;
 
 export {
+  GUEST_LOGIN_MUTATION,
   LOGIN_MUTATION,
   LOGOUT_MUTATION,
   SIGNUP_MUTATION,
