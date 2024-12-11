@@ -15,6 +15,11 @@ from ..models import User as UserModel, \
     Type as TypeModel, \
     EggGroup as EggGroupModel
 
+class GuestUserObject(graphene.ObjectType):
+    id = graphene.String()
+    name = graphene.String()
+    email = graphene.String()
+
 
 class UserObject(SQLAlchemyObjectType):
     class Meta:

@@ -1,6 +1,10 @@
 import graphene
 from backend import db
 from flask import session
+import jwt
+import datetime
+import uuid
+
 from ..models import User as UserModel, \
     Pokemon as PokemonModel, \
     Move as MoveModel, \
@@ -13,7 +17,8 @@ from ..models import User as UserModel, \
     Team as TeamModel, \
     TeamPokemon as TeamPokemonModel
 
-from ..graphql.objects import UserObject as User, \
+from ..graphql.objects import GuestUserObject as GuestUser, \
+    UserObject as User, \
     PokemonObject as Pokemon, \
     MoveObject as Move, \
     AbilityObject as Ability, \
@@ -29,6 +34,47 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user
 from graphql import GraphQLError
 from graphql_relay import from_global_id
+from os import environ
+
+class GuestLoginMutation(graphene.Mutation):
+    class Arguments:
+        pass
+
+    token = graphene.String()
+    user = graphene.Field(GuestUser)
+
+    def mutate(self, info):
+        guest_user = {
+            "id": str(uuid.uuid4()),
+            "name": "Guest",
+            "email": None,
+        }
+
+        session['guest_user'] = guest_user
+
+        secret_key = environ.get("JWT_SECRET_KEY")
+        if not secret_key:
+            raise Exception("JWT_SECRET_KEY not set in environment variables")
+
+        expiration = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=12)
+
+        token = jwt.encode(
+            {
+                'sub': guest_user['id'],
+                'exp': expiration,
+                'name': guest_user['name'],
+                'email': guest_user['email']
+            },
+            secret_key,
+            algorithm='HS256'
+        )
+
+        session['guest_token'] = token
+
+        return GuestLoginMutation(
+            token=token,
+            user=guest_user
+        )
 
 
 class LoginMutation(graphene.Mutation):
@@ -564,4 +610,5 @@ class Mutation(graphene.ObjectType):
     delete_team = DeleteTeamMutation.Field()
     login = LoginMutation.Field()
     logout = LogoutMutation.Field()
+    guest_login = GuestLoginMutation.Field()
     mutate_shiny_counter = ShinyCounterMutation.Field()
