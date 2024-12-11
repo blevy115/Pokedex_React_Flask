@@ -43,6 +43,7 @@ const PokemonDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const role = localStorage.getItem("role");
 
   const { data, loading } = useQuery(GET_POKEMON_INFO, {
     variables: { id: parseInt(params.pokemonId) },
@@ -54,6 +55,7 @@ const PokemonDetail = () => {
     {
       variables: { user_id: user.id },
       client: backEndClient,
+      skip: role === "guest",
     }
   );
 
@@ -63,18 +65,22 @@ const PokemonDetail = () => {
 
   const [mutateUserPokemonRelation] = useMutation(USER_POKEMON_MUTATION, {
     client: backEndClient,
-    refetchQueries: [
-      {
-        query: GET_USER_POKEMONS,
-        variables: { user_id: user.id },
-      },
-    ],
+    refetchQueries:
+      role !== "guest"
+        ? [
+            {
+              query: GET_USER_POKEMONS,
+              variables: { user_id: user.id },
+            },
+          ]
+        : [],
   });
   const name = !loading ? data.pokemon_details[0].name : undefined;
   const types = !loading ? data.pokemon_details[0].types : undefined;
   const stats = !loading ? data.pokemon_details[0].stats : undefined;
 
   const isAFavourite = useMemo(() => {
+    if (role === "guest") return false;
     return !userPokemonsLoading && userPokemonsData
       ? userPokemonsData.userPokemons.some(
           (pokemon) =>
@@ -131,7 +137,7 @@ const PokemonDetail = () => {
       }`}
     >
       <div className="app-pokemon-detail-info">
-        <PokemonNav name={name} id ={pokemonIdInt} />
+        <PokemonNav name={name} id={pokemonIdInt} />
         <GenerationSelector
           generation={generation}
           pokedexes={info.pokedexes}
@@ -139,13 +145,18 @@ const PokemonDetail = () => {
         <PokemonCry id={params.pokemonId} />
         <PokemonImage id={params.pokemonId} />
         <Types types={types} />
-        <button
-          className="favourite-button clickable"
-          onClick={handleUserPokemonLinking}
-        >
-          {isAFavourite ? "Unfavourite" : "Favourite"}
-        </button>
-        {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
+        {role !== "guest" && (
+          <>
+            <button
+              className="favourite-button clickable"
+              onClick={handleUserPokemonLinking}
+            >
+              {isAFavourite ? "Unfavourite" : "Favourite"}
+            </button>
+            {isAFavourite && <ShinyCounter pokemonId={pokemonIdInt} />}
+          </>
+        )}
+
         <PokemonForms forms={info.forms} pokemonId={pokemonIdInt} />
         <EvolutionaryChain
           chain={info.evolutionChain}

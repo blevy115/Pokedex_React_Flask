@@ -11,6 +11,7 @@ import "./NavBar.scss";
 
 const NavBar = () => {
   const [, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const role = localStorage.getItem("role");
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ const NavBar = () => {
     await logoutMutation();
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("role");
     setUser(null);
     navigate("/login", { replace: true });
   };
@@ -68,16 +70,20 @@ const NavBar = () => {
             Egg Groups
           </NavLink>
         </li>
-        <li>
-          <NavLink to="/favourites" activeclassname="active">
-            Favourites
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/teams" activeclassname="active">
-            Teams
-          </NavLink>
-        </li>
+        {role !== "guest" && (
+          <>
+            <li>
+              <NavLink to="/favourites" activeclassname="active">
+                Favourites
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/teams" activeclassname="active">
+                Teams
+              </NavLink>
+            </li>
+          </>
+        )}
       </ul>
       <ul className="app__navbar-links">
         <li className="logout">
@@ -167,29 +173,33 @@ const NavBar = () => {
                     Egg Groups
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink
-                    to="/favourites"
-                    activeclassname="active"
-                    onClick={() => setToggle(false)}
-                  >
-                    Favourites
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/teams"
-                    activeclassname="active"
-                    onClick={() => setToggle(false)}
-                  >
-                    Teams
-                  </NavLink>
-                </li>
-                <li className="logout">
-                  <a href="#" onClick={handleLogout}>
-                    Logout
-                  </a>
-                </li>
+                {role !== "guest" && (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/favourites"
+                        activeclassname="active"
+                        onClick={() => setToggle(false)}
+                      >
+                        Favourites
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        to="/teams"
+                        activeclassname="active"
+                        onClick={() => setToggle(false)}
+                      >
+                        Teams
+                      </NavLink>
+                    </li>
+                    <li className="logout">
+                      <a href="#" onClick={handleLogout}>
+                        Logout
+                      </a>
+                    </li>
+                  </>
+                )}
               </ul>
             </motion.div>
           )}

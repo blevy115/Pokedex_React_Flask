@@ -3,7 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 
 import { backEndClient } from "../../../api/clients";
-import { LOGIN_MUTATION } from "../../../api/queries/backend";
+import {
+  LOGIN_MUTATION,
+  GUEST_LOGIN_MUTATION,
+} from "../../../api/queries/backend";
 
 import { LoginLoading } from "../../../components";
 
@@ -15,6 +18,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [loginMutation] = useMutation(LOGIN_MUTATION, {
+    client: backEndClient,
+  });
+  const [guestLoginMutation] = useMutation(GUEST_LOGIN_MUTATION, {
     client: backEndClient,
   });
   const navigate = useNavigate();
@@ -37,6 +43,27 @@ const Login = () => {
       }
       localStorage.setItem("token", response.data.login.token);
       localStorage.setItem("user", JSON.stringify(response.data.login.user));
+      localStorage.setItem("role", "member");
+      navigate("/pokemon", { replace: true });
+    } catch (e) {
+      setLoading(false);
+      setError(e.message);
+    }
+  }
+
+  async function handleGuestLogin() {
+    setLoading(true);
+    try {
+      const response = await guestLoginMutation();
+      if (!response.data.guestLogin.token || !response.data.guestLogin.user) {
+        throw new Error("Guest Login Failed");
+      }
+      localStorage.setItem("token", response.data.guestLogin.token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify(response.data.guestLogin.user)
+      );
+      localStorage.setItem("role", "guest");
       navigate("/pokemon", { replace: true });
     } catch (e) {
       setLoading(false);
@@ -81,6 +108,13 @@ const Login = () => {
             {error && <span className="error">{error}</span>}
             <button className="auth-form-submit" type="submit">
               Log In
+            </button>
+            <button
+              className="auth-form-submit"
+              type="button"
+              onClick={handleGuestLogin}
+            >
+              Guest Login
             </button>
           </form>
         </div>
