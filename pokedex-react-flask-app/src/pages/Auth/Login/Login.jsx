@@ -106,16 +106,18 @@ const Login = () => {
               />
             </div>
             {error && <span className="error">{error}</span>}
-            <button className="auth-form-submit" type="submit">
-              Log In
-            </button>
-            <button
-              className="auth-form-submit"
-              type="button"
-              onClick={handleGuestLogin}
-            >
-              Guest Login
-            </button>
+            <div className="auth-button-container">
+              <button className="auth-form-submit" type="submit">
+                Log In
+              </button>
+              <button
+                className="auth-form-submit"
+                type="button"
+                onClick={handleGuestLogin}
+              >
+                Guest
+              </button>
+            </div>
           </form>
         </div>
       </div>
